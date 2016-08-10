@@ -27,33 +27,31 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p>EnMasse aims to provide the required tools and services for deploying and running a messaging service on <a href="https://www.openshift.com/">Openshift</a>. Running on Openshift means you can either run EnMasse on your own cluster locally or in the cloud. You can also run EnMasse on <a href="https://www.openshift.org/">Openshift Origin</a>, which is the upstream community project.</p>
+        <p>The EnMasse project provides the required tools and services for deploying and running a scalable messaging service on <a href="https://www.openshift.com/">Openshift</a>. Running on Openshift means that you can either run EnMasse on your own cluster locally or in the cloud. You can also run EnMasse on <a href="https://www.openshift.org/">Openshift Origin</a>, which is the upstream community project.</p>
 
-<p>Some highlights of what EnMasse is:</p>
+<p>EnMasse uses the <a href="https://qpid.apache.org/components/dispatch-router/index.html">Qpid Dispatch Router</a>, a high performance AMQP message router, in order to scale to a large number of clients and messages. For store-and-forward semantics, EnMasse uses message brokers such as <a href="https://activemq.apache.org/artemis/">Apache ActiveMQ Artemis</a>. </p>
+
+<p>EnMasse simplifies the setup and management of a messaging cluster by providing:</p>
 
 <ul>
-<li>A configuration format encapsulating details of brokers and routers
-
-<ul>
-<li>Separates cluster admin and application developer roles</li>
-</ul>
-</li>
+<li>A simple configuration format encapsulating details of message brokers and routers. The configuration is split into a cluster admin config and application developer config.</li>
 <li>A set of agents running as part of the cluster and acts on changes to the configuration
 
 <ul>
-<li>Configures the Qpid Dispatch Router cluster network</li>
-<li>Generates and starts broker clusters for each address marked as store-and-forward and attaches volumes for persistence</li>
+<li>Configures the router network.</li>
+<li>Generates and starts brokers for addresses marked as store-and-forward and attaches volumes for persistence.</li>
 </ul>
 </li>
-<li>Templates for quickly setting up a messaging cluster on Openshift</li>
+<li>Templates for quickly setting up a messaging cluster on Openshift.</li>
 </ul>
 
 <p>The project is still in it's infancy, so there are currently a lot of TODO items that are being worked
 on in addition to the occasional bugfixing:</p>
 
 <ul>
-<li>Supporting other brokers (currently ActiveMQ and ActiveMQ Artemis only)</li>
-<li>Supporting topics (only queues supported at the moment)</li>
+<li>Supporting more message brokers (currently ActiveMQ and ActiveMQ Artemis only)</li>
+<li>Supporting topics</li>
+<li>Supporting durable subscriptions</li>
 <li>Stabilizing configuration format</li>
 <li>Downscaling brokers without loosing messages</li>
 <li>Scalability and performance testing</li>
