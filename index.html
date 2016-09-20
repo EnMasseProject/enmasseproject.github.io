@@ -31,10 +31,22 @@
 
 <p>EnMasse uses the <a href="https://qpid.apache.org/components/dispatch-router/index.html">Qpid Dispatch Router</a>, a high performance AMQP message router, in order to scale to a large number of clients and messages. For store-and-forward semantics, EnMasse uses message brokers such as <a href="https://activemq.apache.org/artemis/">Apache ActiveMQ Artemis</a>. </p>
 
-<p>EnMasse simplifies the setup and management of a messaging cluster by providing:</p>
+<p>Some long-term goals for EnMasse:</p>
 
 <ul>
-<li>A simple configuration format encapsulating details of message brokers and routers. The configuration is split into a cluster admin config and application developer config.</li>
+<li>Support different communication patterns like request-response, pub-sub and events</li>
+<li>Support for a variety of different protocols like AMQP, MQTT, HTTP(1.1 &amp; 2), CoAP and STOMP</li>
+<li>Multi-tenancy</li>
+<li>Scalability</li>
+<li>Elasticity without service interruption</li>
+<li>Simple setup and management of messaging clusters</li>
+</ul>
+
+<p>EnMasse itself consists of infrastructure components that makes deployment and scaling easier. Here are some of the parts that make up EnMasse:</p>
+
+<ul>
+<li>A simple configuration format encapsulating details of message brokers and routers. The configuration can be split into a cluster admin config and application developer config.</li>
+<li>A set of templates for creating brokers manually or automatically based on a single configuration.</li>
 <li>A set of agents running as part of the cluster and acts on changes to the configuration
 
 <ul>
@@ -42,7 +54,7 @@
 <li>Generates and starts brokers for addresses marked as store-and-forward and attaches volumes for persistence.</li>
 </ul>
 </li>
-<li>Templates for quickly setting up a messaging cluster on Openshift.</li>
+<li>Templates for quickly setting up EnMasse on Openshift.</li>
 </ul>
 
 <p>The project is still in it's infancy, so there are currently a lot of TODO items that are being worked
@@ -50,10 +62,8 @@ on in addition to the occasional bugfixing:</p>
 
 <ul>
 <li>Supporting more message brokers (currently ActiveMQ and ActiveMQ Artemis only)</li>
-<li>Supporting topics</li>
-<li>Supporting durable subscriptions</li>
 <li>Stabilizing configuration format</li>
-<li>Downscaling brokers without loosing messages</li>
+<li>Downscaling brokers for topics without loosing messages</li>
 <li>Scalability and performance testing</li>
 </ul>
 
