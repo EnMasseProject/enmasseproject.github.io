@@ -25,4 +25,4 @@ HTTP and CoAP.
 * <b>Multitenancy</b>: Manage multiple independent instances
 * Built on <b>OpenShift</b>: deploy <b>on-premise</b> or in the <b>cloud</b>
 
-To get started with EnMasse, have a look at the [Getting Started](https://github.com/EnMasseProject/enmasse/tree/master/documentation/getting-started) guides.
+For more information, see the [github repository](https://github.com/EnMasseProject/enmasse). To get started with EnMasse, have a look at the [Getting Started](https://github.com/EnMasseProject/enmasse/tree/master/documentation/getting-started) guides.
