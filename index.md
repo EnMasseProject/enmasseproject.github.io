@@ -12,14 +12,14 @@ The EnMasse project that aims to create, as a community, an open source messagin
 
 ## Overall architecture
 
-![EnMasse](https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/overview/enmasse_overall_view.png)
-
 Taking a look at 40000 feet, the overall architecture is made of :
 
 * a Qpid Dispatch Router network for allowing clients connection, "direct" messaging and components communication on AMQP
 * from zero to more ActiveMQ Artemis brokers for providing "store and forward" capabilities
 * an MQTT gateway for providing connection to remote MQTT clients
 * an admin component for handling the overall deployment
+
+![EnMasse](https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/overview/enmasse_overall_view.png)
 
 ## Features
 
