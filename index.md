@@ -10,6 +10,17 @@ EnMasse is an open source messaging platform, with focus on scalability and perf
 
 The EnMasse project that aims to create, as a community, an open source messaging platform that runs on [Kubernetes](https://kubernetes.io/) and [OpenShift](http://openshift.org/), using open standards like [AMQP](http://amqp.org/) and [MQTT](http://mqtt.org/) etc. EnMasse is based on other open source projects like [Apache ActiveMQ Artemis](https://activemq.apache.org/artemis/), [Apache Qpid Dispatch Router](https://qpid.apache.org/components/dispatch-router/index.html) and finally the [Vert.x](http://vertx.io/) toolkit.
 
+## Overall architecture
+
+![EnMasse](https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/overview/enmasse_overall_view.png)
+
+Taking a look at 40000 feet, the overall architecture is made of :
+
+* a Qpid Dispatch Router network for allowing clients connection, "direct" messaging and components communication on AMQP
+* from zero to more ActiveMQ Artemis brokers for providing "store and forward" capabilities
+* an MQTT gateway for providing connection to remote MQTT clients
+* an admin component for handling the overall deployment
+
 ## Features
 
 * Multiple <b>communication patterns</b>: request-response, pub-sub and events
