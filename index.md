@@ -4,7 +4,7 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 layout: page
 ---
-![EnMasse](https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/logo/enmasse_logo.png)
+![EnMasse](https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/images/logo/enmasse_logo.png)
 
 EnMasse is an open source messaging platform, with focus on scalability and performance. EnMasse can run on your own infrastructure or in the cloud, and simplifies the deployment of messaging infrastructure.
 
@@ -19,7 +19,7 @@ Taking a look at 40000 feet, the overall architecture is made of :
 * an MQTT gateway for providing connection to remote MQTT clients
 * an admin component for handling the overall deployment
 
-![EnMasse](https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/overview/enmasse_overall_view.png)
+![EnMasse](https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/overview/enmasse_overall_view.png)
 
 ## Features
 
@@ -33,4 +33,4 @@ Taking a look at 40000 feet, the overall architecture is made of :
 
 EnMasse can be used for many purposes, such as moving your messaging infrastructure to the cloud (without depending on a specific cloud provider) or building a scalable messaging backbone for IoT.
 
-For more information, see the [github repository](https://github.com/EnMasseProject/enmasse). To get started with EnMasse, have a look at the [Getting Started](https://github.com/EnMasseProject/enmasse/tree/master/documentation/getting-started) guides.
+For more information, see the [github repository](https://github.com/EnMasseProject/enmasse). To get started with EnMasse, have a look at the [Getting Started](https://github.com/EnMasseProject/enmasse/tree/master/documentation/design_docs/getting-started) guides.
