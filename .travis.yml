@@ -1,6 +1,8 @@
 language: ruby
 rvm:
 - 2.2
+install:
+- bundle install
 script:
 - ruby build.rb
 - sh push.sh
