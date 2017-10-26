@@ -1,8 +1,6 @@
 language: ruby
 rvm:
-- 2.2
-install:
-- bundle install --full-index --retry=3
+- 2.4.1
 script:
 - ruby build.rb
 - sh push.sh
