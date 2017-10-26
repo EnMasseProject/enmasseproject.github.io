@@ -2,7 +2,7 @@ language: ruby
 rvm:
 - 2.2
 install:
-- bundle install
+- bundle install --full-index --retry=3
 script:
 - ruby build.rb
 - sh push.sh
