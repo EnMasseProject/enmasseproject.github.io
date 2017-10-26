@@ -13,7 +13,7 @@ commit_website_files() {
 }
 
 upload_files() {
-  git remote add origin-pages https://${GH_TOKEN}@github.com/EnMasseProject/enmasseproject.github.io.git > /dev/null 2>&1
+  git remote add origin-pages git@github.com:EnMasseProject/enmasseproject.github.io.git > /dev/null 2>&1
   git push --quiet --set-upstream origin-pages master
 }
 
