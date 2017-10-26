@@ -2,7 +2,8 @@ language: ruby
 rvm:
 - 2.4.1
 install:
-- bundle --full-index
+- bundle update listen
+- bundle update jekyll-watch
 - bundle --full-index install
 script:
 - ruby build.rb
