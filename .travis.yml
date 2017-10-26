@@ -5,6 +5,7 @@ install:
 - bundle update listen
 - bundle update jekyll-watch
 - bundle install --full-index
+- gem install asciidoctor
 script:
 - ruby build.rb
 - sh push.sh
