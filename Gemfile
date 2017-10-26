@@ -15,6 +15,8 @@ gem "jekyll", "3.4.2"
 gem "minima", "~> 2.0"
 
 gem "listen", "3.1.5"
+gem "rb-fsevent"
+gem "ruby_dep"
 
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
 # uncomment the line below. To upgrade, run `bundle update github-pages`.
