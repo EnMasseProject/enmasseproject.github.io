@@ -4,7 +4,7 @@ rvm:
 install:
 - bundle update listen
 - bundle update jekyll-watch
-- bundle --full-index install
+- bundle install --full-index
 script:
 - ruby build.rb
 - sh push.sh
