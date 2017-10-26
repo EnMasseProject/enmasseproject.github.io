@@ -1,6 +1,9 @@
 language: ruby
 rvm:
 - 2.4.1
+install:
+  bundle --full-index
+  bundle --full-index install
 script:
 - ruby build.rb
 - sh push.sh
