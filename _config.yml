@@ -15,12 +15,20 @@
 # in the templates via {{ site.myvariable }}.
 title: EnMasse - Messaging as a Service
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://enmasseproject.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://enmasse.io" # the base hostname & protocol for your site, e.g. http://example.com
 github: [metadata]
+plugins_dir:
+  - jekyll-menus
+    #  - jekyll-asciidoc
 
+asciidoc:
+  ext: adoc
+  base_dir: :docdir
 # Build settings
 markdown: kramdown
 theme: minima
 exclude:
+  - enmasse
+  - ignore
   - Gemfile
   - Gemfile.lock
