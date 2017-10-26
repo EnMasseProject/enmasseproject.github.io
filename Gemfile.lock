@@ -48,6 +48,7 @@ DEPENDENCIES
   jekyll (= 3.4.2)
   jekyll-feed (~> 0.6)
   jekyll-menus
+  listen (= 3.1.5)
   minima (~> 2.0)
   tzinfo-data
 
