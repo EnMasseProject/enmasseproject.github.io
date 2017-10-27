@@ -49,6 +49,7 @@ VERSIONS.each do |version|
 
         if File.file?(master)
             `asciidoctor #{master} -o #{output} -s`
+            `find _includes`
             article_header.push("  - url: /#{url}")
             article_header.push("    title: #{title}")
             article_header.push("    identifier: #{article}-#{version}")
