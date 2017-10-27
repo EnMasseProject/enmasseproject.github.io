@@ -1,0 +1,240 @@
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel2">
+<li><a href="#address_model">1. Address Model</a>
+<ul class="sectlevel3">
+<li><a href="#address_space">1.1. Address Space</a></li>
+<li><a href="#address">1.2. Address</a></li>
+<li><a href="#plans">1.3. Plans</a>
+<ul class="sectlevel4">
+<li><a href="#address_space_plans">Address Space Plans</a></li>
+<li><a href="#address_plans">Address Plans</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#address_space_2">2. Address Space</a>
+<ul class="sectlevel3">
+<li><a href="#standard_address_space">2.1. Standard Address Space</a>
+<ul class="sectlevel4">
+<li><a href="#address_types">Address Types</a></li>
+<li><a href="#standard-queue">Queue</a></li>
+<li><a href="#standard-topic">Topic</a></li>
+<li><a href="#anycast">Anycast</a></li>
+<li><a href="#multicast">Multicast</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="address_model">1. Address Model</h3>
+<div class="paragraph">
+<p>The EnMasse address model involves three distinct concepts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>types of address spaces</p>
+</li>
+<li>
+<p>types of addresses within each address space</p>
+</li>
+<li>
+<p>available plans</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="address_space">1.1. Address Space</h4>
+<div class="paragraph">
+<p>An address space is a group of addresses that can be accessed through a single connection (per protocol). This means that clients connected to the endpoints of an address space can send messages to or receive messages from any address it is authorized to send messages to or receive messages from within that address space. An address space can support multiple protocols, which is defined by the address space type.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="address">1.2. Address</h4>
+<div class="paragraph">
+<p>An address is part of an address space and represents a destination used for sending and receiving messages. An address has a type, which defines the semantics of sending messages to and receiving messages from that address.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="plans">1.3. Plans</h4>
+<div class="paragraph">
+<p>Both address spaces and addresses can be restricted by a plan, which enforces a limit on resource usage across multiple dimensions. &lt;tag for upstream only&gt;Note that the set of plans currently offered might be extended in the future, and the constraints imposed by a plan within an address space might change as operational experience is gained.&lt;/tag for upstream only&gt;</p>
+</div>
+<div class="sect4">
+<h5 id="address_space_plans">Address Space Plans</h5>
+<div class="paragraph">
+<p>Each address space has a plan that restricts the aggregated resource usage within an address space. Each address space type can translate the plan into a set of restrictions, for example, the ability to scale up to five routers or to create up to 10 addresses. These restrictions are documented within each address space.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="address_plans">Address Plans</h5>
+<div class="paragraph">
+<p>The usage of each address is also constrained by a plan. Each address type translates the plan into a set of restrictions, for example, up to five consumers or up to 100 messages per hour. These restrictions are documented within each address type.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="address_space_2">2. Address Space</h3>
+<div class="paragraph">
+<p>The only currently supported address space is standard.</p>
+</div>
+<div class="sect3">
+<h4 id="standard_address_space">2.1. Standard Address Space</h4>
+<div class="paragraph">
+<p>The default address space in EnMasse is the standard address space and it consists of an AMQP router network in combination with attachable storage units. The implementation of a storage unit is hidden from the client and the routers with a well-defined API. This address space type is appropriate when you have many connections and addresses. However, it has the following limitations: no transaction support, no message ordering, no selectors on queues, and no message groups.</p>
+</div>
+<div class="paragraph">
+<p>Clients connect and send and receive messages in this address space using the AMQP or MQTT protocols. Note that MQTT does not support qos2 or retained messages.</p>
+</div>
+<div class="paragraph">
+<p>TODO: This reflects the status quo, but how should multiple protocols actually be surfaced?</p>
+</div>
+<div class="sect4">
+<h5 id="address_types">Address Types</h5>
+<div class="paragraph">
+<p>The standard address space supports four address types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>queue</p>
+</li>
+<li>
+<p>topic</p>
+</li>
+<li>
+<p>anycast</p>
+</li>
+<li>
+<p>multicast</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>TODO: Document plan restrictions and document properties for all 4 types</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="standard-queue">Queue</h5>
+<div class="paragraph">
+<p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases where you want to decouple the producer and consumer. A queue can be sharded across multiple storage units, in which case message order is no longer guaranteed.</p>
+</div>
+<div class="sect5">
+<h6 id="queue-plans">Queue Plans</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>inmemory</p>
+</li>
+<li>
+<p>persisted</p>
+</li>
+<li>
+<p>pooled-inmemory</p>
+</li>
+<li>
+<p>pooled-persisted</p>
+</li>
+</ul>
+</div>
+<div class="sect6">
+<h7 id="in-memory-queue">In memory</h7>
+<div class="paragraph">
+<p>Creates a standalone broker cluster for queues. Messages are not persisted on
+stable storage.</p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="persisted-queue">Persisted</h7>
+<div class="paragraph">
+<p>Creates a standalone broker cluster for queues. Messages are persisted on stable
+storage.</p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="pooled-in-memory-queue">Pooled in memory</h7>
+<div class="paragraph">
+<p>Schedules queues to run on a shared broker cluster, reducing overhead. Messages
+are not persisted on stable storage.</p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="pooled-persisted-queue">Pooled persisted</h7>
+<div class="paragraph">
+<p>Schedules queues to run on a shared broker cluster, reducing overhead. Messages
+are persisted on stable storage.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="standard-topic">Topic</h5>
+<div class="paragraph">
+<p>The topic address type supports the publish-subscribe messaging pattern where you have 1..N producers and 1..M consumers. Each message published to a topic address is forwarded to all subscribers for that address. A subscriber can also be durable, in which case messages are kept until the subscriber has acknowledged them.</p>
+</div>
+<div class="sect5">
+<h6 id="topic-plans">Topic Plans</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>inmemory</p>
+</li>
+<li>
+<p>persisted</p>
+</li>
+</ul>
+</div>
+<div class="sect6">
+<h7 id="in-memory-topic">In memory</h7>
+<div class="paragraph">
+<p>Creates a standalone broker cluster for topics. Messages are not persisted on
+stable storage.</p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="persisted-topic">Persisted</h7>
+<div class="paragraph">
+<p>Creates a standalone broker cluster for topics. Messages are persisted on stable
+storage.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="anycast">Anycast</h5>
+<div class="paragraph">
+<p>The anycast address type is a scalable direct address for sending messages to one consumer. Messages sent to an anycast address are not stored, but forwarded directly to the consumer. This method makes this address type ideal for request-reply (RPC) uses or even work distribution. This is the cheapest address type as it does not require any persistence.</p>
+</div>
+<div class="sect5">
+<h6 id="anycast-plans">Anycast Plans</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>standard</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="multicast">Multicast</h5>
+<div class="paragraph">
+<p>The multicast address type is a scalable direct address for sending messages to multiple consumers. Messages sent to a multicast address are forwarded to all consumers receiving messages on that address. It is important to note that only pre-settled messages can be sent to multicast addresses, as message acknowledgements from consumers are not propagated to producers.</p>
+</div>
+<div class="sect5">
+<h6 id="multicast-plans">Multicast Plans</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>standard</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
