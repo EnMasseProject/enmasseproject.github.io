@@ -14,8 +14,11 @@ commit_website_files() {
 }
 
 upload_files() {
-  git remote add origin-pages git@github.com:EnMasseProject/enmasseproject.github.io.git > /dev/null 2>&1
-  git push -u origin-pages master
+    git remote add sshorigin git@github.com:EnMasseProject/enmasseproject.github.io.git
+#  git push -u origin-pages master
+    echo "Push norma"
+    git push
+    git push -u sshorigin master
 }
 
 setup_git
