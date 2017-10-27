@@ -11,7 +11,6 @@ commit_website_files() {
   git add documentation/$TRAVIS_BRANCH
   git add _include/documentation/$TRAVIS_BRANCH
   git add _data
-  git add _site
   git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
 }
 
