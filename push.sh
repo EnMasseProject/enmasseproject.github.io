@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 setup_git() {
   git config --global user.email "travis@travis-ci.org"
@@ -9,7 +10,7 @@ commit_website_files() {
   git add documentation
   git add _include/documentation
   git add _data
-  git commit -a --message "Travis build: $TRAVIS_BUILD_NUMBER"
+  git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
 }
 
 upload_files() {
