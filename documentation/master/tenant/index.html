@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Managing addresses</title>
+  <title>Managing address spaces and addresses</title>
   <meta name="description" content="">
 
   <link rel="stylesheet" href="/assets/main.css">
@@ -70,7 +70,7 @@
     
   <a href="/documentation/master/service_admin" title="Go to Installation">Installation</a><br />
 
-  <a href="/documentation/master/tenant" title="Go to Managing addresses">Managing addresses</a><br />
+  <a href="/documentation/master/tenant" title="Go to Managing address spaces and addresses">Managing address spaces and addresses</a><br />
 
   <a href="/documentation/master/messaging_app_developer" title="Go to Developing applications">Developing applications</a><br />
 
@@ -79,7 +79,7 @@
 </header>
 
         <br />
-        <h3> Managing addresses </h3>
+        <h3> Managing address spaces and addresses </h3>
         <br />
         <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -107,6 +107,14 @@
 <li><a href="#multicast">Multicast</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#configuring-using-restapi">3. Configuring EnMasse using a REST API</a>
+<ul class="sectlevel3">
+<li><a href="#creating_an_address_space">3.1. Creating an Address Space</a></li>
+<li><a href="#viewing_address_space_status">3.2. Viewing Address Space Status</a></li>
+<li><a href="#creating_addresses">3.3. Creating Addresses</a></li>
+<li><a href="#viewing_configured_addresses">3.4. Viewing Configured Addresses</a></li>
 </ul>
 </li>
 </ul>
@@ -318,6 +326,154 @@ storage.</p>
 </ul>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuring-using-restapi">3. Configuring EnMasse using a REST API</h3>
+<div class="paragraph">
+<p>TODO: Authentication of clients</p>
+</div>
+<div class="paragraph">
+<p>EnMasse provides a REST API that can be used for configuring address spaces and addresses
+within those address spaces.</p>
+</div>
+<div class="sect3">
+<h4 id="creating_an_address_space">3.1. Creating an Address Space</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Creating address spaces is only applicable for multi-tenant deployments of EnMasse.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To create a 'standard' address space, save the following JSON data to a file:</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>{
+    "apiVersion": "v1/enmasse",
+    "kind": "AddressSpace",
+    "metadata": {
+        "name": "myspace"
+    },
+    "spec": {
+        "type": "standard"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>+
+This will create the infrastructure required for that address space. Starting up the address space
+will take a while, usually depending on how fast it is able to download the Docker images for the
+various components.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="viewing_address_space_status">3.2. Viewing Address Space Status</h4>
+<div class="ulist">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>You can use the REST API to check the status of the address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>curl http://$(oc get route restapi -o jsonpath='{.spec.host}')/v1/addressspaces/myspace</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can consider the address space to be ready to use when <code>status.isReady</code> is <code>true</code> in the returned JSON
+object.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="creating_addresses">3.3. Creating Addresses</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>To create addresses in the standard address space, save the following to a file:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>{
+  "apiVersion": "enmasse.io/v1",
+  "kind": "AddressList",
+  "items": [
+    {
+      "metadata": {
+        "name": "myqueue"
+      },
+      "spec": {
+        "type": "queue"
+      }
+    },
+    {
+      "metadata": {
+        "name": "mytopic"
+      },
+      "spec": {
+        "type": "topic"
+      }
+    },
+    {
+      "metadata": {
+        "name": "myanycast"
+      },
+      "spec": {
+        "type": "anycast"
+      }
+    },
+    {
+      "metadata": {
+        "name": "mymulticast"
+      },
+      "spec": {
+        "type": "multicast"
+      }
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>You can then create those addresses using the REST API:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>curl -X PUT -T addresses.json -H "content-type: application/json" http://$(oc get route restapi -o jsonpath='{.spec.host}')/v1/addresses/default</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="viewing_configured_addresses">3.4. Viewing Configured Addresses</h4>
+<div class="ulist">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>To check which addresses are configured:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>curl http://$(oc get route restapi -o jsonpath='{.spec.host}')/v1/addresses/default</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The addresses are ready to be used by messaging clients once the <code>status.isReady</code> field of each
+address is set to <code>true</code>.</p>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
