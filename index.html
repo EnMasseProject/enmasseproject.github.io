@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>EnMasse - Messaging as a Service</title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://enmasse.io/">
+  <link rel="alternate" type="application/rss+xml" title="EnMasse - Messaging as a Service" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+    <div id="rhbar" style="height:40px;background-color: #202020">
+        <a class="rhd-logo" href="http://developers.redhat.com" style="float: right;background-image: url(http://static.jboss.org/images/rhbar/rhd_reverse.png);background-repeat: no-repeat;height: 40px;width: 136px;"></a>
+        <a class="rhlogo" href="http://www.redhat.com/" style="float: right;background-image: url(http://static.jboss.org/images/rhbar/redhatlogo_reverse.png);background-repeat: no-repeat;height: 40px;width: 85px;"></a>
+    </div>
+    <div align="center">
+    <img alt="EnMasse" src="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/images/logo/enmasse_logo.png" height="150px" />
+</div>
+<br />
+<br />
+<header align="center">
+  <nav>
+    
+    
+
+<a href="/" title="Go to Overview">Overview</a> 
+
+ |
+
+
+<a href="/documentation" title="Go to Documentation">Documentation</a> 
+
+ |
+
+
+<a href="https://github.com/EnMasseProject/enmasse/releases/" title="Go to Downloads">Downloads</a> 
+
+ |
+
+
+<a href="/contributing" title="Go to Contributing">Contributing</a> 
+
+
+
+
+  </nav>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title"></h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="overview">Overview</h1>
+
+<p>EnMasse is an open source messaging platform, with focus on scalability and performance. EnMasse can run on your own infrastructure or in the cloud, and simplifies the deployment of messaging infrastructure.</p>
+
+<p>The EnMasse project that aims to create, as a community, an open source messaging platform that runs on <a href="https://kubernetes.io/">Kubernetes</a> and <a href="http://openshift.org/">OpenShift</a>, using open standards like <a href="http://amqp.org/">AMQP</a> and <a href="http://mqtt.org/">MQTT</a> etc. EnMasse is based on other open source projects like <a href="https://activemq.apache.org/artemis/">Apache ActiveMQ Artemis</a>, <a href="https://qpid.apache.org/components/dispatch-router/index.html">Apache Qpid Dispatch Router</a> and finally the <a href="http://vertx.io/">Vert.x</a> toolkit.</p>
+
+<h1 id="overall-architecture">Overall architecture</h1>
+
+<p>Taking a look at 40000 feet, the overall architecture is made of :</p>
+
+<ul>
+  <li>a Qpid Dispatch Router network for allowing clients connection, “direct” messaging and components communication on AMQP</li>
+  <li>from zero to more ActiveMQ Artemis brokers for providing “store and forward” capabilities</li>
+  <li>an MQTT gateway for providing connection to remote MQTT clients</li>
+  <li>an admin component for handling the overall deployment</li>
+</ul>
+
+<p><img src="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/overview/enmasse_overall_view.png" alt="EnMasse" /></p>
+
+<h1 id="features">Features</h1>
+
+<ul>
+  <li>Multiple <b>communication patterns</b>: request-response, pub-sub and events</li>
+  <li>Support for <b>store and forward</b> and <b>direct messaging</b> mechanisms</li>
+  <li><b>Elastic scaling</b> of message brokers</li>
+  <li><b>AMQP</b> and <b>MQTT</b> support</li>
+  <li><b>Simple</b> setup, management and <b>monitoring</b>.</li>
+  <li><b>Multitenancy</b>: Manage multiple independent instances</li>
+  <li>Built on <b>Kubernetes/OpenShift</b>: deploy <b>on-premise</b> or in the <b>cloud</b></li>
+</ul>
+
+<p>EnMasse can be used for many purposes, such as moving your messaging infrastructure to the cloud (without depending on a specific cloud provider) or building a scalable messaging backbone for IoT.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">EnMasse - Messaging as a Service</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              EnMasse - Messaging as a Service
+            
+            </li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <div class="container" id="companyfooter">
+      <div class="redhatlogo" style="text-align:center;">
+          <div id="logospacer"></div>
+          <a href="http://www.redhat.com/"><img alt="Red Hat" src="http://static.jboss.org/images/rhbar/redhatlogo.png"></a>
+      </div>
+    </div>
+  </body>
+
+</html>
