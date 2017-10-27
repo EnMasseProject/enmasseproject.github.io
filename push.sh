@@ -7,8 +7,9 @@ setup_git() {
 }
 
 commit_website_files() {
-  git add documentation
-  git add _include/documentation
+  git checkout master
+  git add documentation/$TRAVIS_BRANCH
+  git add _include/documentation/$TRAVIS_BRANCH
   git add _data
   git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
 }
@@ -16,8 +17,6 @@ commit_website_files() {
 upload_files() {
     git remote add sshorigin git@github.com:EnMasseProject/enmasseproject.github.io.git
 #  git push -u origin-pages master
-    echo "Push norma"
-    git push
     git push -u sshorigin master
 }
 
