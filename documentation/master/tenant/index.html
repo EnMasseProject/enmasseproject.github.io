@@ -107,6 +107,13 @@
 <li><a href="#multicast">Multicast</a></li>
 </ul>
 </li>
+<li><a href="#brokered_address_space">2.2. Brokered Address Space</a>
+<ul class="sectlevel4">
+<li><a href="#address_types_2">Address types</a></li>
+<li><a href="#brokered-queue">Queue</a></li>
+<li><a href="#brokered-topic">Topic</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#configuring-using-restapi">3. Configuring EnMasse using a REST API</a>
@@ -181,9 +188,6 @@
 <div class="paragraph">
 <p>Clients connect and send and receive messages in this address space using the AMQP or MQTT protocols. Note that MQTT does not support qos2 or retained messages.</p>
 </div>
-<div class="paragraph">
-<p>TODO: This reflects the status quo, but how should multiple protocols actually be surfaced?</p>
-</div>
 <div class="sect4">
 <h5 id="address_types">Address Types</h5>
 <div class="paragraph">
@@ -204,9 +208,6 @@
 <p>multicast</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>TODO: Document plan restrictions and document properties for all 4 types</p>
 </div>
 </div>
 <div class="sect4">
@@ -324,6 +325,78 @@ storage.</p>
 <p>standard</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="brokered_address_space">2.2. Brokered Address Space</h4>
+<div class="paragraph">
+<p>The brokered address space is designed to support broker-specific features, at the cost of limited
+scale in terms of the number of connections and addresses. This address space supports JMS
+transactions, message groups, and so on.</p>
+</div>
+<div class="paragraph">
+<p>Clients connect and send and receive messages in this address space using the AMQP protocol.</p>
+</div>
+<div class="sect4">
+<h5 id="address_types_2">Address types</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>queue</p>
+</li>
+<li>
+<p>topic</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="brokered-queue">Queue</h5>
+<div class="paragraph">
+<p>The queue address type is a store-and-forward queue. This address type is appropriate for
+implementing a distributed work queue, handling traffic bursts, and other use cases where you want
+to decouple the producer and consumer. A queue in the brokered address spaces supports selectors,
+message groups, transactions and other JMS features. If the queue is a high volume queue and these
+semantics are not needed, see the <a href="#standard-queue">standard address space <code>queue</code></a> type.</p>
+</div>
+<div class="sect5">
+<h6 id="brokered-queue-plans">Queue Plans</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>standard</p>
+</li>
+</ul>
+</div>
+<div class="sect6">
+<h7 id="standard-queue-plan">Standard</h7>
+<div class="paragraph">
+<p>The standard queue plan deploys a queue in the broker for that address space.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="brokered-topic">Topic</h5>
+<div class="paragraph">
+<p>The topic address type supports the publish-subscribe messaging pattern where you have 1..N producers and 1..M consumers. Each message published to a topic address is forwarded to all subscribers for that address. A subscriber can also be durable, in which case messages are kept until the subscriber has acknowledged them.</p>
+</div>
+<div class="sect5">
+<h6 id="brokered-topic-plans">Topic Plans</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>standard</p>
+</li>
+</ul>
+</div>
+<div class="sect6">
+<h7 id="standard-topic-plan">Standard</h7>
+<div class="paragraph">
+<p>The standard topic plan deploys a topic in the broker for that address space.</p>
+</div>
 </div>
 </div>
 </div>
