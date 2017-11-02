@@ -1,11 +1,10 @@
 [[installing-openshift]]
 
-== Installing {ProductName} on OpenShift
+== Installing {ProductName} on Kubernetes
 
 include::common/prerequisites-openshift.adoc[leveloffset=+1]
 
 include::common/install-procedure.adoc[leveloffset+=1]
-
 
 ==== Installing {ProductName} in Single-Tenant Mode
 
@@ -20,7 +19,7 @@ not have cluster-admin privileges. Otherwise, choose multi-tenant mode.
 +
 [source,options="nowrap"]
 ----
-./deploy-openshift.sh -m "https://localhost:8443" -n enmasse -o singletenant
+./deploy-kubernetes.sh -m "https://localhost:8443" -n enmasse -o singletenant
 ----
 +
 Running this script creates the deployments required for running {ProductName} in single-tenant mode. Starting
@@ -31,7 +30,7 @@ images for the various components.
 +
 [source,options="nowrap"]
 ----
-curl http://$(oc get route restapi -o jsonpath='{.spec.host}')/v1/addressspaces/default
+curl https://$(minikube ip)/v1/addressspaces/default
 ----
 +
 The deployment is finished when `status.isReady` is `true` in the returned JSON object.
@@ -48,16 +47,20 @@ not have cluster-admin privileges. Otherwise, choose multi-tenant mode.
 +
 [source,options="nowrap"]
 ----
-./deploy-openshift.sh -m "https://localhost:8443" -n enmasse -o multitenant
+./deploy-kubernetes.sh -m "https://localhost:8443" -n enmasse -o multitenant
 ----
+
+The Kubernetes deployment script and YAML files currently do not support Role
+Based Access Control (RBAC). In Kubernetes clusters which have RBAC enabled, it is
+required to additionally create a role binding for the `default` service account
+to the `view` role and for the `enmasse-service-account` to the `cluster-admin` role.
 
 . Grant cluster-admin privileges:
 +
 [source,options="nowrap"]
 ----
-oc login -u system:admin
-oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:$(oc project -q):enmasse-service-account
-oc adm policy add-cluster-role-to-user cluster-admin developer
+kubectl create clusterrolebinding enmasse-service-account-binding --clusterrole=cluster-admin --serviceaccount=enmasse:enmasse-service-account
+kubectl create rolebinding default-view-binding --clusterrole=view --serviceaccount=enmasse:default -n enmasse
 ----
 +
 The deployments required for running {ProductName} in multi-tenant mode are created.
@@ -65,5 +68,6 @@ The deployments required for running {ProductName} in multi-tenant mode are crea
 +
 [source,options="nowrap"]
 ----
-oc get pods -n enmasse
+kubectl get pods -n enmasse
 ----
+

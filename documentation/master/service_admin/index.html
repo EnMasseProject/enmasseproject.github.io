@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Installation</title>
+  <title>Installation and configuration</title>
   <meta name="description" content="">
 
   <link rel="stylesheet" href="/assets/main.css">
@@ -70,38 +70,44 @@
   <nav>
     
     
-  <a href="/documentation/master/service_admin" title="Go to Installation">Installation</a><br />
+  <a href="/documentation/master/getting_started" title="Go to Getting Started">Getting Started</a><br />
+
+  <a href="/documentation/master/service_admin" title="Go to Installation and configuration">Installation and configuration</a><br />
 
   <a href="/documentation/master/tenant" title="Go to Managing address spaces and addresses">Managing address spaces and addresses</a><br />
 
-  <a href="/documentation/master/messaging_app_developer" title="Go to Developing applications">Developing applications</a><br />
+  <a href="/documentation/master/messaging_app_developer" title="Go to Connecting applications to EnMasse">Connecting applications to EnMasse</a><br />
 
 
   </nav>
 </header>
 
         <br />
-        <h3> Installation </h3>
+        <h3> Installation and configuration </h3>
         <br />
         <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
 <li><a href="#installing-openshift">1. Installing EnMasse on OpenShift</a>
-<ul class="sectlevel3">
-<li><a href="#prerequisites">1.1. Prerequisites</a>
 <ul class="sectlevel4">
+<li><a href="#prerequisites-openshift">Prerequisites</a></li>
 <li><a href="#installing_enmasse_in_single_tenant_mode">Installing EnMasse in Single-Tenant Mode</a></li>
 <li><a href="#installing_enmasse_in_multi_tenant_mode">Installing EnMasse in Multi-Tenant Mode</a></li>
 </ul>
 </li>
+<li><a href="#installing-openshift">2. Installing EnMasse on Kubernetes</a>
+<ul class="sectlevel4">
+<li><a href="#prerequisites-openshift">Prerequisites</a></li>
+<li><a href="#installing_enmasse_in_single_tenant_mode_2">Installing EnMasse in Single-Tenant Mode</a></li>
+<li><a href="#installing_enmasse_in_multi_tenant_mode_2">Installing EnMasse in Multi-Tenant Mode</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="sect2">
 <h3 id="installing-openshift">1. Installing EnMasse on OpenShift</h3>
-<div class="sect3">
-<h4 id="prerequisites">1.1. Prerequisites</h4>
+<div class="sect4">
+<h5 id="prerequisites-openshift">Prerequisites</h5>
 <div class="paragraph">
 <p>To install EnMasse, you need to have the OpenShift client tools. You can download the OpenShift
 Origin client from <a href="https://github.com/openshift/origin/releases">OpenShift Origin</a>. EnMasse has
@@ -125,6 +131,7 @@ on your machine.</p>
 </div>
 <div class="paragraph">
 <p>You can invoke the deployment script with <code>-h</code> to view a list of options.</p>
+</div>
 </div>
 <div class="sect4">
 <h5 id="installing_enmasse_in_single_tenant_mode">Installing EnMasse in Single-Tenant Mode</h5>
@@ -202,6 +209,121 @@ EnMasse will be up and running once all pods in the 'enmasse' namespace are in t
 </li>
 </ol>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="installing-openshift">2. Installing EnMasse on Kubernetes</h3>
+<div class="sect4">
+<h5 id="prerequisites-openshift">Prerequisites</h5>
+<div class="paragraph">
+<p>To install EnMasse, you need to have the OpenShift client tools. You can download the OpenShift
+Origin client from <a href="https://github.com/openshift/origin/releases">OpenShift Origin</a>. EnMasse has
+been tested to work with the latest stable release of the OpenShift Origin Client.</p>
+</div>
+<div class="paragraph">
+<p>If you do not have an OpenShift cluster available, see
+<a href="https://github.com/minishift/minishift">minishift</a> for an example of how to run a local instance of OpenShift
+on your machine.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Download one of the releases from <a href="https://github.com/EnMasseProject/enmasse/releases" class="bare">https://github.com/EnMasseProject/enmasse/releases</a> and unpack it.</p>
+</li>
+<li>
+<p>Deploy EnMasse using the deployment script provided in the release.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You can invoke the deployment script with <code>-h</code> to view a list of options.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="installing_enmasse_in_single_tenant_mode_2">Installing EnMasse in Single-Tenant Mode</h5>
+<div class="paragraph">
+<p>EnMasse can be deployed in either a single-tenant mode or a multi-tenant mode. Choose
+single-tenant mode if you do not expect to be creating multiple isolated address spaces or if you do
+not have cluster-admin privileges. Otherwise, choose multi-tenant mode.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>To install EnMasse in single-tenant mode run the following script:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./deploy-kubernetes.sh -m "https://localhost:8443" -n enmasse -o singletenant</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Running this script creates the deployments required for running EnMasse in single-tenant mode. Starting
+up EnMasse will take a while, usually depending on how fast it is able to download the Docker
+images for the various components.</p>
+</div>
+</li>
+<li>
+<p>You can use the REST API to check the status of the deployment:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>curl https://$(minikube ip)/v1/addressspaces/default</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The deployment is finished when <code>status.isReady</code> is <code>true</code> in the returned JSON object.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="installing_enmasse_in_multi_tenant_mode_2">Installing EnMasse in Multi-Tenant Mode</h5>
+<div class="paragraph">
+<p>EnMasse can be deployed in either a single-tenant mode or a multi-tenant mode. Choose
+single-tenant mode if you do not expect to be creating multiple isolated address spaces or if you do
+not have cluster-admin privileges. Otherwise, choose multi-tenant mode.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>To install EnMasse in multi-tenant mode, run the following script:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>./deploy-kubernetes.sh -m "https://localhost:8443" -n enmasse -o multitenant</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The Kubernetes deployment script and YAML files currently do not support Role
+Based Access Control (RBAC). In Kubernetes clusters which have RBAC enabled, it is
+required to additionally create a role binding for the <code>default</code> service account
+to the <code>view</code> role and for the <code>enmasse-service-account</code> to the <code>cluster-admin</code> role.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Grant cluster-admin privileges:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>kubectl create clusterrolebinding enmasse-service-account-binding --clusterrole=cluster-admin --serviceaccount=enmasse:enmasse-service-account
+kubectl create rolebinding default-view-binding --clusterrole=view --serviceaccount=enmasse:default -n enmasse</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The deployments required for running EnMasse in multi-tenant mode are created.
+EnMasse will be up and running once all pods in the 'enmasse' namespace are in the <code>Running</code> state:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>kubectl get pods -n enmasse</code></pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
