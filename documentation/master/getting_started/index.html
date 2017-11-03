@@ -338,6 +338,22 @@ and
 <pre class="nowrap">./simple_send.py -a "amqps://$(oc get route -o jsonpath='{.spec.host}' messaging):443/anycast" -m 10</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The server certificates is not verified in the above examples. To fetch the certificate, run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">mkdir -p certs
+oc get secret external-certs-messaging -o jsonpath='{.data.tls\.crt}' | base64 -d &gt; certs/tls.crt</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can modify the client code to use this cert to verify the server connection.</p>
+</div>
+<div class="paragraph">
+<p>Have a look at <a href="http://enmasse.io/documentation/master/messaging_app_developer/#connecting">connecting
+to EnMasse</a> for more client examples.</p>
+</div>
 </div>
 <div class="sect5">
 <h6 id="mqtt">Connecting using MQTT</h6>
@@ -354,7 +370,7 @@ oc get secret external-certs-mqtt  -o jsonpath='{.data.tls\.crt}' | base64 -d &g
 <div class="sect6">
 <h7 id="subscriber_client">Subscriber client</h7>
 <div class="paragraph">
-<p>Save the following to <code>tls_mqtt_recv.py</code>:</p>
+<p>Save the following to <code>tls_mqtt_recv.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_recv.py">download</a>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -438,7 +454,7 @@ subscriber client can be used in the following way:</p>
 <div class="sect6">
 <h7 id="publisher_client">Publisher client</h7>
 <div class="paragraph">
-<p>Save the following to <code>tls_mqtt_send.py</code>:</p>
+<p>Save the following to <code>tls_mqtt_send.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_send.py">download</a>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -760,6 +776,22 @@ and
 <pre class="nowrap">./simple_send.py -a "amqps://$(kubectl get ingress -o jsonpath='{.spec.host}' messaging):443/anycast" -m 10</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The server certificates is not verified in the above examples. To fetch the certificate, run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">mkdir -p certs
+kubectl get secret external-certs-messaging -o jsonpath='{.data.tls\.crt}' | base64 -d &gt; certs/tls.crt</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can modify the client code to use this cert to verify the server connection.</p>
+</div>
+<div class="paragraph">
+<p>Have a look at <a href="http://enmasse.io/documentation/master/messaging_app_developer/#connecting">connecting
+to EnMasse</a> for more client examples.</p>
+</div>
 </div>
 <div class="sect5">
 <h6 id="mqtt">Connecting using MQTT</h6>
@@ -776,7 +808,7 @@ kubectl get secret external-certs-mqtt  -o jsonpath='{.data.tls\.crt}' | base64 
 <div class="sect6">
 <h7 id="subscriber_client_2">Subscriber client</h7>
 <div class="paragraph">
-<p>Save the following to <code>tls_mqtt_recv.py</code>:</p>
+<p>Save the following to <code>tls_mqtt_recv.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_recv.py">download</a>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -860,7 +892,7 @@ subscriber client can be used in the following way:</p>
 <div class="sect6">
 <h7 id="publisher_client_2">Publisher client</h7>
 <div class="paragraph">
-<p>Save the following to <code>tls_mqtt_send.py</code>:</p>
+<p>Save the following to <code>tls_mqtt_send.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_send.py">download</a>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1147,6 +1179,22 @@ and
 <pre class="nowrap">./simple_send.py -a "amqps://$(oc get route -o jsonpath='{.spec.host}' messaging):443/anycast" -m 10</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The server certificates is not verified in the above examples. To fetch the certificate, run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">mkdir -p certs
+oc get secret external-certs-messaging -o jsonpath='{.data.tls\.crt}' | base64 -d &gt; certs/tls.crt</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can modify the client code to use this cert to verify the server connection.</p>
+</div>
+<div class="paragraph">
+<p>Have a look at <a href="http://enmasse.io/documentation/master/messaging_app_developer/#connecting">connecting
+to EnMasse</a> for more client examples.</p>
+</div>
 </div>
 <div class="sect5">
 <h6 id="mqtt">Connecting using MQTT</h6>
@@ -1163,7 +1211,7 @@ oc get secret external-certs-mqtt  -o jsonpath='{.data.tls\.crt}' | base64 -d &g
 <div class="sect6">
 <h7 id="subscriber_client_3">Subscriber client</h7>
 <div class="paragraph">
-<p>Save the following to <code>tls_mqtt_recv.py</code>:</p>
+<p>Save the following to <code>tls_mqtt_recv.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_recv.py">download</a>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1247,7 +1295,7 @@ subscriber client can be used in the following way:</p>
 <div class="sect6">
 <h7 id="publisher_client_3">Publisher client</h7>
 <div class="paragraph">
-<p>Save the following to <code>tls_mqtt_send.py</code>:</p>
+<p>Save the following to <code>tls_mqtt_send.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_send.py">download</a>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
