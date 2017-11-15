@@ -435,7 +435,7 @@ various components.</p>
 <p>You can use the REST API to check the status of the address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>curl -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/v1/addressspaces/myspace</code></pre>
+<pre class="highlightjs highlight nowrap"><code>curl -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addressspaces/myspace</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -500,7 +500,7 @@ object.</p>
 <p>You can then create those addresses using the REST API:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>curl -X PUT -T addresses.json -H "content-type: application/json" -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/v1/addresses/default</code></pre>
+<pre class="highlightjs highlight nowrap"><code>curl -X PUT -T addresses.json -H "content-type: application/json" -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addresses/default</code></pre>
 </div>
 </div>
 </li>
@@ -516,7 +516,7 @@ object.</p>
 <p>To check which addresses are configured:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>curl -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/v1/addresses/default</code></pre>
+<pre class="highlightjs highlight nowrap"><code>curl -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addresses/default</code></pre>
 </div>
 </div>
 <div class="paragraph">
