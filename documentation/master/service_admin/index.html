@@ -160,7 +160,7 @@ images for the various components.</p>
 <p>You can use the REST API to check the status of the deployment:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>curl http://$(oc get route restapi -o jsonpath='{.spec.host}')/v1/addressspaces/default</code></pre>
+<pre class="highlightjs highlight nowrap"><code>curl -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/v1/addressspaces/default</code></pre>
 </div>
 </div>
 <div class="paragraph">
