@@ -89,8 +89,8 @@
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#enmasse-on-openshift">1. EnMasse on OpenShift</a>
-<ul class="sectlevel4">
-<li><a href="#prerequisites-openshift">Prerequisites</a></li>
+<ul class="sectlevel3">
+<li><a href="#prerequisites-openshift">1.1. Prerequisites</a></li>
 <li><a href="#installing-openshift">1.2. Installing EnMasse</a>
 <ul class="sectlevel4">
 <li><a href="#deploying_enmasse">Deploying EnMasse</a></li>
@@ -111,8 +111,8 @@
 </ul>
 </li>
 <li><a href="#enmasse-on-kubernetes">2. EnMasse on Kubernetes</a>
-<ul class="sectlevel4">
-<li><a href="#prerequisites-kubernetes">Prerequisites</a></li>
+<ul class="sectlevel3">
+<li><a href="#prerequisites-kubernetes">2.1. Prerequisites</a></li>
 <li><a href="#installing-kubernetes">2.2. Installing</a>
 <ul class="sectlevel4">
 <li><a href="#deploying_enmasse_2">Deploying EnMasse</a></li>
@@ -125,14 +125,13 @@
 <li><a href="#address_types_2">Address types</a></li>
 </ul>
 </li>
-<li><a href="#exposing-messaging-through-ingress-resource">2.5. Exposing messaging through Ingress resource</a></li>
-<li><a href="#sending-and-receiving-messages-kubernetes">2.6. Sending and receiving messages</a>
+<li><a href="#sending-and-receiving-messages-kubernetes">2.5. Sending and receiving messages</a>
 <ul class="sectlevel5">
 <li><a href="#connecting_with_amqp_2">Connecting with AMQP</a></li>
 <li><a href="#mqtt">Connecting using MQTT</a></li>
 </ul>
 </li>
-<li><a href="#conclusion-kubernetes">2.7. Conclusion</a></li>
+<li><a href="#conclusion-kubernetes">2.6. Conclusion</a></li>
 </ul>
 </li>
 <li><a href="#setting-up-enmasse-on-aws">3. Setting up EnMasse on AWS</a>
@@ -171,8 +170,8 @@
 <p>This guide will walk through the process of setting up EnMasse on
 OpenShift with clients for sending and receiving messages.</p>
 </div>
-<div class="sect4">
-<h5 id="prerequisites-openshift">Prerequisites</h5>
+<div class="sect3">
+<h4 id="prerequisites-openshift">1.1. Prerequisites</h4>
 <div class="paragraph">
 <p>To install EnMasse, you need to have the OpenShift client tools. You can download the OpenShift
 Origin client from <a href="https://github.com/openshift/origin/releases">OpenShift Origin</a>. EnMasse has
@@ -304,7 +303,7 @@ resources consumed by the API. Here is an example config with all 4 variants tha
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">curl -X POST -H "content-type: application/json" --data-binary @addresses.json -k https://$(oc get route -o jsonpath='{.spec.host}' restapi)/v1/addresses/default</pre>
+<pre class="nowrap">curl -X POST -H "content-type: application/json" --data-binary @addresses.json -k https://$(oc get route -o jsonpath='{.spec.host}' restapi)/apis/enmasse.io/v1/addresses/default</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -558,20 +557,12 @@ client.loop_forever()</code></pre>
 Kubernetes cluster together with clients for sending and receiving
 messages.</p>
 </div>
-<div class="sect4">
-<h5 id="prerequisites-kubernetes">Prerequisites</h5>
+<div class="sect3">
+<h4 id="prerequisites-kubernetes">2.1. Prerequisites</h4>
 <div class="paragraph">
 <p>To install EnMasse, you need to have Kubernetes installed. You can use
 <a href="https://github.com/kubernetes/minikube">minikube</a> if you want to install EnMasse on your
 laptop.</p>
-</div>
-<div class="paragraph">
-<p>Since minikube runs in a virtual machine, you need to enable the ingress controller:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code>minikube addons enable ingress</code></pre>
-</div>
 </div>
 </div>
 <div class="sect3">
@@ -630,13 +621,20 @@ kubectl create rolebinding default-view-binding --clusterrole=view --serviceacco
 <h4 id="deploying-external-load-balancers">2.3. Deploying external load balancers</h4>
 <div class="paragraph">
 <p>If you&#8217;re running EnMasse in your own Kubernetes instance on any of the
-cloud providers, and if you don&#8217;t have or don&#8217;t want to deploy an
-ingress controller, you can deploy the external load balancer services
+cloud providers, you can deploy the external load balancer services
 to expose EnMasse ports:</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">kubectl apply -f kubernetes/addons/external-lb.yaml -n enmasse</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are running in multitenant mode, exposing the restapi is sufficient:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f kubernetes/addons/external-lb-restapi.yaml -n enmasse</pre>
 </div>
 </div>
 </div>
@@ -726,7 +724,7 @@ resources consumed by the API. Here is an example config with all 4 variants tha
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">curl -X POST -H "content-type: application/json" --data-binary @addresses.json -k https://$(kubectl get ingress -o jsonpath='{.spec.host}' restapi)/v1/addresses/default</pre>
+<pre class="nowrap">curl -X POST -H "content-type: application/json" --data-binary @addresses.json -k https://$(kubectl get ingress -o jsonpath='{.spec.host}' restapi)/apis/enmasse.io/v1/addresses/default</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -735,18 +733,7 @@ resources consumed by the API. Here is an example config with all 4 variants tha
 </div>
 </div>
 <div class="sect3">
-<h4 id="exposing-messaging-through-ingress-resource">2.5. Exposing messaging through Ingress resource</h4>
-<div class="paragraph">
-<p>To open up for AMQP using minikube and the nginx ingress controller,
-follow
-<a href="https://github.com/kubernetes/contrib/tree/master/ingress/controllers/nginx/examples/tcp">this</a>
-and
-<a href="https://github.com/kubernetes/ingress/tree/master/">this</a>
-guide, using the port <code>5672</code> and the service <code>default/messaging</code>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="sending-and-receiving-messages-kubernetes">2.6. Sending and receiving messages</h4>
+<h4 id="sending-and-receiving-messages-kubernetes">2.5. Sending and receiving messages</h4>
 <div class="sect5">
 <h6 id="connecting_with_amqp_2">Connecting with AMQP</h6>
 <div class="paragraph">
@@ -976,7 +963,7 @@ client.loop_forever()</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="conclusion-kubernetes">2.7. Conclusion</h3>
+<h3 id="conclusion-kubernetes">2.6. Conclusion</h3>
 <div class="paragraph">
 <p>We have seen how to setup a messaging service in Kubernetes, and how to
 communicate with it using python example AMQP clients.</p>

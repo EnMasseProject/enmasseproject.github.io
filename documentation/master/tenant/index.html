@@ -383,11 +383,9 @@ semantics are not needed, see the <a href="#standard-queue">standard address spa
 <div class="sect2">
 <h3 id="configuring-using-restapi">3. Configuring EnMasse using a REST API</h3>
 <div class="paragraph">
-<p>TODO: Authentication of clients</p>
-</div>
-<div class="paragraph">
 <p>EnMasse provides a REST API that can be used for configuring address spaces and addresses
-within those address spaces.</p>
+within those address spaces. When running EnMasse in multitenant mode, clients are
+authenticated using <a href="https://kubernetes.io/docs/admin/authorization/rbac/">RBAC</a> by default.</p>
 </div>
 <div class="sect3">
 <h4 id="creating_an_address_space">3.1. Creating an Address Space</h4>
@@ -398,13 +396,11 @@ within those address spaces.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
+<div class="olist arabic">
 <div class="title">Procedure</div>
-<p>To create a 'standard' address space, save the following JSON data to a file:</p>
-</div>
-<div class="paragraph">
-<p>+</p>
-</div>
+<ol class="arabic">
+<li>
+<p>Save the following JSON data to a file 'space.json':</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code>{
@@ -419,11 +415,22 @@ within those address spaces.</p>
 }</code></pre>
 </div>
 </div>
+</li>
+<li>
+<p>POST the address space definition to the REST API using curl:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code>TOKEN=`oc whoami -t`
+curl -X POST -T @space.json -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addressspaces/myspace</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>+
-This will create the infrastructure required for that address space. Starting up the address space
+<p>This will create the infrastructure required for that address space. Starting up the address space
 will take a while, usually depending on how fast it is able to download the Docker images for the
 various components.</p>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect3">
@@ -435,7 +442,8 @@ various components.</p>
 <p>You can use the REST API to check the status of the address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>curl -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addressspaces/myspace</code></pre>
+<pre class="highlightjs highlight nowrap"><code>TOKEN=`oc whoami -t`
+curl -k -H "Authorization: Bearer $TOKEN" https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addressspaces/myspace</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -497,10 +505,11 @@ object.</p>
 </div>
 </li>
 <li>
-<p>You can then create those addresses using the REST API:</p>
+<p>You can then create those addresses using the REST API (Replace <code>default</code> with the name of your address space if running in multitenant mode):</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>curl -X PUT -T addresses.json -H "content-type: application/json" -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addresses/default</code></pre>
+<pre class="highlightjs highlight nowrap"><code>TOKEN=`oc whoami -t`
+curl -X PUT -T addresses.json -H "content-type: application/json" -H "Authorization: Bearer $TOKEN" -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addresses/default</code></pre>
 </div>
 </div>
 </li>
