@@ -92,6 +92,7 @@
 <ul class="sectlevel3">
 <li><a href="#prerequisites-openshift">1.1. Prerequisites</a>
 <ul class="sectlevel4">
+<li><a href="#creating_project_for_enmasse">Creating project for EnMasse</a></li>
 <li><a href="#deploying_authentication_services">Deploying authentication services</a></li>
 <li><a href="#deploying_enmasse">Deploying EnMasse</a></li>
 </ul>
@@ -100,8 +101,9 @@
 </li>
 <li><a href="#installing-openshift">2. Installing EnMasse on Kubernetes</a>
 <ul class="sectlevel3">
-<li><a href="#prerequisites-openshift">2.1. Prerequisites</a>
+<li><a href="#prerequisites-kubernetes">2.1. Prerequisites</a>
 <ul class="sectlevel4">
+<li><a href="#creating_namespace_for_enmasse">Creating namespace for EnMasse</a></li>
 <li><a href="#deploying_authentication_services_2">Deploying authentication services</a></li>
 <li><a href="#deploying_enmasse_2">Deploying EnMasse</a></li>
 </ul>
@@ -144,6 +146,21 @@ and Mac. You can invoke the deployment script with <code>-h</code> to view a lis
 supporting the OpenShift client.</p>
 </div>
 <div class="sect4">
+<h5 id="creating_project_for_enmasse">Creating project for EnMasse</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create enmasse project:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc new-project enmasse</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
 <h5 id="deploying_authentication_services">Deploying authentication services</h5>
 <div class="paragraph">
 <p>EnMasse require at least 1 authentication service to be deployed. The authentication service
@@ -167,7 +184,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=none-au
 <p>Create secret with the none authentication service certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create secret tls none-authservice-cert --cert=none-authservice-cert/tls.crt --key=none-authservice-cert/tls.key -n enmasse</pre>
+<pre class="nowrap">oc create secret tls none-authservice-cert --cert=none-authservice-cert/tls.crt --key=none-authservice-cert/tls.key</pre>
 </div>
 </div>
 </li>
@@ -175,7 +192,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=none-au
 <p>Create the none authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f ./openshift/addons/none-authservice.yaml | oc create -n enmasse -f -</pre>
+<pre class="nowrap">oc process -f ./openshift/addons/none-authservice.yaml | oc create -f -</pre>
 </div>
 </div>
 </li>
@@ -200,7 +217,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Create secret with the standard authentication service certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create secret tls standard-authservice-cert --cert=standard-authservice-cert/tls.crt --key=standard-authservice-cert/tls.key -n enmasse</pre>
+<pre class="nowrap">oc create secret tls standard-authservice-cert --cert=standard-authservice-cert/tls.crt --key=standard-authservice-cert/tls.key</pre>
 </div>
 </div>
 </li>
@@ -208,7 +225,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Create secret with keycloak admin credentials. Choose password wisely as this user will have complete access over authentication and authorization policies:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -n enmasse secret generic keycloak-credentials --from-literal=admin.username=admin --from-literal=admin.password=myrandompassword</pre>
+<pre class="nowrap">oc create secret generic keycloak-credentials --from-literal=admin.username=admin --from-literal=admin.password=myrandompassword</pre>
 </div>
 </div>
 </li>
@@ -216,7 +233,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Create the standard authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f ./openshift/addons/standard-authservice.yaml | oc create -n enmasse -f -</pre>
+<pre class="nowrap">oc process -f ./openshift/addons/standard-authservice.yaml | oc create -f -</pre>
 </div>
 </div>
 </li>
@@ -230,18 +247,10 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Create namespace:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc new-project enmasse</pre>
-</div>
-</div>
-</li>
-<li>
 <p>Create service account for the EnMasse address controller:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create sa enmasse-service-account -n enmasse</pre>
+<pre class="nowrap">oc create sa enmasse-service-account</pre>
 </div>
 </div>
 </li>
@@ -262,6 +271,9 @@ oc create -f ./openshift/cluster-roles.yaml</pre>
 oc adm policy add-cluster-role-to-user enmasse-namespace-admin system:serviceaccount:enmasse:enmasse-service-account</pre>
 </div>
 </div>
+<div class="paragraph">
+<p><strong>Note</strong>: You can log back in as the regular user after this step.</p>
+</div>
 </li>
 <li>
 <p>Create a certificate to use for the address controller. For testing purposes, you can create a self-signed certificate:</p>
@@ -276,7 +288,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 <p>Create secret with address-controller certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -n enmasse secret tls address-controller-cert --cert=address-controller-cert/tls.crt --key=address-controller-cert/tls.key</pre>
+<pre class="nowrap">oc create secret tls address-controller-cert --cert=address-controller-cert/tls.crt --key=address-controller-cert/tls.key</pre>
 </div>
 </div>
 </li>
@@ -284,7 +296,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 <p>Deploy address-controller:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f ./openshift/enmasse.yaml ENABLE_RBAC=true ADDRESS_CONTROLLER_CERT_SECRET=address-controller-cert | oc create -n enmasse -f -</pre>
+<pre class="nowrap">oc process -f ./openshift/enmasse.yaml ENABLE_RBAC=true ADDRESS_CONTROLLER_CERT_SECRET=address-controller-cert | oc create -f -</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -307,19 +319,11 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 <div class="sect2">
 <h3 id="installing-openshift">2. Installing EnMasse on Kubernetes</h3>
 <div class="sect3">
-<h4 id="prerequisites-openshift">2.1. Prerequisites</h4>
+<h4 id="prerequisites-kubernetes">2.1. Prerequisites</h4>
 <div class="paragraph">
-<p>To install EnMasse, you need to have the OpenShift client tools. You can download the OpenShift
-Origin client from <a href="https://github.com/openshift/origin/releases">OpenShift Origin</a>. EnMasse has
-been tested to work with the latest stable release of the OpenShift Origin Client.</p>
-</div>
-<div class="paragraph">
-<p>If you do not have an OpenShift cluster available, see
-<a href="https://github.com/minishift/minishift">minishift</a> for an example of how to run a local instance of OpenShift
-on your machine.</p>
-</div>
-<div class="paragraph">
-<p>You also need a way to generate certificates. This guide uses <a href="https://www.openssl.org/">OpenSSL</a>.</p>
+<p>To install EnMasse, you need to have Kubernetes installed. You can use
+<a href="https://github.com/kubernetes/minikube">minikube</a> if you want to install EnMasse on your
+laptop.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -336,6 +340,22 @@ and Mac. You can invoke the deployment script with <code>-h</code> to view a lis
 <div class="paragraph">
 <p>This guide will walk through the manual deployment procedure and should work on any platform
 supporting the <code>kubectl</code> command line client.</p>
+</div>
+<div class="sect4">
+<h5 id="creating_namespace_for_enmasse">Creating namespace for EnMasse</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create enmasse namespace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create namespace enmasse
+kubectl config set-context $(kubectl config current-context) --namespace=enmasse</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
 </div>
 <div class="sect4">
 <h5 id="deploying_authentication_services_2">Deploying authentication services</h5>
@@ -361,7 +381,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=none-au
 <p>Create secret with the none authentication service certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl create secret tls none-authservice-cert --cert=none-authservice-cert/tls.crt --key=none-authservice-cert/tls.key -n enmasse</pre>
+<pre class="nowrap">kubectl create secret tls none-authservice-cert --cert=none-authservice-cert/tls.crt --key=none-authservice-cert/tls.key</pre>
 </div>
 </div>
 </li>
@@ -394,7 +414,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Create secret with the standard authentication service certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl create -n enmasse secret tls standard-authservice-cert --cert=standard-authservice-cert/tls.crt --key=standard-authservice-cert/tls.key -n enmasse</pre>
+<pre class="nowrap">kubectl create secret tls standard-authservice-cert --cert=standard-authservice-cert/tls.crt --key=standard-authservice-cert/tls.key</pre>
 </div>
 </div>
 </li>
@@ -402,7 +422,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Create secret with keycloak admin credentials. Choose password wisely as this user will have complete access over authentication and authorization policies:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl create -n enmasse secret generic keycloak-credentials --from-literal=admin.username=admin --from-literal=admin.password=myrandompassword</pre>
+<pre class="nowrap">kubectl create secret generic keycloak-credentials --from-literal=admin.username=admin --from-literal=admin.password=myrandompassword</pre>
 </div>
 </div>
 </li>
@@ -423,18 +443,10 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create enmasse namespace:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create namespace enmasse</pre>
-</div>
-</div>
-</li>
-<li>
 <p>Create service account for the EnMasse address controller:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl create sa enmasse-service-account -n enmasse</pre>
+<pre class="nowrap">kubectl create sa enmasse-service-account</pre>
 </div>
 </div>
 </li>
@@ -451,7 +463,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 <p>Create secret with address-controller certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl -n enmasse secret tls address-controller-cert --cert=address-controller-cert/tls.crt --key=address-controller-cert/tls.key</pre>
+<pre class="nowrap">kubectl secret tls address-controller-cert --cert=address-controller-cert/tls.crt --key=address-controller-cert/tls.key</pre>
 </div>
 </div>
 </li>
