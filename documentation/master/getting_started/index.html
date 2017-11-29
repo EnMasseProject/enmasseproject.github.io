@@ -168,7 +168,8 @@
 <div class="sectionbody">
 <div class="paragraph">
 <p>This guide will walk through the process of setting up EnMasse on
-OpenShift with clients for sending and receiving messages.</p>
+OpenShift with clients for sending and receiving messages. The guide will deploy EnMasse in a single
+tenant mode and with the <code>none</code> authentication service.</p>
 </div>
 <div class="sect3">
 <h4 id="prerequisites-openshift">1.1. Prerequisites</h4>
@@ -182,6 +183,9 @@ been tested to work with the latest stable release of the OpenShift Origin Clien
 <a href="https://github.com/minishift/minishift">minishift</a> for an example of how to run a local instance of OpenShift
 on your machine.</p>
 </div>
+<div class="paragraph">
+<p>You also need a way to generate certificates. This guide uses <a href="https://www.openssl.org/">OpenSSL</a>.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="installing-openshift">1.2. Installing EnMasse</h4>
@@ -191,13 +195,7 @@ on your machine.</p>
 <li>
 <p>Download one of the releases from <a href="https://github.com/EnMasseProject/enmasse/releases" class="bare">https://github.com/EnMasseProject/enmasse/releases</a> and unpack it.</p>
 </li>
-<li>
-<p>Deploy EnMasse using the deployment script provided in the release.</p>
-</li>
 </ol>
-</div>
-<div class="paragraph">
-<p>You can invoke the deployment script with <code>-h</code> to view a list of options.</p>
 </div>
 <div class="sect4">
 <h5 id="deploying_enmasse">Deploying EnMasse</h5>
@@ -555,7 +553,8 @@ client.loop_forever()</code></pre>
 <div class="paragraph">
 <p>This guide will walk through the process of setting up EnMasse on a
 Kubernetes cluster together with clients for sending and receiving
-messages.</p>
+messages. The guide will deploy EnMasse in a single tenant mode and with the <code>none</code> authentication
+service.</p>
 </div>
 <div class="sect3">
 <h4 id="prerequisites-kubernetes">2.1. Prerequisites</h4>
@@ -573,13 +572,7 @@ laptop.</p>
 <li>
 <p>Download one of the releases from <a href="https://github.com/EnMasseProject/enmasse/releases" class="bare">https://github.com/EnMasseProject/enmasse/releases</a> and unpack it.</p>
 </li>
-<li>
-<p>Deploy EnMasse using the deployment script provided in the release.</p>
-</li>
 </ol>
-</div>
-<div class="paragraph">
-<p>You can invoke the deployment script with <code>-h</code> to view a list of options.</p>
 </div>
 <div class="sect4">
 <h5 id="deploying_enmasse_2">Deploying EnMasse</h5>
@@ -1094,13 +1087,7 @@ EnMasse.</p>
 <li>
 <p>Download one of the releases from <a href="https://github.com/EnMasseProject/enmasse/releases" class="bare">https://github.com/EnMasseProject/enmasse/releases</a> and unpack it.</p>
 </li>
-<li>
-<p>Deploy EnMasse using the deployment script provided in the release.</p>
-</li>
 </ol>
-</div>
-<div class="paragraph">
-<p>You can invoke the deployment script with <code>-h</code> to view a list of options.</p>
 </div>
 <div class="sect4">
 <h5 id="deploying_enmasse_3">Deploying EnMasse</h5>
