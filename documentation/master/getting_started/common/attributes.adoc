@@ -12,14 +12,16 @@
 :toc:
 :linkattrs:
 :toclevels: 4
-:Title: Using Enmasse
+:Title: Using {ProductName}
 
 // Product attributes
 
-:ProductLongName: Red Hat OpenShift Messaging
+:ProductLongName: EnMasse
 :ProductName: EnMasse
 :ProductVersion: 
 :ProductMajorVersion: 
+:AuthProductName: Keycloak
+:AuthProductNameConsole: Keycloak Administration Console
 :QpidJmsVersion: 0.20.0
 :ProtonVersion: 0.16.0
 :ExampleQueue: myqueue
@@ -27,15 +29,17 @@
 
 // Component attributes
 
-:BrokerLongName: {ProductLongName} Broker
-:BrokerName: {ProductName} Broker
+:AMQConsoleName:
+:BrokerLongName: {AMQProductLongName} Broker
+:BrokerName: {AMQProductName} Broker
 :BrokerVersion: 7.0
-:RouterLongName: {ProductLongName} Interconnect
-:RouterName: {ProductName} Interconnect
+:ConsoleName: {ProductName} Console
+:RouterLongName: {AMQProductLongName} Interconnect
+:RouterName: {AMQProductName} Interconnect
 :RouterVersion: 1.0
 :RouterUpstreamDir: {base_dir}/../upstreams/qpid-dispatch
-:ClientsLongName: {ProductLongName} Clients
-:ClientsName: {ProductName} Clients
+:ClientsLongName: {AMQProductLongName} Clients
+:ClientsName: {AMQProductName} Clients
 :ClientsVersion: 1.1
 :ClientAmqpJmsName: Apache Qpid JMS
 :ClientAmqpCppName: Apache Qpid Proton C++
@@ -60,7 +64,7 @@
 :ClientCoreJmsBook: Using the {ClientCoreJmsName}
 :ClientOpenWireJmsBook: Using the {ClientOpenWireJmsName} Client
 :ClientReleaseNotesBook: {ClientsName} {ClientsVersion} Release Notes
-:ConsoleBook: Using {ConsoleName}
+:AMQConsoleBook: Using {AMQConsoleName}
 :ConsoleReleaseNotesBook: {ConsoleName} {ConsoleVersion} Release Notes
 
 // Book links
