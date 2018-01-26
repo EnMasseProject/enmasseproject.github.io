@@ -246,11 +246,17 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 </div>
 <div class="sect4">
 <h5 id="deploying_enmasse">Deploying EnMasse</h5>
+<div class="paragraph">
+<p>To deploy EnMasse, it is recommended that you have cluster-admin access in order to set up the
+required roles for creating namespaces and managing resources in those namespaces. See
+<a href="#openshift-install-single-address-space">Procedure</a> for how to deploy EnMasse without cluster-admin
+access, which will restrict it to a single address space.</p>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Create service account for the EnMasse address controller:</p>
+<p>Create a service account for the EnMasse address controller:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc create sa enmasse-admin</pre>
@@ -288,6 +294,69 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 </div>
 </li>
 <li>
+<p>Create a secret containing the address-controller certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create secret tls address-controller-cert --cert=address-controller-cert/tls.crt --key=address-controller-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the address-controller:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc process -f ./openshift/enmasse.yaml ENABLE_RBAC=true ADDRESS_CONTROLLER_CERT_SECRET=address-controller-cert | oc create -f -</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The deployments required for running EnMasse are now created.</p>
+</div>
+</li>
+<li>
+<p>EnMasse will be up and running once all pods in the 'enmasse' namespace are in the <code>Running</code> state:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -n enmasse</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="deploying_enmasse_limited_to_a_single_address_space">Deploying EnMasse limited to a single address space</h5>
+<div id="openshift-install-single-address-space" class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create service accounts for the EnMasse address controller and address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create sa -n enmasse enmasse-admin
+oc create sa -n enmasse address-space-admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Grant privileges required for viewing and managing resources:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc policy add-role-to-user view system:serviceaccount:enmasse:default
+oc policy add-role-to-user admin system:serviceaccount:enmasse:enmasse-admin
+oc policy add-role-to-user admin system:serviceaccount:enmasse:address-space-admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a certificate to use for the address controller. For testing purposes, you can create a self-signed certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mkdir -p address-controller-cert/
+openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address-controller.enmasse.svc.cluster.local" -out address-controller-cert/tls.crt -keyout address-controller-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
 <p>Create secret with address-controller certificate:</p>
 <div class="listingblock">
 <div class="content">
@@ -299,7 +368,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 <p>Deploy address-controller:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f ./openshift/enmasse.yaml ENABLE_RBAC=true ADDRESS_CONTROLLER_CERT_SECRET=address-controller-cert | oc create -f -</pre>
+<pre class="nowrap">oc process -f ./openshift/enmasse.yaml ENABLE_RBAC=false ADDRESS_CONTROLLER_CERT_SECRET=address-controller-cert | oc create -f -</pre>
 </div>
 </div>
 <div class="paragraph">
