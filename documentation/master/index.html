@@ -81,9 +81,10 @@
 <li><a href="#installation_and_configuration">1. Installation and configuration</a>
 <ul class="sectlevel2">
 <li><a href="#installing-openshift">1.1. Installing EnMasse on OpenShift</a></li>
-<li><a href="#monitoring">1.2. Monitoring EnMasse</a></li>
+<li><a href="#monitoring">1.2. Monitoring EnMasse on OpenShift</a></li>
 <li><a href="#installing-openshift">1.3. Installing EnMasse on Kubernetes</a></li>
-<li><a href="#monitoring">1.4. Monitoring EnMasse</a></li>
+<li><a href="#monitoring">1.4. Monitoring EnMasse on Kubernetes</a></li>
+<li><a href="#plans">1.5. Configuring plans and resource definitions</a></li>
 </ul>
 </li>
 <li><a href="#managing_address_spaces_and_addresses">2. Managing address spaces and addresses</a>
@@ -399,7 +400,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 </div>
 </div>
 <div class="sect2">
-<h3 id="monitoring">1.2. Monitoring EnMasse</h3>
+<h3 id="monitoring">1.2. Monitoring EnMasse on OpenShift</h3>
 <div class="paragraph">
 <p>EnMasse comes with addons for Prometheus and Grafana for monitoring the service. Cluster-admin
 privileges is required for Prometheus to monitor pods in the cluster.</p>
@@ -649,7 +650,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 </div>
 </div>
 <div class="sect2">
-<h3 id="monitoring">1.4. Monitoring EnMasse</h3>
+<h3 id="monitoring">1.4. Monitoring EnMasse on Kubernetes</h3>
 <div class="paragraph">
 <p>EnMasse comes with addons for Prometheus and Grafana for monitoring the service.</p>
 </div>
@@ -697,6 +698,257 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="plans">1.5. Configuring plans and resource definitions</h3>
+<div class="paragraph">
+<p>Plans are used to configure quotas and control the resources consumed by a particular deployment.  Plans are configured by the EnMasse service operator, and selected when creating an address space and address.</p>
+</div>
+<div class="paragraph">
+<p>Resource definitions are a description of some resource referenced by the plans, which may be configured with a template and parameters to be used when instantiating the template.</p>
+</div>
+<div class="paragraph">
+<p>By default, EnMasse comes with a set of plans and resource definitions that will be
+sufficient for most uses.</p>
+</div>
+<div class="paragraph">
+<p>This guide will explain how to create and modify plans to suit your needs.</p>
+</div>
+<div class="sect3">
+<h4 id="address-space-plans">1.5.1. Address Space plans</h4>
+<div class="paragraph">
+<p>Address space plans configure the quota available to a given address space. By default, EnMasse comes with an 'unlimited' quota plan for both the standard and brokered address space.</p>
+</div>
+<div class="paragraph">
+<p>Plans are configured as configmaps. Following is an example plan for the standard address space:</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="service_admin/restrictive-plan.yaml">restrictive-plan.yaml</a></div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: restrictive-plan
+  labels:
+    type: address-space-plan
+data:
+  definition: |-
+    {
+      "apiVersion": "enmasse.io/v1",
+      "kind": "AddressSpacePlan",
+      "metadata": {
+        "name": "restrictive-plan"
+        "annotations": {
+          "defined-by": "standard-space"
+        }
+      },
+      "displayName": "Restrictive Plan",
+      "displayOrder": 0,
+      "shortDescription": "A plan with restrictive quotas",
+      "longDescription": "A plan with restrictive quotas for the standard address space",
+      "uuid": "74b9a40e-117e-11e8-b4e1-507b9def37d9",
+      "addressSpaceType": "standard",
+      "addressPlans": [
+        "small-queue",
+        "small-anycast"
+      ],
+      "resources": [
+        {
+          "name": "router",
+          "min": "0.0",
+          "max": "2.0"
+        },
+        {
+          "name": "broker",
+          "min": "0.0",
+          "max": "2.0"
+        },
+        {
+          "name": "aggregate",
+          "min": "0.0",
+          "max": "2.0"
+        }
+      ]
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following fields are required:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>metadata.name</p>
+</li>
+<li>
+<p>resources</p>
+</li>
+<li>
+<p>addressPlans</p>
+</li>
+<li>
+<p>addressSpaceType</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The other fields are only used by the console UI. Its also important to note the annotation 'defined-by', which points to a resource definition describing the infrastructure that should be deployed when an address space with this plan is created.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="address-plans">1.5.2. Address plans</h4>
+<div class="paragraph">
+<p>Address plans configure the expected resource usage of a given address. The sum of the resource usage for all resource types determines the amount of infrastructure provisioned for an address space. A single router and broker pod has a max usage of 1. If a new address requires additional resources, and the resource consumption is within the address space plan limits, a new pod will be created automatically to handle the increased load.</p>
+</div>
+<div class="paragraph">
+<p>As you may have noticed in the previous section, the address space plan referenced 2 address plans, 'small-queue' and 'small-anycast'. These address plans are stored as configmaps and may be defined as follows:</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="service_admin/small-queue-plan.yaml">small-queue-plan.yaml</a></div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: small-queue-plan
+  labels:
+    type: address-plan
+data:
+  definition: |-
+    {
+      "apiVersion": "enmasse.io/v1",
+      "kind": "AddressPlan",
+      "metadata": {
+        "name": "small-queue"
+      },
+      "displayName": "Small queue plan",
+      "displayOrder": 0,
+      "shortDescription": "A plan for small queues",
+      "longDescription": "A plan for small queues that consume little resources",
+      "uuid": "98feabb6-1183-11e8-a769-507b9def37d9",
+      "addressType": "queue",
+      "requiredResources": [
+        {
+          "name": "router",
+          "credit": 0.2
+        },
+        {
+          "name": "broker",
+          "credit": 0.3
+        }
+      ]
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following fields are required:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>metadata.name</p>
+</li>
+<li>
+<p>requiredResources</p>
+</li>
+<li>
+<p>addressType</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A single router and broker can support 5 and 3 instances of addresses with this plan respectively.  If the number of addresses with this plan increases to 4, another broker is created. If it increases further to 6, another router is created as well.</p>
+</div>
+<div class="paragraph">
+<p>Note, however, that although the address space plan allows 2 routers and 2 brokers to be deployed, it only allows 2 pods to be deployed in total. This means that the address space is restricted to 3 addresses with the 'small-queue' plan.</p>
+</div>
+<div class="paragraph">
+<p>The 'small-anycast' plan does not consume any broker resources, and may provision 2 routers at the expense of not being able to create any brokers:</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="service_admin/small-anycast-plan.yaml">small-anycast-plan.yaml</a></div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: small-anycast-plan
+  labels:
+    type: address-plan
+data:
+  definition: |-
+    {
+      "apiVersion": "enmasse.io/v1",
+      "kind": "AddressPlan",
+      "metadata": {
+        "name": "small-anycast"
+      },
+      "displayName": "Small anycast plan",
+      "displayOrder": 0,
+      "shortDescription": "A plan for small anycast addresses",
+      "longDescription": "A plan for small anycast addresses that consume little resources",
+      "uuid": "cb61f440-1184-11e8-adda-507b9def37d9",
+      "addressType": "anycast",
+      "requiredResources": [
+        {
+          "name": "router",
+          "credit": 0.2
+        }
+      ]
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Up to 10 addresses with this plan may be created (5 per router).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="resource-definitions">1.5.3. Resource definitions</h4>
+<div class="paragraph">
+<p>Resource describes a template along with a set of parameters. The resource definition is referenced from the plans. At present, only 3 resource definitions are supported:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>router</p>
+</li>
+<li>
+<p>broker</p>
+</li>
+<li>
+<p>broker-topic</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Resource definitions with other names will not work with EnMasse. It is, however, possible to modify these resource definitions to change the template and template parameters used when instantiating the infrastructure. For instance, the following configmap that increases the memory available for brokers can replace the default provided by EnMasse:</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="service_admin/broker-resource.yaml">broker-resource.yaml</a></div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: broker-resource
+  labels:
+    type: resource-definition
+data:
+  definition: |-
+    {
+      "apiVersion": "enmasse.io/v1",
+      "kind": "ResourceDefinition",
+      "metadata": {
+        "name": "broker"
+      },
+      "template": "queue-persisted",
+      "parameters": [
+        {
+          "name": "BROKER_MEMORY_LIMIT",
+          "value": "2Gi"
+        }
+      ]
+    }</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -733,7 +985,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 </div>
 </div>
 <div class="sect3">
-<h4 id="plans">2.1.3. Plans</h4>
+<h4 id="plans_2">2.1.3. Plans</h4>
 <div class="paragraph">
 <p>Both address spaces and addresses can be restricted by a plan, which enforces a limit on resource usage across multiple dimensions. Note that the set of plans currently offered might be extended in the future, and the constraints imposed by a plan within an address space might change as operational experience is gained.</p>
 </div>
@@ -785,85 +1037,11 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 <div class="paragraph">
 <p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases where you want to decouple the producer and consumer. A queue can be sharded across multiple storage units; however, message order is no longer guaranteed.</p>
 </div>
-<div class="sect5">
-<h6 id="queue-plans">Queue Plans</h6>
-<div class="ulist">
-<ul>
-<li>
-<p>inmemory</p>
-</li>
-<li>
-<p>persisted</p>
-</li>
-<li>
-<p>pooled-inmemory</p>
-</li>
-<li>
-<p>pooled-persisted</p>
-</li>
-</ul>
-</div>
-<div class="sect6">
-<h7 id="in-memory-queue">In memory</h7>
-<div class="paragraph">
-<p>Creates a standalone broker cluster for queues. Messages are not persisted on
-stable storage.</p>
-</div>
-</div>
-<div class="sect6">
-<h7 id="persisted-queue">Persisted</h7>
-<div class="paragraph">
-<p>Creates a standalone broker cluster for queues. Messages are persisted on stable
-storage.</p>
-</div>
-</div>
-<div class="sect6">
-<h7 id="pooled-in-memory-queue">Pooled in memory</h7>
-<div class="paragraph">
-<p>Schedules queues to run on a shared broker cluster, reducing overhead. Messages
-are not persisted on stable storage.</p>
-</div>
-</div>
-<div class="sect6">
-<h7 id="pooled-persisted-queue">Pooled persisted</h7>
-<div class="paragraph">
-<p>Schedules queues to run on a shared broker cluster, reducing overhead. Messages
-are persisted on stable storage.</p>
-</div>
-</div>
-</div>
 </div>
 <div class="sect4">
 <h5 id="standard-topic">Topic</h5>
 <div class="paragraph">
 <p>The topic address type supports the publish-subscribe messaging pattern where you have 1..N producers and 1..M consumers. Each message published to a topic address is forwarded to all subscribers for that address. A subscriber can also be durable, in which case messages are kept until the subscriber has acknowledged them.</p>
-</div>
-<div class="sect5">
-<h6 id="topic-plans">Topic Plans</h6>
-<div class="ulist">
-<ul>
-<li>
-<p>inmemory</p>
-</li>
-<li>
-<p>persisted</p>
-</li>
-</ul>
-</div>
-<div class="sect6">
-<h7 id="in-memory-topic">In memory</h7>
-<div class="paragraph">
-<p>Creates a standalone broker cluster for topics. Messages are not persisted on
-stable storage.</p>
-</div>
-</div>
-<div class="sect6">
-<h7 id="persisted-topic">Persisted</h7>
-<div class="paragraph">
-<p>Creates a standalone broker cluster for topics. Messages are persisted on stable
-storage.</p>
-</div>
-</div>
 </div>
 </div>
 <div class="sect4">
@@ -871,31 +1049,11 @@ storage.</p>
 <div class="paragraph">
 <p>The anycast address type is a scalable direct address for sending messages to one consumer. Messages sent to an anycast address are not stored, but forwarded directly to the consumer. This method makes this address type ideal for request-reply (RPC) uses or even work distribution. This is the cheapest address type as it does not require any persistence.</p>
 </div>
-<div class="sect5">
-<h6 id="anycast-plans">Anycast Plans</h6>
-<div class="ulist">
-<ul>
-<li>
-<p>standard</p>
-</li>
-</ul>
-</div>
-</div>
 </div>
 <div class="sect4">
 <h5 id="multicast">Multicast</h5>
 <div class="paragraph">
 <p>The multicast address type is a scalable direct address for sending messages to multiple consumers. Messages sent to a multicast address are forwarded to all consumers receiving messages on that address. It is important to note that only pre-settled messages can be sent to multicast addresses, as message acknowledgements from consumers are not propagated to producers.</p>
-</div>
-<div class="sect5">
-<h6 id="multicast-plans">Multicast Plans</h6>
-<div class="ulist">
-<ul>
-<li>
-<p>standard</p>
-</li>
-</ul>
-</div>
 </div>
 </div>
 </div>
@@ -928,17 +1086,13 @@ transactions, message groups, and so on.</p>
 <p>The queue address type is a store-and-forward queue. This address type is appropriate for
 implementing a distributed work queue, handling traffic bursts, and other use cases where you want
 to decouple the producer and consumer. A queue in the brokered address spaces supports selectors,
-message groups, transactions, and other JMS features.
-Only a standard plan is available for queues.</p>
+message groups, transactions, and other JMS features.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="brokered-topic">Topic</h5>
 <div class="paragraph">
 <p>The topic address type supports the publish-subscribe messaging pattern where you have 1..N producers and 1..M consumers. Each message published to a topic address is forwarded to all subscribers for that address. A subscriber can also be durable, in which case messages are kept until the subscriber has acknowledged them.</p>
-</div>
-<div class="paragraph">
-<p>Only a standard plan is available for topics.</p>
 </div>
 </div>
 </div>
@@ -966,14 +1120,15 @@ authenticated using <a href="https://kubernetes.io/docs/admin/authorization/rbac
 <p>Save the following JSON data to a file 'space.json':</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>{
+<pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
     "apiVersion": "v1/enmasse",
     "kind": "AddressSpace",
     "metadata": {
         "name": "myspace"
     },
     "spec": {
-        "type": "standard"
+        "type": "standard",
+        "plan": "unlimited-standard"
     }
 }</code></pre>
 </div>
@@ -1026,7 +1181,7 @@ object.</p>
 <p>To create addresses in the standard address space, save the following to a file:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>{
+<pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
   "apiVersion": "enmasse.io/v1",
   "kind": "AddressList",
   "items": [
@@ -1035,7 +1190,8 @@ object.</p>
         "name": "myqueue"
       },
       "spec": {
-        "type": "queue"
+        "type": "queue",
+        "plan": "sharded-queue"
       }
     },
     {
@@ -1043,7 +1199,8 @@ object.</p>
         "name": "mytopic"
       },
       "spec": {
-        "type": "topic"
+        "type": "topic",
+        "plan": "sharded-topic"
       }
     },
     {
@@ -1051,7 +1208,8 @@ object.</p>
         "name": "myanycast"
       },
       "spec": {
-        "type": "anycast"
+        "type": "anycast",
+        "plan": "standard-anycast"
       }
     },
     {
@@ -1059,7 +1217,8 @@ object.</p>
         "name": "mymulticast"
       },
       "spec": {
-        "type": "multicast"
+        "type": "multicast",
+        "plan": "standard-multicast"
       }
     }
   ]
@@ -1071,7 +1230,7 @@ object.</p>
 <p>You can then create those addresses using the following REST API command. Replace <code>default</code> with the name of your address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>TOKEN=`oc whoami -t`
+<pre class="highlightjs highlight nowrap"><code class="language-bash hljs" data-lang="bash">TOKEN=`oc whoami -t`
 curl -X PUT -T addresses.json -H "content-type: application/json" -H "Authorization: Bearer $TOKEN" -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addresses/default</code></pre>
 </div>
 </div>
@@ -1088,7 +1247,7 @@ curl -X PUT -T addresses.json -H "content-type: application/json" -H "Authorizat
 <p>To check which addresses are configured:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>curl -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addresses/default</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-bash hljs" data-lang="bash">curl -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addresses/default</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1148,7 +1307,7 @@ address-space.</p>
 <h5 id="apache_qpid_proton_python">Apache Qpid Proton Python</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>from __future__ import print_function, unicode_literals
+<pre class="highlightjs highlight nowrap"><code class="language-python hljs" data-lang="python">from __future__ import print_function, unicode_literals
 from proton import Message
 from proton.handlers import MessagingHandler
 from proton.reactor import Container
@@ -1180,7 +1339,7 @@ Container(HelloWorld("amqps://&lt;messaging-route-hostname&gt;:443", "myqueue"))
 <h5 id="apache_qpid_jms">Apache Qpid JMS</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>package org.apache.qpid.jms.example;
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">package org.apache.qpid.jms.example;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -1259,7 +1418,7 @@ queue.myQueueLookup = myqueue</code></pre>
 <h5 id="rhea_javascript_client">Rhea JavaScript Client</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>var container = require('rhea');
+<pre class="highlightjs highlight nowrap"><code class="language-javascript hljs" data-lang="javascript">var container = require('rhea');
 container.on('connection_open', function (context) {
     context.connection.open_receiver('myqueue');
     context.connection.open_sender('myqueue');
@@ -1283,7 +1442,7 @@ container.connect({port:443, host:'&lt;messaging-route-hostname&gt;', transport:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>#include &lt;proton/connection.hpp&gt;
+<pre class="highlightjs highlight nowrap"><code class="language-cpp hljs" data-lang="cpp">#include &lt;proton/connection.hpp&gt;
 #include &lt;proton/container.hpp&gt;
 #include &lt;proton/default_container.hpp&gt;
 #include &lt;proton/delivery.hpp&gt;
@@ -1350,7 +1509,7 @@ int main(int argc, char **argv) {
 <h5 id="amqp_net_lite">AMQP.Net Lite</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code>using System;
+<pre class="highlightjs highlight nowrap"><code class="language-c# hljs" data-lang="c#">using System;
 using Amqp;
 
 namespace Test
@@ -1508,7 +1667,8 @@ resources consumed by the API. Here is an example config with all 4 variants tha
         "name": "myqueue"
       },
       "spec": {
-        "type": "queue"
+        "type": "queue",
+        "plan": "sharded-queue"
       }
     },
     {
@@ -1516,7 +1676,8 @@ resources consumed by the API. Here is an example config with all 4 variants tha
         "name": "mytopic"
       },
       "spec": {
-        "type": "topic"
+        "type": "topic",
+        "plan": "sharded-topic"
       }
     },
     {
@@ -1524,7 +1685,8 @@ resources consumed by the API. Here is an example config with all 4 variants tha
         "name": "myanycast"
       },
       "spec": {
-        "type": "anycast"
+        "type": "anycast",
+        "plan": "standard-anycast"
       }
     },
     {
@@ -1532,7 +1694,8 @@ resources consumed by the API. Here is an example config with all 4 variants tha
         "name": "mymulticast"
       },
       "spec": {
-        "type": "multicast"
+        "type": "multicast",
+        "plan": "standard-multicast"
       }
     }
   ]
@@ -1936,7 +2099,8 @@ resources consumed by the API. Here is an example config with all 4 variants tha
         "name": "myqueue"
       },
       "spec": {
-        "type": "queue"
+        "type": "queue",
+        "plan": "sharded-queue"
       }
     },
     {
@@ -1944,7 +2108,8 @@ resources consumed by the API. Here is an example config with all 4 variants tha
         "name": "mytopic"
       },
       "spec": {
-        "type": "topic"
+        "type": "topic",
+        "plan": "sharded-topic"
       }
     },
     {
@@ -1952,7 +2117,8 @@ resources consumed by the API. Here is an example config with all 4 variants tha
         "name": "myanycast"
       },
       "spec": {
-        "type": "anycast"
+        "type": "anycast",
+        "plan": "standard-anycast"
       }
     },
     {
@@ -1960,7 +2126,8 @@ resources consumed by the API. Here is an example config with all 4 variants tha
         "name": "mymulticast"
       },
       "spec": {
-        "type": "multicast"
+        "type": "multicast",
+        "plan": "standard-multicast"
       }
     }
   ]
