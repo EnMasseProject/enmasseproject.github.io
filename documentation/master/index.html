@@ -81,9 +81,9 @@
 <li><a href="#installation_and_configuration">1. Installation and configuration</a>
 <ul class="sectlevel2">
 <li><a href="#installing-openshift">1.1. Installing EnMasse on OpenShift</a></li>
-<li><a href="#monitoring">1.2. Monitoring EnMasse on OpenShift</a></li>
-<li><a href="#installing-openshift">1.3. Installing EnMasse on Kubernetes</a></li>
-<li><a href="#monitoring">1.4. Monitoring EnMasse on Kubernetes</a></li>
+<li><a href="#monitoring-openshift">1.2. Monitoring EnMasse on OpenShift</a></li>
+<li><a href="#installing-kubernetes">1.3. Installing EnMasse on Kubernetes</a></li>
+<li><a href="#monitoring-kubernetes">1.4. Monitoring EnMasse on Kubernetes</a></li>
 <li><a href="#plans">1.5. Configuring plans and resource definitions</a></li>
 </ul>
 </li>
@@ -230,7 +230,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Give view permissions for the keycloak controller:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc adm policy add-role-to-user view system:serviceaccount:$(oc project -q):default</pre>
+<pre class="nowrap">oc adm policy add-role-to-user view system:serviceaccount:enmasse:default</pre>
 </div>
 </div>
 </li>
@@ -242,7 +242,40 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 </div>
 </div>
 </li>
+<li>
+<p>Create keycloak configuration used by controller and service. To make the standard authservice
+accessible for the messaging console and keycloak operator, you need to specify the <code>httpUrl</code>
+setting. If you are running a local OpenShift cluster without a public DNS, use the internal service
+IP for the hostname, otherwise use the hostname of the external route. To get the service ip:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get service standard-authservice -o jsonpath={.spec.clusterIP}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Or, if you have a public hostname:</p>
+</li>
 </ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>oc get route keycloak -o jsonpath={.spec.host}</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create keycloak configuration:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>AUTH_HOST=&lt;value from one of the previous commands&gt;
+AUTH_PORT=8443 if using the service ip, 443 if using the route host
+oc create configmap keycloak-config --from-literal=hostname=standard-authservice --from-literal=port=5671 --from-literal=httpUrl=https://$AUTH_HOST:$AUTH_PORT/auth --from-literal=caSecretName=standard-authservice-cert</pre>
+</div>
 </div>
 </div>
 </div>
@@ -279,7 +312,8 @@ oc create -f ./openshift/cluster-roles.yaml</pre>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc login -u system:admin
-oc adm policy add-cluster-role-to-user enmasse-namespace-admin system:serviceaccount:enmasse:enmasse-admin</pre>
+oc policy add-role-to-user admin system:serviceaccount:enmasse:enmasse-admin
+oc adm policy add-cluster-role-to-user enmasse-admin system:serviceaccount:enmasse:enmasse-admin</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -300,6 +334,16 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc create secret tls address-controller-cert --cert=address-controller-cert/tls.crt --key=address-controller-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Install default plan and resource configuration</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create -f ./openshift/addons/resource-definitions.yaml
+oc create -f ./openshift/addons/standard-plans.yaml
+oc create -f ./openshift/addons/brokered-plans.yaml</pre>
 </div>
 </div>
 </li>
@@ -334,8 +378,8 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 <p>Create service accounts for the EnMasse address controller and address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create sa -n enmasse enmasse-admin
-oc create sa -n enmasse address-space-admin</pre>
+<pre class="nowrap">oc create sa enmasse-admin
+oc create sa address-space-admin</pre>
 </div>
 </div>
 </li>
@@ -353,8 +397,16 @@ oc policy add-role-to-user admin system:serviceaccount:enmasse:address-space-adm
 <p>Install default plan and resource configuration</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./openshift/addons/standard-plans.yaml
-oc create -f ./openshift/addons/brokered-plans.yaml</pre>
+<pre class="nowrap">oc create -f ./openshift/addons/resource-definitions.yaml
+oc create -f ./openshift/addons/standard-plans.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy default address space</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc process -f ./openshift/address-space.yaml NAME=default NAMESPACE=enmasse TYPE=standard PLAN=unlimited-standard | oc create -f -</pre>
 </div>
 </div>
 </li>
@@ -400,7 +452,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 </div>
 </div>
 <div class="sect2">
-<h3 id="monitoring">1.2. Monitoring EnMasse on OpenShift</h3>
+<h3 id="monitoring-openshift">1.2. Monitoring EnMasse on OpenShift</h3>
 <div class="paragraph">
 <p>EnMasse comes with addons for Prometheus and Grafana for monitoring the service. Cluster-admin
 privileges is required for Prometheus to monitor pods in the cluster.</p>
@@ -410,14 +462,6 @@ privileges is required for Prometheus to monitor pods in the cluster.</p>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
-<li>
-<p>Create cluster-reader role needed by Prometheus</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc create -f ./openshift/addons/cluster-reader.yaml</pre>
-</div>
-</div>
-</li>
 <li>
 <p>Create Prometheus deployment</p>
 <div class="listingblock">
@@ -430,7 +474,7 @@ privileges is required for Prometheus to monitor pods in the cluster.</p>
 <p>Grant cluster-reader privileges to Prometheus service account</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc policy add-role-to-user cluster-reader system:serviceaccount:enmasse:prometheus-server</pre>
+<pre class="nowrap">oc adm policy add-cluster-role-to-user cluster-reader system:serviceaccount:enmasse:prometheus-server</pre>
 </div>
 </div>
 </li>
@@ -466,7 +510,7 @@ privileges is required for Prometheus to monitor pods in the cluster.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="installing-openshift">1.3. Installing EnMasse on Kubernetes</h3>
+<h3 id="installing-kubernetes">1.3. Installing EnMasse on Kubernetes</h3>
 <div class="sect3">
 <h4 id="prerequisites-kubernetes">1.3.1. Prerequisites</h4>
 <div class="paragraph">
@@ -583,7 +627,26 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 </div>
 </div>
 </li>
+<li>
+<p>Create keycloak configuration used by controller and service. For the messaging console and
+keycloak controller to work, you need to specify the <code>httpUrl</code> setting. To get the service ip:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get service standard-authservice -o jsonpath={.spec.clusterIP}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create keycloak configuration:</p>
+</li>
 </ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>AUTH_HOST=&lt;value from one of the previous commands&gt;
+AUTH_PORT=8443 if using the service ip, 443 if using the route host
+kubectl create configmap keycloak-config --from-literal=hostname=standard-authservice --from-literal=port=5671 --from-literal=httpUrl=https://$AUTH_HOST:$AUTH_PORT/auth --from-literal=caSecretName=standard-authservice-cert</pre>
+</div>
 </div>
 </div>
 </div>
@@ -650,7 +713,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address
 </div>
 </div>
 <div class="sect2">
-<h3 id="monitoring">1.4. Monitoring EnMasse on Kubernetes</h3>
+<h3 id="monitoring-kubernetes">1.4. Monitoring EnMasse on Kubernetes</h3>
 <div class="paragraph">
 <p>EnMasse comes with addons for Prometheus and Grafana for monitoring the service.</p>
 </div>
@@ -1714,7 +1777,7 @@ and
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">./simple_recv.py -a "amqps://$(oc get route -o jsonpath='{.spec.host}' messaging):443/anycast" -m 10</pre>
+<pre class="nowrap">./simple_recv.py -a "amqps://$(oc get route -o jsonpath='{.spec.host}' messaging):443/myanycast" -m 10</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1722,7 +1785,7 @@ and
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">./simple_send.py -a "amqps://$(oc get route -o jsonpath='{.spec.host}' messaging):443/anycast" -m 10</pre>
+<pre class="nowrap">./simple_send.py -a "amqps://$(oc get route -o jsonpath='{.spec.host}' messaging):443/myanycast" -m 10</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1963,7 +2026,7 @@ laptop.</p>
 </div>
 <div class="paragraph">
 <p>This guide uses a shell script for deploying EnMasse. Windows users are adviced to look at
-<a href="#installing-kubernetes">Installing</a>.</p>
+<a href="#installing-kubernetes">Installing EnMasse on Kubernetes</a>.</p>
 </div>
 <div class="sect5">
 <h6 id="deploying_enmasse_4">Deploying EnMasse</h6>
@@ -2138,7 +2201,7 @@ and
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">./simple_recv.py -a "amqps://$(kubectl get ingress -o jsonpath='{.spec.host}' messaging):443/anycast" -m 10</pre>
+<pre class="nowrap">./simple_recv.py -a "amqps://$(kubectl get ingress -o jsonpath='{.spec.host}' messaging):443/myanycast" -m 10</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2146,7 +2209,7 @@ and
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">./simple_send.py -a "amqps://$(kubectl get ingress -o jsonpath='{.spec.host}' messaging):443/anycast" -m 10</pre>
+<pre class="nowrap">./simple_send.py -a "amqps://$(kubectl get ingress -o jsonpath='{.spec.host}' messaging):443/myanycast" -m 10</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2539,7 +2602,7 @@ and
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">./simple_recv.py -a "amqps://$(oc get route -o jsonpath='{.spec.host}' messaging):443/anycast" -m 10</pre>
+<pre class="nowrap">./simple_recv.py -a "amqps://$(oc get route -o jsonpath='{.spec.host}' messaging):443/myanycast" -m 10</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2547,7 +2610,7 @@ and
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">./simple_send.py -a "amqps://$(oc get route -o jsonpath='{.spec.host}' messaging):443/anycast" -m 10</pre>
+<pre class="nowrap">./simple_send.py -a "amqps://$(oc get route -o jsonpath='{.spec.host}' messaging):443/myanycast" -m 10</pre>
 </div>
 </div>
 <div class="paragraph">

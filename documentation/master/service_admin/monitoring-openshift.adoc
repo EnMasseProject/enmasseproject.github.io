@@ -1,4 +1,4 @@
-[[monitoring]]
+[[monitoring-openshift]]
 
 == Monitoring {ProductName} on OpenShift
 
@@ -8,13 +8,6 @@ privileges is required for Prometheus to monitor pods in the cluster.
 === Deploying Prometheus
 
 .Procedure
-
-. Create cluster-reader role needed by Prometheus
-+
-[options="nowrap"]
-----
-oc create -f ./openshift/addons/cluster-reader.yaml
-----
 
 . Create Prometheus deployment
 +
@@ -27,7 +20,7 @@ oc create -f ./openshift/addons/prometheus.yaml -n enmasse
 +
 [options="nowrap"]
 ----
-oc policy add-role-to-user cluster-reader system:serviceaccount:enmasse:prometheus-server
+oc adm policy add-cluster-role-to-user cluster-reader system:serviceaccount:enmasse:prometheus-server
 ----
 
 === Deploying Grafana
