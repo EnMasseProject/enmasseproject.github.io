@@ -189,7 +189,8 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=none-au
 <p>Create the none authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f ./openshift/addons/none-authservice.yaml | oc create -f -</pre>
+<pre class="nowrap">oc create -f ./resources/none-authservice/service.yaml
+oc create -f ./resources/none-authservice/deployment.yaml</pre>
 </div>
 </div>
 </li>
@@ -238,7 +239,11 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Create the standard authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f ./openshift/addons/standard-authservice.yaml | oc create -f -</pre>
+<pre class="nowrap">oc create -f ./resources/standard-authservice/service.yaml
+oc create -f ./resources/standard-authservice/keycloak-deployment.yaml
+oc create -f ./resources/standard-authservice/controller-deployment.yaml
+oc create -f ./resources/standard-authservice/pvc.yaml
+oc create -f ./resources/standard-authservice/route.yaml</pre>
 </div>
 </div>
 </li>
@@ -255,27 +260,23 @@ IP for the hostname, otherwise use the hostname of the external route. To get th
 </li>
 <li>
 <p>Or, if you have a public hostname:</p>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre>oc get route keycloak -o jsonpath={.spec.host}</pre>
+<pre class="nowrap">oc get route keycloak -o jsonpath={.spec.host}</pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>Create keycloak configuration:</p>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre>AUTH_HOST=&lt;value from one of the previous commands&gt;
+<pre class="nowrap">AUTH_HOST=&lt;value from one of the previous commands&gt;
 AUTH_PORT=8443 if using the service ip, 443 if using the route host
 oc create configmap keycloak-config --from-literal=hostname=standard-authservice --from-literal=port=5671 --from-literal=httpUrl=https://$AUTH_HOST:$AUTH_PORT/auth --from-literal=caSecretName=standard-authservice-cert</pre>
 </div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -291,7 +292,7 @@ access, which will restrict it to a single address space.</p>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Create a service account for the EnMasse address controller:</p>
+<p>Create a service account for the EnMasse address space controller:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc create sa enmasse-admin</pre>
@@ -303,17 +304,19 @@ access, which will restrict it to a single address space.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc login -u system:admin
-oc create -f ./openshift/cluster-roles.yaml</pre>
+oc create -f ./resources/cluster-roles/api-server.yaml
+oc create -f ./resources/cluster-roles/address-space-controller.yaml</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Grant cluster-admin privileges to service account:</p>
+<p>Grant privileges to service account:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc login -u system:admin
 oc policy add-role-to-user admin system:serviceaccount:enmasse:enmasse-admin
-oc adm policy add-cluster-role-to-user enmasse-admin system:serviceaccount:enmasse:enmasse-admin</pre>
+oc adm policy add-cluster-role-to-user enmasse.io:address-space-controller system:serviceaccount:enmasse:enmasse-admin
+oc adm policy add-cluster-role-to-user enmasse.io:api-server system:serviceaccount:enmasse:enmasse-admin</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -321,37 +324,62 @@ oc adm policy add-cluster-role-to-user enmasse-admin system:serviceaccount:enmas
 </div>
 </li>
 <li>
-<p>Create a certificate to use for the address controller. For testing purposes, you can create a self-signed certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mkdir -p address-controller-cert/
-openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address-controller.enmasse.svc.cluster.local" -out address-controller-cert/tls.crt -keyout address-controller-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a secret containing the address-controller certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc create secret tls address-controller-cert --cert=address-controller-cert/tls.crt --key=address-controller-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
 <p>Install default plan and resource configuration</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./openshift/addons/resource-definitions.yaml
-oc create -f ./openshift/addons/standard-plans.yaml
-oc create -f ./openshift/addons/brokered-plans.yaml</pre>
+<pre class="nowrap">oc create -f ./resources/resource-definitions/resource-definitions.yaml
+oc create -f ./resources/plans/standard-plans.yaml
+oc create -f ./resources/plans/brokered-plans.yaml</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Deploy the address-controller:</p>
+<p>Create a certificate to use for the api server. For testing purposes, you can create a self-signed certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f ./openshift/enmasse.yaml ENABLE_RBAC=true ADDRESS_CONTROLLER_CERT_SECRET=address-controller-cert | oc create -f -</pre>
+<pre class="nowrap">mkdir -p api-server-cert/
+openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-server.enmasse.svc.cluster.local" -out api-server-cert/tls.crt -keyout api-server-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a secret containing the api-server certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create secret tls api-server-cert --cert=api-server-cert/tls.crt --key=api-server-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create API server config:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create configmap api-server-config --from-literal=enableRbac=true</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the api-server:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create -f ./resources/api-server/deployment.yaml
+oc create -f ./resources/api-server/service.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create routes exposing the API server:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create route passthrough restapi --service=api-server -n enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the address-space-controller:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create -f ./resources/address-space-controller/deployment.yaml</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -375,7 +403,7 @@ oc create -f ./openshift/addons/brokered-plans.yaml</pre>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Create service accounts for the EnMasse address controller and address space:</p>
+<p>Create service accounts for the EnMasse address space controller and address space:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc create sa enmasse-admin
@@ -397,8 +425,8 @@ oc policy add-role-to-user admin system:serviceaccount:enmasse:address-space-adm
 <p>Install default plan and resource configuration</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./openshift/addons/resource-definitions.yaml
-oc create -f ./openshift/addons/standard-plans.yaml</pre>
+<pre class="nowrap">oc create -f ./resources/resource-definitions/resource-definitions.yaml
+oc create -f ./resources/plans/standard-plans.yaml</pre>
 </div>
 </div>
 </li>
@@ -406,32 +434,24 @@ oc create -f ./openshift/addons/standard-plans.yaml</pre>
 <p>Deploy default address space</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f ./openshift/address-space.yaml NAME=default NAMESPACE=enmasse TYPE=standard PLAN=unlimited-standard | oc create -f -</pre>
+<pre class="nowrap">oc process -f ./resources/templates/address-space.yaml NAME=default NAMESPACE=enmasse TYPE=standard PLAN=unlimited-standard | oc create -f -</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Create a certificate to use for the address controller. For testing purposes, you can create a self-signed certificate:</p>
+<p>Deploy template for creating addresses. You can use this later for creating addresses from the command line</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">mkdir -p address-controller-cert/
-openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address-controller.enmasse.svc.cluster.local" -out address-controller-cert/tls.crt -keyout address-controller-cert/tls.key</pre>
+<pre class="nowrap">oc create -f ./resources/templates/address.yaml -n enmasse</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Create secret with address-controller certificate:</p>
+<p>Deploy address-space-controller:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create secret tls address-controller-cert --cert=address-controller-cert/tls.crt --key=address-controller-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy address-controller:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc process -f ./openshift/enmasse.yaml ENABLE_RBAC=false ADDRESS_CONTROLLER_CERT_SECRET=address-controller-cert | oc create -f -</pre>
+<pre class="nowrap">oc create -f ./resources/address-space-controller/address-space-definitions.yaml
+oc create -f ./resources/address-space-controller/deployment.yaml</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -527,7 +547,7 @@ laptop.</p>
 </ol>
 </div>
 <div class="paragraph">
-<p>To simplify deployment, have a look at the <code>deploy-kubernetes.sh</code> script which should work on Linux
+<p>To simplify deployment, have a look at the <code>deploy.sh</code> script which should work on Linux
 and Mac. You can invoke the deployment script with <code>-h</code> to view a list of options.</p>
 </div>
 <div class="paragraph">
@@ -582,7 +602,8 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=none-au
 <p>Create the none authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f ./kubernetes/addons/none-authservice.yaml</pre>
+<pre class="nowrap">kubectl apply -f ./resources/none-authservice/service.yaml
+kubectl apply -f ./resources/none-authservice/deployment.yaml</pre>
 </div>
 </div>
 </li>
@@ -623,7 +644,10 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Create the standard authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f ./kubernetes/addons/standard-authservice.yaml</pre>
+<pre class="nowrap">kubectl apply -f ./resources/standard-authservice/service.yaml
+kubectl apply -f ./resources/standard-authservice/keycloak-deployment.yaml
+kubectl apply -f ./resources/standard-authservice/controller-deployment.yaml
+kubectl apply -f ./resources/standard-authservice/pvc.yaml</pre>
 </div>
 </div>
 </li>
@@ -638,15 +662,15 @@ keycloak controller to work, you need to specify the <code>httpUrl</code> settin
 </li>
 <li>
 <p>Create keycloak configuration:</p>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre>AUTH_HOST=&lt;value from one of the previous commands&gt;
+<pre class="nowrap">AUTH_HOST=&lt;value from one of the previous commands&gt;
 AUTH_PORT=8443 if using the service ip, 443 if using the route host
 kubectl create configmap keycloak-config --from-literal=hostname=standard-authservice --from-literal=port=5671 --from-literal=httpUrl=https://$AUTH_HOST:$AUTH_PORT/auth --from-literal=caSecretName=standard-authservice-cert</pre>
 </div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -655,7 +679,7 @@ kubectl create configmap keycloak-config --from-literal=hostname=standard-authse
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create service account for the EnMasse address controller:</p>
+<p>Create service account for the EnMasse address space controller:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">kubectl create sa enmasse-admin</pre>
@@ -666,33 +690,44 @@ kubectl create configmap keycloak-config --from-literal=hostname=standard-authse
 <p>Install default plan and resource configuration</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f ./kubernetes/addons/standard-plans.yaml
-kubectl apply -f ./kubernetes/addons/brokered-plans.yaml</pre>
+<pre class="nowrap">kubectl apply -f ./resources/resource-definitions/resource-definitions.yaml
+kubectl apply -f ./resources/plans/standard-plans.yaml
+kubectl apply -f ./resources/plans/brokered-plans.yaml
+kubectl apply -f ./resources/address-space-controller/address-space-definitions.yaml</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Create a certificate to use for the address controller. For testing purposes, you can create a self-signed certificate:</p>
+<p>Create a certificate to use for the api server. For testing purposes, you can create a self-signed certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">mkdir -p address-controller-cert/
-openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=address-controller.enmasse.svc.cluster.local" -out address-controller-cert/tls.crt -keyout address-controller-cert/tls.key</pre>
+<pre class="nowrap">mkdir -p api-server-cert/
+openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-server.enmasse.svc.cluster.local" -out api-server-cert/tls.crt -keyout api-server-cert/tls.key</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Create secret with address-controller certificate:</p>
+<p>Create a secret containing the api-server certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl secret tls address-controller-cert --cert=address-controller-cert/tls.crt --key=address-controller-cert/tls.key</pre>
+<pre class="nowrap">kubectl create secret tls api-server-cert --cert=api-server-cert/tls.crt --key=api-server-cert/tls.key</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Deploy address-controller:</p>
+<p>Deploy the api-server:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f ./kubernetes/enmasse.yaml</pre>
+<pre class="nowrap">kubectl create -f ./resources/api-server/deployment.yaml
+kubectl create -f ./resources/api-server/service.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the address-space-controller:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create -f ./resources/address-space-controller/deployment.yaml</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1163,19 +1198,20 @@ message groups, transactions, and other JMS features.</p>
 <div class="sect2">
 <h3 id="configuring-using-restapi">2.2. Configuring EnMasse using a REST API</h3>
 <div class="paragraph">
-<p>EnMasse provides a REST API that can be used for configuring address spaces and addresses
-within those address spaces. When running EnMasse in multitenant mode, clients are
-authenticated using <a href="https://kubernetes.io/docs/admin/authorization/rbac/" target="_blank" rel="noopener">RBAC</a> by default.</p>
+<p>EnMasse provides an API that can be used for configuring address spaces and addresses
+within those address spaces. Clients can be configured to authenticate using
+<a href="https://kubernetes.io/docs/admin/authorization/rbac/" target="_blank" rel="noopener">RBAC</a>.</p>
+</div>
+<div class="paragraph">
+<p>All API URIs are namespaced. This means that address spaces are scoped within a particular
+namespace. Addresses are scoped within an address space. This means that an address
+space in address space A may have the same name as an address in address space B.</p>
+</div>
+<div class="paragraph">
+<p>Likewise, an address space in namespace A can have the same name as an address space in namespace B.</p>
 </div>
 <div class="sect3">
 <h4 id="creating_an_address_space">2.2.1. Creating an Address Space</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Creating address spaces is only applicable for multitenant deployments of EnMasse.</p>
-</li>
-</ul>
-</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1184,7 +1220,7 @@ authenticated using <a href="https://kubernetes.io/docs/admin/authorization/rbac
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
-    "apiVersion": "v1/enmasse",
+    "apiVersion": "enmasse.io/v1alpha1",
     "kind": "AddressSpace",
     "metadata": {
         "name": "myspace"
@@ -1198,15 +1234,16 @@ authenticated using <a href="https://kubernetes.io/docs/admin/authorization/rbac
 </div>
 </li>
 <li>
-<p>POST the address space definition to the REST API using curl:</p>
+<p>POST the address space definition to the API using curl:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code>TOKEN=`oc whoami -t`
-curl -X POST -T space.json -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addressspaces</code></pre>
+curl -X POST -T space.json -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1alpha1/namespaces/[:namespace]/addressspaces</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will create the infrastructure required for that address space. Starting up the address space
+<p>This will create the infrastructure required for that address space. Replace the namespace with the
+namespace of the application requesting the address space to be created. Starting up the address space
 will take a while, usually depending on how fast it is able to download the Docker images for the
 various components.</p>
 </div>
@@ -1220,11 +1257,11 @@ various components.</p>
 <div class="title">Procedure</div>
 <ul>
 <li>
-<p>You can use the REST API to check the status of the address space:</p>
+<p>You can use the API to check the status of the address space:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code>TOKEN=`oc whoami -t`
-curl -k -H "Authorization: Bearer $TOKEN" https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addressspaces/myspace</code></pre>
+curl -k -H "Authorization: Bearer $TOKEN" https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1alpha1/namespaces/[:namespace]/addressspaces/myspace</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1241,52 +1278,30 @@ object.</p>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>To create addresses in the standard address space, save the following to a file:</p>
+<p>To create addresses in the standard address space, save the address definition to a file:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
-  "apiVersion": "enmasse.io/v1",
-  "kind": "AddressList",
-  "items": [
-    {
-      "spec": {
-        "address": "myqueue",
-        "type": "queue",
-        "plan": "sharded-queue"
-      }
-    },
-    {
-      "spec": {
-        "address": "mytopic",
-        "type": "topic",
-        "plan": "sharded-topic"
-      }
-    },
-    {
-      "spec": {
-        "address": "myanycast",
-        "type": "anycast",
-        "plan": "standard-anycast"
-      }
-    },
-    {
-      "spec": {
-        "address": "mymulticast",
-        "type": "multicast",
-        "plan": "standard-multicast"
-      }
-    }
-  ]
+  "apiVersion": "enmasse.io/v1alpha1",
+  "kind": "Address",
+  "metadata": {
+      "addressSpace": "myspace"
+  },
+  "spec": {
+    "address": "myqueue",
+    "type": "queue",
+    "plan": "pooled-queue"
+  }
 }</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>You can then create those addresses using the following REST API command. Replace <code>default</code> with the name of your address space:</p>
+<p>You can then create the address using the following API. Replace the namespace with the same as for the address space:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-bash hljs" data-lang="bash">TOKEN=`oc whoami -t`
-curl -X PUT -T addresses.json -H "content-type: application/json" -H "Authorization: Bearer $TOKEN" -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addresses/default</code></pre>
+curl -X PUT -T address.json -H "content-type: application/json" -H "Authorization: Bearer $TOKEN" -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1alpha1/namespaces/[:namespace]/addressspaces/myspace/addresses</code></pre>
 </div>
 </div>
 </li>
@@ -1302,7 +1317,7 @@ curl -X PUT -T addresses.json -H "content-type: application/json" -H "Authorizat
 <p>To check which addresses are configured:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-bash hljs" data-lang="bash">curl -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1/addresses/default</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-bash hljs" data-lang="bash">curl -k https://$(oc get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1alpha1/namespaces/[:namespace]/addressspace/myspace/addresses</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1652,7 +1667,7 @@ on your machine.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">./deploy-openshift.sh -m "https://localhost:8443" -n enmasse </pre>
+<pre class="nowrap">./deploy.sh -m "https://localhost:8443" -n enmasse  -t openshift</pre>
 </div>
 </div>
 </div>
@@ -1660,7 +1675,7 @@ on your machine.</p>
 <h7 id="using_ansible">Using ansible</h7>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">ansible-playbook ansible/playbooks/openshift/singletenant.yml</pre>
+<pre class="nowrap">ansible-playbook ansible/playbooks/openshift/singletenant-standard.yml</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1707,7 +1722,7 @@ addresses. You can get the console URL by running the following command:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>You can also deploy the addressing config using the address controller
+<p>You can also deploy the addressing config using the REST API
 API. See the <a href="#configuring-using-restapi">Configuring EnMasse using a REST API</a> for details on the
 resources consumed by the API. Here is an example config with all 4 variants that you can save to <code>addresses.json</code>:</p>
 </div>
@@ -1754,7 +1769,7 @@ resources consumed by the API. Here is an example config with all 4 variants tha
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">curl -X POST -H "content-type: application/json" --data-binary @addresses.json -k https://$(oc get route -o jsonpath='{.spec.host}' restapi)/apis/enmasse.io/v1/addresses/default</pre>
+<pre class="nowrap">curl -X POST -H "content-type: application/json" --data-binary @addresses.json -k https://$(oc get route -o jsonpath='{.spec.host}' restapi)/apis/enmasse.io/v1/namespaces/myproject/addressspaces/default/addresses</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2037,7 +2052,7 @@ laptop.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">./deploy-kubernetes.sh -m "https://localhost:8443" -n enmasse </pre>
+<pre class="nowrap">./deploy.sh -m "https://localhost:8443" -n enmasse  -t kubernetes</pre>
 </div>
 </div>
 </div>
@@ -2045,7 +2060,7 @@ laptop.</p>
 <h7 id="using_ansible_2">Using ansible</h7>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">ansible-playbook ansible/playbooks/openshift/singletenant.yml</pre>
+<pre class="nowrap">ansible-playbook ansible/playbooks/openshift/singletenant-standard.yml</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2131,7 +2146,7 @@ addresses. You can get the console URL by running the following command:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>You can also deploy the addressing config using the address controller
+<p>You can also deploy the addressing config using the REST API
 API. See the <a href="#configuring-using-restapi">Configuring EnMasse using a REST API</a> for details on the
 resources consumed by the API. Here is an example config with all 4 variants that you can save to <code>addresses.json</code>:</p>
 </div>
@@ -2178,7 +2193,7 @@ resources consumed by the API. Here is an example config with all 4 variants tha
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">curl -X POST -H "content-type: application/json" --data-binary @addresses.json -k https://$(kubectl get ingress -o jsonpath='{.spec.host}' restapi)/apis/enmasse.io/v1/addresses/default</pre>
+<pre class="nowrap">curl -X POST -H "content-type: application/json" --data-binary @addresses.json -k https://$(kubectl get ingress -o jsonpath='{.spec.host}' restapi)/apis/enmasse.io/v1/namespaces/myproject/addressspaces/default/addresses</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2556,7 +2571,7 @@ EnMasse.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">./deploy-openshift.sh -m "https://openshift.yourdomain:8443" -n enmasse -u myuser</pre>
+<pre class="nowrap">./deploy.sh -m "https://openshift.yourdomain:8443" -n enmasse -u myuser -t openshift</pre>
 </div>
 </div>
 </div>
@@ -2564,7 +2579,7 @@ EnMasse.</p>
 <h7 id="using_ansible_3">Using ansible</h7>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">ansible-playbook ansible/playbooks/openshift/singletenant.yml</pre>
+<pre class="nowrap">ansible-playbook ansible/playbooks/openshift/singletenant-standard.yml</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2849,7 +2864,7 @@ oc adm policy add-cluster-role-to-user hawkular-openshift-agent system:serviceac
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>oc process -f https://raw.githubusercontent.com/hawkular/hawkular-grafana-datasource/master/docker/openshift/openshift-template-ephemeral.yaml -n openshift-infra | oc create -n openshift-infra -f -</pre>
+<pre>oc process -f https://raw.githubusercontent.com/hawkular/hawkular-grafana-datasource/master/openshift/openshift-template-ephemeral.yaml -n openshift-infra | oc create -n openshift-infra -f -</pre>
 </div>
 </div>
 <div class="paragraph">
