@@ -395,7 +395,7 @@ IP for the hostname, otherwise use the hostname of the external route. To get th
 <p>Create keycloak configuration:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">AUTH_HOST=&lt;value from one of the previous commands&gt;
+<pre class="nowrap">AUTH_HOST=value from one of the previous commands
 AUTH_PORT=8443 if using the service ip, 443 if using the route host
 oc create configmap keycloak-config --from-literal=hostname=standard-authservice --from-literal=port=5671 --from-literal=httpUrl=https://$AUTH_HOST:$AUTH_PORT/auth --from-literal=caSecretName=standard-authservice-cert</pre>
 </div>
@@ -671,12 +671,12 @@ oc create -f ./resources/service-broker/service.yaml</pre>
 <p>Create service broker config:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">AUTH_HOST=<value from="" one="" of="" the="" previous="" commands="">
+<pre class="nowrap">AUTH_HOST=value from one of the previous commands
 AUTH_PORT=8443 if using the service ip, 443 if using the route host
-oc create configmap service-broker-config --from-literal=enableRbac=false --from-literal=keycloakUrl=https://$AUTH_HOST:$AUTH_PORT/auth&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/li&gt;
+oc create configmap service-broker-config --from-literal=enableRbac=false --from-literal=keycloakUrl=https://$AUTH_HOST:$AUTH_PORT/auth</pre>
+</div>
+</div>
+</li>
 <li>
 <p>Create secret with token for Service Catalog</p>
 <div class="listingblock">
@@ -693,9 +693,9 @@ oc create configmap service-broker-config --from-literal=enableRbac=false --from
 </div>
 </div>
 </li>
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;/div&gt;
+</ol>
+</div>
+</div>
 <div class="sect4">
 <h5 id="openshift-install-single-address-space">Deploying EnMasse limited to a single address space</h5>
 <div class="olist arabic">
@@ -770,8 +770,8 @@ supporting the OpenShift client.</p>
 </ol>
 </div>
 </div>
-&lt;/div&gt;
-&lt;/div&gt;
+</div>
+</div>
 <div class="sect2">
 <h3 id="installing-kubernetes">1.2. Installing EnMasse on Kubernetes</h3>
 <div class="sect3">
@@ -909,9 +909,9 @@ IP for the hostname, otherwise use the hostname of the external route. To get th
 <p>Create keycloak configuration:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">AUTH_HOST=&lt;value from one of the previous commands&gt;
+<pre class="nowrap">AUTH_HOST=value from one of the previous commands
 AUTH_PORT=8443 if using the service ip, 443 if using the route host
-oc create configmap keycloak-config --from-literal=hostname=standard-authservice --from-literal=port=5671 --from-literal=httpUrl=https://$AUTH_HOST:$AUTH_PORT/auth --from-literal=caSecretName=standard-authservice-cert</pre>
+kubectl create configmap keycloak-config --from-literal=hostname=standard-authservice --from-literal=port=5671 --from-literal=httpUrl=https://$AUTH_HOST:$AUTH_PORT/auth --from-literal=caSecretName=standard-authservice-cert</pre>
 </div>
 </div>
 </li>
@@ -1085,12 +1085,12 @@ kubectl create -f ./resources/service-broker/service.yaml</pre>
 <p>Create service broker config:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">AUTH_HOST=<value from="" one="" of="" the="" previous="" commands="">
+<pre class="nowrap">AUTH_HOST=value from one of the previous commands
 AUTH_PORT=8443 if using the service ip, 443 if using the route host
-kubectl create configmap service-broker-config --from-literal=enableRbac=false --from-literal=keycloakUrl=https://$AUTH_HOST:$AUTH_PORT/auth&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/li&gt;
+kubectl create configmap service-broker-config --from-literal=enableRbac=false --from-literal=keycloakUrl=https://$AUTH_HOST:$AUTH_PORT/auth</pre>
+</div>
+</div>
+</li>
 <li>
 <p>Create secret with token for Service Catalog</p>
 <div class="listingblock">
@@ -1107,13 +1107,13 @@ kubectl create configmap service-broker-config --from-literal=enableRbac=false -
 </div>
 </div>
 </li>
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="configuring_address_space_and_address_plans">2. Configuring address space and address plans</h2>
 <div class="sectionbody">
@@ -6244,7 +6244,6 @@ The default username and password is <code>admin/admin</code>. E</p>
 </div>
 </div>
 </div>
-</value></pre></div></div></li></ol></div></div></div></div></value></pre></div></div></li></ol></div></div></div></div></div></div>
 
       </div>
     </main>
