@@ -1,4 +1,4 @@
-= EnMasse API
+= EnMasse
 
 
 [[_overview]]
@@ -13,13 +13,12 @@ __Version__ : 1.0.0
 
 === URI scheme
 [%hardbreaks]
-__BasePath__ : /apis/enmasse.io/v1alpha1
-__Schemes__ : HTTP
+__Schemes__ : HTTPS
 
 
 === Tags
 
-* addresses : Operating on Addresses within an AddressSpace.
+* addresses : Operating on Addresses.
 * addressspaces : Operate on AddressSpaces
 
 
@@ -34,15 +33,11 @@ __URL__ : http://enmasse.io
 [[_paths]]
 == Paths
 
-[[_appendaddresses]]
-=== Append Addresses to an AddressSpace
-....
-POST /addresses/{addressSpace}
-....
-
+[[_createenmassev1alpha1namespacedaddress]]
+=== POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses
 
 ==== Description
-Append one or more Addresses to the specified AddressSpace.
+create an Address
 
 
 ==== Parameters
@@ -50,10 +45,10 @@ Append one or more Addresses to the specified AddressSpace.
 [options="header", cols=".^2a,.^3a,.^9a,.^4a"]
 |===
 |Type|Name|Description|Schema
-|**Path**|**addressSpace** +
-__required__|Name of AddressSpace|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
 |**Body**|**body** +
-__required__|AddressList object|<<_addresslist,AddressList>>
+__required__||<<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>>
 |===
 
 
@@ -62,9 +57,9 @@ __required__|AddressList object|<<_addresslist,AddressList>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|Addresses appended successfully. An AddressList containing all Addresses is returned.|<<_addresslist,AddressList>>
-|**404**|AddressSpace not found|No Content
-|**405**|Invalid input|No Content
+|**200**|OK|<<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>>
+|**201**|Created|<<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>>
+|**401**|Unauthorized|No Content
 |===
 
 
@@ -81,17 +76,14 @@ __required__|AddressList object|<<_addresslist,AddressList>>
 ==== Tags
 
 * addresses
+* enmasse_v1alpha1
 
 
-[[_getaddresslist]]
-=== Get list of all Addresses in the AddressSpace
-....
-GET /addresses/{addressSpace}
-....
-
+[[_listenmassev1alpha1namespacedaddress]]
+=== GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses
 
 ==== Description
-Returns a list of all Addresses in the specified AddressSpace
+list objects of kind Address
 
 
 ==== Parameters
@@ -99,8 +91,10 @@ Returns a list of all Addresses in the specified AddressSpace
 [options="header", cols=".^2a,.^3a,.^9a,.^4a"]
 |===
 |Type|Name|Description|Schema
-|**Path**|**addressSpace** +
-__required__|Name of AddressSpace|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|**Query**|**labelSelector** +
+__optional__|A selector to restrict the list of returned objects by their labels. Defaults to everything.|string
 |===
 
 
@@ -109,8 +103,8 @@ __required__|Name of AddressSpace|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|Successful operation. An AddressList containing all Addresses in the AddressSpace is returned.|<<_addresslist,AddressList>>
-|**404**|AddressSpace not found|No Content
+|**200**|OK|<<_io_enmasse_v1alpha1_addresslist,io.enmasse.v1alpha1.AddressList>>
+|**401**|Unauthorized|No Content
 |===
 
 
@@ -122,261 +116,14 @@ __required__|Name of AddressSpace|string
 ==== Tags
 
 * addresses
+* enmasse_v1alpha1
 
 
-[[_replaceaddresses]]
-=== Replace Addresses in an AddressSpace
-....
-PUT /addresses/{addressSpace}
-....
-
+[[_readenmassev1alpha1namespacedaddress]]
+=== GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}
 
 ==== Description
-Replace Addresses in the specified AddressSpace with those specified in the request body.
-
-
-==== Parameters
-
-[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
-|===
-|Type|Name|Description|Schema
-|**Path**|**addressSpace** +
-__required__|Name of AddressSpace|string
-|**Body**|**body** +
-__required__|AddressList object|<<_addresslist,AddressList>>
-|===
-
-
-==== Responses
-
-[options="header", cols=".^2a,.^14a,.^4a"]
-|===
-|HTTP Code|Description|Schema
-|**200**|Addresses replaced successfully. An AddressList containing all Addresses is returned.|<<_addresslist,AddressList>>
-|**404**|AddressSpace not found|No Content
-|**405**|Invalid input|No Content
-|===
-
-
-==== Consumes
-
-* `application/json`
-
-
-==== Produces
-
-* `application/json`
-
-
-==== Tags
-
-* addresses
-
-
-[[_deletealladdresses]]
-=== Delete all Addresses in an AddressSpace
-....
-DELETE /addresses/{addressSpace}
-....
-
-
-==== Parameters
-
-[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
-|===
-|Type|Name|Description|Schema
-|**Path**|**addressSpace** +
-__required__|Name of AddressSpace|string
-|===
-
-
-==== Responses
-
-[options="header", cols=".^2a,.^14a,.^4a"]
-|===
-|HTTP Code|Description|Schema
-|**200**|Deletion successful; Empty AddressList is returned.|<<_addresslist,AddressList>>
-|**404**|AddressSpace not found|No Content
-|===
-
-
-==== Produces
-
-* `application/json`
-
-
-==== Tags
-
-* addresses
-
-
-[[_getaddress]]
-=== Get Address by name
-....
-GET /addresses/{addressSpace}/{address}
-....
-
-
-==== Description
-Returns a single Address
-
-
-==== Parameters
-
-[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
-|===
-|Type|Name|Description|Schema
-|**Path**|**address** +
-__required__|Name of Address to return|string
-|**Path**|**addressSpace** +
-__required__|Name of AddressSpace|string
-|===
-
-
-==== Responses
-
-[options="header", cols=".^2a,.^14a,.^4a"]
-|===
-|HTTP Code|Description|Schema
-|**200**|Successful operation. The Address object is returned.|<<_address,Address>>
-|**404**|Address or AddressSpace not found|No Content
-|===
-
-
-==== Produces
-
-* `application/json`
-
-
-==== Tags
-
-* addresses
-
-
-[[_deleteaddress]]
-=== Delete an Address
-....
-DELETE /addresses/{addressSpace}/{address}
-....
-
-
-==== Parameters
-
-[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
-|===
-|Type|Name|Description|Schema
-|**Path**|**address** +
-__required__|Name of Address to delete|string
-|**Path**|**addressSpace** +
-__required__|Name of AddressSpace|string
-|===
-
-
-==== Responses
-
-[options="header", cols=".^2a,.^14a,.^4a"]
-|===
-|HTTP Code|Description|Schema
-|**200**|Deletion successful; List of remaining Addresses is returned.|<<_addresslist,AddressList>>
-|**404**|Address or AddressSpace not found|No Content
-|===
-
-
-==== Produces
-
-* `application/json`
-
-
-==== Tags
-
-* addresses
-
-
-[[_createaddressspace]]
-=== Create a new AddressSpace
-....
-POST /addressspaces
-....
-
-
-==== Description
-Creates a new AddressSpace in which you can then create Addresses.
-
-
-==== Parameters
-
-[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
-|===
-|Type|Name|Description|Schema
-|**Body**|**body** +
-__required__|AddressSpace object|<<_addressspace,AddressSpace>>
-|===
-
-
-==== Responses
-
-[options="header", cols=".^2a,.^14a,.^4a"]
-|===
-|HTTP Code|Description|Schema
-|**200**|AddressSpace created successfully. An AddressSpaceList containing all AddressSpaces is returned.|<<_addressspacelist,AddressSpaceList>>
-|**405**|Invalid input|No Content
-|===
-
-
-==== Consumes
-
-* `application/json`
-
-
-==== Produces
-
-* `application/json`
-
-
-==== Tags
-
-* addressspaces
-
-
-[[_getaddressspacelist]]
-=== Get list of all AddressSpaces
-....
-GET /addressspaces
-....
-
-
-==== Description
-Returns a list of all AddressSpaces in the system
-
-
-==== Responses
-
-[options="header", cols=".^2a,.^14a,.^4a"]
-|===
-|HTTP Code|Description|Schema
-|**200**|Successful operation. An AddressSpaceList containing all AddressSpaces is returned.|<<_addressspacelist,AddressSpaceList>>
-|===
-
-
-==== Produces
-
-* `application/json`
-
-
-==== Tags
-
-* addressspaces
-
-
-[[_getaddressspace]]
-=== Get AddressSpace by name
-....
-GET /addressspaces/{name}
-....
-
-
-==== Description
-Returns a single AddressSpace
+read the specified Address
 
 
 ==== Parameters
@@ -385,7 +132,9 @@ Returns a single AddressSpace
 |===
 |Type|Name|Description|Schema
 |**Path**|**name** +
-__required__|Name of AddressSpace to return|string
+__required__|Name of Address to read|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
 |===
 
 
@@ -394,8 +143,184 @@ __required__|Name of AddressSpace to return|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|Successful operation. An AddressSpace object is returned.|<<_addressspace,AddressSpace>>
-|**404**|AddressSpace not found|No Content
+|**200**|OK|<<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>>
+|**401**|Unauthorized|No Content
+|**404**|Not found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* addresses
+* enmasse_v1alpha1
+
+
+[[_replaceenmassev1alpha1namespacedaddress]]
+=== PUT /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}
+
+==== Description
+replace the specified Address
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**name** +
+__required__|Name of Address to replace|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|**Body**|**body** +
+__required__||<<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>>
+|**201**|Created|<<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>>
+|**401**|Unauthorized|No Content
+|===
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* addresses
+* enmasse_v1alpha1
+
+
+[[_deleteenmassev1alpha1namespacedaddress]]
+=== DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}
+
+==== Description
+delete an Address
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**name** +
+__required__|Name of Address to delete|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_status,Status>>
+|**401**|Unauthorized|No Content
+|**404**|Not found|No Content
+|===
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* addresses
+* enmasse_v1alpha1
+
+
+[[_createenmassev1alpha1namespacedaddressspace]]
+=== POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces
+
+==== Description
+create an AddressSpace
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|**Body**|**body** +
+__required__||<<_io_enmasse_v1alpha1_addressspace,io.enmasse.v1alpha1.AddressSpace>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_v1alpha1_addressspace,io.enmasse.v1alpha1.AddressSpace>>
+|**201**|Created|<<_io_enmasse_v1alpha1_addressspace,io.enmasse.v1alpha1.AddressSpace>>
+|**401**|Unauthorized|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* addressspaces
+* enmasse_v1alpha1
+
+
+[[_listenmassev1alpha1namespacedaddressspace]]
+=== GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces
+
+==== Description
+list objects of kind AddressSpace
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|**Query**|**labelSelector** +
+__optional__|A selector to restrict the list of returned objects by their labels. Defaults to everything.|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_v1alpha1_addressspacelist,io.enmasse.v1alpha1.AddressSpaceList>>
+|**401**|Unauthorized|No Content
 |===
 
 
@@ -407,13 +332,329 @@ __required__|Name of AddressSpace to return|string
 ==== Tags
 
 * addressspaces
+* enmasse_v1alpha1
 
 
-[[_deleteaddressspace]]
-=== Delete an AddressSpace
-....
-DELETE /addressspaces/{name}
-....
+[[_createenmassev1alpha1addressspaceaddresses]]
+=== POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses
+
+==== Description
+create Addresses in an AddressSpace
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**addressSpace** +
+__required__|Name of AddressSpace|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|**Body**|**body** +
+__required__|AddressList object|<<_io_enmasse_v1alpha1_addresslist,io.enmasse.v1alpha1.AddressList>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_status,Status>>
+|**401**|Unauthorized|No Content
+|**404**|Not found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* addressspace_addresses
+* enmasse_v1alpha1
+
+
+[[_listenmassev1alpha1namespacedaddressspaceaddress]]
+=== GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses
+
+==== Description
+list objects of kind Address in AddressSpace
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**addressSpace** +
+__required__|Name of AddressSpace|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_v1alpha1_addresslist,io.enmasse.v1alpha1.AddressList>>
+|**401**|Unauthorized|No Content
+|**404**|Not found|No Content
+|===
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* addressspace_addresses
+* enmasse_v1alpha1
+
+
+[[_readenmassev1alpha1namespacedaddressspaceaddress]]
+=== GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}
+
+==== Description
+read the specified Address in AddressSpace
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**address** +
+__required__|Name of Address|string
+|**Path**|**addressSpace** +
+__required__|Name of AddressSpace|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>>
+|**401**|Unauthorized|No Content
+|**404**|Not found|No Content
+|===
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* addressspace_addresses
+* enmasse_v1alpha1
+
+
+[[_replaceenmassev1alpha1namespacedaddressspaceaddress]]
+=== PUT /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}
+
+==== Description
+replace Address in an AddressSpace
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**address** +
+__required__|Name of address|string
+|**Path**|**addressSpace** +
+__required__|Name of AddressSpace|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|**Body**|**body** +
+__required__|Address object|<<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>>
+|**201**|Created|<<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>>
+|**401**|Unauthorized|No Content
+|**404**|Not found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* addressspace_addresses
+* enmasse_v1alpha1
+
+
+[[_deleteenmassev1alpha1namespacedaddressspaceaddress]]
+=== DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}
+
+==== Description
+delete an Address in AddressSpace
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**address** +
+__required__|Name of Address|string
+|**Path**|**addressSpace** +
+__required__|Name of AddressSpace|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_status,Status>>
+|**401**|Unauthorized|No Content
+|**404**|Not found|No Content
+|===
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* addressspace_addresses
+* enmasse_v1alpha1
+
+
+[[_readenmassev1alpha1namespacedaddressspace]]
+=== GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}
+
+==== Description
+read the specified AddressSpace
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**name** +
+__required__|Name of AddressSpace to read|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_v1alpha1_addressspace,io.enmasse.v1alpha1.AddressSpace>>
+|**401**|Unauthorized|No Content
+|**404**|Not found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* addressspaces
+* enmasse_v1alpha1
+
+
+[[_replaceenmassev1alpha1namespacedaddressspace]]
+=== PUT /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}
+
+==== Description
+replace the specified AddressSpace
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**name** +
+__required__|Name of AddressSpace to replace|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|**Body**|**body** +
+__required__||<<_io_enmasse_v1alpha1_addressspace,io.enmasse.v1alpha1.AddressSpace>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_v1alpha1_addressspace,io.enmasse.v1alpha1.AddressSpace>>
+|**201**|Created|<<_io_enmasse_v1alpha1_addressspace,io.enmasse.v1alpha1.AddressSpace>>
+|**401**|Unauthorized|No Content
+|===
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* addressspaces
+* enmasse_v1alpha1
+
+
+[[_deleteenmassev1alpha1namespacedaddressspace]]
+=== DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}
+
+==== Description
+delete an AddressSpace
 
 
 ==== Parameters
@@ -423,6 +664,8 @@ DELETE /addressspaces/{name}
 |Type|Name|Description|Schema
 |**Path**|**name** +
 __required__|Name of AddressSpace to delete|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
 |===
 
 
@@ -431,8 +674,9 @@ __required__|Name of AddressSpace to delete|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|Deletion successful; List of remaining AddressSpaces is returned.|<<_addressspacelist,AddressSpaceList>>
-|**404**|AddressSpace not found|No Content
+|**200**|OK|<<_status,Status>>
+|**401**|Unauthorized|No Content
+|**404**|Not found|No Content
 |===
 
 
@@ -444,6 +688,7 @@ __required__|Name of AddressSpace to delete|string
 ==== Tags
 
 * addressspaces
+* enmasse_v1alpha1
 
 
 
@@ -451,8 +696,36 @@ __required__|Name of AddressSpace to delete|string
 [[_definitions]]
 == Definitions
 
-[[_address]]
-=== Address
+[[_objectmeta]]
+=== ObjectMeta
+ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**name** +
+__required__|string
+|**namespace** +
+__optional__|string
+|===
+
+
+[[_status]]
+=== Status
+Status is a return value for calls that don't return other objects.
+
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**code** +
+__optional__|Suggested HTTP return code for this status, 0 if not set.|integer (int32)
+|===
+
+
+[[_io_enmasse_v1alpha1_address]]
+=== io.enmasse.v1alpha1.Address
 
 [options="header", cols=".^3a,.^4a"]
 |===
@@ -464,14 +737,14 @@ __required__|enum (Address)
 |**metadata** +
 __required__|<<_objectmeta,ObjectMeta>>
 |**spec** +
-__required__|<<_addressspec,AddressSpec>>
+__required__|<<_io_enmasse_v1alpha1_addressspec,io.enmasse.v1alpha1.AddressSpec>>
 |**status** +
-__optional__|<<_addressstatus,AddressStatus>>
+__optional__|<<_io_enmasse_v1alpha1_addressstatus,io.enmasse.v1alpha1.AddressStatus>>
 |===
 
 
-[[_addresslist]]
-=== AddressList
+[[_io_enmasse_v1alpha1_addresslist]]
+=== io.enmasse.v1alpha1.AddressList
 
 [options="header", cols=".^3a,.^11a,.^4a"]
 |===
@@ -479,29 +752,14 @@ __optional__|<<_addressstatus,AddressStatus>>
 |**apiVersion** +
 __required__|**Default** : `"enmasse.io/v1alpha1"`|enum (enmasse.io/v1alpha1)
 |**items** +
-__required__||< <<_address,Address>> > array
+__required__||< <<_io_enmasse_v1alpha1_address,io.enmasse.v1alpha1.Address>> > array
 |**kind** +
 __required__||enum (AddressList)
 |===
 
 
-[[_addressmeta]]
-=== AddressMeta
-
-[options="header", cols=".^3a,.^4a"]
-|===
-|Name|Schema
-|**addressSpace** +
-__optional__|string
-|**name** +
-__optional__|string
-|**uuid** +
-__optional__|string
-|===
-
-
-[[_addressspace]]
-=== AddressSpace
+[[_io_enmasse_v1alpha1_addressspace]]
+=== io.enmasse.v1alpha1.AddressSpace
 
 [options="header", cols=".^3a,.^4a"]
 |===
@@ -513,14 +771,14 @@ __required__|enum (AddressSpace)
 |**metadata** +
 __required__|<<_objectmeta,ObjectMeta>>
 |**spec** +
-__required__|<<_addressspacespec,AddressSpaceSpec>>
+__required__|<<_io_enmasse_v1alpha1_addressspacespec,io.enmasse.v1alpha1.AddressSpaceSpec>>
 |**status** +
-__optional__|<<_addressspacestatus,AddressSpaceStatus>>
+__optional__|<<_io_enmasse_v1alpha1_addressspacestatus,io.enmasse.v1alpha1.AddressSpaceStatus>>
 |===
 
 
-[[_addressspacelist]]
-=== AddressSpaceList
+[[_io_enmasse_v1alpha1_addressspacelist]]
+=== io.enmasse.v1alpha1.AddressSpaceList
 
 [options="header", cols=".^3a,.^11a,.^4a"]
 |===
@@ -528,29 +786,29 @@ __optional__|<<_addressspacestatus,AddressSpaceStatus>>
 |**apiVersion** +
 __required__|**Default** : `"enmasse.io/v1alpha1"`|enum (enmasse.io/v1alpha1)
 |**items** +
-__required__||< <<_addressspace,AddressSpace>> > array
+__required__||< <<_io_enmasse_v1alpha1_addressspace,io.enmasse.v1alpha1.AddressSpace>> > array
 |**kind** +
 __required__||enum (AddressSpaceList)
 |===
 
 
-[[_addressspacespec]]
-=== AddressSpaceSpec
+[[_io_enmasse_v1alpha1_addressspacespec]]
+=== io.enmasse.v1alpha1.AddressSpaceSpec
 
 [options="header", cols=".^3a,.^4a"]
 |===
 |Name|Schema
 |**authenticationService** +
-__optional__|<<_addressspacespec_authenticationservice,authenticationService>>
+__optional__|<<_io_enmasse_v1alpha1_addressspacespec_authenticationservice,authenticationService>>
 |**endpoints** +
-__optional__|< <<_addressspacespec_endpoints,endpoints>> > array
+__optional__|< <<_io_enmasse_v1alpha1_addressspacespec_endpoints,endpoints>> > array
 |**plan** +
 __required__|string
 |**type** +
-__required__|<<_addressspacetype,AddressSpaceType>>
+__required__|<<_io_enmasse_v1alpha1_addressspacetype,io.enmasse.v1alpha1.AddressSpaceType>>
 |===
 
-[[_addressspacespec_authenticationservice]]
+[[_io_enmasse_v1alpha1_addressspacespec_authenticationservice]]
 **authenticationService**
 
 [options="header", cols=".^3a,.^4a"]
@@ -562,23 +820,27 @@ __optional__|object
 __optional__|string
 |===
 
-[[_addressspacespec_endpoints]]
+[[_io_enmasse_v1alpha1_addressspacespec_endpoints]]
 **endpoints**
 
 [options="header", cols=".^3a,.^4a"]
 |===
 |Name|Schema
 |**cert** +
-__optional__|<<_addressspacespec_cert,cert>>
+__optional__|<<_io_enmasse_v1alpha1_addressspacespec_cert,cert>>
 |**host** +
 __optional__|string
 |**name** +
 __optional__|string
+|**port** +
+__optional__|integer
 |**service** +
 __optional__|string
+|**servicePorts** +
+__optional__|< <<_io_enmasse_v1alpha1_addressspacespec_serviceports,servicePorts>> > array
 |===
 
-[[_addressspacespec_cert]]
+[[_io_enmasse_v1alpha1_addressspacespec_cert]]
 **cert**
 
 [options="header", cols=".^3a,.^4a"]
@@ -590,9 +852,21 @@ __optional__|string
 __optional__|string
 |===
 
+[[_io_enmasse_v1alpha1_addressspacespec_serviceports]]
+**servicePorts**
 
-[[_addressspacestatus]]
-=== AddressSpaceStatus
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**name** +
+__optional__|string
+|**port** +
+__optional__|integer
+|===
+
+
+[[_io_enmasse_v1alpha1_addressspacestatus]]
+=== io.enmasse.v1alpha1.AddressSpaceStatus
 
 [options="header", cols=".^3a,.^4a"]
 |===
@@ -604,30 +878,30 @@ __optional__|< string > array
 |===
 
 
-[[_addressspacetype]]
-=== AddressSpaceType
-Type of address space (standard, brokered)
+[[_io_enmasse_v1alpha1_addressspacetype]]
+=== io.enmasse.v1alpha1.AddressSpaceType
+AddressSpaceType is the type of address space (standard, brokered). Each type supports different types of addresses and semantics for those types.
 
 __Type__ : enum (standard, brokered)
 
 
-[[_addressspec]]
-=== AddressSpec
+[[_io_enmasse_v1alpha1_addressspec]]
+=== io.enmasse.v1alpha1.AddressSpec
 
 [options="header", cols=".^3a,.^4a"]
 |===
 |Name|Schema
 |**address** +
-__optional__|string
+__required__|string
 |**plan** +
 __required__|string
 |**type** +
-__required__|<<_addresstype,AddressType>>
+__required__|<<_io_enmasse_v1alpha1_addresstype,io.enmasse.v1alpha1.AddressType>>
 |===
 
 
-[[_addressstatus]]
-=== AddressStatus
+[[_io_enmasse_v1alpha1_addressstatus]]
+=== io.enmasse.v1alpha1.AddressStatus
 
 [options="header", cols=".^3a,.^4a"]
 |===
@@ -641,24 +915,11 @@ __optional__|enum (Pending, Configuring, Active, Failed, Terminating)
 |===
 
 
-[[_addresstype]]
-=== AddressType
-Type of address (queue, topic, …)
+[[_io_enmasse_v1alpha1_addresstype]]
+=== io.enmasse.v1alpha1.AddressType
+Type of address (queue, topic, …). Each address type support different kinds of messaging semantics.
 
 __Type__ : enum (queue, topic, anycast, multicast)
-
-
-[[_objectmeta]]
-=== ObjectMeta
-
-[options="header", cols=".^3a,.^4a"]
-|===
-|Name|Schema
-|**name** +
-__required__|string
-|**namespace** +
-__optional__|string
-|===
 
 
 
