@@ -710,7 +710,7 @@ supporting the OpenShift client.</p>
 <div class="sect4">
 <h5 id="deploying_authentication_services">Deploying authentication services</h5>
 <div class="paragraph">
-<p>EnMasse require at least 1 authentication service to be deployed. The authentication service
+<p>EnMasse requires at least 1 authentication service to be deployed. The authentication service
 can either be none (allow all), standard (keycloak) or external (not managed by enmasse).</p>
 </div>
 <div class="sect5">
@@ -972,23 +972,18 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 oc create -f ./resources/api-server/service.yaml</pre>
 </div>
 </div>
+<div class="paragraph">
+<p><a id="oc-register-apiservice"></a></p>
+</div>
 </li>
-</ol>
-</div>
-<div class="paragraph">
-<p><a id="oc-register-apiserver"></a>
-. (Optional) Register API server to support custom resources</p>
-</div>
-<div class="paragraph">
-<p>+</p>
-</div>
+<li>
+<p>(Optional) Register API server to support custom resources</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc process -f ./resources/templates/api-service.yaml ENMASSE_NAMESPACE=enmasse | oc create -f -</pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>(Optional) Create routes exposing the API server:</p>
 <div class="listingblock">
@@ -1003,7 +998,7 @@ oc create -f ./resources/api-server/service.yaml</pre>
 <div class="sect4">
 <h5 id="optional_deploying_service_broker">(Optional) Deploying Service Broker</h5>
 <div class="paragraph">
-<p>The Service Broker provides an implementation of the Open Service Broker API that integerates with the Kubernetes Service Catalog. The Service Broker requires the Standard Authentication Service to be deployed.</p>
+<p>The Service Broker provides an implementation of the Open Service Broker API that integrates with the Kubernetes Service Catalog. The Service Broker requires the Standard Authentication Service to be deployed.</p>
 </div>
 <div class="paragraph">
 <p><strong>NOTE</strong>: If you install on OpenShift, it is recommended that you have cluster-admin access in order to set up the required roles for delegating authentication to the Kubernetes master. See <a href="#openshift-install-single-address-space">Deploying EnMasse limited to a single address space</a> for how to deploy without cluster-admin access, which will restrict it to a single address space.</p>
@@ -1234,13 +1229,21 @@ supporting the <code>kubectl</code> command line client.</p>
 </div>
 </div>
 </li>
+<li>
+<p>Set enmasse namespace as default namespace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl config set-context $(kubectl config current-context) --namespace=enmasse</pre>
+</div>
+</div>
+</li>
 </ol>
 </div>
 </div>
 <div class="sect4">
 <h5 id="deploying_authentication_services_2">Deploying authentication services</h5>
 <div class="paragraph">
-<p>EnMasse require at least 1 authentication service to be deployed. The authentication service
+<p>EnMasse requires at least 1 authentication service to be deployed. The authentication service
 can either be none (allow all), standard (keycloak) or external (not managed by enmasse).</p>
 </div>
 <div class="sect5">
@@ -1448,7 +1451,7 @@ kubectl create -f ./resources/api-server/service.yaml</pre>
 <div class="sect4">
 <h5 id="optional_deploying_service_broker_2">(Optional) Deploying Service Broker</h5>
 <div class="paragraph">
-<p>The Service Broker provides an implementation of the Open Service Broker API that integerates with the Kubernetes Service Catalog. The Service Broker requires the Standard Authentication Service to be deployed.</p>
+<p>The Service Broker provides an implementation of the Open Service Broker API that integrates with the Kubernetes Service Catalog. The Service Broker requires the Standard Authentication Service to be deployed.</p>
 </div>
 <div class="paragraph">
 <p><strong>NOTE</strong>: If you install on OpenShift, it is recommended that you have cluster-admin access in order to set up the required roles for delegating authentication to the Kubernetes master. See <a href="#openshift-install-single-address-space">Deploying EnMasse limited to a single address space</a> for how to deploy without cluster-admin access, which will restrict it to a single address space.</p>
@@ -2538,7 +2541,7 @@ on your machine.</p>
 </ol>
 </div>
 <div class="paragraph">
-<p>This guide uses a shell script for deploying EnMasse. Windows users are adviced to look at
+<p>This guide uses a shell script for deploying EnMasse. Windows users are advised to look at
 <a href="#installing-openshift">Installing EnMasse on OpenShift</a>.</p>
 </div>
 <div class="sect5">
@@ -2558,7 +2561,7 @@ on your machine.</p>
 <h7 id="using_ansible">Using ansible</h7>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">ansible-playbook ansible/playbooks/openshift/singletenant-standard.yml</pre>
+<pre class="nowrap">ansible-playbook -i ansible/inventory/singletenant-standard.example ansible/playbooks/openshift/install.yml</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2923,7 +2926,7 @@ laptop.</p>
 </ol>
 </div>
 <div class="paragraph">
-<p>This guide uses a shell script for deploying EnMasse. Windows users are adviced to look at
+<p>This guide uses a shell script for deploying EnMasse. Windows users are advised to look at
 <a href="#installing-kubernetes">Installing EnMasse on Kubernetes</a>.</p>
 </div>
 <div class="sect5">
@@ -2943,7 +2946,7 @@ laptop.</p>
 <h7 id="using_ansible_2">Using ansible</h7>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">ansible-playbook ansible/playbooks/openshift/singletenant-standard.yml</pre>
+<pre class="nowrap">ansible-playbook -i ansible/inventory/singletenant-standard.example ansible/playbooks/openshift/install.yml</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2960,37 +2963,17 @@ meantime, you can start to create your address configuration.</p>
 <p>The Kubernetes deployment script and YAML files currently do not support Role
 Based Access Control (RBAC). In Kubernetes clusters which have RBAC enabled, it is
 required to additionally create a role binding for the <code>default</code> service account
-to the <code>view</code> role and for the <code>enmasse-service-account</code> to the <code>cluster-admin</code> role:</p>
+to the <code>edit</code> role and for the <code>enmasse-admin</code> to the <code>cluster-admin</code> and <code>admin</code> roles:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">kubectl create clusterrolebinding enmasse-service-account-binding --clusterrole=cluster-admin --serviceaccount=enmasse:enmasse-service-account
-kubectl create rolebinding default-view-binding --clusterrole=view --serviceaccount=enmasse:default -n enmasse</pre>
+<pre class="nowrap">kubectl create clusterrolebinding enmasse-admin-cluster-binding --clusterrole=cluster-admin --serviceaccount=enmasse:enmasse-admin
+kubectl create rolebinding default-edit-binding --clusterrole=edit --serviceaccount=enmasse:default -n enmasse
+kubectl create rolebinding enmasse-admin-admin-binding --clusterrole=admin --serviceaccount=enmasse:enmasse-admin -n enmasse</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><em>Note: The <code>cluster-admin</code> role gives the <code>enmasse-service-account</code> service account unlimited access to the Kubernetes cluster.</em></p>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="deploying-external-load-balancers">Deploying external load balancers</h5>
-<div class="paragraph">
-<p>If you&#8217;re running EnMasse in your own Kubernetes instance on any of the
-cloud providers, you can deploy the external load balancer services
-to expose EnMasse ports:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f kubernetes/addons/external-lb.yaml -n enmasse</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If you are running in multitenant mode, exposing the restapi is sufficient:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f kubernetes/addons/external-lb-restapi.yaml -n enmasse</pre>
+<p><em>Note: The <code>cluster-admin</code> role gives the <code>enmasse-admin</code> service account unlimited access to the Kubernetes cluster.</em></p>
 </div>
 </div>
 </div>
@@ -3462,7 +3445,7 @@ EnMasse.</p>
 <h7 id="using_ansible_3">Using ansible</h7>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">ansible-playbook ansible/playbooks/openshift/singletenant-standard.yml</pre>
+<pre class="nowrap">ansible-playbook -i ansible/inventory/singletenant-standard.example ansible/playbooks/openshift/install.yml</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6672,7 +6655,7 @@ The default username and password is <code>admin/admin</code>. E</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-22 16:05:15 UTC
+Last updated 2018-05-24 08:13:37 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
