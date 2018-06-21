@@ -778,10 +778,11 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 </div>
 </li>
 <li>
-<p>Give view permissions for the keycloak controller:</p>
+<p>Grant privileges to service account:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc adm policy add-role-to-user view system:serviceaccount:enmasse:default</pre>
+<pre class="nowrap">oc login -u system:admin
+oc adm policy add-cluster-role-to-user enmasse.io:keycloak-controller system:serviceaccount:enmasse:enmasse-admin</pre>
 </div>
 </div>
 </li>
@@ -857,7 +858,7 @@ restrict it to a single address space.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc login -u system:admin
-oc create -f ./resources/cluster-roles/address-space-controller.yaml</pre>
+oc create -f ./resources/cluster-roles/openshift/address-space-controller.yaml</pre>
 </div>
 </div>
 </li>
@@ -2387,7 +2388,32 @@ container.on('sendable', function (context) {
     context.sender.send({body:'Hello World!'});
     context.sender.detach();
 });
-container.connect({port:443, host:'&lt;messaging-route-hostname&gt;', transport:'tls', rejectUnauthorized:false});</code></pre>
+container.connect({username: '&lt;username&gt;', password: '&lt;password&gt;', port:443, host:'&lt;messaging-route-hostname&gt;', transport:'tls', rejectUnauthorized:false});</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="rhea_javascript_client_using_websockets">Rhea JavaScript Client using WebSockets</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-javascript hljs" data-lang="javascript">var container = require('rhea');
+var WebSocket = require('ws');
+
+container.on('connection_open', function (context) {
+    context.connection.open_receiver('myqueue');
+    context.connection.open_sender('myqueue');
+});
+container.on('message', function (context) {
+    console.log(context.message.body);
+    context.connection.close();
+});
+container.on('sendable', function (context) {
+    context.sender.send({body:'Hello World!'});
+    context.sender.detach();
+});
+
+var ws = container.websocket_connect(WebSocket);
+container.connect({username: '&lt;username&gt;', password: '&lt;password&gt;', connection_details: ws("wss://&lt;messaging-route-hostname&gt;:443", ["binary"], {rejectUnauthorized: false})});</code></pre>
 </div>
 </div>
 </div>
@@ -2465,7 +2491,7 @@ int main(int argc, char **argv) {
 <h5 id="amqp_net_lite">AMQP.Net Lite</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-c# hljs" data-lang="c#">using System;
+<pre class="highlightjs highlight nowrap"><code class="language-csharp hljs" data-lang="csharp">using System;
 using Amqp;
 
 namespace Test
@@ -6409,15 +6435,6 @@ The default username and password is <code>admin/admin</code>. E</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>port</strong><br>
-<em>optional</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>integer</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>service</strong><br>
 <em>optional</em></p>
 </div></div></td>
@@ -6427,11 +6444,11 @@ The default username and password is <code>admin/admin</code>. E</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>servicePorts</strong><br>
+<p><strong>servicePort</strong><br>
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_v1alpha1_addressspacespec_serviceports">servicePorts</a> &gt; array</p>
+<p>string</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -6471,7 +6488,113 @@ The default username and password is <code>admin/admin</code>. E</p>
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_v1alpha1_addressspacespec_serviceports" class="paragraph">
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_v1alpha1_addressspacestatus">io.enmasse.v1alpha1.AddressSpaceStatus</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>endpointStatuses</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_v1alpha1_addressspacestatus_endpointstatuses">endpointStatuses</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>isReady</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>boolean</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>messages</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; string &gt; array</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_v1alpha1_addressspacestatus_endpointstatuses" class="paragraph">
+<p><strong>endpointStatuses</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>host</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>port</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>serviceHost</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>servicePorts</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_v1alpha1_addressspacestatus_serviceports">servicePorts</a> &gt; array</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_v1alpha1_addressspacestatus_serviceports" class="paragraph">
 <p><strong>servicePorts</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -6502,41 +6625,6 @@ The default username and password is <code>admin/admin</code>. E</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>integer</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_io_enmasse_v1alpha1_addressspacestatus">io.enmasse.v1alpha1.AddressSpaceStatus</h5>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 42.8571%;">
-<col style="width: 57.1429%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>isReady</strong><br>
-<em>optional</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>boolean</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>messages</strong><br>
-<em>optional</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; string &gt; array</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -6655,7 +6743,7 @@ The default username and password is <code>admin/admin</code>. E</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-24 08:13:37 UTC
+Last updated 2018-06-21 07:47:26 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">

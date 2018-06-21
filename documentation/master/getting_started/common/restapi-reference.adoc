@@ -832,12 +832,10 @@ __optional__|<<_io_enmasse_v1alpha1_addressspacespec_cert,cert>>
 __optional__|string
 |**name** +
 __optional__|string
-|**port** +
-__optional__|integer
 |**service** +
 __optional__|string
-|**servicePorts** +
-__optional__|< <<_io_enmasse_v1alpha1_addressspacespec_serviceports,servicePorts>> > array
+|**servicePort** +
+__optional__|string
 |===
 
 [[_io_enmasse_v1alpha1_addressspacespec_cert]]
@@ -852,7 +850,40 @@ __optional__|string
 __optional__|string
 |===
 
-[[_io_enmasse_v1alpha1_addressspacespec_serviceports]]
+
+[[_io_enmasse_v1alpha1_addressspacestatus]]
+=== io.enmasse.v1alpha1.AddressSpaceStatus
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**endpointStatuses** +
+__optional__|< <<_io_enmasse_v1alpha1_addressspacestatus_endpointstatuses,endpointStatuses>> > array
+|**isReady** +
+__optional__|boolean
+|**messages** +
+__optional__|< string > array
+|===
+
+[[_io_enmasse_v1alpha1_addressspacestatus_endpointstatuses]]
+**endpointStatuses**
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**host** +
+__optional__|string
+|**name** +
+__optional__|string
+|**port** +
+__optional__|integer
+|**serviceHost** +
+__optional__|string
+|**servicePorts** +
+__optional__|< <<_io_enmasse_v1alpha1_addressspacestatus_serviceports,servicePorts>> > array
+|===
+
+[[_io_enmasse_v1alpha1_addressspacestatus_serviceports]]
 **servicePorts**
 
 [options="header", cols=".^3a,.^4a"]
@@ -862,19 +893,6 @@ __optional__|string
 __optional__|string
 |**port** +
 __optional__|integer
-|===
-
-
-[[_io_enmasse_v1alpha1_addressspacestatus]]
-=== io.enmasse.v1alpha1.AddressSpaceStatus
-
-[options="header", cols=".^3a,.^4a"]
-|===
-|Name|Schema
-|**isReady** +
-__optional__|boolean
-|**messages** +
-__optional__|< string > array
 |===
 
 
