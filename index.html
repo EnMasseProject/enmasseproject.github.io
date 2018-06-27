@@ -71,35 +71,20 @@
   <div class="post-content">
     <h1 id="overview">Overview</h1>
 
-<p>EnMasse is an open source messaging platform, with focus on scalability and performance. EnMasse can run on your own infrastructure or in the cloud, and simplifies the deployment of messaging infrastructure.</p>
+<p>EnMasse is an open source project for managed, self-service messaging on <a href="https://kubernetes.io">Kubernetes</a>. EnMasse can run on your own infrastructure or in the cloud, and simplifies running a messaging infrastructure for your organization.</p>
 
-<p>The EnMasse project aims to create, as a community, an open source messaging platform that runs on <a href="https://kubernetes.io/">Kubernetes</a> and <a href="http://openshift.org/">OpenShift</a>. EnMasse promotes open standards like <a href="http://amqp.org/">AMQP</a> and <a href="http://mqtt.org/">MQTT</a> etc. and aims to provide support for other protocols as well.</p>
+<p>The <b>messaging service operator</b> can deploy and manage messaging infrastructure using cloud-native tools, while <b>independent teams</b> can request messaging resources using cloud-native APIs and tools.</p>
 
 <h1 id="features">Features</h1>
 
 <ul>
-  <li>Handles different <b>communication patterns</b> like request-response, pub-sub and events</li>
-  <li>Provides an <a href="http://enmasse.io/documentation/master/index.html#address_model">address model</a> and an <a href="http://enmasse.io/documentation/master/index.html#configuring-using-restapi">API</a> for managing messaging infrastructure</li>
-  <li>Supports <b>multitenancy</b> with multiple isolated address spaces</li>
-  <li>Supports <b>authentication</b> and <b>authorization</b> of clients and identity management using <a href="http://www.keycloak.org/">keycloak</a></li>
-  <li>Built on <b>Kubernetes/OpenShift</b>: deploy <b>on-premise</b> or in the <b>cloud</b></li>
+  <li>Built-in <b>authentication</b> and <b>authorization</b> of clients and identity management</li>
+  <li>Runs on <b>Kubernetes</b>: deploy <b>on-premise</b> or in the <b>cloud</b></li>
+  <li>Different <b>messaging patterns</b> like request-response, pub-sub and events</li>
+  <li>Decouple <b>operation</b> of messaging infrastructure from <b>usage</b></li>
 </ul>
 
 <p>EnMasse can be used for many purposes, such as moving your messaging infrastructure to the cloud <b>without depending on a specific cloud provider</b>, building a scalable messaging backbone for <b>IoT</b>, or just as a <b>cloud-ready</b> version of a message broker.</p>
-
-<p>EnMasse supports a <code class="highlighter-rouge">standard</code> and a <code class="highlighter-rouge">brokered</code> address space types, each with different semantics.</p>
-
-<h4 id="standard-address-space">Standard address space</h4>
-
-<p>The standard address space type is the default type in EnMasse, and is focused on scaling in the number of connections and the throughput of the system. It supports <b>AMQP</b> and <b>MQTT</b> protocols, with more to come in the future. This address space type is based on based on other open source projects like <a href="https://activemq.apache.org/artemis/">Apache ActiveMQ Artemis</a> and <a href="https://qpid.apache.org/components/dispatch-router/index.html">Apache Qpid Dispatch Router</a> and provides elastic scaling of these components.  From 40000 feet, the messaging infrastructure looks like this:</p>
-
-<p><img src="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/overview/enmasse_overall_view.png" alt="EnMasse Standard" /></p>
-
-<h4 id="brokered-address-space">Brokered address space</h4>
-
-<p>The brokered address space type is the “classical” message broker in the cloud. It supports JMS with transactions, message groups, selectors on queues etc. These kind of features are powerful in building complex messaging patterns. This address space is also the most light weight as it features only a single broker + a management console. The high level architecture of this address space looks like this:</p>
-
-<p><img src="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/overview/enmasse_brokered_view.png" alt="EnMasse Brokered" /></p>
 
 <p>To learn more about EnMasse, take a look at our <a href="/documentation">documentation</a>.</p>
 
