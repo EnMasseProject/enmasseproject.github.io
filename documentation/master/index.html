@@ -436,71 +436,78 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#installation">1. Installation</a>
+<li><a href="#overview">1. Overview</a>
+<ul class="sectlevel3">
+<li><a href="#features">1.1. Features</a></li>
+<li><a href="#standard_address_space">1.2. Standard address space</a></li>
+<li><a href="#brokered_address_space">1.3. Brokered address space</a></li>
+</ul>
+</li>
+<li><a href="#installation">2. Installation</a>
 <ul class="sectlevel2">
-<li><a href="#installing-openshift">1.1. Installing EnMasse on OpenShift</a>
+<li><a href="#installing-openshift">2.1. Installing EnMasse on OpenShift</a>
 <ul class="sectlevel3">
-<li><a href="#prerequisites-openshift">1.1.1. Prerequisites</a></li>
-<li><a href="#installing_enmasse_using_ansible">1.1.2. Installing EnMasse using Ansible</a></li>
-<li><a href="#installing_enmasse_manually">1.1.3. Installing EnMasse manually</a></li>
+<li><a href="#prerequisites-openshift">2.1.1. Prerequisites</a></li>
+<li><a href="#installing_enmasse_using_ansible">2.1.2. Installing EnMasse using Ansible</a></li>
+<li><a href="#installing_enmasse_manually">2.1.3. Installing EnMasse manually</a></li>
 </ul>
 </li>
-<li><a href="#installing-kubernetes">1.2. Installing EnMasse on Kubernetes</a>
+<li><a href="#installing-kubernetes">2.2. Installing EnMasse on Kubernetes</a>
 <ul class="sectlevel3">
-<li><a href="#prerequisites-kubernetes">1.2.1. Prerequisites</a></li>
+<li><a href="#prerequisites-kubernetes">2.2.1. Prerequisites</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#configuring_address_space_and_address_plans">2. Configuring address space and address plans</a>
+<li><a href="#configuring_address_space_and_address_plans">3. Configuring address space and address plans</a>
 <ul class="sectlevel3">
-<li><a href="#address-space-plans">2.1. Address Space plans</a></li>
-<li><a href="#address-plans">2.2. Address plans</a></li>
-<li><a href="#resource-definitions">2.3. Resource definitions</a></li>
+<li><a href="#address-space-plans">3.1. Address Space plans</a></li>
+<li><a href="#address-plans">3.2. Address plans</a></li>
+<li><a href="#resource-definitions">3.3. Resource definitions</a></li>
 </ul>
 </li>
-<li><a href="#monitoring">3. Monitoring</a>
+<li><a href="#monitoring">4. Monitoring</a>
 <ul class="sectlevel2">
-<li><a href="#monitoring">3.1. Monitoring EnMasse</a>
+<li><a href="#monitoring">4.1. Monitoring EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#deploying_prometheus">3.1.1. Deploying Prometheus</a></li>
-<li><a href="#deploying_grafana">3.1.2. Deploying Grafana</a></li>
+<li><a href="#deploying_prometheus">4.1.1. Deploying Prometheus</a></li>
+<li><a href="#deploying_grafana">4.1.2. Deploying Grafana</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#managing_address_spaces_and_addresses">4. Managing address spaces and addresses</a>
+<li><a href="#managing_address_spaces_and_addresses">5. Managing address spaces and addresses</a>
 <ul class="sectlevel2">
-<li><a href="#address_model">4.1. Address Model</a>
+<li><a href="#address_model">5.1. Address Model</a>
 <ul class="sectlevel3">
-<li><a href="#address_space">4.1.1. Address Space</a></li>
-<li><a href="#address">4.1.2. Address</a></li>
-<li><a href="#plans_2">4.1.3. Plans</a></li>
-<li><a href="#standard_address_space">4.1.4. Standard Address Space</a></li>
-<li><a href="#brokered_address_space">4.1.5. Brokered Address Space</a></li>
+<li><a href="#address_space">5.1.1. Address Space</a></li>
+<li><a href="#address">5.1.2. Address</a></li>
+<li><a href="#plans_2">5.1.3. Plans</a></li>
+<li><a href="#standard_address_space">5.1.4. Standard Address Space</a></li>
+<li><a href="#brokered_address_space">5.1.5. Brokered Address Space</a></li>
 </ul>
 </li>
-<li><a href="#configuring-using-cli">4.2. Configuring EnMasse using the command line</a>
+<li><a href="#configuring-using-cli">5.2. Configuring EnMasse using the command line</a>
 <ul class="sectlevel3">
-<li><a href="#creating_an_address_space">4.2.1. Creating an Address Space</a></li>
-<li><a href="#creating_an_address">4.2.2. Creating an Address</a></li>
+<li><a href="#creating_an_address_space">5.2.1. Creating an Address Space</a></li>
+<li><a href="#creating_an_address">5.2.2. Creating an Address</a></li>
 </ul>
 </li>
-<li><a href="#configuring-using-restapi">4.3. Configuring EnMasse using a REST API</a>
+<li><a href="#configuring-using-restapi">5.3. Configuring EnMasse using a REST API</a>
 <ul class="sectlevel3">
-<li><a href="#creating_an_address_space_2">4.3.1. Creating an Address Space</a></li>
-<li><a href="#viewing_address_space_status">4.3.2. Viewing Address Space Status</a></li>
-<li><a href="#creating_addresses">4.3.3. Creating Addresses</a></li>
-<li><a href="#viewing_configured_addresses">4.3.4. Viewing Configured Addresses</a></li>
+<li><a href="#creating_an_address_space_2">5.3.1. Creating an Address Space</a></li>
+<li><a href="#viewing_address_space_status">5.3.2. Viewing Address Space Status</a></li>
+<li><a href="#creating_addresses">5.3.3. Creating Addresses</a></li>
+<li><a href="#viewing_configured_addresses">5.3.4. Viewing Configured Addresses</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#connecting_applications_to_enmasse">5. Connecting applications to EnMasse</a>
+<li><a href="#connecting_applications_to_enmasse">6. Connecting applications to EnMasse</a>
 <ul class="sectlevel2">
-<li><a href="#connecting">5.1. Connecting to EnMasse</a>
+<li><a href="#connecting">6.1. Connecting to EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#client_examples">5.1.1. Client Examples</a></li>
+<li><a href="#client_examples">6.1.1. Client Examples</a></li>
 </ul>
 </li>
 </ul>
@@ -528,12 +535,73 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="installation">1. Installation</h2>
+<h2 id="overview">1. Overview</h2>
+<div class="sectionbody">
+<div id="enmasse_overview" class="paragraph">
+<p>EnMasse is an open source project for managed, self-service messaging on [Kubernetes](<a href="https://kubernetes.io" class="bare">https://kubernetes.io</a>). EnMasse can run on your own infrastructure or in the cloud, and simplifies running a messaging infrastructure for your organization.</p>
+</div>
+<div class="paragraph">
+<p>The service admin can deploy and manage messaging infrastructure, while tenants can request messaging resources, both using cloud-native APIs and tools.</p>
+</div>
+<div class="sect3">
+<h4 id="features">1.1. Features</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Built-in authentication and authorization of clients and identity management</p>
+</li>
+<li>
+<p>Runs on Kubernetes: deploy on-premise or in the cloud</p>
+</li>
+<li>
+<p>Different messaging patterns such as request-response, publish-subscribe and events</p>
+</li>
+<li>
+<p>Decouple operation of infrastructure from configuration and use by applications</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>EnMasse can be used for many purposes, such as moving your messaging infrastructure to the cloud without depending on a specific cloud provider, building a scalable messaging backbone for IoT, or just as a cloud-ready version of a message broker.</p>
+</div>
+<div class="paragraph">
+<p>EnMasse can provision different types of messaging depending on your use case. A user can request messaging resources by creating an <a href="#address_space">Address Space</a>.</p>
+</div>
+<div class="paragraph">
+<p>EnMasse currently supports a <code>standard</code> and a <code>brokered</code> address space type, each with different semantics.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="standard_address_space">1.2. Standard address space</h3>
+<div class="paragraph">
+<p>The standard address space type is the default type in EnMasse, and is focused on scaling in the number of connections and the throughput of the system. It supports AMQP and MQTT protocols, with more to come in the future. This address space type is based on other open source projects such as [Apache ActiveMQ Artemis](<a href="https://activemq.apache.org/artemis/" class="bare">https://activemq.apache.org/artemis/</a>) and [Apache Qpid Dispatch Router](<a href="https://qpid.apache.org/components/dispatch-router/index.html" class="bare">https://qpid.apache.org/components/dispatch-router/index.html</a>) and provides elastic scaling of these components.  This image illustrates the high-level architecture of the standard address space:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/overview/enmasse_overall_view.png" alt="Standard Address Space">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="brokered_address_space">1.3. Brokered address space</h3>
+<div class="paragraph">
+<p>The brokered address space type is the "classic" message broker in the cloud which supports AMQP, CORE, OpenWire, and MQTT protocols. It supports JMS with transactions, message groups, selectors on queues and so on. These features are useful for building complex messaging patterns. This address space is also more lightweight as it features only a single broker and a management console.  This image illustrates the high-level architecture of the brokered address space:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/overview/enmasse_brokered_view.png" alt="Brokered Address Space">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installation">2. Installation</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="installing-openshift">1.1. Installing EnMasse on OpenShift</h3>
+<h3 id="installing-openshift">2.1. Installing EnMasse on OpenShift</h3>
 <div class="sect3">
-<h4 id="prerequisites-openshift">1.1.1. Prerequisites</h4>
+<h4 id="prerequisites-openshift">2.1.1. Prerequisites</h4>
 <div class="paragraph">
 <p>To install EnMasse, you need to have the OpenShift client tools. You can download the OpenShift
 Origin client from <a href="https://github.com/openshift/origin/releases">OpenShift Origin</a>. EnMasse has
@@ -564,7 +632,7 @@ on your machine.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="installing_enmasse_using_ansible">1.1.2. Installing EnMasse using Ansible</h4>
+<h4 id="installing_enmasse_using_ansible">2.1.2. Installing EnMasse using Ansible</h4>
 <div class="paragraph">
 <p>Installing with Ansible requires creating an inventory file with the variables for configuring the
 system. Example inventory files can be found in the <code>ansible/inventory</code> folder. The following
@@ -687,7 +755,7 @@ authentication_services=["standard"]</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="installing_enmasse_manually">1.1.3. Installing EnMasse manually</h4>
+<h4 id="installing_enmasse_manually">2.1.3. Installing EnMasse manually</h4>
 <div class="paragraph">
 <p>This guide will walk through the manual deployment procedure and should work on any platform
 supporting the OpenShift client.</p>
@@ -1194,9 +1262,9 @@ supporting the OpenShift client.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="installing-kubernetes">1.2. Installing EnMasse on Kubernetes</h3>
+<h3 id="installing-kubernetes">2.2. Installing EnMasse on Kubernetes</h3>
 <div class="sect3">
-<h4 id="prerequisites-kubernetes">1.2.1. Prerequisites</h4>
+<h4 id="prerequisites-kubernetes">2.2.1. Prerequisites</h4>
 <div class="paragraph">
 <p>To install EnMasse, you need to have Kubernetes installed. You can use
 <a href="https://github.com/kubernetes/minikube">minikube</a> if you want to install EnMasse on your
@@ -1544,7 +1612,7 @@ kubectl create configmap service-broker-config --from-literal=enableRbac=false -
 </div>
 </div>
 <div class="sect1">
-<h2 id="configuring_address_space_and_address_plans">2. Configuring address space and address plans</h2>
+<h2 id="configuring_address_space_and_address_plans">3. Configuring address space and address plans</h2>
 <div class="sectionbody">
 <div id="plans" class="paragraph">
 <p>Plans are used to configure quotas and control the resources consumed by a particular deployment.  Plans are configured by the EnMasse service operator, and selected when creating an address space and address.</p>
@@ -1560,7 +1628,7 @@ sufficient for most uses.</p>
 <p>This guide will explain how to create and modify plans to suit your needs.</p>
 </div>
 <div class="sect3">
-<h4 id="address-space-plans">2.1. Address Space plans</h4>
+<h4 id="address-space-plans">3.1. Address Space plans</h4>
 <div class="paragraph">
 <p>Address space plans configure the quota available to a given address space. By default, EnMasse comes with an 'unlimited' quota plan for both the standard and brokered address space.</p>
 </div>
@@ -1641,7 +1709,7 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="address-plans">2.2. Address plans</h4>
+<h4 id="address-plans">3.2. Address plans</h4>
 <div class="paragraph">
 <p>Address plans configure the expected resource usage of a given address. The sum of the resource usage for all resource types determines the amount of infrastructure provisioned for an address space. A single router and broker pod has a max usage of 1. If a new address requires additional resources, and the resource consumption is within the address space plan limits, a new pod will be created automatically to handle the increased load.</p>
 </div>
@@ -1746,7 +1814,7 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="resource-definitions">2.3. Resource definitions</h4>
+<h4 id="resource-definitions">3.3. Resource definitions</h4>
 <div class="paragraph">
 <p>Resource describes a template along with a set of parameters. The resource definition is referenced from the plans. At present, only 3 resource definitions are supported:</p>
 </div>
@@ -1797,16 +1865,16 @@ data:
 </div>
 </div>
 <div class="sect1">
-<h2 id="monitoring">3. Monitoring</h2>
+<h2 id="monitoring">4. Monitoring</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="monitoring">3.1. Monitoring EnMasse</h3>
+<h3 id="monitoring">4.1. Monitoring EnMasse</h3>
 <div class="paragraph">
 <p>EnMasse comes with addons for Prometheus and Grafana for monitoring the service. Cluster-admin
 privileges is required for Prometheus to monitor pods in the cluster.</p>
 </div>
 <div class="sect3">
-<h4 id="deploying_prometheus">3.1.1. Deploying Prometheus</h4>
+<h4 id="deploying_prometheus">4.1.1. Deploying Prometheus</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1822,7 +1890,7 @@ privileges is required for Prometheus to monitor pods in the cluster.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deploying_grafana">3.1.2. Deploying Grafana</h4>
+<h4 id="deploying_grafana">4.1.2. Deploying Grafana</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1852,10 +1920,10 @@ privileges is required for Prometheus to monitor pods in the cluster.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="managing_address_spaces_and_addresses">4. Managing address spaces and addresses</h2>
+<h2 id="managing_address_spaces_and_addresses">5. Managing address spaces and addresses</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="address_model">4.1. Address Model</h3>
+<h3 id="address_model">5.1. Address Model</h3>
 <div class="paragraph">
 <p>The EnMasse address model involves three distinct concepts:</p>
 </div>
@@ -1873,19 +1941,19 @@ privileges is required for Prometheus to monitor pods in the cluster.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="address_space">4.1.1. Address Space</h4>
+<h4 id="address_space">5.1.1. Address Space</h4>
 <div class="paragraph">
 <p>An address space is a group of addresses that can be accessed through a single connection (per protocol). This means that clients connected to the endpoints of an address space can send messages to or receive messages from any address it is authorized to send messages to or receive messages from within that address space. An address space can support multiple protocols, which is defined by the address space type.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="address">4.1.2. Address</h4>
+<h4 id="address">5.1.2. Address</h4>
 <div class="paragraph">
 <p>An address is part of an address space and represents a destination used for sending and receiving messages. An address has a type, which defines the semantics of sending messages to and receiving messages from that address.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="plans_2">4.1.3. Plans</h4>
+<h4 id="plans_2">5.1.3. Plans</h4>
 <div class="paragraph">
 <p>Both address spaces and addresses can be restricted by a plan, which enforces a limit on resource usage across multiple dimensions. Note that the set of plans currently offered might be extended in the future, and the constraints imposed by a plan within an address space might change as operational experience is gained.</p>
 </div>
@@ -1903,7 +1971,7 @@ privileges is required for Prometheus to monitor pods in the cluster.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="standard_address_space">4.1.4. Standard Address Space</h4>
+<h4 id="standard_address_space">5.1.4. Standard Address Space</h4>
 <div class="paragraph">
 <p>The default address space in EnMasse is the standard address space and it consists of an AMQP router network in combination with attachable storage units. The implementation of a storage unit is hidden from the client and the routers with a well-defined API. This address space type is appropriate when you have many connections and addresses. However, it has the following limitations: no transaction support, no message ordering, no selectors on queues, and no message groups.</p>
 </div>
@@ -1958,7 +2026,7 @@ privileges is required for Prometheus to monitor pods in the cluster.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="brokered_address_space">4.1.5. Brokered Address Space</h4>
+<h4 id="brokered_address_space">5.1.5. Brokered Address Space</h4>
 <div class="paragraph">
 <p>The brokered address space is designed to support broker-specific features, at the cost of limited
 scale in terms of the number of connections and addresses. This address space supports JMS
@@ -1998,14 +2066,14 @@ message groups, transactions, and other JMS features.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuring-using-cli">4.2. Configuring EnMasse using the command line</h3>
+<h3 id="configuring-using-cli">5.2. Configuring EnMasse using the command line</h3>
 <div class="paragraph">
 <p>EnMasse can be configured to support manipulating address spaces and addresses using the
 Kubernetes and OpenShift command line tools. See <a href="#oc-register-apiservice">[oc-register-apiservice]</a> for how to setup the API
 server to support this if you have not already configured your installation with it.</p>
 </div>
 <div class="sect3">
-<h4 id="creating_an_address_space">4.2.1. Creating an Address Space</h4>
+<h4 id="creating_an_address_space">5.2.1. Creating an Address Space</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2043,7 +2111,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="creating_an_address">4.2.2. Creating an Address</h4>
+<h4 id="creating_an_address">5.2.2. Creating an Address</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2083,7 +2151,7 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuring-using-restapi">4.3. Configuring EnMasse using a REST API</h3>
+<h3 id="configuring-using-restapi">5.3. Configuring EnMasse using a REST API</h3>
 <div class="paragraph">
 <p>EnMasse provides an API that can be used for configuring address spaces and addresses
 within those address spaces. Clients can be configured to authenticate using
@@ -2098,7 +2166,7 @@ space in address space A may have the same name as an address in address space B
 <p>Likewise, an address space in namespace A can have the same name as an address space in namespace B.</p>
 </div>
 <div class="sect3">
-<h4 id="creating_an_address_space_2">4.3.1. Creating an Address Space</h4>
+<h4 id="creating_an_address_space_2">5.3.1. Creating an Address Space</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2139,7 +2207,7 @@ various components.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="viewing_address_space_status">4.3.2. Viewing Address Space Status</h4>
+<h4 id="viewing_address_space_status">5.3.2. Viewing Address Space Status</h4>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
@@ -2160,7 +2228,7 @@ object.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="creating_addresses">4.3.3. Creating Addresses</h4>
+<h4 id="creating_addresses">5.3.3. Creating Addresses</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2196,7 +2264,7 @@ curl -X POST -T address.json -H "content-type: application/json" -H "Authorizati
 </div>
 </div>
 <div class="sect3">
-<h4 id="viewing_configured_addresses">4.3.4. Viewing Configured Addresses</h4>
+<h4 id="viewing_configured_addresses">5.3.4. Viewing Configured Addresses</h4>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
@@ -2219,10 +2287,10 @@ address is set to <code>true</code>.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="connecting_applications_to_enmasse">5. Connecting applications to EnMasse</h2>
+<h2 id="connecting_applications_to_enmasse">6. Connecting applications to EnMasse</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="connecting">5.1. Connecting to EnMasse</h3>
+<h3 id="connecting">6.1. Connecting to EnMasse</h3>
 <div class="paragraph">
 <p>To connect to the messaging service from outside the openshift or
 kubernetes cluster, TLS must be used with SNI set to specify the fully
@@ -2233,7 +2301,7 @@ qualified hostname for the address-space. The port used is 443.</p>
 address-space.</p>
 </div>
 <div class="sect3">
-<h4 id="client_examples">5.1.1. Client Examples</h4>
+<h4 id="client_examples">6.1.1. Client Examples</h4>
 <div class="paragraph">
 <p>Simple examples are shown here for the following clients:</p>
 </div>
@@ -3347,12 +3415,11 @@ are persisted.</p>
 <div class="sect4">
 <h5 id="prerequisites-aws">Prerequisites</h5>
 <div class="paragraph">
-<p>First, you must have created an <a href="https://aws.amazon.com/ec2/">EC2
-instance</a>. EnMasse runs on OpenShift and Kubernetes, but this post uses
-OpenShift purely for convenience. Have a look at the
-<a href="https://docs.openshift.org/latest/install_config/install/prerequisites.html">OpenShift
-prerequisites</a> for the required hardware configuration. The installation
-will be done using <a href="https://www.ansible.com">Ansible</a>, so make sure
+<p>First, you must have created an <a href="https://aws.amazon.com/ec2/">EC2 instance</a>. EnMasse runs on OpenShift
+and Kubernetes, but this post uses OpenShift purely for convenience. For the required hardware
+configuration, see the
+<a href="https://docs.openshift.org/latest/getting_started/administrators.html#prerequisites">OpenShift
+prerequisites</a>. The installation will be done using <a href="https://www.ansible.com">Ansible</a>, so make sure
 Ansible is installed on laptop or workstation.</p>
 </div>
 <div class="sect5">
@@ -6743,7 +6810,7 @@ The default username and password is <code>admin/admin</code>. E</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-28 15:26:42 UTC
+Last updated 2018-07-03 13:38:35 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
