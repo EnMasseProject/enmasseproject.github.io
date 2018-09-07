@@ -1,4 +1,4 @@
-= EnMasse
+= EnMasse REST API
 
 
 [[_overview]]
@@ -20,6 +20,7 @@ __Schemes__ : HTTPS
 
 * addresses : Operating on Addresses.
 * addressspaces : Operate on AddressSpaces
+* messagingusers : Operating on MessagingUsers.
 
 
 === External Docs
@@ -691,6 +692,227 @@ __required__|object name and auth scope, such as for teams and projects|string
 * enmasse_v1alpha1
 
 
+[[_createauthenmassev1alpha1namespacedmessaginguser]]
+=== POST /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers
+
+==== Description
+create a MessagingUser
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|**Body**|**body** +
+__required__||<<_io_enmasse_user_v1alpha1_messaginguser,io.enmasse.user.v1alpha1.MessagingUser>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_user_v1alpha1_messaginguser,io.enmasse.user.v1alpha1.MessagingUser>>
+|**201**|Created|<<_io_enmasse_user_v1alpha1_messaginguser,io.enmasse.user.v1alpha1.MessagingUser>>
+|**401**|Unauthorized|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* auth
+* enmasse_v1alpha1
+* user
+
+
+[[_listauthenmassev1alpha1namespacedmessaginguser]]
+=== GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers
+
+==== Description
+list objects of kind MessagingUser
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|**Query**|**labelSelector** +
+__optional__|A selector to restrict the list of returned objects by their labels. Defaults to everything.|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_user_v1alpha1_messaginguserlist,io.enmasse.user.v1alpha1.MessagingUserList>>
+|**401**|Unauthorized|No Content
+|===
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* auth
+* enmasse_v1alpha1
+* user
+
+
+[[_readauthenmassev1alpha1namespacedmessaginguser]]
+=== GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}
+
+==== Description
+read the specified MessagingUser
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**name** +
+__required__|Name of MessagingUser to read. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_user_v1alpha1_messaginguser,io.enmasse.user.v1alpha1.MessagingUser>>
+|**401**|Unauthorized|No Content
+|**404**|Not found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* auth
+* enmasse_v1alpha1
+* user
+
+
+[[_replaceauthenmassev1alpha1namespacedmessaginguser]]
+=== PUT /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}
+
+==== Description
+replace the specified MessagingUser
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**name** +
+__required__|Name of MessagingUser to replace. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|**Body**|**body** +
+__required__||<<_io_enmasse_user_v1alpha1_messaginguser,io.enmasse.user.v1alpha1.MessagingUser>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_io_enmasse_user_v1alpha1_messaginguser,io.enmasse.user.v1alpha1.MessagingUser>>
+|**201**|Created|<<_io_enmasse_user_v1alpha1_messaginguser,io.enmasse.user.v1alpha1.MessagingUser>>
+|**401**|Unauthorized|No Content
+|===
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* auth
+* enmasse_v1alpha1
+* user
+
+
+[[_deleteauthenmassev1alpha1namespacedmessaginguser]]
+=== DELETE /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}
+
+==== Description
+delete a MessagingUser
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**name** +
+__required__|Name of MessagingUser to delete. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').|string
+|**Path**|**namespace** +
+__required__|object name and auth scope, such as for teams and projects|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_status,Status>>
+|**401**|Unauthorized|No Content
+|**404**|Not found|No Content
+|===
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* auth
+* enmasse_v1alpha1
+* user
+
+
 
 
 [[_definitions]]
@@ -713,7 +935,7 @@ __optional__|string
 
 [[_status]]
 === Status
-Status is a return value for calls that don't return other objects.
+Status is a return value for calls that do not return other objects.
 
 
 [options="header", cols=".^3a,.^11a,.^4a"]
@@ -721,6 +943,83 @@ Status is a return value for calls that don't return other objects.
 |Name|Description|Schema
 |**code** +
 __optional__|Suggested HTTP return code for this status, 0 if not set.|integer (int32)
+|===
+
+
+[[_io_enmasse_user_v1alpha1_messaginguser]]
+=== io.enmasse.user.v1alpha1.MessagingUser
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**apiVersion** +
+__required__|enum (user.enmasse.io/v1alpha1)
+|**kind** +
+__required__|enum (MessagingUser)
+|**metadata** +
+__required__|<<_objectmeta,ObjectMeta>>
+|**spec** +
+__required__|<<_io_enmasse_user_v1alpha1_userspec,io.enmasse.user.v1alpha1.UserSpec>>
+|===
+
+
+[[_io_enmasse_user_v1alpha1_messaginguserlist]]
+=== io.enmasse.user.v1alpha1.MessagingUserList
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**apiVersion** +
+__required__|enum (user.enmasse.io/v1alpha1)
+|**items** +
+__required__|< <<_io_enmasse_user_v1alpha1_messaginguser,io.enmasse.user.v1alpha1.MessagingUser>> > array
+|**kind** +
+__required__|enum (MessagingUserList)
+|===
+
+
+[[_io_enmasse_user_v1alpha1_userspec]]
+=== io.enmasse.user.v1alpha1.UserSpec
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**authentication** +
+__optional__|<<_io_enmasse_user_v1alpha1_userspec_authentication,authentication>>
+|**authorization** +
+__optional__|< <<_io_enmasse_user_v1alpha1_userspec_authorization,authorization>> > array
+|**username** +
+__required__|string
+|===
+
+[[_io_enmasse_user_v1alpha1_userspec_authentication]]
+**authentication**
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**federatedUserid** +
+__optional__|User id of the user to federate when 'federated' type is specified.|string
+|**federatedUsername** +
+__optional__|User name of the user to federate when 'federated' type is specified.|string
+|**password** +
+__optional__|Base64 encoded value of password when 'password' type is specified.|string
+|**provider** +
+__optional__|Name of provider to use for federated identity when 'federated' type is specified.|string
+|**type** +
+__required__||enum (password, federated)
+|===
+
+[[_io_enmasse_user_v1alpha1_userspec_authorization]]
+**authorization**
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**addresses** +
+__optional__|< string > array
+|**operations** +
+__required__|< enum (send, receive, view, manage) > array
 |===
 
 

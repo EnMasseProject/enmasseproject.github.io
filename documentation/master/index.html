@@ -528,26 +528,30 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#overview">1. Overview</a>
+<ul class="sectlevel2">
+<li><a href="#features">1.1. Features</a>
 <ul class="sectlevel3">
-<li><a href="#features">1.1. Features</a></li>
-<li><a href="#standard_address_space">1.2. Standard address space</a></li>
-<li><a href="#brokered_address_space">1.3. Brokered address space</a></li>
+<li><a href="#standard_address_space_overview">1.1.1. Standard address space</a></li>
+<li><a href="#brokered_address_space_overview">1.1.2. Brokered address space</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#installation">2. Installation</a>
 <ul class="sectlevel2">
-<li><a href="#installing-on-openshift-messaging">2.1. Installing EnMasse on OpenShift</a>
+<li><a href="#installing-on-openshift-okd">2.1. Installing EnMasse on OpenShift</a>
 <ul class="sectlevel3">
-<li><a href="#downloading-maas">2.1.1. Downloading EnMasse</a></li>
-<li><a href="#installing-using-ansible-maas">2.1.2. Installing EnMasse using Ansible</a></li>
-<li><a href="#installing-using-manual-steps-messaging">2.1.3. Installing EnMasse manually</a>
+<li><a href="#downloading-okd">2.1.1. Downloading EnMasse</a></li>
+<li><a href="#ref-ansible-config-settings-okd">2.1.2. Ansible configuration settings</a></li>
+<li><a href="#installing-using-ansible-okd">2.1.3. Installing EnMasse using Ansible</a></li>
+<li><a href="#installing-using-manual-steps-okd">2.1.4. Installing EnMasse manually</a>
 <ul class="sectlevel4">
-<li><a href="#creating-project-messaging">Creating the project for EnMasse</a></li>
-<li><a href="#deploying-auth-services-messaging">Deploying authentication services</a></li>
-<li><a href="#deploying-address-space-controller-messaging">Deploying the address space controller</a></li>
-<li><a href="#deploying-api-server-messaging">(Optional) Deploying the API server</a></li>
-<li><a href="#deploying-service-broker-messaging">(Optional) Deploying the service broker</a></li>
-<li><a href="#deploying-single-address-space-messaging">Deploying EnMasse to a single address space</a></li>
+<li><a href="#creating-project-okd">Creating the project for EnMasse</a></li>
+<li><a href="#deploying-auth-services-okd">Deploying authentication services</a></li>
+<li><a href="#deploying-address-space-controller-okd">Deploying the address space controller</a></li>
+<li><a href="#deploying-api-server-okd">(Optional) Deploying the API server</a></li>
+<li><a href="#deploying-service-broker-okd">(Optional) Deploying the service broker</a></li>
+<li><a href="#deploying-single-namespace-okd">(Optional) Deploying EnMasse to a single namespace</a></li>
 </ul>
 </li>
 </ul>
@@ -555,34 +559,34 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#installing-on-kubernetes-kube">2.2. Installing EnMasse on Kubernetes</a>
 <ul class="sectlevel3">
 <li><a href="#downloading-kube">2.2.1. Downloading EnMasse</a></li>
-<li><a href="#creating-project-kube">2.2.2. Creating the project for EnMasse</a></li>
-<li><a href="#deploying-auth-services-kube">2.2.3. Deploying authentication services</a>
+<li><a href="#installing-using-manual-steps-kube">2.2.2. Installing EnMasse manually</a>
 <ul class="sectlevel4">
-<li><a href="#deploying_the_none_authentication_service_2">Deploying the <code>none</code> authentication service</a></li>
-<li><a href="#deploying_the_standard_authentication_service_2">Deploying the <code>standard</code> authentication service</a></li>
+<li><a href="#creating-project-kube">Creating the project for EnMasse</a></li>
+<li><a href="#deploying-auth-services-kube">Deploying authentication services</a></li>
+<li><a href="#deploying-address-space-controller-kube">Deploying the address space controller</a></li>
+<li><a href="#deploying-api-server-kube">(Optional) Deploying the API server</a></li>
+<li><a href="#deploying-service-broker-kube">(Optional) Deploying the service broker</a></li>
+<li><a href="#deploying-single-namespace-kube">(Optional) Deploying EnMasse to a single namespace</a></li>
 </ul>
 </li>
-<li><a href="#deploying-address-space-controller-kube">2.2.4. Deploying the address space controller</a></li>
-<li><a href="#deploying-api-server-kube">2.2.5. (Optional) Deploying the API server</a></li>
-<li><a href="#deploying-service-broker-kube">2.2.6. (Optional) Deploying the service broker</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#address_space_and_address_plans">3. Address space and address plans</a>
 <ul class="sectlevel2">
-<li><a href="#plans-maas">3.1. Plans</a>
+<li><a href="#plans-kube">3.1. Plans</a>
 <ul class="sectlevel3">
-<li><a href="#con-address-space-plans-maas">3.1.1. Address space plans</a></li>
-<li><a href="#con-address-plans-maas">3.1.2. Address plans</a></li>
-<li><a href="#con-resource-definitions-maas">3.1.3. Resource definitions</a></li>
+<li><a href="#con-address-space-plans-kube">3.1.1. Address space plans</a></li>
+<li><a href="#con-address-plans-kube">3.1.2. Address plans</a></li>
+<li><a href="#con-resource-definitions-kube">3.1.3. Resource definitions</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#monitoring">4. Monitoring</a>
 <ul class="sectlevel2">
-<li><a href="#monitoring">4.1. Monitoring EnMasse</a>
+<li><a href="#monitoring-kube">4.1. Monitoring EnMasse</a>
 <ul class="sectlevel3">
 <li><a href="#deploying_prometheus">4.1.1. Deploying Prometheus</a></li>
 <li><a href="#deploying_grafana">4.1.2. Deploying Grafana</a></li>
@@ -637,11 +641,29 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 </ul>
 </li>
-<li><a href="#connecting_applications_to_enmasse">6. Connecting applications to EnMasse</a>
+<li><a href="#a-collection-of-modules">6. Managing users</a>
 <ul class="sectlevel2">
-<li><a href="#connecting">6.1. Connecting to EnMasse</a>
+<li><a href="#concept-user-model-managing-users">6.1. User model</a>
 <ul class="sectlevel3">
-<li><a href="#client_examples">6.1.1. Client Examples</a>
+<li><a href="#authentication">6.1.1. Authentication</a>
+<ul class="sectlevel4">
+<li><a href="#password_authentication_type">Password authentication type</a></li>
+<li><a href="#federated_authentication_type">Federated authentication type</a></li>
+</ul>
+</li>
+<li><a href="#authorization">6.1.2. Authorization</a></li>
+</ul>
+</li>
+<li><a href="#proc-creating-users-cli-managing-users">6.2. Creating users using the command line</a></li>
+<li><a href="#proc-deleting-users-cli-managing-users">6.3. Deleting users using the command line</a></li>
+<li><a href="#additional_resources">6.4. Additional resources</a></li>
+</ul>
+</li>
+<li><a href="#connecting_applications_to_enmasse">7. Connecting applications to EnMasse</a>
+<ul class="sectlevel2">
+<li><a href="#connecting">7.1. Connecting to EnMasse</a>
+<ul class="sectlevel3">
+<li><a href="#client_examples">7.1.1. Client Examples</a>
 <ul class="sectlevel4">
 <li><a href="#apache_qpid_proton_python">Apache Qpid Proton Python</a></li>
 <li><a href="#apache_qpid_jms">Apache Qpid JMS</a></li>
@@ -656,39 +678,59 @@ table.CodeRay td.code>pre{padding:0}
 </ul>
 </li>
 <li><a href="#quick_start_guides">Appendix A: Quick start guides</a>
-<ul class="sectlevel3">
+<ul class="sectlevel2">
 <li><a href="#enmasse-on-openshift">A.1. EnMasse on OpenShift</a>
+<ul class="sectlevel3">
+<li><a href="#installing-openshift">A.1.1. Installing EnMasse</a>
 <ul class="sectlevel4">
-<li><a href="#installing-openshift">Installing EnMasse</a></li>
-<li><a href="#configuring-addresses-openshift">Configuring addresses</a></li>
-<li><a href="#sending-and-receiving-messages-openshift">Sending and receiving messages</a></li>
-<li><a href="#conclusion-openshift">Conclusion</a></li>
+<li><a href="#deploying_enmasse">Deploying EnMasse</a></li>
 </ul>
 </li>
-<li><a href="#enmasse-on-kubernetes">A.2. EnMasse on Kubernetes</a>
+<li><a href="#configuring-addresses-openshift">A.1.2. Configuring addresses</a>
+<ul class="sectlevel4">
+<li><a href="#address_types_3">Address types</a></li>
+</ul>
+</li>
+<li><a href="#sending-and-receiving-messages-openshift">A.1.3. Sending and receiving messages</a>
+<ul class="sectlevel4">
+<li><a href="#connecting_with_amqp">Connecting with AMQP</a></li>
+<li><a href="#connecting_using_mqtt">Connecting using MQTT</a></li>
+</ul>
+</li>
+<li><a href="#conclusion-openshift">A.1.4. Conclusion</a></li>
+<li><a href="#enmasse-on-kubernetes">A.1.5. EnMasse on Kubernetes</a>
 <ul class="sectlevel4">
 <li><a href="#installing-kubernetes">Installing</a></li>
+<li><a href="#deploying_enmasse_2">Deploying EnMasse</a></li>
 <li><a href="#configuring-addresses-kubernetes">Configuring addresses</a></li>
+<li><a href="#address_types_4">Address types</a></li>
 <li><a href="#sending-and-receiving-messages-kubernetes">Sending and receiving messages</a></li>
+<li><a href="#connecting_with_amqp_2">Connecting with AMQP</a></li>
+<li><a href="#connecting_using_mqtt_2">Connecting using MQTT</a></li>
 <li><a href="#conclusion-kubernetes">Conclusion</a></li>
 </ul>
 </li>
-<li><a href="#setting-up-enmasse-on-aws">A.3. Setting up EnMasse on AWS</a>
+<li><a href="#setting-up-enmasse-on-aws">A.1.6. Setting up EnMasse on AWS</a>
 <ul class="sectlevel4">
 <li><a href="#prerequisites-aws">Prerequisites</a></li>
 <li><a href="#setting-up-openshift-aws">Setting up OpenShift</a></li>
 <li><a href="#creating-a-user">Creating a user</a></li>
 <li><a href="#installing_enmasse">Installing EnMasse</a></li>
+<li><a href="#deploying_enmasse_3">Deploying EnMasse</a></li>
 <li><a href="#sending-and-receiving-messages-aws">Sending and receiving messages</a></li>
+<li><a href="#connecting_with_amqp_3">Connecting with AMQP</a></li>
+<li><a href="#connecting_using_mqtt_3">Connecting using MQTT</a></li>
 <li><a href="#optional-setting-up-metrics">(Optional) Setting up metrics</a></li>
 <li><a href="#summary">Summary</a></li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+</li>
 <li><a href="#rest_api_reference">Appendix B: REST API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#enmasse">B.1. EnMasse</a>
+<li><a href="#enmasse_rest_api">B.1. EnMasse REST API</a>
 <ul class="sectlevel3">
 <li><a href="#_overview">B.1.1. Overview</a>
 <ul class="sectlevel4">
@@ -715,12 +757,20 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_readenmassev1alpha1namespacedaddressspace">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}</a></li>
 <li><a href="#_replaceenmassev1alpha1namespacedaddressspace">PUT /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}</a></li>
 <li><a href="#_deleteenmassev1alpha1namespacedaddressspace">DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}</a></li>
+<li><a href="#_createauthenmassev1alpha1namespacedmessaginguser">POST /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers</a></li>
+<li><a href="#_listauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers</a></li>
+<li><a href="#_readauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</a></li>
+<li><a href="#_replaceauthenmassev1alpha1namespacedmessaginguser">PUT /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</a></li>
+<li><a href="#_deleteauthenmassev1alpha1namespacedmessaginguser">DELETE /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</a></li>
 </ul>
 </li>
 <li><a href="#_definitions">B.1.3. Definitions</a>
 <ul class="sectlevel4">
 <li><a href="#_objectmeta">ObjectMeta</a></li>
 <li><a href="#_status">Status</a></li>
+<li><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></li>
+<li><a href="#_io_enmasse_user_v1alpha1_messaginguserlist">io.enmasse.user.v1alpha1.MessagingUserList</a></li>
+<li><a href="#_io_enmasse_user_v1alpha1_userspec">io.enmasse.user.v1alpha1.UserSpec</a></li>
 <li><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></li>
 <li><a href="#_io_enmasse_v1alpha1_addresslist">io.enmasse.v1alpha1.AddressList</a></li>
 <li><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></li>
@@ -750,8 +800,8 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>The service admin can deploy and manage messaging infrastructure, while tenants can request messaging resources, both using cloud-native APIs and tools.</p>
 </div>
-<div class="sect3">
-<h4 id="features">1.1. Features</h4>
+<div class="sect2">
+<h3 id="features">1.1. Features</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -777,9 +827,8 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>EnMasse currently supports a <code>standard</code> and a <code>brokered</code> address space type, each with different semantics.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="standard_address_space">1.2. Standard address space</h3>
+<div class="sect3">
+<h4 id="standard_address_space_overview">1.1.1. Standard address space</h4>
 <div class="paragraph">
 <p>The standard address space type is the default type in EnMasse, and is focused on scaling in the number of connections and the throughput of the system. It supports AMQP and MQTT protocols, with more to come in the future. This address space type is based on other open source projects such as [Apache ActiveMQ Artemis](<a href="https://activemq.apache.org/artemis/" class="bare">https://activemq.apache.org/artemis/</a>) and [Apache Qpid Dispatch Router](<a href="https://qpid.apache.org/components/dispatch-router/index.html" class="bare">https://qpid.apache.org/components/dispatch-router/index.html</a>) and provides elastic scaling of these components.  This image illustrates the high-level architecture of the standard address space:</p>
 </div>
@@ -789,8 +838,8 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="brokered_address_space">1.3. Brokered address space</h3>
+<div class="sect3">
+<h4 id="brokered_address_space_overview">1.1.2. Brokered address space</h4>
 <div class="paragraph">
 <p>The brokered address space type is the "classic" message broker in the cloud which supports AMQP, CORE, OpenWire, and MQTT protocols. It supports JMS with transactions, message groups, selectors on queues and so on. These features are useful for building complex messaging patterns. This address space is also more lightweight as it features only a single broker and a management console.  This image illustrates the high-level architecture of the brokered address space:</p>
 </div>
@@ -802,11 +851,12 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
 <h2 id="installation">2. Installation</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="installing-on-openshift-messaging">2.1. Installing EnMasse on OpenShift</h3>
+<h3 id="installing-on-openshift-okd">2.1. Installing EnMasse on OpenShift</h3>
 <div class="paragraph">
 <p>EnMasse can be installed using automated <a href="https://www.ansible.com/">Ansible</a> playbooks, the
 <code>deploy.sh</code> script, or the manual steps.</p>
@@ -842,7 +892,7 @@ on your machine.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="downloading-maas">2.1.1. Downloading EnMasse</h4>
+<h4 id="downloading-okd">2.1.1. Downloading EnMasse</h4>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
@@ -853,10 +903,98 @@ on your machine.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="installing-using-ansible-maas">2.1.2. Installing EnMasse using Ansible</h4>
+<h4 id="ref-ansible-config-settings-okd">2.1.2. Ansible configuration settings</h4>
 <div class="paragraph">
-<p>Installing EnMasse using Ansible requires creating an inventory file with the variables for configuring the
-system. Example inventory files can be found in the <code>ansible/inventory</code> folder. For more information about the supported Ansible configuration settings see <a href="#ref-ansible-config-settings-messaging">[ref-ansible-config-settings-messaging]</a>.</p>
+<p>The following Ansible configuration settings are supported.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Ansible Configuration Settings</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default value</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Required</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">namespace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the namespace where EnMasse is installed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">multitenant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to install EnMasse in multitenant mode. Single-tenant mode is recommended for evaluation purposes only.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enable_rbac</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable RBAC authentication of REST APIs.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">service_catalog</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable integration with the Service Catalog.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">osb_console_prefix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the HTTP URL of the Console prefix for the Service Catalog dashboard.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">service broker service IP address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">authentication_services</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the list of authentication services to deploy. <code>none</code> and <code>standard</code> are supported.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>none</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keycloak_admin_password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the admin password to use for the standard authentication service Keycloak instance.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes (if <code>standard</code> is enabled)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keycloak_http_url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the OAUTH URL to use for Keycloak.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">standard authentication service IP address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">api_server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable the REST API server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">register_api_server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to register the API server with Kubernetes master.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">secure_api_server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable mutual TLS for the API server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="installing-using-ansible-okd">2.1.3. Installing EnMasse using Ansible</h4>
+<div class="paragraph">
+<p>Installing EnMasse using Ansible requires creating an inventory file with the variables for configuring the system. Example inventory files can be found in the <code>ansible/inventory</code> folder. For more information about the supported Ansible configuration settings see <a href="#ref-ansible-config-settings-okd">Ansible configuration settings</a>.</p>
 </div>
 <div class="paragraph">
 <p>An example inventory file that enables both the API server and service broker integration:</p>
@@ -896,13 +1034,13 @@ authentication_services=["standard"]</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="installing-using-manual-steps-messaging">2.1.3. Installing EnMasse manually</h4>
+<h4 id="installing-using-manual-steps-okd">2.1.4. Installing EnMasse manually</h4>
 <div class="paragraph">
 <p>The manual deployment procedure can be performed on any platform
 supporting the OpenShift client.</p>
 </div>
 <div class="sect4">
-<h5 id="creating-project-messaging">Creating the project for EnMasse</h5>
+<h5 id="creating-project-okd">Creating the project for EnMasse</h5>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
@@ -918,7 +1056,7 @@ supporting the OpenShift client.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="deploying-auth-services-messaging">Deploying authentication services</h5>
+<h5 id="deploying-auth-services-okd">Deploying authentication services</h5>
 <div class="paragraph">
 <p>EnMasse requires at least one authentication service to be deployed. The authentication service
 can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code>external</code> (not managed by EnMasse).</p>
@@ -1042,7 +1180,7 @@ oc create configmap keycloak-config --from-literal=hostname=standard-authservice
 </div>
 </div>
 <div class="sect4">
-<h5 id="deploying-address-space-controller-messaging">Deploying the address space controller</h5>
+<h5 id="deploying-address-space-controller-okd">Deploying the address space controller</h5>
 <div class="paragraph">
 <p>The address space controller is responsible for creating the infrastructure used by address spaces.</p>
 </div>
@@ -1053,7 +1191,7 @@ oc create configmap keycloak-config --from-literal=hostname=standard-authservice
 <div class="title">Note</div>
 </td>
 <td class="content">
-To install EnMasse on OpenShift, you must have <code>cluster-admin</code> access to set up the required roles for creating namespaces and managing resources in those namespaces; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-address-space-messaging">Deploying EnMasse to a single address space</a>.
+To install EnMasse on OpenShift , you must have <code>cluster-admin</code> access to set up the required roles for creating namespaces and managing resources in those namespaces; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-okd">(Optional) Deploying EnMasse to a single namespace</a>.
 </td>
 </tr>
 </table>
@@ -1114,7 +1252,7 @@ oc create -f ./resources/address-space-controller/deployment.yaml</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="deploying-api-server-messaging">(Optional) Deploying the API server</h5>
+<h5 id="deploying-api-server-okd">(Optional) Deploying the API server</h5>
 <div class="paragraph">
 <p>The API server provides a REST API for creating address spaces and addresses. It can also serve as
 a Kubernetes API server if it is registered as an APIService.</p>
@@ -1126,7 +1264,10 @@ a Kubernetes API server if it is registered as an APIService.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-To install EnMasse on OpenShift, you must have <code>cluster-admin</code> access to set up the required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-address-space-messaging">Deploying EnMasse to a single address space</a>.
+To install EnMasse on OpenShift, you must have <code>cluster-admin</code> access to set up the
+required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted
+to a single address space. For more information about how to deploy without <code>cluster-admin</code> access,
+which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-okd">(Optional) Deploying EnMasse to a single namespace</a>.
 </td>
 </tr>
 </table>
@@ -1202,6 +1343,10 @@ oc create -f ./resources/api-server/service.yaml</pre>
 <p><a id="oc-register-apiservice"></a></p>
 </div>
 </li>
+</ol>
+</div>
+<div id="register-api-service-okd" class="olist arabic">
+<ol class="arabic">
 <li>
 <p>(Optional) Register the API server to support custom resources:</p>
 <div class="listingblock">
@@ -1222,7 +1367,7 @@ oc create -f ./resources/api-server/service.yaml</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="deploying-service-broker-messaging">(Optional) Deploying the service broker</h5>
+<h5 id="deploying-service-broker-okd">(Optional) Deploying the service broker</h5>
 <div class="paragraph">
 <p>The service broker provides an implementation of the Open Service Broker API that integrates with the Kubernetes Service Catalog. The service broker requires the standard authentication service to be deployed.</p>
 </div>
@@ -1233,7 +1378,7 @@ oc create -f ./resources/api-server/service.yaml</pre>
 <div class="title">Note</div>
 </td>
 <td class="content">
-To install EnMasse on OpenShift, you must have <code>cluster-admin</code> access to set up the required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-address-space-messaging">Deploying EnMasse to a single address space</a>.
+To install EnMasse on OpenShift, you must have <code>cluster-admin</code> access to set up the required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-okd">(Optional) Deploying EnMasse to a single namespace</a>.
 </td>
 </tr>
 </table>
@@ -1369,7 +1514,19 @@ oc create configmap service-broker-config --from-literal=enableRbac=false --from
 </div>
 </div>
 <div class="sect4">
-<h5 id="deploying-single-address-space-messaging">Deploying EnMasse to a single address space</h5>
+<h5 id="deploying-single-namespace-okd">(Optional) Deploying EnMasse to a single namespace</h5>
+<div class="paragraph">
+<p>Although EnMasse is designed to manage multiple namespaces, there are cases where deploying to a
+single namespace is useful when evaluating EnMasse without the required privileges.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisite</div>
+<ul>
+<li>
+<p>At least one authentication service must be installed. For more information see * <a href="#deploying-auth-services-okd">Deploying authentication services</a>.</p>
+</li>
+</ul>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1471,7 +1628,13 @@ laptop.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="creating-project-kube">2.2.2. Creating the project for EnMasse</h4>
+<h4 id="installing-using-manual-steps-kube">2.2.2. Installing EnMasse manually</h4>
+<div class="paragraph">
+<p>The manual deployment procedure can be performed on any platform
+supporting the Kubernetes client.</p>
+</div>
+<div class="sect4">
+<h5 id="creating-project-kube">Creating the project for EnMasse</h5>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1494,14 +1657,14 @@ laptop.</p>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="deploying-auth-services-kube">2.2.3. Deploying authentication services</h4>
+<div class="sect4">
+<h5 id="deploying-auth-services-kube">Deploying authentication services</h5>
 <div class="paragraph">
 <p>EnMasse requires at least one authentication service to be deployed. The authentication service
 can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code>external</code> (not managed by EnMasse).</p>
 </div>
-<div class="sect4">
-<h5 id="deploying_the_none_authentication_service_2">Deploying the <code>none</code> authentication service</h5>
+<div class="sect5">
+<h6 id="deploying_the_none_authentication_service_2">Deploying the <code>none</code> authentication service</h6>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1534,8 +1697,8 @@ kubectl create -f ./resources/none-authservice/deployment.yaml</pre>
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="deploying_the_standard_authentication_service_2">Deploying the <code>standard</code> authentication service</h5>
+<div class="sect5">
+<h6 id="deploying_the_standard_authentication_service_2">Deploying the <code>standard</code> authentication service</h6>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1601,8 +1764,8 @@ kubectl create configmap keycloak-config --from-literal=hostname=standard-authse
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="deploying-address-space-controller-kube">2.2.4. Deploying the address space controller</h4>
+<div class="sect4">
+<h5 id="deploying-address-space-controller-kube">Deploying the address space controller</h5>
 <div class="paragraph">
 <p>The address space controller is responsible for creating the infrastructure used by address spaces.</p>
 </div>
@@ -1613,7 +1776,7 @@ kubectl create configmap keycloak-config --from-literal=hostname=standard-authse
 <div class="title">Note</div>
 </td>
 <td class="content">
-To install EnMasse on OpenShift, you must have <code>cluster-admin</code> access to set up the required roles for creating namespaces and managing resources in those namespaces; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-address-space-messaging">Deploying EnMasse to a single address space</a>.
+To install EnMasse on Kubernetes , you must have <code>cluster-admin</code> access to set up the required roles for creating namespaces and managing resources in those namespaces; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-kube">(Optional) Deploying EnMasse to a single namespace</a>.
 </td>
 </tr>
 </table>
@@ -1651,8 +1814,8 @@ kubectl create -f ./resources/address-space-controller/deployment.yaml</pre>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="deploying-api-server-kube">2.2.5. (Optional) Deploying the API server</h4>
+<div class="sect4">
+<h5 id="deploying-api-server-kube">(Optional) Deploying the API server</h5>
 <div class="paragraph">
 <p>The API server provides a REST API for creating address spaces and addresses. It can also serve as
 a Kubernetes API server if it is registered as an APIService.</p>
@@ -1664,7 +1827,10 @@ a Kubernetes API server if it is registered as an APIService.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-To install EnMasse on OpenShift, you must have <code>cluster-admin</code> access to set up the required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-address-space-messaging">Deploying EnMasse to a single address space</a>.
+To install EnMasse on Kubernetes, you must have <code>cluster-admin</code> access to set up the
+required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted
+to a single address space. For more information about how to deploy without <code>cluster-admin</code> access,
+which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-kube">(Optional) Deploying EnMasse to a single namespace</a>.
 </td>
 </tr>
 </table>
@@ -1717,8 +1883,8 @@ kubectl create -f ./resources/api-server/service.yaml</pre>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="deploying-service-broker-kube">2.2.6. (Optional) Deploying the service broker</h4>
+<div class="sect4">
+<h5 id="deploying-service-broker-kube">(Optional) Deploying the service broker</h5>
 <div class="paragraph">
 <p>The service broker provides an implementation of the Open Service Broker API that integrates with the Kubernetes Service Catalog. The service broker requires the standard authentication service to be deployed.</p>
 </div>
@@ -1729,7 +1895,7 @@ kubectl create -f ./resources/api-server/service.yaml</pre>
 <div class="title">Note</div>
 </td>
 <td class="content">
-To install EnMasse on OpenShift, you must have <code>cluster-admin</code> access to set up the required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-address-space-messaging">Deploying EnMasse to a single address space</a>.
+To install EnMasse on Kubernetes, you must have <code>cluster-admin</code> access to set up the required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-kube">(Optional) Deploying EnMasse to a single namespace</a>.
 </td>
 </tr>
 </table>
@@ -1824,6 +1990,94 @@ kubectl create configmap service-broker-config --from-literal=enableRbac=false -
 </ol>
 </div>
 </div>
+<div class="sect4">
+<h5 id="deploying-single-namespace-kube">(Optional) Deploying EnMasse to a single namespace</h5>
+<div class="paragraph">
+<p>Although EnMasse is designed to manage multiple namespaces, there are cases where deploying to a
+single namespace is useful when evaluating EnMasse without the required privileges.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisite</div>
+<ul>
+<li>
+<p>At least one authentication service must be installed. For more information see * <a href="#deploying-auth-services-kube">Deploying authentication services</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create service accounts for the EnMasse address space controller and address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create sa enmasse-admin
+oc create sa address-space-admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Grant privileges required for viewing and managing resources:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc policy add-role-to-user view system:serviceaccount:enmasse:default
+oc policy add-role-to-user admin system:serviceaccount:enmasse:enmasse-admin
+oc policy add-role-to-user admin system:serviceaccount:enmasse:address-space-admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Install the default plan and resource configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create -f ./resources/resource-definitions/resource-definitions.yaml
+oc create -f ./resources/plans/standard-plans.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the default address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc process -f ./resources/templates/address-space.yaml NAME=default NAMESPACE=enmasse TYPE=standard PLAN=unlimited-standard | oc create -f -</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the template for creating addresses:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create -f ./resources/templates/address.yaml -n enmasse</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can use this template later for creating addresses from the command line.</p>
+</div>
+</li>
+<li>
+<p>Deploy the address space controller:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create -f ./resources/address-space-controller/address-space-definitions.yaml
+oc create -f ./resources/address-space-controller/deployment.yaml</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The deployments required for running EnMasse are now created.</p>
+</div>
+</li>
+<li>
+<p>EnMasse is running once all pods in the <code>enmasse</code> namespace are in the <code>Running</code> state:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -n enmasse</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1831,7 +2085,7 @@ kubectl create configmap service-broker-config --from-literal=enableRbac=false -
 <h2 id="address_space_and_address_plans">3. Address space and address plans</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="plans-maas">3.1. Plans</h3>
+<h3 id="plans-kube">3.1. Plans</h3>
 <div class="paragraph">
 <p>Plans are used to configure quotas and control the resources consumed by a particular deployment. Plans are configured by the EnMasse service operator and are selected when creating an address space and an address.</p>
 </div>
@@ -1843,7 +2097,7 @@ kubectl create configmap service-broker-config --from-literal=enableRbac=false -
 sufficient for most use cases.</p>
 </div>
 <div class="sect3">
-<h4 id="con-address-space-plans-maas">3.1.1. Address space plans</h4>
+<h4 id="con-address-space-plans-kube">3.1.1. Address space plans</h4>
 <div class="paragraph">
 <p>Address space plans specify the quota available to a given address space. By default, EnMasse includes an unlimited quota plan for both the standard and brokered address spaces.</p>
 </div>
@@ -1924,12 +2178,12 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-address-plans-maas">3.1.2. Address plans</h4>
+<h4 id="con-address-plans-kube">3.1.2. Address plans</h4>
 <div class="paragraph">
 <p>Address plans specify the expected resource usage of a given address. The sum of the resource usage for all resource types determines the amount of infrastructure provisioned for an address space. A single router and broker pod has a maximum usage of one. If a new address requires additional resources and the resource consumption is within the address space plan limits, a new pod will be created automatically to handle the increased load.</p>
 </div>
 <div class="paragraph">
-<p>In the <a href="#con-address-space-plans-messaging">[con-address-space-plans-messaging]</a> section, the address space plan references two address plans: <code>small-queue</code> and <code>small-anycast</code>. These address plans are stored as <code>ConfigMaps</code> and are defined as follows:</p>
+<p>In the <a href="#con-address-space-plans-kube">Address space plans</a> section, the address space plan references two address plans: <code>small-queue</code> and <code>small-anycast</code>. These address plans are stored as <code>ConfigMaps</code> and are defined as follows:</p>
 </div>
 <div class="listingblock">
 <div class="title"><a href="service_admin/small-queue-plan.yaml">small-queue-plan.yaml</a></div>
@@ -2029,7 +2283,7 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-resource-definitions-maas">3.1.3. Resource definitions</h4>
+<h4 id="con-resource-definitions-kube">3.1.3. Resource definitions</h4>
 <div class="paragraph">
 <p>A resource describes a template along with a set of parameters. The resource definition is referenced from the plans. At present, only three resource definitions are supported:</p>
 </div>
@@ -2084,7 +2338,7 @@ data:
 <h2 id="monitoring">4. Monitoring</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="monitoring">4.1. Monitoring EnMasse</h3>
+<h3 id="monitoring-kube">4.1. Monitoring EnMasse</h3>
 <div class="paragraph">
 <p>EnMasse comes with addons for Prometheus and Grafana for monitoring the service. Cluster-admin
 privileges is required for Prometheus to monitor pods in the cluster.</p>
@@ -2294,7 +2548,7 @@ message groups, transactions, and other JMS features.</p>
 <h3 id="configuring-using-cli">5.2. Configuring EnMasse using the command line</h3>
 <div class="paragraph">
 <p>EnMasse can be configured to support manipulating address spaces and addresses using the
-Kubernetes and OpenShift command line tools. See <a href="#oc-register-apiservice">[oc-register-apiservice]</a> for how to setup the API
+Kubernetes and OpenShift command-line tools. See <a href="#register-api-service-okd">[register-api-service-okd]</a> for how to setup the API
 server to support this if you have not already configured your installation with it.</p>
 </div>
 <div class="sect3">
@@ -2512,10 +2766,244 @@ address is set to <code>true</code>.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="connecting_applications_to_enmasse">6. Connecting applications to EnMasse</h2>
+<h2 id="a-collection-of-modules">6. Managing users</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>EnMasse user management is only supported when using the standard authentication service. Users can
+be managed using a Kubernetes native REST API and custom resources using the command-line tools.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>EnMasse is installed with custom resources enabled</p>
+</li>
+<li>
+<p>You have created an <a href="#address_space">Address Space</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="concept-user-model-managing-users">6.1. User model</h3>
+<div class="paragraph">
+<p>Users define authentication and authorization for messaging clients and console users. Users are
+configured as <code>MessagingUsers</code> resources. Users can only be created, deleted, read and listed (not
+modified). Following is an example user:</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="common/user-example1.yaml">user-example1.yaml</a></div>
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="yaml">apiVersion: user.enmasse.io/v1alpha1
+kind: MessagingUser
+metadata:
+  name: myspace.user1
+spec:
+  username: user1
+  authentication:
+    type: password
+    password: cGFzc3dvcmQ= # Base64 encoded
+  authorization:
+    - addresses: ["queue1", "queue2", "topic*"]
+      operations: ["send", "recv"]
+    - addresses: ["anycast1"]
+      operations: ["send"]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following fields are required:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>metadata.name</code></p>
+</li>
+<li>
+<p><code>metadata.namespace</code></p>
+</li>
+<li>
+<p><code>spec.authentication</code></p>
+</li>
+<li>
+<p><code>spec.authorization</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>spec.authentication</code> object defines how the user is authenticated, whereas
+<code>spec.authorization</code> defines the authorization policies for that user.</p>
+</div>
+<div class="sect3">
+<h4 id="authentication">6.1.1. Authentication</h4>
+<div class="paragraph">
+<p>The supported values for the authentication type are <code>password</code> and <code>federated</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+At present, <code>password</code> type users can be used for both applications and console users, whereas
+<code>federated</code> type users will only work when using the messaging console.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="password_authentication_type">Password authentication type</h5>
+<div class="paragraph">
+<p>For the <code>password</code> type, an additional field <code>password</code> must be set to a base64-encoded value of the
+password for that user. The password will not be printed out when reading the resource.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="federated_authentication_type">Federated authentication type</h5>
+<div class="paragraph">
+<p>For the <code>federated</code> type, an additional field <code>provider</code> must be specified. The supported values
+depend on the identity providers configured for the address space. The fields <code>federatedUsername</code>
+and <code>federatedUserid</code> must be set, and should map to the username and userid in the federated
+identity provider.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="authorization">6.1.2. Authorization</h4>
+<div class="paragraph">
+<p>In addition, authorization policies can be defined using operations and addresses. Valid operations
+are <code>send</code>, <code>recv</code>, <code>view</code>, <code>manage</code>. If addresses are omitted, operations will be applied to all
+addresses.</p>
+</div>
+<div class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">MessagingUser definition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-creating-users-cli-managing-users">6.2. Creating users using the command line</h3>
+<div class="paragraph">
+<p>Users can in EnMasse can be created using standard command line tools.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>An address space must have been created.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Save user definition to file</p>
+<div class="listingblock">
+<div class="title"><a href="common/user-example1.yaml">user-example1.yaml</a></div>
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="yaml">apiVersion: user.enmasse.io/v1alpha1
+kind: MessagingUser
+metadata:
+  name: myspace.user1
+spec:
+  username: user1
+  authentication:
+    type: password
+    password: cGFzc3dvcmQ= # Base64 encoded
+  authorization:
+    - addresses: ["queue1", "queue2", "topic*"]
+      operations: ["send", "recv"]
+    - addresses: ["anycast1"]
+      operations: ["send"]</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create user</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create -f user-example1.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="#_overview">Rest API Reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-deleting-users-cli-managing-users">6.3. Deleting users using the command line</h3>
+<div class="paragraph">
+<p>Users can in EnMasse can be deleted using standard command line tools.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>An address space must have been created.</p>
+</li>
+<li>
+<p>A user must have been created.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>List the current users:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get messagingusers</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete the desired user:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl delete messaginguser myspace.user1</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="#_overview">Rest API Reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="additional_resources">6.4. Additional resources</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#enmasse_rest_api">EnMasse REST API</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="connecting_applications_to_enmasse">7. Connecting applications to EnMasse</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="connecting">6.1. Connecting to EnMasse</h3>
+<h3 id="connecting">7.1. Connecting to EnMasse</h3>
 <div class="paragraph">
 <p>To connect to the messaging service from outside the openshift or
 kubernetes cluster, TLS must be used with SNI set to specify the fully
@@ -2526,7 +3014,7 @@ qualified hostname for the address-space. The port used is 443.</p>
 address-space.</p>
 </div>
 <div class="sect3">
-<h4 id="client_examples">6.1.1. Client Examples</h4>
+<h4 id="client_examples">7.1.1. Client Examples</h4>
 <div class="paragraph">
 <p>Simple examples are shown here for the following clients:</p>
 </div>
@@ -2826,8 +3314,8 @@ namespace Test
 <div class="sect1">
 <h2 id="quick_start_guides">Appendix A: Quick start guides</h2>
 <div class="sectionbody">
-<div class="sect3">
-<h4 id="enmasse-on-openshift">A.1. EnMasse on OpenShift</h4>
+<div class="sect2">
+<h3 id="enmasse-on-openshift">A.1. EnMasse on OpenShift</h3>
 <div class="paragraph">
 <p>This guide will walk through the process of setting up EnMasse on
 OpenShift with clients for sending and receiving messages. The guide will deploy EnMasse in a single
@@ -2851,19 +3339,24 @@ on your machine.</p>
 </li>
 </ul>
 </div>
-<div class="sect4">
-<h5 id="installing-openshift">Installing EnMasse</h5>
-<div class="paragraph">
-<p>Unresolved directive in getting_started/openshift.adoc - include::common/install-procedure.adoc[leveloffset+=1]</p>
+<div class="sect3">
+<h4 id="installing-openshift">A.1.1. Installing EnMasse</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Download one of the releases from <a href="https://github.com/EnMasseProject/enmasse/releases" class="bare">https://github.com/EnMasseProject/enmasse/releases</a> and unpack it.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>This guide uses a shell script for deploying EnMasse. Windows users are advised to look at
 <a href="#installing-openshift">Installing EnMasse</a>.</p>
 </div>
+<div class="sect4">
+<h5 id="deploying_enmasse">Deploying EnMasse</h5>
 <div class="sect5">
-<h6 id="deploying_enmasse">Deploying EnMasse</h6>
-<div class="sect6">
-<h7 id="using_script">Using script</h7>
+<h6 id="using_script">Using script</h6>
 <div class="paragraph">
 <p>Invoke the deployment script to deploy EnMasse</p>
 </div>
@@ -2873,8 +3366,8 @@ on your machine.</p>
 </div>
 </div>
 </div>
-<div class="sect6">
-<h7 id="using_ansible">Using ansible</h7>
+<div class="sect5">
+<h6 id="using_ansible">Using Ansible</h6>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">ansible-playbook -i ansible/inventory/singletenant-standard.example ansible/playbooks/openshift/deploy_all.yml</pre>
@@ -2889,10 +3382,10 @@ meantime, you can start to create your address configuration.</p>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="configuring-addresses-openshift">A.1.2. Configuring addresses</h4>
 <div class="sect4">
-<h5 id="configuring-addresses-openshift">Configuring addresses</h5>
-<div class="sect6">
-<h7 id="address_types_3">Address types</h7>
+<h5 id="address_types_3">Address types</h5>
 <div class="paragraph">
 <p>EnMasse is configured with a set of addresses that you can use for
 messages. Currently, EnMasse supports 4 different address types:</p>
@@ -2979,10 +3472,10 @@ resources consumed by the API. Here is an example config with all 4 variants tha
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="sending-and-receiving-messages-openshift">A.1.3. Sending and receiving messages</h4>
 <div class="sect4">
-<h5 id="sending-and-receiving-messages-openshift">Sending and receiving messages</h5>
-<div class="sect6">
-<h7 id="connecting_with_amqp">Connecting with AMQP</h7>
+<h5 id="connecting_with_amqp">Connecting with AMQP</h5>
 <div class="paragraph">
 <p>For sending and receiving messages, have a look at an example python
 <a href="http://qpid.apache.org/releases/qpid-proton-0.18.0/proton/python/examples/simple_send.py.html">sender</a>
@@ -3021,8 +3514,8 @@ oc get secret external-certs-messaging -o jsonpath='{.data.tls\.crt}' | base64 -
 <p>Have a look at <a href="#connecting">Connecting to EnMasse</a> for more client examples.</p>
 </div>
 </div>
-<div class="sect6">
-<h7 id="mqtt">Connecting using MQTT</h7>
+<div class="sect4">
+<h5 id="connecting_using_mqtt">Connecting using MQTT</h5>
 <div class="paragraph">
 <p>For sending and receiving messages route, you can use the paho-mqtt client library. To connect,
 fetch the server certificate:</p>
@@ -3033,8 +3526,8 @@ fetch the server certificate:</p>
 oc get secret external-certs-mqtt  -o jsonpath='{.data.tls\.crt}' | base64 -d &gt; certs/tls.crt</pre>
 </div>
 </div>
-<div class="sect7">
-<h8 id="subscriber_client">Subscriber client</h8>
+<div class="sect5">
+<h6 id="subscriber_client">Subscriber client</h6>
 <div class="paragraph">
 <p>Save the following to <code>tls_mqtt_recv.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_recv.py">download</a>:</p>
 </div>
@@ -3108,7 +3601,7 @@ client.loop_forever()</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In order to subscribe to a topic (i.e. <code>mytopic</code> from the previous addresses configuration), the
+<p>In order to subscribe to a topic (that is, <code>mytopic</code> from the previous addresses configuration), the
 subscriber client can be used in the following way:</p>
 </div>
 <div class="literalblock">
@@ -3116,9 +3609,8 @@ subscriber client can be used in the following way:</p>
 <pre>./tls_mqtt_recv.py -c "$(oc get route -o jsonpath='{.spec.host}' mqtt)" -p 443 -t mytopic -q 1 -s ./certs/tls.crt</pre>
 </div>
 </div>
-</div>
-<div class="sect7">
-<h8 id="publisher_client">Publisher client</h8>
+<div class="sect6">
+<h7 id="publisher_client">Publisher client</h7>
 <div class="paragraph">
 <p>Save the following to <code>tls_mqtt_send.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_send.py">download</a>:</p>
 </div>
@@ -3208,37 +3700,47 @@ client.loop_forever()</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="conclusion-openshift">Conclusion</h5>
-<div class="paragraph">
-<p>We have seen how to setup EnMasse on OpenShift, and how to communicate with it using AMQP and MQTT clients.</p>
 </div>
+<div class="sect3">
+<h4 id="conclusion-openshift">A.1.4. Conclusion</h4>
+<div class="paragraph">
+<p>We have seen how to setup EnMasse on OpenShift, and how to communicate with it using AMQP and MQTT clients.
+:context: kube</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="enmasse-on-kubernetes">A.2. EnMasse on Kubernetes</h4>
+<h4 id="enmasse-on-kubernetes">A.1.5. EnMasse on Kubernetes</h4>
 <div class="paragraph">
 <p>This guide will walk through the process of setting up EnMasse on a
 Kubernetes cluster together with clients for sending and receiving
 messages. The guide will deploy EnMasse in a single tenant mode and with the <code>none</code> authentication
 service.</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in getting_started/kubernetes.adoc - include::common/prerequisites-kubernetes.adoc[leveloffset=+1]</p>
+<div id="prerequisites-kubernetes" class="paragraph">
+<div class="title">Prerequisites</div>
+<p>To install EnMasse, you need to have Kubernetes installed. You can use
+<a href="https://github.com/kubernetes/minikube">minikube</a> if you want to install EnMasse on your
+laptop.</p>
 </div>
 <div class="sect4">
 <h5 id="installing-kubernetes">Installing</h5>
-<div class="paragraph">
-<p>Unresolved directive in getting_started/kubernetes.adoc - include::common/install-procedure.adoc[leveloffset+=1]</p>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Download one of the releases from <a href="https://github.com/EnMasseProject/enmasse/releases" class="bare">https://github.com/EnMasseProject/enmasse/releases</a> and unpack it.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>This guide uses a shell script for deploying EnMasse. Windows users are advised to look at
 <a href="#installing-kubernetes">Installing</a>.</p>
 </div>
+</div>
+<div class="sect4">
+<h5 id="deploying_enmasse_2">Deploying EnMasse</h5>
 <div class="sect5">
-<h6 id="deploying_enmasse_2">Deploying EnMasse</h6>
-<div class="sect6">
-<h7 id="using_script_2">Using script</h7>
+<h6 id="using_script_2">Using script</h6>
 <div class="paragraph">
 <p>Invoke the deployment script to deploy EnMasse</p>
 </div>
@@ -3248,8 +3750,8 @@ service.</p>
 </div>
 </div>
 </div>
-<div class="sect6">
-<h7 id="using_ansible_2">Using ansible</h7>
+<div class="sect5">
+<h6 id="using_ansible_2">Using Ansible</h6>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">ansible-playbook -i ansible/inventory/singletenant-standard.example ansible/playbooks/openshift/deploy_all.yml</pre>
@@ -3260,7 +3762,6 @@ service.</p>
 up EnMasse will take a while, usually depending on how fast it is able
 to download the docker images for the various components. In the
 meantime, you can start to create your address configuration.</p>
-</div>
 </div>
 </div>
 <div class="sect5">
@@ -3285,8 +3786,10 @@ kubectl create rolebinding enmasse-admin-admin-binding --clusterrole=admin --ser
 </div>
 <div class="sect4">
 <h5 id="configuring-addresses-kubernetes">Configuring addresses</h5>
-<div class="sect6">
-<h7 id="address_types_4">Address types</h7>
+
+</div>
+<div class="sect4">
+<h5 id="address_types_4">Address types</h5>
 <div class="paragraph">
 <p>EnMasse is configured with a set of addresses that you can use for
 messages. Currently, EnMasse supports 4 different address types:</p>
@@ -3372,11 +3875,12 @@ resources consumed by the API. Here is an example config with all 4 variants tha
 <p>This will connect to the address controller REST API and deploy the address config in the 'default' address space.</p>
 </div>
 </div>
-</div>
 <div class="sect4">
 <h5 id="sending-and-receiving-messages-kubernetes">Sending and receiving messages</h5>
-<div class="sect6">
-<h7 id="connecting_with_amqp_2">Connecting with AMQP</h7>
+
+</div>
+<div class="sect4">
+<h5 id="connecting_with_amqp_2">Connecting with AMQP</h5>
 <div class="paragraph">
 <p>For sending and receiving messages, have a look at an example python
 <a href="http://qpid.apache.org/releases/qpid-proton-0.18.0/proton/python/examples/simple_send.py.html">sender</a>
@@ -3415,8 +3919,8 @@ kubectl get secret external-certs-messaging -o jsonpath='{.data.tls\.crt}' | bas
 <p>Have a look at <a href="#connecting">Connecting to EnMasse</a> for more client examples.</p>
 </div>
 </div>
-<div class="sect6">
-<h7 id="mqtt">Connecting using MQTT</h7>
+<div class="sect4">
+<h5 id="connecting_using_mqtt_2">Connecting using MQTT</h5>
 <div class="paragraph">
 <p>For sending and receiving messages route, you can use the paho-mqtt client library. To connect,
 fetch the server certificate:</p>
@@ -3427,8 +3931,8 @@ fetch the server certificate:</p>
 kubectl get secret external-certs-mqtt  -o jsonpath='{.data.tls\.crt}' | base64 -d &gt; certs/tls.crt</pre>
 </div>
 </div>
-<div class="sect7">
-<h8 id="subscriber_client_2">Subscriber client</h8>
+<div class="sect5">
+<h6 id="subscriber_client_2">Subscriber client</h6>
 <div class="paragraph">
 <p>Save the following to <code>tls_mqtt_recv.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_recv.py">download</a>:</p>
 </div>
@@ -3502,7 +4006,7 @@ client.loop_forever()</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In order to subscribe to a topic (i.e. <code>mytopic</code> from the previous addresses configuration), the
+<p>In order to subscribe to a topic (that is, <code>mytopic</code> from the previous addresses configuration), the
 subscriber client can be used in the following way:</p>
 </div>
 <div class="literalblock">
@@ -3510,9 +4014,8 @@ subscriber client can be used in the following way:</p>
 <pre>./tls_mqtt_recv.py -c "$(oc get route -o jsonpath='{.spec.host}' mqtt)" -p 443 -t mytopic -q 1 -s ./certs/tls.crt</pre>
 </div>
 </div>
-</div>
-<div class="sect7">
-<h8 id="publisher_client_2">Publisher client</h8>
+<div class="sect6">
+<h7 id="publisher_client_2">Publisher client</h7>
 <div class="paragraph">
 <p>Save the following to <code>tls_mqtt_send.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_send.py">download</a>:</p>
 </div>
@@ -3611,7 +4114,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="setting-up-enmasse-on-aws">A.3. Setting up EnMasse on AWS</h4>
+<h4 id="setting-up-enmasse-on-aws">A.1.6. Setting up EnMasse on AWS</h4>
 <div class="paragraph">
 <p>This guide walks you through setting up EnMasse on an AWS EC2 instance.
 This is not even very specific to AWS, so you can probably modify the
@@ -3619,7 +4122,7 @@ configuration to fit Microsoft Azure or even Google GCE.</p>
 </div>
 <div class="paragraph">
 <p>The end result from this guide is an instance of EnMasse suitable for
-development and/or experimentation, and should not be considered a
+development and experimentation, and should not be considered a
 production ready setup. For instance, no persistence is configured, so
 neither messages in brokers nor state in other components like hawkular
 are persisted.</p>
@@ -3650,7 +4153,7 @@ parameter is set to <code>-H -S</code> (remove the <code>-n</code>).</p>
 <div class="paragraph">
 <p>Once Ansible is setup, installing OpenShift is easy. First, an inventory
 file with the configuration and the hosts must be created. Save the
-following configuration to a file, i.e. <code>ansible-inventory.txt</code>:</p>
+following configuration to a file, that is, <code>ansible-inventory.txt</code>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -3681,7 +4184,7 @@ openshift_hosted_metrics_deploy=true
 defined in <code>/etc/origin/master/htpasswd</code>.</p>
 </div>
 <div class="paragraph">
-<p>If you don&#8217;t have a domain with wildcard support, you can replace with
+<p>If you do not have a domain with wildcard support, you can replace with
 .nip.io, and you will have a working setup without having a specialized
 domain.</p>
 </div>
@@ -3725,13 +4228,19 @@ EnMasse.</p>
 </div>
 <div class="sect4">
 <h5 id="installing_enmasse">Installing EnMasse</h5>
-<div class="paragraph">
-<p>Unresolved directive in getting_started/aws.adoc - include::common/install-procedure.adoc[leveloffset+=1]</p>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Download one of the releases from <a href="https://github.com/EnMasseProject/enmasse/releases" class="bare">https://github.com/EnMasseProject/enmasse/releases</a> and unpack it.</p>
+</li>
+</ol>
 </div>
+</div>
+<div class="sect4">
+<h5 id="deploying_enmasse_3">Deploying EnMasse</h5>
 <div class="sect5">
-<h6 id="deploying_enmasse_3">Deploying EnMasse</h6>
-<div class="sect6">
-<h7 id="using_script_3">Using script</h7>
+<h6 id="using_script_3">Using script</h6>
 <div class="paragraph">
 <p>Invoke the deployment script to deploy EnMasse</p>
 </div>
@@ -3741,8 +4250,8 @@ EnMasse.</p>
 </div>
 </div>
 </div>
-<div class="sect6">
-<h7 id="using_ansible_3">Using ansible</h7>
+<div class="sect5">
+<h6 id="using_ansible_3">Using Ansible</h6>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">ansible-playbook -i ansible/inventory/singletenant-standard.example ansible/playbooks/openshift/deploy_all.yml</pre>
@@ -3767,11 +4276,12 @@ followed the above guide, you should have EnMasse deployed. The endpoints will b
 </div>
 </div>
 </div>
-</div>
 <div class="sect4">
 <h5 id="sending-and-receiving-messages-aws">Sending and receiving messages</h5>
-<div class="sect6">
-<h7 id="connecting_with_amqp_3">Connecting with AMQP</h7>
+
+</div>
+<div class="sect4">
+<h5 id="connecting_with_amqp_3">Connecting with AMQP</h5>
 <div class="paragraph">
 <p>For sending and receiving messages, have a look at an example python
 <a href="http://qpid.apache.org/releases/qpid-proton-0.18.0/proton/python/examples/simple_send.py.html">sender</a>
@@ -3810,8 +4320,8 @@ oc get secret external-certs-messaging -o jsonpath='{.data.tls\.crt}' | base64 -
 <p>Have a look at <a href="#connecting">Connecting to EnMasse</a> for more client examples.</p>
 </div>
 </div>
-<div class="sect6">
-<h7 id="mqtt">Connecting using MQTT</h7>
+<div class="sect4">
+<h5 id="connecting_using_mqtt_3">Connecting using MQTT</h5>
 <div class="paragraph">
 <p>For sending and receiving messages route, you can use the paho-mqtt client library. To connect,
 fetch the server certificate:</p>
@@ -3822,8 +4332,8 @@ fetch the server certificate:</p>
 oc get secret external-certs-mqtt  -o jsonpath='{.data.tls\.crt}' | base64 -d &gt; certs/tls.crt</pre>
 </div>
 </div>
-<div class="sect7">
-<h8 id="subscriber_client_3">Subscriber client</h8>
+<div class="sect5">
+<h6 id="subscriber_client_3">Subscriber client</h6>
 <div class="paragraph">
 <p>Save the following to <code>tls_mqtt_recv.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_recv.py">download</a>:</p>
 </div>
@@ -3897,7 +4407,7 @@ client.loop_forever()</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In order to subscribe to a topic (i.e. <code>mytopic</code> from the previous addresses configuration), the
+<p>In order to subscribe to a topic (that is, <code>mytopic</code> from the previous addresses configuration), the
 subscriber client can be used in the following way:</p>
 </div>
 <div class="literalblock">
@@ -3905,9 +4415,8 @@ subscriber client can be used in the following way:</p>
 <pre>./tls_mqtt_recv.py -c "$(oc get route -o jsonpath='{.spec.host}' mqtt)" -p 443 -t mytopic -q 1 -s ./certs/tls.crt</pre>
 </div>
 </div>
-</div>
-<div class="sect7">
-<h8 id="publisher_client_3">Publisher client</h8>
+<div class="sect6">
+<h7 id="publisher_client_3">Publisher client</h7>
 <div class="paragraph">
 <p>Save the following to <code>tls_mqtt_send.py</code> or <a href="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/examples/tls_mqtt_send.py">download</a>:</p>
 </div>
@@ -4004,7 +4513,7 @@ client.loop_forever()</code></pre>
 you a nice overview of whats going on over time. First of all, I like to
 setup everything metric-related in the <code>openshift-infra</code> project. To do
 that, you must first give your user permission sufficient privileges. In
-this setup, since it&#8217;s not a production setup, I grant cluster-admin
+this setup, since it is not a production setup, I grant cluster-admin
 privileges for simplicity (requires logging into the ec2 instance):</p>
 </div>
 <div class="literalblock">
@@ -4061,11 +4570,12 @@ The default username and password is <code>admin/admin</code>. E</p>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
 <h2 id="rest_api_reference">Appendix B: REST API Reference</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="enmasse">B.1. EnMasse</h3>
+<h3 id="enmasse_rest_api">B.1. EnMasse REST API</h3>
 <div class="sect3">
 <h4 id="_overview">B.1.1. Overview</h4>
 <div class="paragraph">
@@ -4092,6 +4602,9 @@ The default username and password is <code>admin/admin</code>. E</p>
 </li>
 <li>
 <p>addressspaces : Operate on AddressSpaces</p>
+</li>
+<li>
+<p>messagingusers : Operating on MessagingUsers.</p>
 </li>
 </ul>
 </div>
@@ -6277,6 +6790,716 @@ The default username and password is <code>admin/admin</code>. E</p>
 </div>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_createauthenmassev1alpha1namespacedmessaginguser">POST /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers</h5>
+<div class="sect5">
+<h6 id="description_16">Description</h6>
+<div class="paragraph">
+<p>create a MessagingUser</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_16">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Body</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>body</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_16">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>201</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Created</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="consumes_7">Consumes</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="produces_16">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_17">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>auth</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+<li>
+<p>user</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_listauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers</h5>
+<div class="sect5">
+<h6 id="description_17">Description</h6>
+<div class="paragraph">
+<p>list objects of kind MessagingUser</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_17">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Query</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>labelSelector</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>A selector to restrict the list of returned objects by their labels. Defaults to everything.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_17">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguserlist">io.enmasse.user.v1alpha1.MessagingUserList</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="produces_17">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_18">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>auth</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+<li>
+<p>user</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_readauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
+<div class="sect5">
+<h6 id="description_18">Description</h6>
+<div class="paragraph">
+<p>read the specified MessagingUser</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_18">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Name of MessagingUser to read. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_18">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>404</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Not found</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="consumes_8">Consumes</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="produces_18">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_19">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>auth</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+<li>
+<p>user</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_replaceauthenmassev1alpha1namespacedmessaginguser">PUT /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
+<div class="sect5">
+<h6 id="description_19">Description</h6>
+<div class="paragraph">
+<p>replace the specified MessagingUser</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_19">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Name of MessagingUser to replace. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Body</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>body</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_19">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>201</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Created</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="produces_19">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_20">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>auth</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+<li>
+<p>user</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_deleteauthenmassev1alpha1namespacedmessaginguser">DELETE /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
+<div class="sect5">
+<h6 id="description_20">Description</h6>
+<div class="paragraph">
+<p>delete a MessagingUser</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_20">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Name of MessagingUser to delete. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_20">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_status">Status</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>404</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Not found</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="produces_20">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_21">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>auth</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+<li>
+<p>user</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_definitions">B.1.3. Definitions</h4>
@@ -6321,7 +7544,7 @@ The default username and password is <code>admin/admin</code>. E</p>
 <div class="sect4">
 <h5 id="_status">Status</h5>
 <div class="paragraph">
-<p>Status is a return value for calls that don&#8217;t return other objects.</p>
+<p>Status is a return value for calls that do not return other objects.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -6347,6 +7570,259 @@ The default username and password is <code>admin/admin</code>. E</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>integer (int32)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>apiVersion</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (user.enmasse.io/v1alpha1)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>kind</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (MessagingUser)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>metadata</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_objectmeta">ObjectMeta</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>spec</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_userspec">io.enmasse.user.v1alpha1.UserSpec</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_user_v1alpha1_messaginguserlist">io.enmasse.user.v1alpha1.MessagingUserList</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>apiVersion</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (user.enmasse.io/v1alpha1)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>items</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>kind</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (MessagingUserList)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_user_v1alpha1_userspec">io.enmasse.user.v1alpha1.UserSpec</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>authentication</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_userspec_authentication">authentication</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>authorization</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_user_v1alpha1_userspec_authorization">authorization</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>username</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_user_v1alpha1_userspec_authentication" class="paragraph">
+<p><strong>authentication</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>federatedUserid</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>User id of the user to federate when 'federated' type is specified.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>federatedUsername</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>User name of the user to federate when 'federated' type is specified.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>password</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Base64 encoded value of password when 'password' type is specified.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>provider</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Name of provider to use for federated identity when 'federated' type is specified.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>type</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (password, federated)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_user_v1alpha1_userspec_authorization" class="paragraph">
+<p><strong>authorization</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>addresses</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; string &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>operations</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; enum (send, receive, view, manage) &gt; array</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -7017,7 +8493,7 @@ The default username and password is <code>admin/admin</code>. E</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-08-20 18:00:15 UTC
+Last updated 2018-09-07 06:54:16 UTC
 </div>
 </div>
 </body>
