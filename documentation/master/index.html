@@ -3335,6 +3335,18 @@ been tested to work with the latest stable release of the OpenShift Origin Clien
 on your machine.</p>
 </li>
 <li>
+<p>If you want to install EnMasse on Minishift and want to use Service Catalog, you must explicitly enable it during the start-up, like</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">MINISHIFT_ENABLE_EXPERIMENTAL="y" minishift start --extra-clusterup-flags "--service-catalog"</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
 <p>A method to generate certificates is required. This guide uses <a href="https://www.openssl.org/" target="_blank" rel="noopener">OpenSSL</a>.</p>
 </li>
 </ul>
@@ -8493,7 +8505,7 @@ The default username and password is <code>admin/admin</code>. E</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-09-07 06:54:16 UTC
+Last updated 2018-09-12 12:09:43 UTC
 </div>
 </div>
 </body>

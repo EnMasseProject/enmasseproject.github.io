@@ -1,0 +1,111 @@
+== why
+
+Tenants currently need to create users and assign permissions using the Keycloak console or API when
+using the standard address space.
+
+It is desirable to be able to create all EnMasse resources using `kubectl` or `oc` to improve the user experience.
+(i.e. `oc create -f address_space.yaml && oc create -f addresses.yaml && oc create -f users.yaml`)
+
+The standard authentication service happens to be implemented using keycloak. Having an API in front
+of that allows us to change that implementation if we wish.
+
+== what/how
+
+A new api group 'user.enmasse.io' will be created. It will support the following operations:
+
+To create a user (oc create -f user1.yaml):
+```
+POST /apis/user.enmasse.io/v1alpha1/namespaces/myproject/messagingusers
+```
+
+To read a user (oc get myspace.user1):
+```
+GET /apis/user.enmasse.io/v1alpha1/namespaces/myproject/messagingusers/myspace.user1
+```
+
+To update a user (oc replace -f user1.yaml):
+
+```
+PUT /apis/user.enmasse.io/v1alpha1/namespaces/myproject/messagingusers/myspace.user1
+```
+
+To remove a user (oc delete enmasse-user myspace.user1)
+
+```
+DELETE /apis/user.enmasse.io/v1alpha1/namespaces/myproject/messagingusers/myspace.user1
+```
+
+In the same way as addresses, users are scoped by namespace _and_ address space and resource names
+must include the address space name and username separated by a dot ('.').
+
+A user may authentication using passwords or a federated identity. In the case of authentication
+using a password, the password is provided upon creation on the user.  Subsequent reads of this
+user will not be able to see the password, and so applications need to 'remember' the password
+using secrets or other mechanisms. To start with, users can not be modified (i.e. have the password
+changed).
+
+```
+apiVersion: user.enmasse.io/v1alpha1
+kind: MessagingUser
+metadata:
+    name: myspace.user1
+spec:
+    username: user1
+    authentication:
+      type: password
+      password: mypassword
+    authorization:
+    - addresses: [ "topic1", "topic2", "queue*" ]
+      operations: [ "send", "recv", "view" ]
+```
+
+Users can also be authenticated using a federated identity where providers such as OpenShift can be
+supported. In the first instance, federated users can only be used for console access (should be
+reflected in user documentation).
+
+```
+apiVersion: user.enmasse.io/v1alpha1
+kind: MessagingUser 
+metadata:
+    name: myspace.user2
+spec:
+    username: user2
+    authentication:
+      type: federated
+      provider: openshift
+      openshiftUserid: openshift user id
+      openshiftUsername: openshift user name
+    authorization:
+    - addresses: [ "*" ]
+      operations: [ "send", "recv", "view" ]
+    - operations: [ "manage" ]
+```
+
+The authorization policies describe what operations and on what addresses a particular user may
+perform those operations. Operations can be either `send`, `recv` or `view`, which can be applied to
+individual or multiple addresses using wildcards as the _suffix. The `manage` operation is a special operation
+that applies to all addresses and can be used to allow console user access (whereas view gives
+read-only console access).
+
+Addresses may contain wildcards at the end of the pattern. '*' will match all addresses.
+
+As a future improvements, the concept of groups can be introduced where the authorization policies
+can apply to multiple users.
+
+=== Tasks
+
+The following tasks are needed to support this proposal:
+
+* Add support for new User type to java model
+* Implement creating, updating, deleting, getting users in keycloak based on User
+* Add support for the new API in api-server
+* Ensure federated identities require no manual interaction in Keycloak (get rid of dialog in UI)
+
+== testing
+
+* Tests that create users and check that they have the correct permissions
+
+== documentation
+
+* Documentation covering how to manage users as well as updating swagger.json with the new API and
+  resources.
