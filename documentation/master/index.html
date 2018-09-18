@@ -548,12 +548,12 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel4">
 <li><a href="#creating-project-okd">Creating the project for EnMasse</a></li>
 <li><a href="#deploying-auth-services-okd">Deploying authentication services</a></li>
-<li><a href="#deploying-address-space-controller-okd">Deploying the address space controller</a></li>
-<li><a href="#deploying-api-server-okd">(Optional) Deploying the API server</a></li>
+<li><a href="#deploying-address-space-controller-okd">Deploying the Address Space Controller</a></li>
+<li><a href="#deploying-api-server-okd">Deploying the API server</a></li>
 <li><a href="#deploying-service-broker-okd">(Optional) Deploying the service broker</a></li>
-<li><a href="#deploying-single-namespace-okd">(Optional) Deploying EnMasse to a single namespace</a></li>
 </ul>
 </li>
+<li><a href="#installing-without-cluster-admin-privileges-okd">2.1.5. Installing EnMasse without cluster-admin privileges</a></li>
 </ul>
 </li>
 <li><a href="#installing-on-kubernetes-kube">2.2. Installing EnMasse on Kubernetes</a>
@@ -563,10 +563,9 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel4">
 <li><a href="#creating-project-kube">Creating the project for EnMasse</a></li>
 <li><a href="#deploying-auth-services-kube">Deploying authentication services</a></li>
-<li><a href="#deploying-address-space-controller-kube">Deploying the address space controller</a></li>
-<li><a href="#deploying-api-server-kube">(Optional) Deploying the API server</a></li>
+<li><a href="#deploying-address-space-controller-kube">Deploying the Address Space Controller</a></li>
+<li><a href="#deploying-api-server-kube">Deploying the API server</a></li>
 <li><a href="#deploying-service-broker-kube">(Optional) Deploying the service broker</a></li>
-<li><a href="#deploying-single-namespace-kube">(Optional) Deploying EnMasse to a single namespace</a></li>
 </ul>
 </li>
 </ul>
@@ -656,7 +655,6 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li><a href="#proc-creating-users-cli-managing-users">6.2. Creating users using the command line</a></li>
 <li><a href="#proc-deleting-users-cli-managing-users">6.3. Deleting users using the command line</a></li>
-<li><a href="#additional_resources">6.4. Additional resources</a></li>
 </ul>
 </li>
 <li><a href="#connecting_applications_to_enmasse">7. Connecting applications to EnMasse</a>
@@ -929,12 +927,6 @@ on your machine.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">multitenant</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to install EnMasse in multitenant mode. Single-tenant mode is recommended for evaluation purposes only.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">enable_rbac</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable RBAC authentication of REST APIs.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
@@ -1000,14 +992,13 @@ on your machine.</p>
 <p>An example inventory file that enables both the API server and service broker integration:</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="service_admin/multitenant-all.inventory">multitenant-all.inventory</a></div>
+<div class="title"><a href="service_admin/example.inventory">example.inventory</a></div>
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>[enmasse]
 localhost ansible_connection=local
 
 [enmasse:vars]
 namespace=enmasse
-multitenant=true
 enable_rbac=false
 api_server=true
 service_catalog=true
@@ -1180,21 +1171,9 @@ oc create configmap keycloak-config --from-literal=hostname=standard-authservice
 </div>
 </div>
 <div class="sect4">
-<h5 id="deploying-address-space-controller-okd">Deploying the address space controller</h5>
+<h5 id="deploying-address-space-controller-okd">Deploying the Address Space Controller</h5>
 <div class="paragraph">
-<p>The address space controller is responsible for creating the infrastructure used by address spaces.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-To install EnMasse on OpenShift , you must have <code>cluster-admin</code> access to set up the required roles for creating namespaces and managing resources in those namespaces; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-okd">(Optional) Deploying EnMasse to a single namespace</a>.
-</td>
-</tr>
-</table>
+<p>The Address Space Controller is responsible for creating the infrastructure used by address spaces.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -1208,25 +1187,11 @@ To install EnMasse on OpenShift , you must have <code>cluster-admin</code> acces
 </div>
 </li>
 <li>
-<p>Create cluster-wide roles used by the <code>enmasse-admin</code> service account:</p>
+<p>Grant privileges required for viewing and managing resources:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc login -u system:admin
-oc create -f ./resources/cluster-roles/openshift/address-space-controller.yaml</pre>
+<pre class="nowrap">oc create rolebinding enmasse-admin-admin-binding --clusterrole=admin --serviceaccount=enmasse:enmasse-admin -n enmasse</pre>
 </div>
-</div>
-</li>
-<li>
-<p>Grant privileges to the service account:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin
-oc policy add-role-to-user admin system:serviceaccount:enmasse:enmasse-admin
-oc adm policy add-cluster-role-to-user enmasse.io:address-space-controller system:serviceaccount:enmasse:enmasse-admin</pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Note</strong>: You can log in again as the regular user after this step.</p>
 </div>
 </li>
 <li>
@@ -1244,6 +1209,8 @@ oc create -f ./resources/plans/brokered-plans.yaml</pre>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc create -f ./resources/address-space-controller/address-space-definitions.yaml
+oc create -f ./resources/address-space-controller/standard-broker-definitions.yaml
+oc create -f ./resources/address-space-controller/broker-prometheus-config.yaml
 oc create -f ./resources/address-space-controller/deployment.yaml</pre>
 </div>
 </div>
@@ -1252,25 +1219,20 @@ oc create -f ./resources/address-space-controller/deployment.yaml</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="deploying-api-server-okd">(Optional) Deploying the API server</h5>
+<h5 id="deploying-api-server-okd">Deploying the API server</h5>
 <div class="paragraph">
-<p>The API server provides a REST API for creating address spaces and addresses. It can also serve as
-a Kubernetes API server if it is registered as an APIService.</p>
+<p>The API server provides a REST API for creating address spaces and addresses. It can also serve as an aggregated API server if it is registered as an API service.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-To install EnMasse on OpenShift, you must have <code>cluster-admin</code> access to set up the
-required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted
-to a single address space. For more information about how to deploy without <code>cluster-admin</code> access,
-which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-okd">(Optional) Deploying EnMasse to a single namespace</a>.
-</td>
-</tr>
-</table>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>To install the EnMasse API Server on OpenShift, you must have <code>cluster-admin</code> access to set up the
+required roles for delegating authentication to the OpenShift master; otherwise, you are restricted
+to using templates for creating address spaces. For more information about how to deploy without <code>cluster-admin</code> access,
+which restricts EnMasse to using templates, see <a href="#installing-without-cluster-admin-privileges-okd">Installing EnMasse without cluster-admin privileges</a>.</p>
+</li>
+</ul>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -1371,23 +1333,17 @@ oc create -f ./resources/api-server/service.yaml</pre>
 <div class="paragraph">
 <p>The service broker provides an implementation of the Open Service Broker API that integrates with the Kubernetes Service Catalog. The service broker requires the standard authentication service to be deployed.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-To install EnMasse on OpenShift, you must have <code>cluster-admin</code> access to set up the required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-okd">(Optional) Deploying EnMasse to a single namespace</a>.
-</td>
-</tr>
-</table>
-</div>
 <div class="ulist">
-<div class="title">Prerequisite</div>
+<div class="title">Prerequisites</div>
 <ul>
 <li>
 <p>The service broker requires the standard authentication service to be deployed.</p>
+</li>
+<li>
+<p>To install the EnMasse Service Broker on OpenShift, you must have <code>cluster-admin</code> access to set up the
+required roles for delegating authentication to the OpenShift master; otherwise, you are restricted
+to using templates for creating address spaces. For more information about how to deploy without <code>cluster-admin</code> access,
+which restricts EnMasse to using templates, see <a href="#installing-without-cluster-admin-privileges-okd">Installing EnMasse without cluster-admin privileges</a>.</p>
 </li>
 </ul>
 </div>
@@ -1513,17 +1469,17 @@ oc create configmap service-broker-config --from-literal=enableRbac=false --from
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="deploying-single-namespace-okd">(Optional) Deploying EnMasse to a single namespace</h5>
-<div class="paragraph">
-<p>Although EnMasse is designed to manage multiple namespaces, there are cases where deploying to a
-single namespace is useful when evaluating EnMasse without the required privileges.</p>
 </div>
+<div class="sect3">
+<h4 id="installing-without-cluster-admin-privileges-okd">2.1.5. Installing EnMasse without cluster-admin privileges</h4>
 <div class="ulist">
-<div class="title">Prerequisite</div>
+<div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>At least one authentication service must be installed. For more information see * <a href="#deploying-auth-services-okd">Deploying authentication services</a>.</p>
+<p>At least one authentication service must be installed. For more information see <a href="#deploying-auth-services-okd">Deploying authentication services</a>.</p>
+</li>
+<li>
+<p>The Address Space Controller must be installed. For more information see <a href="#deploying-address-space-controller-okd">Deploying the Address Space Controller</a></p>
 </li>
 </ul>
 </div>
@@ -1531,38 +1487,18 @@ single namespace is useful when evaluating EnMasse without the required privileg
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Create service accounts for the EnMasse address space controller and address space:</p>
+<p>Deploy the template for creating address spaces:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create sa enmasse-admin
-oc create sa address-space-admin</pre>
+<pre class="nowrap">oc create -f ./resources/templates/address-space.yaml -n enmasse</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Grant privileges required for viewing and managing resources:</p>
+<p>Create an address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc policy add-role-to-user view system:serviceaccount:enmasse:default
-oc policy add-role-to-user admin system:serviceaccount:enmasse:enmasse-admin
-oc policy add-role-to-user admin system:serviceaccount:enmasse:address-space-admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Install the default plan and resource configuration:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc create -f ./resources/resource-definitions/resource-definitions.yaml
-oc create -f ./resources/plans/standard-plans.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy the default address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc process -f ./resources/templates/address-space.yaml NAME=default NAMESPACE=enmasse TYPE=standard PLAN=unlimited-standard | oc create -f -</pre>
+<pre class="nowrap">oc process -f ./resources/templates/address-space.yaml NAME=myspace INFRA_UUID=abcd TYPE=standard PLAN=unlimited-standard | oc create -f -</pre>
 </div>
 </div>
 </li>
@@ -1573,32 +1509,16 @@ oc create -f ./resources/plans/standard-plans.yaml</pre>
 <pre class="nowrap">oc create -f ./resources/templates/address.yaml -n enmasse</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>You can use this template later for creating addresses from the command line.</p>
-</div>
 </li>
 <li>
-<p>Deploy the address space controller:</p>
+<p>Create an address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./resources/address-space-controller/address-space-definitions.yaml
-oc create -f ./resources/address-space-controller/deployment.yaml</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The deployments required for running EnMasse are now created.</p>
-</div>
-</li>
-<li>
-<p>EnMasse is running once all pods in the <code>enmasse</code> namespace are in the <code>Running</code> state:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc get pods -n enmasse</pre>
+<pre class="nowrap">oc process address ADDRESS_SPACE=myspace ADDRESS=queue1 INFRA_UUID=abcd | oc create -f -</pre>
 </div>
 </div>
 </li>
 </ol>
-</div>
 </div>
 </div>
 </div>
@@ -1765,21 +1685,9 @@ kubectl create configmap keycloak-config --from-literal=hostname=standard-authse
 </div>
 </div>
 <div class="sect4">
-<h5 id="deploying-address-space-controller-kube">Deploying the address space controller</h5>
+<h5 id="deploying-address-space-controller-kube">Deploying the Address Space Controller</h5>
 <div class="paragraph">
-<p>The address space controller is responsible for creating the infrastructure used by address spaces.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-To install EnMasse on Kubernetes , you must have <code>cluster-admin</code> access to set up the required roles for creating namespaces and managing resources in those namespaces; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-kube">(Optional) Deploying EnMasse to a single namespace</a>.
-</td>
-</tr>
-</table>
+<p>The Address Space Controller is responsible for creating the infrastructure used by address spaces.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -1789,6 +1697,14 @@ To install EnMasse on Kubernetes , you must have <code>cluster-admin</code> acce
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">kubectl create sa enmasse-admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Grant privileges required for viewing and managing resources:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create rolebinding enmasse-admin-admin-binding --clusterrole=admin --serviceaccount=enmasse:enmasse-admin -n enmasse</pre>
 </div>
 </div>
 </li>
@@ -1807,6 +1723,8 @@ kubectl create -f ./resources/plans/brokered-plans.yaml</pre>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">kubectl create -f ./resources/address-space-controller/address-space-definitions.yaml
+kubectl create -f ./resources/address-space-controller/standard-broker-definitions.yaml
+kubectl create -f ./resources/address-space-controller/broker-prometheus-config.yaml
 kubectl create -f ./resources/address-space-controller/deployment.yaml</pre>
 </div>
 </div>
@@ -1815,25 +1733,9 @@ kubectl create -f ./resources/address-space-controller/deployment.yaml</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="deploying-api-server-kube">(Optional) Deploying the API server</h5>
+<h5 id="deploying-api-server-kube">Deploying the API server</h5>
 <div class="paragraph">
-<p>The API server provides a REST API for creating address spaces and addresses. It can also serve as
-a Kubernetes API server if it is registered as an APIService.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-To install EnMasse on Kubernetes, you must have <code>cluster-admin</code> access to set up the
-required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted
-to a single address space. For more information about how to deploy without <code>cluster-admin</code> access,
-which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-kube">(Optional) Deploying EnMasse to a single namespace</a>.
-</td>
-</tr>
-</table>
+<p>The API server provides a REST API for creating address spaces and addresses. It can also serve as an aggregated API server if it is registered as an API service.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -1887,26 +1789,6 @@ kubectl create -f ./resources/api-server/service.yaml</pre>
 <h5 id="deploying-service-broker-kube">(Optional) Deploying the service broker</h5>
 <div class="paragraph">
 <p>The service broker provides an implementation of the Open Service Broker API that integrates with the Kubernetes Service Catalog. The service broker requires the standard authentication service to be deployed.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-To install EnMasse on Kubernetes, you must have <code>cluster-admin</code> access to set up the required roles for delegating authentication to the Kubernetes master; otherwise, you are restricted to a single address space. For more information about how to deploy without <code>cluster-admin</code> access, which restricts EnMasse to a single address space, see <a href="#deploying-single-namespace-kube">(Optional) Deploying EnMasse to a single namespace</a>.
-</td>
-</tr>
-</table>
-</div>
-<div class="ulist">
-<div class="title">Prerequisite</div>
-<ul>
-<li>
-<p>The service broker requires the standard authentication service to be deployed.</p>
-</li>
-</ul>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -1984,93 +1866,6 @@ kubectl create configmap service-broker-config --from-literal=enableRbac=false -
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">kubectl process -f ./resources/templates/service-broker.yaml BROKER_NAMESPACE=enmasse | oc create -f -</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect4">
-<h5 id="deploying-single-namespace-kube">(Optional) Deploying EnMasse to a single namespace</h5>
-<div class="paragraph">
-<p>Although EnMasse is designed to manage multiple namespaces, there are cases where deploying to a
-single namespace is useful when evaluating EnMasse without the required privileges.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisite</div>
-<ul>
-<li>
-<p>At least one authentication service must be installed. For more information see * <a href="#deploying-auth-services-kube">Deploying authentication services</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create service accounts for the EnMasse address space controller and address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc create sa enmasse-admin
-oc create sa address-space-admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Grant privileges required for viewing and managing resources:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc policy add-role-to-user view system:serviceaccount:enmasse:default
-oc policy add-role-to-user admin system:serviceaccount:enmasse:enmasse-admin
-oc policy add-role-to-user admin system:serviceaccount:enmasse:address-space-admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Install the default plan and resource configuration:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc create -f ./resources/resource-definitions/resource-definitions.yaml
-oc create -f ./resources/plans/standard-plans.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy the default address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc process -f ./resources/templates/address-space.yaml NAME=default NAMESPACE=enmasse TYPE=standard PLAN=unlimited-standard | oc create -f -</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy the template for creating addresses:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc create -f ./resources/templates/address.yaml -n enmasse</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can use this template later for creating addresses from the command line.</p>
-</div>
-</li>
-<li>
-<p>Deploy the address space controller:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc create -f ./resources/address-space-controller/address-space-definitions.yaml
-oc create -f ./resources/address-space-controller/deployment.yaml</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The deployments required for running EnMasse are now created.</p>
-</div>
-</li>
-<li>
-<p>EnMasse is running once all pods in the <code>enmasse</code> namespace are in the <code>Running</code> state:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc get pods -n enmasse</pre>
 </div>
 </div>
 </li>
@@ -2779,7 +2574,7 @@ be managed using a Kubernetes native REST API and custom resources using the com
 <p>EnMasse is installed with custom resources enabled</p>
 </li>
 <li>
-<p>You have created an <a href="#address_space">Address Space</a></p>
+<p>You must have already created an <a href="#address_space">Address Space</a></p>
 </li>
 </ul>
 </div>
@@ -2986,10 +2781,8 @@ spec:
 </li>
 </ul>
 </div>
-</div>
-<div class="sect2">
-<h3 id="additional_resources">6.4. Additional resources</h3>
 <div class="ulist">
+<div class="title">Additional resources</div>
 <ul>
 <li>
 <p><a href="#enmasse_rest_api">EnMasse REST API</a></p>
@@ -8505,7 +8298,7 @@ The default username and password is <code>admin/admin</code>. E</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-09-12 12:09:43 UTC
+Last updated 2018-09-18 07:45:45 UTC
 </div>
 </div>
 </body>
