@@ -35,7 +35,7 @@ oc new-project enmasse
 +
 [options="nowrap",subs="attributes"]
 ----
-oc process -f examples/templates/enmasse-with-none-authservice.yaml NAMESPACE=enmasse | oc apply -f -
+oc process -f install/templates/enmasse-with-none-authservice.yaml NAMESPACE=enmasse | oc apply -f -
 ----
 
 include::../modules/proc-create-address-space-cli.adoc[leveloffset=+1]
@@ -53,4 +53,5 @@ include::mqtt-client-openshift.adoc[leveloffset=+1]
 == Conclusion
 
 We have seen how to setup {ProductName} on OpenShift, and how to communicate with it using AMQP and MQTT clients.
+
 :context: {parent-context}

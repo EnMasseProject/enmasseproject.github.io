@@ -552,20 +552,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#proc-deleting-users-cli-managing-users">4.3. Deleting users using the command line</a></li>
 </ul>
 </li>
-<li><a href="#connecting_applications_to_enmasse">5. Connecting applications to EnMasse</a>
+<li><a href="#assembly-connecting-applications-messaging">5. Connecting applications to EnMasse</a>
 <ul class="sectlevel2">
-<li><a href="#connecting">5.1. Connecting to EnMasse</a>
+<li><a href="#client-examples-messaging">5.1. Client examples</a></li>
+<li><a href="#ref-python-example-messaging">5.2. Apache Qpid Proton Python example</a>
 <ul class="sectlevel3">
-<li><a href="#client_examples">5.1.1. Client Examples</a>
+<li><a href="#ref-jms-example-messaging">5.2.1. Apache Qpid JMS example</a></li>
+<li><a href="#ref-javascript-example-messaging">5.2.2. Rhea JavaScript Client example</a>
 <ul class="sectlevel4">
-<li><a href="#apache_qpid_proton_python">Apache Qpid Proton Python</a></li>
-<li><a href="#apache_qpid_jms">Apache Qpid JMS</a></li>
-<li><a href="#rhea_javascript_client">Rhea JavaScript Client</a></li>
-<li><a href="#rhea_javascript_client_using_websockets">Rhea JavaScript Client using WebSockets</a></li>
-<li><a href="#apache_qpid_proton_c">Apache Qpid Proton C++</a></li>
-<li><a href="#amqp_net_lite">AMQP.Net Lite</a></li>
+<li><a href="#rhea_javascript_client_example_using_websockets">Rhea JavaScript Client example using WebSockets</a></li>
 </ul>
 </li>
+<li><a href="#ref-cpp-example-messaging">5.2.3. Apache Qpid Proton C++ example</a></li>
+<li><a href="#ref-dotnet-example-messaging">5.2.4. AMQP.Net Lite example</a></li>
 </ul>
 </li>
 </ul>
@@ -818,7 +817,7 @@ on your machine.</p>
 <p>Deploy using <code>enmasse-with-standard-authservice</code> template</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f examples/templates/enmasse-with-standard-authservice.yaml NAMESPACE=enmasse | oc apply -f -</pre>
+<pre class="nowrap">oc process -f install/templates/enmasse-with-standard-authservice.yaml NAMESPACE=enmasse | oc apply -f -</pre>
 </div>
 </div>
 </li>
@@ -972,7 +971,7 @@ can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code
 <p>Create the <code>none</code> authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./examples/install/none-authservice</pre>
+<pre class="nowrap">oc create -f ./install/components/none-authservice</pre>
 </div>
 </div>
 </li>
@@ -988,7 +987,7 @@ can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code
 <p>Modify the installation files according to the namespace the Standard Authservice is going to be installed in</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/install/standard-authservice/*RoleBinding*.yaml</code></pre>
+<pre class="highlightjs highlight"><code>sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/standard-authservice/<strong>RoleBinding</strong>.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -1001,7 +1000,7 @@ can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code
 <p>Create the <code>standard</code> authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./examples/install/standard-authservice</pre>
+<pre class="nowrap">oc create -f ./install/components/standard-authservice</pre>
 </div>
 </div>
 </li>
@@ -1021,7 +1020,7 @@ can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code
 <p>Modify the installation files according to the namespace the Address Space Controller is going to be installed in</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/install/address-space-controller/*RoleBinding*.yaml</code></pre>
+<pre class="highlightjs highlight"><code>sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/address-space-controller/<strong>RoleBinding</strong>.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -1034,7 +1033,7 @@ can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code
 <p>Deploy the Address Space Controller</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f examples/install/address-space-controller</pre>
+<pre class="nowrap">oc apply -f install/components/address-space-controller</pre>
 </div>
 </div>
 </li>
@@ -1059,8 +1058,8 @@ which restricts EnMasse to using templates, see <a href="#installing-without-clu
 <p>Modify the installation files according to the namespace the API Server is going to be installed in</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/install/api-service/*.yaml
-sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/install/api-server/*RoleBinding*.yaml</code></pre>
+<pre class="highlightjs highlight"><code>sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/api-service/<strong>.yaml
+sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/api-server/*RoleBinding</strong>.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -1073,7 +1072,7 @@ sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/inst
 <p>Register API service</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f examples/install/api-service</pre>
+<pre class="nowrap">oc apply -f install/components/api-service</pre>
 </div>
 </div>
 </li>
@@ -1081,7 +1080,7 @@ sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/inst
 <p>Deploy the API Server</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f examples/install/api-server/</pre>
+<pre class="nowrap">oc apply -f install/components/api-server/</pre>
 </div>
 </div>
 </li>
@@ -1109,8 +1108,8 @@ which restricts EnMasse to using templates, see <a href="#installing-without-clu
 <p>Modify the installation files according to the namespace the Service Broker is going to be installed in</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/install/service-broker/*.yaml
-sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/install/cluster-service-broker/*.yaml</code></pre>
+<pre class="highlightjs highlight"><code>sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/service-broker/<strong>.yaml
+sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/cluster-service-broker/</strong>.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -1123,7 +1122,7 @@ sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/inst
 <p>Deploy the Service Broker:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f examples/install/service-broker</pre>
+<pre class="nowrap">oc apply -f install/components/service-broker</pre>
 </div>
 </div>
 </li>
@@ -1131,7 +1130,7 @@ sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/inst
 <p>Register the Service Broker with the OpenShift Service Catalog:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f examples/install/cluster-service-broker</pre>
+<pre class="nowrap">oc apply -f install/components/cluster-service-broker</pre>
 </div>
 </div>
 </li>
@@ -1275,7 +1274,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=none-au
 <p>Create the <code>none</code> authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl create -f ./examples/install/none-authservice</pre>
+<pre class="nowrap">kubectl create -f ./install/components/none-authservice</pre>
 </div>
 </div>
 </li>
@@ -1291,7 +1290,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=none-au
 <p>Modify the installation files according to the namespace the Standard Authservice is going to be installed in</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/install/standard-authservice/*RoleBinding*.yaml</code></pre>
+<pre class="highlightjs highlight"><code>sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/standard-authservice/<strong>RoleBinding</strong>.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -1321,7 +1320,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Create the <code>standard</code> authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl create -f ./examples/install/standard-authservice</pre>
+<pre class="nowrap">kubectl create -f ./install/components/standard-authservice</pre>
 </div>
 </div>
 </li>
@@ -1341,7 +1340,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Modify the installation files according to the namespace the Address Space Controller is going to be installed in</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/install/address-space-controller/*RoleBinding*.yaml</code></pre>
+<pre class="highlightjs highlight"><code>sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/address-space-controller/<strong>RoleBinding</strong>.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -1354,7 +1353,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Deploy the Address Space Controller</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f examples/install/address-space-controller</pre>
+<pre class="nowrap">kubectl apply -f install/components/address-space-controller</pre>
 </div>
 </div>
 </li>
@@ -1373,8 +1372,8 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <p>Modify the installation files according to the namespace the API Server is going to be installed in</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/install/api-service/*.yaml
-sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/install/api-server/*RoleBinding*.yaml</code></pre>
+<pre class="highlightjs highlight"><code>sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/api-service/<strong>.yaml
+sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/api-server/*RoleBinding</strong>.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -1387,7 +1386,7 @@ sed -i 's/namespace: .*/namespace: <em>&lt;my-namespace&gt;</em>/' examples/inst
 <p>Register API service</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f examples/install/api-service</pre>
+<pre class="nowrap">kubectl apply -f install/components/api-service</pre>
 </div>
 </div>
 </li>
@@ -1412,7 +1411,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 <p>Deploy the API Server</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f examples/install/api-server/</pre>
+<pre class="nowrap">kubectl apply -f install/components/api-server/</pre>
 </div>
 </div>
 </li>
@@ -1523,7 +1522,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 <div class="sect4">
 <h5 id="con-standard-multicast-messaging">Multicast</h5>
 <div class="paragraph">
-<p>The multicast address type is a scalable direct address for sending messages to multiple consumers. Messages sent to a multicast address are forwarded to all consumers receiving messages on that address. Because message acknowledgments from consumers are not propagated to producers, only pre-settled messages can be sent to multicast addresses,.</p>
+<p>The multicast address type is a scalable direct address for sending messages to multiple consumers. Messages sent to a multicast address are forwarded to all consumers receiving messages on that address. Because message acknowledgments from consumers are not propagated to producers, only pre-settled messages can be sent to multicast addresses.</p>
 </div>
 </div>
 <div class="sect4">
@@ -2171,49 +2170,47 @@ spec:
 </div>
 </div>
 <div class="sect1">
-<h2 id="connecting_applications_to_enmasse">5. Connecting applications to EnMasse</h2>
+<h2 id="assembly-connecting-applications-messaging">5. Connecting applications to EnMasse</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="connecting">5.1. Connecting to EnMasse</h3>
 <div class="paragraph">
-<p>To connect to the messaging service from outside the openshift or
-kubernetes cluster, TLS must be used with SNI set to specify the fully
-qualified hostname for the address-space. The port used is 443.</p>
-</div>
-<div class="paragraph">
-<p>The messaging protocols supported depends on the type of the
-address-space.</p>
-</div>
-<div class="sect3">
-<h4 id="client_examples">5.1.1. Client Examples</h4>
-<div class="paragraph">
-<p>Simple examples are shown here for the following clients:</p>
+<p>You can connect your application to EnMasse using one of the following client examples.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Apache Qpid Proton Python</p>
+<p><a href="#ref-python-example-messaging">Apache Qpid Proton Python</a></p>
 </li>
 <li>
-<p>Apache Qpid JMS</p>
+<p><a href="#ref-jms-example-messaging">Apache Qpid JMS</a></p>
 </li>
 <li>
-<p>Rhea JavaScript Client</p>
+<p><a href="#ref-javascript-example-messaging">Rhea JavaScript Client</a></p>
 </li>
 <li>
-<p>Apache Qpid Proton C++</p>
+<p><a href="#ref-cpp-example-messaging">Apache Qpid Proton C++</a></p>
 </li>
 <li>
-<p>AMQP.Net Lite</p>
+<p><a href="#ref-dotnet-example-messaging">AMQP.Net Lite</a></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>These all assume you have created an address of type 'queue' named
-'myqueue'.</p>
+<p>To connect to the messaging service from outside the OpenShift
+or Kubernetes
+cluster, TLS must be used with SNI set to specify the fully qualified host name for the address space. The port used is 443.</p>
 </div>
-<div class="sect4">
-<h5 id="apache_qpid_proton_python">Apache Qpid Proton Python</h5>
+<div class="paragraph">
+<p>The messaging protocols supported depends on the type of address space used. For more information, see the  <a href="#con-address-space-messaging">address space</a> section.</p>
+</div>
+<div class="sect2">
+<h3 id="client-examples-messaging">5.1. Client examples</h3>
+
+</div>
+<div class="sect2">
+<h3 id="ref-python-example-messaging">5.2. Apache Qpid Proton Python example</h3>
+<div class="paragraph">
+<p>You can use the following Apache Qpid Proton Python example to connect your application to EnMasse. This example assumes you have created an address of type <code>queue</code> named <code>myqueue</code>.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-python hljs" data-lang="python">from __future__ import print_function, unicode_literals
@@ -2243,9 +2240,11 @@ class HelloWorld(MessagingHandler):
 Container(HelloWorld("amqps://&lt;messaging-route-hostname&gt;:443", "myqueue")).run()</code></pre>
 </div>
 </div>
+<div class="sect3">
+<h4 id="ref-jms-example-messaging">5.2.1. Apache Qpid JMS example</h4>
+<div class="paragraph">
+<p>You can use the following Apache Qpid JMS example to connect your application to EnMasse. This example assumes you have created an address of type <code>queue</code> named <code>myqueue</code>.</p>
 </div>
-<div class="sect4">
-<h5 id="apache_qpid_jms">Apache Qpid JMS</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">package org.apache.qpid.jms.example;
@@ -2323,8 +2322,11 @@ queue.myQueueLookup = myqueue</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="rhea_javascript_client">Rhea JavaScript Client</h5>
+<div class="sect3">
+<h4 id="ref-javascript-example-messaging">5.2.2. Rhea JavaScript Client example</h4>
+<div class="paragraph">
+<p>You can use the following Rhea JavaScript Client example to connect your application to EnMasse. This example assumes you have created an address of type <code>queue</code> named <code>myqueue</code>.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-javascript hljs" data-lang="javascript">var container = require('rhea');
@@ -2343,9 +2345,8 @@ container.on('sendable', function (context) {
 container.connect({username: '&lt;username&gt;', password: '&lt;password&gt;', port:443, host:'&lt;messaging-route-hostname&gt;', transport:'tls', rejectUnauthorized:false});</code></pre>
 </div>
 </div>
-</div>
 <div class="sect4">
-<h5 id="rhea_javascript_client_using_websockets">Rhea JavaScript Client using WebSockets</h5>
+<h5 id="rhea_javascript_client_example_using_websockets">Rhea JavaScript Client example using WebSockets</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-javascript hljs" data-lang="javascript">var container = require('rhea');
@@ -2369,10 +2370,11 @@ container.connect({username: '&lt;username&gt;', password: '&lt;password&gt;', c
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="apache_qpid_proton_c">Apache Qpid Proton C++</h5>
+</div>
+<div class="sect3">
+<h4 id="ref-cpp-example-messaging">5.2.3. Apache Qpid Proton C++ example</h4>
 <div class="paragraph">
-<p>The C client has equivalent simple_recv and simple_send examples with the same options as python. However, the C library does not perform the same level of processing on the URL; in particular it won&#8217;t take amqps:// to imply using TLS, so the example needs to be modified as follows:</p>
+<p>The C client has equivalent `simple_recv` and `simple_send` examples with the same options as Python. However, the C library does not perform the same level of processing on the URL; in particular it won&#8217;t take <code>amqps://</code> to imply using TLS, so the example needs to be modified as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2439,8 +2441,11 @@ int main(int argc, char **argv) {
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="amqp_net_lite">AMQP.Net Lite</h5>
+<div class="sect3">
+<h4 id="ref-dotnet-example-messaging">5.2.4. AMQP.Net Lite example</h4>
+<div class="paragraph">
+<p>You can use the following AMQP.Net Lite example to connect your application to EnMasse. This example assumes you have created an address of type <code>queue</code> named <code>myqueue</code>.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-csharp hljs" data-lang="csharp">using System;
@@ -2475,7 +2480,6 @@ namespace Test
         }
     }
 }</code></pre>
-</div>
 </div>
 </div>
 </div>
@@ -2932,7 +2936,7 @@ on your machine.</p>
 <p>Deploy using <code>enmasse-with-none-authservice</code> template</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f examples/templates/enmasse-with-none-authservice.yaml NAMESPACE=enmasse | oc apply -f -</pre>
+<pre class="nowrap">oc process -f install/templates/enmasse-with-none-authservice.yaml NAMESPACE=enmasse | oc apply -f -</pre>
 </div>
 </div>
 </li>
@@ -3116,7 +3120,7 @@ oc get secret $(oc get addressspace myspace -o jsonpath={.spec.endpoints[?(@.nam
 <p>You can modify the client code to use this cert to verify the server connection.</p>
 </div>
 <div class="paragraph">
-<p>Have a look at <a href="#connecting">Connecting to EnMasse</a> for more client examples.</p>
+<p>For more information, see <a href="#client-examples-messaging">Client examples</a>.</p>
 </div>
 </div>
 <div class="sect4">
@@ -3300,7 +3304,7 @@ client.loop_forever()</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The the publisher publishes the message and disconnects from EnMasse. The message is received by the previous connected subscriber.</p>
+<p>The publisher publishes the message and disconnects from EnMasse. The message is received by the previous connected subscriber.</p>
 </div>
 </div>
 </div>
@@ -3309,8 +3313,7 @@ client.loop_forever()</code></pre>
 <div class="sect3">
 <h4 id="conclusion-openshift">A.1.5. Conclusion</h4>
 <div class="paragraph">
-<p>We have seen how to setup EnMasse on OpenShift, and how to communicate with it using AMQP and MQTT clients.
-:context: messaging</p>
+<p>We have seen how to setup EnMasse on OpenShift, and how to communicate with it using AMQP and MQTT clients.</p>
 </div>
 </div>
 </div>
@@ -3348,7 +3351,7 @@ kubectl config set-context $(kubectl config current-context) --namespace=enmasse
 <p>Replace namespace references in bundle</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">sed -i "s/namespace: .*/namespace: enmasse/" examples/bundles/enmasse-with-none-authservice/*.yaml</pre>
+<pre class="nowrap">sed -i "s/myproject/enmasse/" install/bundles/enmasse-with-none-authservice/*.yaml</pre>
 </div>
 </div>
 </li>
@@ -3356,7 +3359,7 @@ kubectl config set-context $(kubectl config current-context) --namespace=enmasse
 <p>Deploy using <code>enmasse-with-none-authservice</code> template</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl create -f examples/bundles/enmasse-with-none-authservice</pre>
+<pre class="nowrap">kubectl create -f install/bundles/enmasse-with-none-authservice</pre>
 </div>
 </div>
 </li>
@@ -3541,7 +3544,7 @@ kubectl get secret $(kubectl get addressspace myspace -o jsonpath={.spec.endpoin
 <p>You can modify the client code to use this cert to verify the server connection.</p>
 </div>
 <div class="paragraph">
-<p>Have a look at <a href="#connecting">Connecting to EnMasse</a> for more client examples.</p>
+<p>For more information, see <a href="#client-examples-messaging">Client examples</a>.</p>
 </div>
 </div>
 <div class="sect4">
@@ -3725,7 +3728,7 @@ client.loop_forever()</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The the publisher publishes the message and disconnects from EnMasse. The message is received by the previous connected subscriber.</p>
+<p>The publisher publishes the message and disconnects from EnMasse. The message is received by the previous connected subscriber.</p>
 </div>
 </div>
 </div>
@@ -7663,7 +7666,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-09-25 16:56:56 UTC
+Last updated 2018-09-28 14:44:01 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
