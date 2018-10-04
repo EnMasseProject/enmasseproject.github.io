@@ -1158,7 +1158,7 @@ sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/cluster-s
 <p>Deploy the template for creating address spaces:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./resources/templates/address-space.yaml -n enmasse</pre>
+<pre class="nowrap">oc create -f ./install/components/tenant/address-space.yaml -n enmasse</pre>
 </div>
 </div>
 </li>
@@ -1166,7 +1166,7 @@ sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/cluster-s
 <p>Create an address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f ./resources/templates/address-space.yaml NAME=myspace INFRA_UUID=abcd TYPE=standard PLAN=unlimited-standard | oc create -f -</pre>
+<pre class="nowrap">oc process -f ./install/components/tenant/address-space.yaml NAME=myspace INFRA_UUID=abcd TYPE=standard PLAN=unlimited-standard | oc create -f -</pre>
 </div>
 </div>
 </li>
@@ -1174,7 +1174,7 @@ sed -i 's/myproject/<em>&lt;my-namespace&gt;</em>/' install/components/cluster-s
 <p>Deploy the template for creating addresses:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./resources/templates/address.yaml -n enmasse</pre>
+<pre class="nowrap">oc create -f ./install/components/tenant/address.yaml -n enmasse</pre>
 </div>
 </div>
 </li>
@@ -1586,6 +1586,22 @@ ifdef::Kubernetes[Kubernetes and] OpenShift command-line tools.</p>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
+<li>
+<p>Log in as a messaging tenant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">{cmdcli} login -u developer</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the project for the messaging application:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">{cmdcli} new-project myapp</code></pre>
+</div>
+</div>
+</li>
 <li>
 <p>Create an address space definition:</p>
 <div class="listingblock">
@@ -2764,7 +2780,7 @@ data:
 <p>Create the Prometheus deployment:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./resources/prometheus/prometheus.yaml -n enmasse</pre>
+<pre class="nowrap">oc apply -f ./install/components/prometheus</pre>
 </div>
 </div>
 </li>
@@ -2788,7 +2804,7 @@ data:
 <p>Create the Grafana deployment:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./resources/grafana/grafana.yaml -n enmasse</pre>
+<pre class="nowrap">oc apply -f ./install/components/grafana</pre>
 </div>
 </div>
 </li>
@@ -2829,7 +2845,7 @@ data:
 <p>Create the Prometheus deployment:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl create -f ./resources/prometheus/prometheus.yaml -n enmasse</pre>
+<pre class="nowrap">kubectl apply -f ./install/components/prometheus</pre>
 </div>
 </div>
 </li>
@@ -2845,7 +2861,7 @@ data:
 <p>Create the Grafana deployment:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl create -f ./resources/grafana/grafana.yaml -n enmasse</pre>
+<pre class="nowrap">kubectl apply -f ./install/components/grafana</pre>
 </div>
 </div>
 </li>
@@ -2948,6 +2964,22 @@ on your machine.</p>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
+<li>
+<p>Log in as a messaging tenant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">{cmdcli} login -u developer</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the project for the messaging application:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">{cmdcli} new-project myapp</code></pre>
+</div>
+</div>
+</li>
 <li>
 <p>Create an address space definition:</p>
 <div class="listingblock">
@@ -7666,7 +7698,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-10-02 18:56:54 UTC
+Last updated 2018-10-04 13:42:20 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
