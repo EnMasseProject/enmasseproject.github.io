@@ -575,23 +575,58 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#con-address-space-plans-messaging">6.1.1. Address space plans</a></li>
 <li><a href="#con-address-plans-messaging">6.1.2. Address plans</a></li>
-<li><a href="#con-resource-definitions-messaging">6.1.3. Resource definitions</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#monitoring">7. Monitoring</a>
+<li><a href="#infrastructure_configuration">7. Infrastructure configuration</a>
 <ul class="sectlevel2">
-<li><a href="#monitoring-oc-oc">7.1. Monitoring EnMasse on OpenShift</a>
+<li><a href="#infrastructure-configuration-messaging">7.1. Infrastructure configuration</a>
 <ul class="sectlevel3">
-<li><a href="#deploy-prometheus-oc">7.1.1. Deploying Prometheus</a></li>
-<li><a href="#deploy-grafana-oc">7.1.2. Deploying Grafana</a></li>
+<li><a href="#con-brokered-infra-config-messaging">7.1.1. Brokered infrastructure configuration</a></li>
+<li><a href="#con-standard-infra-config-messaging">7.1.2. Standard infrastructure configuration</a></li>
 </ul>
 </li>
-<li><a href="#monitoring-kube-kube">7.2. Monitoring EnMasse on Kubernetes</a>
+<li><a href="#applying_configuration_changes_on_openshift">7.2. Applying configuration changes on OpenShift</a>
 <ul class="sectlevel3">
-<li><a href="#deploy-prometheus-kube">7.2.1. Deploying Prometheus</a></li>
-<li><a href="#deploy-grafana-kube">7.2.2. Deploying Grafana</a></li>
+<li><a href="#applying-standard-infra-config-changes-messaging-okd">7.2.1. Applying standard infrastructure configuration</a></li>
+</ul>
+</li>
+<li><a href="#applying_configuration_changes_on_kubernetes">7.3. Applying configuration changes on Kubernetes</a>
+<ul class="sectlevel3">
+<li><a href="#applying-standard-infra-config-changes-messaging-k8s">7.3.1. Applying standard infrastructure configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#upgrading">8. Upgrading</a>
+<ul class="sectlevel2">
+<li><a href="#upgrading-enmasse-messaging">8.1. Upgrading EnMasse</a>
+<ul class="sectlevel3">
+<li><a href="#upgrading-enmasse-using-template-messaging-okd">8.1.1. Upgrading EnMasse on OpenShift using Template</a></li>
+<li><a href="#upgrading-enmasse-using-ansible-messaging-okd">8.1.2. Upgrading EnMasse on OpenShift using Ansible</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#monitoring">9. Monitoring</a>
+<ul class="sectlevel2">
+<li><a href="#monitoring-oc-oc">9.1. Monitoring EnMasse on OpenShift</a>
+<ul class="sectlevel3">
+<li><a href="#deploy-prometheus-oc">9.1.1. Deploying Prometheus</a></li>
+<li><a href="#deploy-grafana-oc">9.1.2. Deploying Grafana</a></li>
+<li><a href="#restart-component-oc">9.1.3. Restarting a Component</a></li>
+<li><a href="#get-logs-broker-oc">9.1.4. Viewing Router Logs</a></li>
+<li><a href="#get-logs-router-oc">9.1.5. Viewing Broker Logs</a></li>
+</ul>
+</li>
+<li><a href="#monitoring-kube-kube">9.2. Monitoring EnMasse on Kubernetes</a>
+<ul class="sectlevel3">
+<li><a href="#deploy-prometheus-kube">9.2.1. Deploying Prometheus</a></li>
+<li><a href="#deploy-grafana-kube">9.2.2. Deploying Grafana</a></li>
+<li><a href="#restart-component-kube">9.2.3. Restarting a Component</a></li>
+<li><a href="#get-logs-broker-kube">9.2.4. Viewing Router Logs</a></li>
+<li><a href="#get-logs-router-kube">9.2.5. Viewing Broker Logs</a></li>
 </ul>
 </li>
 </ul>
@@ -642,6 +677,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_paths">B.1.2. Paths</a>
 <ul class="sectlevel4">
+<li><a href="#_createadminenmassev1alpha1namespacedaddressspaceplan">POST /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans</a></li>
+<li><a href="#_listadminenmassev1alpha1namespacedaddresspaceplan">GET /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans</a></li>
+<li><a href="#_readadminenmassev1alpha1namespacedaddressspaceplan">GET /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans/{name}</a></li>
+<li><a href="#_replaceadminenmassev1alpha1namespacedaddressspaceplan">PUT /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans/{name}</a></li>
+<li><a href="#_deleteadminenmassev1alpha1namespacedaddressspaceplan">DELETE /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans/{name}</a></li>
 <li><a href="#_createenmassev1alpha1namespacedaddress">POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses</a></li>
 <li><a href="#_listenmassev1alpha1namespacedaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses</a></li>
 <li><a href="#_readenmassev1alpha1namespacedaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}</a></li>
@@ -668,6 +708,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel4">
 <li><a href="#_objectmeta">ObjectMeta</a></li>
 <li><a href="#_status">Status</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_addressplan">io.enmasse.admin.v1alpha1.AddressPlan</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_addressplanlist">io.enmasse.admin.v1alpha1.AddressPlanList</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_addressspaceplanlist">io.enmasse.admin.v1alpha1.AddressSpacePlanList</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfig">io.enmasse.admin.v1alpha1.BrokeredInfraConfig</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfiglist">io.enmasse.admin.v1alpha1.BrokeredInfraConfigList</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspec">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpec</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecadmin">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpecAdmin</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecbroker">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpecBroker</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfig">io.enmasse.admin.v1alpha1.StandardInfraConfig</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfiglist">io.enmasse.admin.v1alpha1.StandardInfraConfigList</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspec">io.enmasse.admin.v1alpha1.StandardInfraConfigSpec</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecadmin">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecAdmin</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecbroker">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecBroker</a></li>
+<li><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecrouter">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecRouter</a></li>
 <li><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></li>
 <li><a href="#_io_enmasse_user_v1alpha1_messaginguserlist">io.enmasse.user.v1alpha1.MessagingUserList</a></li>
 <li><a href="#_io_enmasse_user_v1alpha1_userspec">io.enmasse.user.v1alpha1.UserSpec</a></li>
@@ -794,9 +849,6 @@ on your machine.</p>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
-<li>
-<p>Download one of the releases from <a href="https://github.com/EnMasseProject/enmasse/releases" class="bare">https://github.com/EnMasseProject/enmasse/releases</a> and unpack it.</p>
-</li>
 <li>
 <p>Login as as a user with cluster-admin</p>
 <div class="listingblock">
@@ -1590,7 +1642,7 @@ ifdef::Kubernetes[Kubernetes and] OpenShift command-line tools.</p>
 <p>Log in as a messaging tenant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">{cmdcli} login -u developer</code></pre>
+<pre class="nowrap">oc login -u developer</pre>
 </div>
 </div>
 </li>
@@ -1598,7 +1650,7 @@ ifdef::Kubernetes[Kubernetes and] OpenShift command-line tools.</p>
 <p>Create the project for the messaging application:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">{cmdcli} new-project myapp</code></pre>
+<pre class="nowrap">oc new-project myapp</pre>
 </div>
 </div>
 </li>
@@ -2043,6 +2095,15 @@ At present, <code>password</code> type users can be used for both applications a
 <div class="paragraph">
 <p>For the <code>password</code> type, an additional field <code>password</code> must be set to a base64-encoded value of the
 password for that user. The password will not be printed out when reading the resource.</p>
+</div>
+<div class="paragraph">
+<p>A password can be base64-encoded on the command line. To encode <code>my-password</code>, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ echo -n my-password | base64
+bXktcGFzc3dvcmQ=</code></pre>
+</div>
 </div>
 </div>
 <div class="sect4">
@@ -2511,11 +2572,7 @@ namespace Test
 <p>Plans are used to configure quotas and control the resources consumed by a particular deployment. Plans are configured by the EnMasse service operator and are selected when creating an address space and an address.</p>
 </div>
 <div class="paragraph">
-<p>Resource definitions are a description of resources referenced by the plans, which can be configured with a template and parameters to be used when instantiating the template.</p>
-</div>
-<div class="paragraph">
-<p>By default, EnMasse comes with a set of plans and resource definitions that are
-sufficient for most use cases.</p>
+<p>EnMasse includes a default set of plans that are sufficient for most use cases.</p>
 </div>
 <div class="sect3">
 <h4 id="con-address-space-plans-messaging">6.1.1. Address space plans</h4>
@@ -2523,56 +2580,38 @@ sufficient for most use cases.</p>
 <p>Address space plans specify the quota available to a given address space. By default, EnMasse includes an unlimited quota plan for both the standard and brokered address spaces.</p>
 </div>
 <div class="paragraph">
-<p>Plans are configured as <code>ConfigMaps</code>. Following is an example plan for the standard address space:</p>
+<p>Plans are configured as custom resources. The following example shows a plan for the standard address space:</p>
 </div>
 <div class="listingblock">
 <div class="title"><a href="resources/restrictive-plan.yaml">restrictive-plan.yaml</a></div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
-kind: ConfigMap
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
+kind: AddressSpacePlan
 metadata:
   name: restrictive-plan
   labels:
-    type: address-space-plan
-data:
-  definition: |-
-    {
-      "apiVersion": "enmasse.io/v1",
-      "kind": "AddressSpacePlan",
-      "metadata": {
-        "name": "restrictive-plan"
-        "annotations": {
-          "defined-by": "standard-space"
-        }
-      },
-      "displayName": "Restrictive Plan",
-      "displayOrder": 0,
-      "shortDescription": "A plan with restrictive quotas",
-      "longDescription": "A plan with restrictive quotas for the standard address space",
-      "uuid": "74b9a40e-117e-11e8-b4e1-507b9def37d9",
-      "addressSpaceType": "standard",
-      "addressPlans": [
-        "small-queue",
-        "small-anycast"
-      ],
-      "resources": [
-        {
-          "name": "router",
-          "min": "0.0",
-          "max": "2.0"
-        },
-        {
-          "name": "broker",
-          "min": "0.0",
-          "max": "2.0"
-        },
-        {
-          "name": "aggregate",
-          "min": "0.0",
-          "max": "2.0"
-        }
-      ]
-    }</code></pre>
+    app: enmasse
+  annotations:
+    defined-by: default
+displayName: Restrictive Plan
+displayOrder: 0
+shortDescription: A plan with restrictive quotas
+longDescription: A plan with restrictive quotas for the standard address space
+uuid: 74b9a40e-117e-11e8-b4e1-507b9def37d9
+addressSpaceType: standard
+addressPlans:
+- small-queue
+- small-anycast
+resources:
+- name: router
+  min: 0.0
+  max: 2.0
+- name: broker
+  min: 0.0
+  max: 2.0
+- name: aggregate
+  min: 0.0
+  max: 2.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2595,7 +2634,7 @@ data:
 </ul>
 </div>
 <div class="paragraph">
-<p>The other fields are used by the EnMasse console UI. Note the annotation <code>defined-by</code>, which points to a resource definition describing the infrastructure that must be deployed when an address space using this plan is created.</p>
+<p>The other fields are used by the EnMasse console UI. Note the annotation <code>defined-by</code>, which points to a infrastructure config that must exist when an address space using this plan is created.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2604,42 +2643,28 @@ data:
 <p>Address plans specify the expected resource usage of a given address. The sum of the resource usage for all resource types determines the amount of infrastructure provisioned for an address space. A single router and broker pod has a maximum usage of one. If a new address requires additional resources and the resource consumption is within the address space plan limits, a new pod will be created automatically to handle the increased load.</p>
 </div>
 <div class="paragraph">
-<p>In the <a href="#con-address-space-plans-messaging">Address space plans</a> section, the address space plan references two address plans: <code>small-queue</code> and <code>small-anycast</code>. These address plans are stored as <code>ConfigMaps</code> and are defined as follows:</p>
+<p>In the <a href="#con-address-space-plans-messaging">Address space plans</a> section, the address space plan references two address plans: <code>small-queue</code> and <code>small-anycast</code>. These address plans are stored as custom resources and are defined as follows:</p>
 </div>
 <div class="listingblock">
 <div class="title"><a href="resources/small-queue-plan.yaml">small-queue-plan.yaml</a></div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
-kind: ConfigMap
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
+kind: AddressPlan
 metadata:
-  name: small-queue-plan
+  name: small-queue
   labels:
-    type: address-plan
-data:
-  definition: |-
-    {
-      "apiVersion": "enmasse.io/v1",
-      "kind": "AddressPlan",
-      "metadata": {
-        "name": "small-queue"
-      },
-      "displayName": "Small queue plan",
-      "displayOrder": 0,
-      "shortDescription": "A plan for small queues",
-      "longDescription": "A plan for small queues that consume little resources",
-      "uuid": "98feabb6-1183-11e8-a769-507b9def37d9",
-      "addressType": "queue",
-      "requiredResources": [
-        {
-          "name": "router",
-          "credit": 0.2
-        },
-        {
-          "name": "broker",
-          "credit": 0.3
-        }
-      ]
-    }</code></pre>
+    app: enmasse
+displayName: Small queue plan
+displayOrder: 0
+shortDescription: A plan for small queues
+longDescription: A plan for small queues that consume little resources
+uuid: 98feabb6-1183-11e8-a769-507b9def37d9
+addressType: queue
+requiredResources:
+- name: router
+  credit: 0.2
+- name: broker
+  credit: 0.3</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2670,101 +2695,357 @@ data:
 <div class="listingblock">
 <div class="title"><a href="resources/small-anycast-plan.yaml">small-anycast-plan.yaml</a></div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
-kind: ConfigMap
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
+kind: AddressPlan
 metadata:
-  name: small-anycast-plan
+  name: small-anycast
   labels:
-    type: address-plan
-data:
-  definition: |-
-    {
-      "apiVersion": "enmasse.io/v1",
-      "kind": "AddressPlan",
-      "metadata": {
-        "name": "small-anycast"
-      },
-      "displayName": "Small anycast plan",
-      "displayOrder": 0,
-      "shortDescription": "A plan for small anycast addresses",
-      "longDescription": "A plan for small anycast addresses that consume little resources",
-      "uuid": "cb61f440-1184-11e8-adda-507b9def37d9",
-      "addressType": "anycast",
-      "requiredResources": [
-        {
-          "name": "router",
-          "credit": 0.2
-        }
-      ]
-    }</code></pre>
+    app: enmasse
+displayName: Small anycast plan
+displayOrder: 0
+shortDescription: A plan for small anycast addresses
+longDescription: A plan for small anycast addresses that consume little resources
+uuid: cb61f440-1184-11e8-adda-507b9def37d9
+addressType: anycast
+requiredResources:
+- name: router
+  credit: 0.2</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>With this plan, up to 10 addresses can be created.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="con-resource-definitions-messaging">6.1.3. Resource definitions</h4>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="infrastructure_configuration">7. Infrastructure configuration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="infrastructure-configuration-messaging">7.1. Infrastructure configuration</h3>
 <div class="paragraph">
-<p>A resource describes a template along with a set of parameters. The resource definition is referenced from the plans. At present, only three resource definitions are supported:</p>
+<p>EnMasse creates infrastructure components such as routers, brokers, and consoles. These
+components can be configured while the system is running, and EnMasse automatically updates
+the components with the new settings.</p>
+</div>
+<div class="paragraph">
+<p>The EnMasse service operator can edit the EnMasse default infrastructure configuration.</p>
+</div>
+<div class="paragraph">
+<p>Infrastructure configuration can be managed for both <code>brokered</code> and <code>standard</code> infrastructure
+using <code>BrokeredInfraConfig</code> and <code>StandardInfraConfig</code> resources.</p>
+</div>
+<div class="sect3">
+<h4 id="con-brokered-infra-config-messaging">7.1.1. Brokered infrastructure configuration</h4>
+<div class="paragraph">
+<p><code>BrokeredInfraConfig</code> resources is used to configure infrastructure deployed by <code>brokered</code> address
+spaces. The brokered infra configuration is referenced by address space plans using a <code>defined-by</code>
+annotation. For more information, see <a href="#con-address-space-plans-messaging">Address space plans</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="resources/brokered-infra-config-example.yaml">brokered-infra-config-example.yaml</a></div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
+kind: BrokeredInfraConfig
+metadata:
+  name: brokered-infra-config-example
+  annotations:
+    enmasse.io/template-name: brokered-space-infra
+spec:
+  version: 0.23.0
+  admin:
+    resources:
+      memory: 256Mi
+  broker:
+    resources:
+      memory: 2Gi
+      storage: 100Gi
+    addressFullPolicy: PAGE</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>version</code> field specifies the EnMasse version used. When upgrading, EnMasse uses
+this field whether to upgrade the infrastructure to the requested version.</p>
+</div>
+<div class="paragraph">
+<p>The <code>admin</code> object specifies the settings you can configure for the <code>admin</code> components.</p>
+</div>
+<div class="paragraph">
+<p>The <code>broker</code> object specifies the settings you can configure for the <code>broker</code> components. Changing
+the <code>.broker.resources.storage</code> setting does not configure existing broker storage size.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="con-standard-infra-config-messaging">7.1.2. Standard infrastructure configuration</h4>
+<div class="paragraph">
+<p><code>StandardInfraConfig</code> resources is used to configure infrastructure deployed by <code>standard</code> address
+spaces. The standard infra configuration is referenced by address space plans using a <code>defined-by</code>
+annotation. For more information, see <a href="#con-address-space-plans-messaging">Address space plans</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="resources/standard-infra-config-example.yaml">standard-infra-config-example.yaml</a></div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
+kind: StandardInfraConfig
+metadata:
+  name: myconfig
+  annotations:
+    enmasse.io/template-name: standard-space-infra
+    enmasse.io/queue-template-name: queue-persisted
+    enmasse.io/topic-template-name: topic-persisted
+spec:
+  version: 0.23.0
+  admin:
+    resources:
+      memory: 256Mi
+  broker:
+    resources:
+      memory: 2Gi
+      storage: 100Gi
+    addressFullPolicy: PAGE
+  router:
+    resources:
+      memory: 256Mi
+    linkCapcity: 1000</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>version</code> field specifies the EnMasse version used. When upgrading, EnMasse uses
+this field whether to upgrade the infrastructure to the requested version.</p>
+</div>
+<div class="paragraph">
+<p>The <code>admin</code> object specifies the settings you can configure for the <code>admin</code> components.</p>
+</div>
+<div class="paragraph">
+<p>The <code>broker</code> object specifies the settings you can configure for the <code>broker</code> components. Changing
+the <code>.broker.resources.storage</code> setting does not configure existing broker storage size.</p>
+</div>
+<div class="paragraph">
+<p>The <code>router</code> object specifies the settings you can configure for the <code>router</code> components.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="applying_configuration_changes_on_openshift">7.2. Applying configuration changes on OpenShift</h3>
+<div class="sect3">
+<h4 id="applying-standard-infra-config-changes-messaging-okd">7.2.1. Applying standard infrastructure configuration</h4>
+<div class="paragraph">
+<p>You can edit existing configurations or create new ones.</p>
 </div>
 <div class="ulist">
+<div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><code>router</code></p>
-</li>
-<li>
-<p><code>broker</code></p>
-</li>
-<li>
-<p><code>broker-topic</code></p>
+<p>A standard infrastructure configuration change that you want to apply. For more information, see <a href="#con-standard-infra-config-messaging">Standard infrastructure configuration</a>.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>Resource definitions with other names will not work with EnMasse. It is, however, possible to modify these resource definitions to change the template and template parameters used when instantiating the infrastructure. For instance, the following configuration map that increases the memory available for brokers can replace the default one provided by EnMasse:</p>
-</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a service operator:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/broker-resource.yaml">broker-resource.yaml</a></div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: broker-resource
-  labels:
-    type: resource-definition
-data:
-  definition: |-
-    {
-      "apiVersion": "enmasse.io/v1",
-      "kind": "ResourceDefinition",
-      "metadata": {
-        "name": "broker"
-      },
-      "template": "queue-persisted",
-      "parameters": [
-        {
-          "name": "BROKER_MEMORY_LIMIT",
-          "value": "2Gi"
-        }
-      ]
-    }</code></pre>
+<pre class="nowrap">oc login -u developer</pre>
 </div>
+</div>
+</li>
+<li>
+<p>Select the project where EnMasse is installed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc project enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Apply the configuration changes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f standard-infra-config-example.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Monitor the pods while they are restarted:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -w</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The configuration changes will be applied within a couple of minutes.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="applying_configuration_changes_on_kubernetes">7.3. Applying configuration changes on Kubernetes</h3>
+<div class="sect3">
+<h4 id="applying-standard-infra-config-changes-messaging-k8s">7.3.1. Applying standard infrastructure configuration</h4>
+<div class="paragraph">
+<p>You can edit existing configurations or create new ones.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>A standard infrastructure configuration change that you want to apply. For more information, see <a href="#con-standard-infra-config-messaging">Standard infrastructure configuration</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Apply the configuration changes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f standard-infra-config-example.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Monitor the pods while they are restarted:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get pods -w</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The configuration changes will be applied within a couple of minutes.</p>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="monitoring">7. Monitoring</h2>
+<h2 id="upgrading">8. Upgrading</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="monitoring-oc-oc">7.1. Monitoring EnMasse on OpenShift</h3>
+<h3 id="upgrading-enmasse-messaging">8.1. Upgrading EnMasse</h3>
+<div class="paragraph">
+<p>EnMasse supports upgrades between minor versions using cloud native tools and the same
+mechanism used to apply configuration changes.  When upgrading, the updated infrastructure
+configuration of the new version will trigger the upgrade to start.</p>
+</div>
+<div class="paragraph">
+<p>Upgrading EnMasse is done by applying the YAML files for the new version.</p>
+</div>
+<div class="sect3">
+<h4 id="upgrading-enmasse-using-template-messaging-okd">8.1.1. Upgrading EnMasse on OpenShift using Template</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>A new release of EnMasse. For more information, see <a href="#downloading-okd">Downloading EnMasse</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a service operator:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u system:admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Select the project where EnMasse is installed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc project enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Apply the new release template:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc process -f install/templates/enmasse-with-standard-authservice.yaml NAMESPACE=enmasse | oc apply -f -</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Monitor pods while they are restarted:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -w</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The upgrade should cause all pods to be restarted within a couple of minutes.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="upgrading-enmasse-using-ansible-messaging-okd">8.1.2. Upgrading EnMasse on OpenShift using Ansible</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>A new release of EnMasse. For more information, see <a href="#downloading-okd">Downloading EnMasse</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a service operator:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u system:admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run the ansible playbook form the new release:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">ansible-playbook -i &lt;inventory file&gt; ansible/playbooks/openshift/deploy_all.yml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Monitor pods while they are restarted:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -w</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The upgrade should cause all pods to be restarted within a couple of minutes.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="monitoring">9. Monitoring</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="monitoring-oc-oc">9.1. Monitoring EnMasse on OpenShift</h3>
 <div class="paragraph">
 <p>You can use Prometheus and Grafana for monitoring the EnMasse service.</p>
 </div>
 <div class="sect3">
-<h4 id="deploy-prometheus-oc">7.1.1. Deploying Prometheus</h4>
+<h4 id="deploy-prometheus-oc">9.1.1. Deploying Prometheus</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -2796,7 +3077,7 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="deploy-grafana-oc">7.1.2. Deploying Grafana</h4>
+<h4 id="deploy-grafana-oc">9.1.2. Deploying Grafana</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2822,14 +3103,81 @@ data:
 <p>Grafana accepts the default username <code>admin</code> and default password <code>admin</code>. For more information about how to connect Grafana to Prometheus, see the <a href="https://prometheus.io/docs/visualization/grafana/#creating-a-prometheus-data-source" target="_blank" rel="noopener">Prometheus documentation</a>. If connecting Grafana to Prometheus, use <code>prometheus.enmasse.svc.cluster.local</code> as the Prometheus host name.</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="restart-component-oc">9.1.3. Restarting a Component</h4>
+<div class="ulist">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>Delete the component&#8217;s pod:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete pod -l name=&lt;component&gt;</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The component will be automatically restarted in a new pod.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="get-logs-broker-oc">9.1.4. Viewing Router Logs</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>List all router pods and choose the pod for the relevant address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -l name=qdrouterd -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Display the logs for the pod:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc logs &lt;pod&gt; -c router</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="get-logs-router-oc">9.1.5. Viewing Broker Logs</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>List all broker pods and choose the pod for the relevant address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -l name=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Display the logs for the pod:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc logs &lt;pod&gt;</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="monitoring-kube-kube">7.2. Monitoring EnMasse on Kubernetes</h3>
+<h3 id="monitoring-kube-kube">9.2. Monitoring EnMasse on Kubernetes</h3>
 <div class="paragraph">
 <p>You can use Prometheus and Grafana for monitoring the EnMasse service.</p>
 </div>
 <div class="sect3">
-<h4 id="deploy-prometheus-kube">7.2.1. Deploying Prometheus</h4>
+<h4 id="deploy-prometheus-kube">9.2.1. Deploying Prometheus</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -2853,7 +3201,7 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="deploy-grafana-kube">7.2.2. Deploying Grafana</h4>
+<h4 id="deploy-grafana-kube">9.2.2. Deploying Grafana</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2877,6 +3225,73 @@ data:
 </div>
 <div class="paragraph">
 <p>Grafana accepts the default username <code>admin</code> and default password <code>admin</code>. For more information about how to connect Grafana to Prometheus, see the <a href="https://prometheus.io/docs/visualization/grafana/#creating-a-prometheus-data-source" target="_blank" rel="noopener">Prometheus documentation</a>. If connecting Grafana to Prometheus, use <code>prometheus.enmasse.svc.cluster.local</code> as the Prometheus host name.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="restart-component-kube">9.2.3. Restarting a Component</h4>
+<div class="ulist">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>Delete the component&#8217;s pod:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl delete pod -l name=&lt;component&gt;</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The component will be automatically restarted in a new pod.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="get-logs-broker-kube">9.2.4. Viewing Router Logs</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>List all router pods and choose the pod for the relevant address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -l name=qdrouterd -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Display the logs for the pod:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl logs &lt;pod&gt; -c router</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="get-logs-router-kube">9.2.5. Viewing Broker Logs</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>List all broker pods and choose the pod for the relevant address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -l name=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Display the logs for the pod:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl logs &lt;pod&gt;</pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -2968,7 +3383,7 @@ on your machine.</p>
 <p>Log in as a messaging tenant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">{cmdcli} login -u developer</code></pre>
+<pre class="nowrap">oc login -u developer</pre>
 </div>
 </div>
 </li>
@@ -2976,7 +3391,7 @@ on your machine.</p>
 <p>Create the project for the messaging application:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">{cmdcli} new-project myapp</code></pre>
+<pre class="nowrap">oc new-project myapp</pre>
 </div>
 </div>
 </li>
@@ -3050,7 +3465,7 @@ spec:
 <p>For more details, see <a href="#con-address-space-messaging">address space</a>. EnMasse also comes with a console that you can use for managing addresses.</p>
 </div>
 <div class="paragraph">
-<p>EnMasse supports managing addresses natively in Kubernetes.</p>
+<p>EnMasse supports managing addresses natively in OpenShift.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -3473,7 +3888,7 @@ spec:
 <p>For more details, see <a href="#con-address-space-messaging">address space</a>. EnMasse also comes with a console that you can use for managing addresses.</p>
 </div>
 <div class="paragraph">
-<p>EnMasse supports managing addresses natively in Kubernetes.</p>
+<p>EnMasse supports managing addresses natively in OpenShift.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -3806,10 +4221,22 @@ communicate with it using python example AMQP clients.</p>
 <p>addresses : Operating on Addresses.</p>
 </li>
 <li>
+<p>addressplans : Operating on AddressPlans.</p>
+</li>
+<li>
+<p>addressspaceplans : Operating on AddressSpacePlans.</p>
+</li>
+<li>
 <p>addressspaces : Operate on AddressSpaces</p>
 </li>
 <li>
+<p>brokeredinfraconfigs : Operating on BrokeredInfraConfigs.</p>
+</li>
+<li>
 <p>messagingusers : Operating on MessagingUsers.</p>
+</li>
+<li>
+<p>standardinfraconfigs : Operating on StandardInfraConfigs.</p>
 </li>
 </ul>
 </div>
@@ -3825,11 +4252,11 @@ communicate with it using python example AMQP clients.</p>
 <div class="sect3">
 <h4 id="_paths">B.1.2. Paths</h4>
 <div class="sect4">
-<h5 id="_createenmassev1alpha1namespacedaddress">POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses</h5>
+<h5 id="_createadminenmassev1alpha1namespacedaddressspaceplan">POST /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans</h5>
 <div class="sect5">
 <h6 id="description">Description</h6>
 <div class="paragraph">
-<p>create an Address</p>
+<p>create an AddressSpacePlan</p>
 </div>
 </div>
 <div class="sect5">
@@ -3875,7 +4302,7 @@ communicate with it using python example AMQP clients.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -3905,7 +4332,7 @@ communicate with it using python example AMQP clients.</p>
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3916,7 +4343,7 @@ communicate with it using python example AMQP clients.</p>
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3958,7 +4385,10 @@ communicate with it using python example AMQP clients.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>addresses</p>
+<p>addressspaceplan</p>
+</li>
+<li>
+<p>admin</p>
 </li>
 <li>
 <p>enmasse_v1alpha1</p>
@@ -3968,11 +4398,11 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_listenmassev1alpha1namespacedaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses</h5>
+<h5 id="_listadminenmassev1alpha1namespacedaddresspaceplan">GET /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans</h5>
 <div class="sect5">
 <h6 id="description_2">Description</h6>
 <div class="paragraph">
-<p>list objects of kind Address</p>
+<p>list objects of kind AddressSpacePlan</p>
 </div>
 </div>
 <div class="sect5">
@@ -4050,7 +4480,7 @@ communicate with it using python example AMQP clients.</p>
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addresslist">io.enmasse.v1alpha1.AddressList</a></p>
+<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplanlist">io.enmasse.admin.v1alpha1.AddressSpacePlanList</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4082,7 +4512,10 @@ communicate with it using python example AMQP clients.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>addresses</p>
+<p>addressspaceplan</p>
+</li>
+<li>
+<p>admin</p>
 </li>
 <li>
 <p>enmasse_v1alpha1</p>
@@ -4092,11 +4525,11 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_readenmassev1alpha1namespacedaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}</h5>
+<h5 id="_readadminenmassev1alpha1namespacedaddressspaceplan">GET /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans/{name}</h5>
 <div class="sect5">
 <h6 id="description_3">Description</h6>
 <div class="paragraph">
-<p>read the specified Address</p>
+<p>read the specified AddressSpacePlan</p>
 </div>
 </div>
 <div class="sect5">
@@ -4126,7 +4559,7 @@ communicate with it using python example AMQP clients.</p>
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Name of Address to read</p>
+<p>Name of AddressSpacePlan to read.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>string</p>
@@ -4174,7 +4607,7 @@ communicate with it using python example AMQP clients.</p>
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4227,7 +4660,10 @@ communicate with it using python example AMQP clients.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>addresses</p>
+<p>addressspaceplan</p>
+</li>
+<li>
+<p>admin</p>
 </li>
 <li>
 <p>enmasse_v1alpha1</p>
@@ -4237,11 +4673,11 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_replaceenmassev1alpha1namespacedaddress">PUT /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}</h5>
+<h5 id="_replaceadminenmassev1alpha1namespacedaddressspaceplan">PUT /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans/{name}</h5>
 <div class="sect5">
 <h6 id="description_4">Description</h6>
 <div class="paragraph">
-<p>replace the specified Address</p>
+<p>replace the specified AddressSpacePlan</p>
 </div>
 </div>
 <div class="sect5">
@@ -4271,7 +4707,7 @@ communicate with it using python example AMQP clients.</p>
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Name of Address to replace</p>
+<p>Name of AddressSpacePlan to replace.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>string</p>
@@ -4302,7 +4738,7 @@ communicate with it using python example AMQP clients.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -4332,7 +4768,7 @@ communicate with it using python example AMQP clients.</p>
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4343,7 +4779,7 @@ communicate with it using python example AMQP clients.</p>
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4375,7 +4811,10 @@ communicate with it using python example AMQP clients.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>addresses</p>
+<p>addressspaceplan</p>
+</li>
+<li>
+<p>admin</p>
 </li>
 <li>
 <p>enmasse_v1alpha1</p>
@@ -4385,11 +4824,11 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_deleteenmassev1alpha1namespacedaddress">DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}</h5>
+<h5 id="_deleteadminenmassev1alpha1namespacedaddressspaceplan">DELETE /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans/{name}</h5>
 <div class="sect5">
 <h6 id="description_5">Description</h6>
 <div class="paragraph">
-<p>delete an Address</p>
+<p>delete an AddressSpacePlan</p>
 </div>
 </div>
 <div class="sect5">
@@ -4419,7 +4858,7 @@ communicate with it using python example AMQP clients.</p>
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Name of Address to delete</p>
+<p>Name of AddressSpacePlan to delete.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>string</p>
@@ -4510,7 +4949,10 @@ communicate with it using python example AMQP clients.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>addresses</p>
+<p>addressspaceplan</p>
+</li>
+<li>
+<p>admin</p>
 </li>
 <li>
 <p>enmasse_v1alpha1</p>
@@ -4520,11 +4962,11 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_createenmassev1alpha1namespacedaddressspace">POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces</h5>
+<h5 id="_createenmassev1alpha1namespacedaddress">POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses</h5>
 <div class="sect5">
 <h6 id="description_6">Description</h6>
 <div class="paragraph">
-<p>create an AddressSpace</p>
+<p>create an Address</p>
 </div>
 </div>
 <div class="sect5">
@@ -4570,7 +5012,7 @@ communicate with it using python example AMQP clients.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -4600,7 +5042,7 @@ communicate with it using python example AMQP clients.</p>
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4611,7 +5053,7 @@ communicate with it using python example AMQP clients.</p>
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4653,7 +5095,7 @@ communicate with it using python example AMQP clients.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>addressspaces</p>
+<p>addresses</p>
 </li>
 <li>
 <p>enmasse_v1alpha1</p>
@@ -4663,11 +5105,11 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_listenmassev1alpha1namespacedaddressspace">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces</h5>
+<h5 id="_listenmassev1alpha1namespacedaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses</h5>
 <div class="sect5">
 <h6 id="description_7">Description</h6>
 <div class="paragraph">
-<p>list objects of kind AddressSpace</p>
+<p>list objects of kind Address</p>
 </div>
 </div>
 <div class="sect5">
@@ -4745,7 +5187,7 @@ communicate with it using python example AMQP clients.</p>
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspacelist">io.enmasse.v1alpha1.AddressSpaceList</a></p>
+<p><a href="#_io_enmasse_v1alpha1_addresslist">io.enmasse.v1alpha1.AddressList</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4777,6 +5219,701 @@ communicate with it using python example AMQP clients.</p>
 <div class="ulist">
 <ul>
 <li>
+<p>addresses</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_readenmassev1alpha1namespacedaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}</h5>
+<div class="sect5">
+<h6 id="description_8">Description</h6>
+<div class="paragraph">
+<p>read the specified Address</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_8">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Name of Address to read</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_8">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>404</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Not found</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="consumes_4">Consumes</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="produces_8">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_9">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>addresses</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_replaceenmassev1alpha1namespacedaddress">PUT /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}</h5>
+<div class="sect5">
+<h6 id="description_9">Description</h6>
+<div class="paragraph">
+<p>replace the specified Address</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_9">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Name of Address to replace</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Body</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>body</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_9">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>201</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Created</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="produces_9">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_10">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>addresses</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_deleteenmassev1alpha1namespacedaddress">DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}</h5>
+<div class="sect5">
+<h6 id="description_10">Description</h6>
+<div class="paragraph">
+<p>delete an Address</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_10">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Name of Address to delete</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_10">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_status">Status</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>404</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Not found</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="produces_10">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_11">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>addresses</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_createenmassev1alpha1namespacedaddressspace">POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces</h5>
+<div class="sect5">
+<h6 id="description_11">Description</h6>
+<div class="paragraph">
+<p>create an AddressSpace</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_11">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Body</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>body</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_11">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>201</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Created</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="consumes_5">Consumes</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="produces_11">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_12">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>addressspaces</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_listenmassev1alpha1namespacedaddressspace">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces</h5>
+<div class="sect5">
+<h6 id="description_12">Description</h6>
+<div class="paragraph">
+<p>list objects of kind AddressSpace</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_12">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Query</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>labelSelector</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>A selector to restrict the list of returned objects by their labels. Defaults to everything.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_12">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_v1alpha1_addressspacelist">io.enmasse.v1alpha1.AddressSpaceList</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="produces_12">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_13">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
 <p>addressspaces</p>
 </li>
 <li>
@@ -4789,13 +5926,13 @@ communicate with it using python example AMQP clients.</p>
 <div class="sect4">
 <h5 id="_createenmassev1alpha1addressspaceaddresses">POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses</h5>
 <div class="sect5">
-<h6 id="description_8">Description</h6>
+<h6 id="description_13">Description</h6>
 <div class="paragraph">
 <p>create Addresses in an AddressSpace</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="parameters_8">Parameters</h6>
+<h6 id="parameters_13">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -4861,7 +5998,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="responses_8">Responses</h6>
+<h6 id="responses_13">Responses</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 10%;">
@@ -4913,7 +6050,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="consumes_4">Consumes</h6>
+<h6 id="consumes_6">Consumes</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -4923,7 +6060,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="produces_8">Produces</h6>
+<h6 id="produces_13">Produces</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -4933,7 +6070,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="tags_9">Tags</h6>
+<h6 id="tags_14">Tags</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -4949,13 +6086,13 @@ communicate with it using python example AMQP clients.</p>
 <div class="sect4">
 <h5 id="_listenmassev1alpha1namespacedaddressspaceaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses</h5>
 <div class="sect5">
-<h6 id="description_9">Description</h6>
+<h6 id="description_14">Description</h6>
 <div class="paragraph">
 <p>list objects of kind Address in AddressSpace</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="parameters_9">Parameters</h6>
+<h6 id="parameters_14">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -5006,7 +6143,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="responses_9">Responses</h6>
+<h6 id="responses_14">Responses</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 10%;">
@@ -5058,7 +6195,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="produces_9">Produces</h6>
+<h6 id="produces_14">Produces</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5068,7 +6205,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="tags_10">Tags</h6>
+<h6 id="tags_15">Tags</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5084,13 +6221,13 @@ communicate with it using python example AMQP clients.</p>
 <div class="sect4">
 <h5 id="_readenmassev1alpha1namespacedaddressspaceaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}</h5>
 <div class="sect5">
-<h6 id="description_10">Description</h6>
+<h6 id="description_15">Description</h6>
 <div class="paragraph">
 <p>read the specified Address in AddressSpace</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="parameters_10">Parameters</h6>
+<h6 id="parameters_15">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -5156,7 +6293,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="responses_10">Responses</h6>
+<h6 id="responses_15">Responses</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 10%;">
@@ -5208,7 +6345,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="produces_10">Produces</h6>
+<h6 id="produces_15">Produces</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5218,7 +6355,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="tags_11">Tags</h6>
+<h6 id="tags_16">Tags</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5234,13 +6371,13 @@ communicate with it using python example AMQP clients.</p>
 <div class="sect4">
 <h5 id="_replaceenmassev1alpha1namespacedaddressspaceaddress">PUT /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}</h5>
 <div class="sect5">
-<h6 id="description_11">Description</h6>
+<h6 id="description_16">Description</h6>
 <div class="paragraph">
 <p>replace Address in an AddressSpace</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="parameters_11">Parameters</h6>
+<h6 id="parameters_16">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -5321,7 +6458,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="responses_11">Responses</h6>
+<h6 id="responses_16">Responses</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 10%;">
@@ -5384,7 +6521,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="consumes_5">Consumes</h6>
+<h6 id="consumes_7">Consumes</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5394,7 +6531,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="produces_11">Produces</h6>
+<h6 id="produces_16">Produces</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5404,7 +6541,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="tags_12">Tags</h6>
+<h6 id="tags_17">Tags</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5420,13 +6557,13 @@ communicate with it using python example AMQP clients.</p>
 <div class="sect4">
 <h5 id="_deleteenmassev1alpha1namespacedaddressspaceaddress">DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}</h5>
 <div class="sect5">
-<h6 id="description_12">Description</h6>
+<h6 id="description_17">Description</h6>
 <div class="paragraph">
 <p>delete an Address in AddressSpace</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="parameters_12">Parameters</h6>
+<h6 id="parameters_17">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -5492,7 +6629,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="responses_12">Responses</h6>
+<h6 id="responses_17">Responses</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 10%;">
@@ -5544,7 +6681,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="produces_12">Produces</h6>
+<h6 id="produces_17">Produces</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5554,7 +6691,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="tags_13">Tags</h6>
+<h6 id="tags_18">Tags</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5570,13 +6707,13 @@ communicate with it using python example AMQP clients.</p>
 <div class="sect4">
 <h5 id="_readenmassev1alpha1namespacedaddressspace">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}</h5>
 <div class="sect5">
-<h6 id="description_13">Description</h6>
+<h6 id="description_18">Description</h6>
 <div class="paragraph">
 <p>read the specified AddressSpace</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="parameters_13">Parameters</h6>
+<h6 id="parameters_18">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -5627,7 +6764,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="responses_13">Responses</h6>
+<h6 id="responses_18">Responses</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 10%;">
@@ -5679,7 +6816,7 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="consumes_6">Consumes</h6>
+<h6 id="consumes_8">Consumes</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5689,7 +6826,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="produces_13">Produces</h6>
+<h6 id="produces_18">Produces</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5699,7 +6836,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="tags_14">Tags</h6>
+<h6 id="tags_19">Tags</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -5715,13 +6852,13 @@ communicate with it using python example AMQP clients.</p>
 <div class="sect4">
 <h5 id="_replaceenmassev1alpha1namespacedaddressspace">PUT /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}</h5>
 <div class="sect5">
-<h6 id="description_14">Description</h6>
+<h6 id="description_19">Description</h6>
 <div class="paragraph">
 <p>replace the specified AddressSpace</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="parameters_14">Parameters</h6>
+<h6 id="parameters_19">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -5785,710 +6922,6 @@ communicate with it using python example AMQP clients.</p>
 </table>
 </div>
 <div class="sect5">
-<h6 id="responses_14">Responses</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 70%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">HTTP Code</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>200</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>OK</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>201</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Created</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>401</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Unauthorized</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>No Content</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="produces_14">Produces</h6>
-<div class="ulist">
-<ul>
-<li>
-<p><code>application/json</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect5">
-<h6 id="tags_15">Tags</h6>
-<div class="ulist">
-<ul>
-<li>
-<p>addressspaces</p>
-</li>
-<li>
-<p>enmasse_v1alpha1</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_deleteenmassev1alpha1namespacedaddressspace">DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}</h5>
-<div class="sect5">
-<h6 id="description_15">Description</h6>
-<div class="paragraph">
-<p>delete an AddressSpace</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="parameters_15">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 16.6666%;">
-<col style="width: 50%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Type</th>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Path</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>name</strong><br>
-<em>required</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Name of AddressSpace to delete</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Path</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>namespace</strong><br>
-<em>required</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>object name and auth scope, such as for teams and projects</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="responses_15">Responses</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 70%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">HTTP Code</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>200</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>OK</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_status">Status</a></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>401</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Unauthorized</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>No Content</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>404</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Not found</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>No Content</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="produces_15">Produces</h6>
-<div class="ulist">
-<ul>
-<li>
-<p><code>application/json</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect5">
-<h6 id="tags_16">Tags</h6>
-<div class="ulist">
-<ul>
-<li>
-<p>addressspaces</p>
-</li>
-<li>
-<p>enmasse_v1alpha1</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_createauthenmassev1alpha1namespacedmessaginguser">POST /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers</h5>
-<div class="sect5">
-<h6 id="description_16">Description</h6>
-<div class="paragraph">
-<p>create a MessagingUser</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="parameters_16">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 16.6666%;">
-<col style="width: 50%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Type</th>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Path</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>namespace</strong><br>
-<em>required</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>object name and auth scope, such as for teams and projects</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Body</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>body</strong><br>
-<em>required</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="responses_16">Responses</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 70%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">HTTP Code</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>200</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>OK</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>201</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Created</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>401</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Unauthorized</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>No Content</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="consumes_7">Consumes</h6>
-<div class="ulist">
-<ul>
-<li>
-<p><code>application/json</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect5">
-<h6 id="produces_16">Produces</h6>
-<div class="ulist">
-<ul>
-<li>
-<p><code>application/json</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect5">
-<h6 id="tags_17">Tags</h6>
-<div class="ulist">
-<ul>
-<li>
-<p>auth</p>
-</li>
-<li>
-<p>enmasse_v1alpha1</p>
-</li>
-<li>
-<p>user</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_listauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers</h5>
-<div class="sect5">
-<h6 id="description_17">Description</h6>
-<div class="paragraph">
-<p>list objects of kind MessagingUser</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="parameters_17">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 16.6666%;">
-<col style="width: 50%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Type</th>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Path</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>namespace</strong><br>
-<em>required</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>object name and auth scope, such as for teams and projects</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Query</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>labelSelector</strong><br>
-<em>optional</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>A selector to restrict the list of returned objects by their labels. Defaults to everything.</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="responses_17">Responses</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 70%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">HTTP Code</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>200</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>OK</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguserlist">io.enmasse.user.v1alpha1.MessagingUserList</a></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>401</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Unauthorized</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>No Content</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="produces_17">Produces</h6>
-<div class="ulist">
-<ul>
-<li>
-<p><code>application/json</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect5">
-<h6 id="tags_18">Tags</h6>
-<div class="ulist">
-<ul>
-<li>
-<p>auth</p>
-</li>
-<li>
-<p>enmasse_v1alpha1</p>
-</li>
-<li>
-<p>user</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_readauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
-<div class="sect5">
-<h6 id="description_18">Description</h6>
-<div class="paragraph">
-<p>read the specified MessagingUser</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="parameters_18">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 16.6666%;">
-<col style="width: 50%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Type</th>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Path</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>name</strong><br>
-<em>required</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Name of MessagingUser to read. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Path</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>namespace</strong><br>
-<em>required</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>object name and auth scope, such as for teams and projects</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="responses_18">Responses</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 70%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">HTTP Code</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>200</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>OK</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>401</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Unauthorized</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>No Content</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>404</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Not found</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>No Content</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="consumes_8">Consumes</h6>
-<div class="ulist">
-<ul>
-<li>
-<p><code>application/json</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect5">
-<h6 id="produces_18">Produces</h6>
-<div class="ulist">
-<ul>
-<li>
-<p><code>application/json</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect5">
-<h6 id="tags_19">Tags</h6>
-<div class="ulist">
-<ul>
-<li>
-<p>auth</p>
-</li>
-<li>
-<p>enmasse_v1alpha1</p>
-</li>
-<li>
-<p>user</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_replaceauthenmassev1alpha1namespacedmessaginguser">PUT /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
-<div class="sect5">
-<h6 id="description_19">Description</h6>
-<div class="paragraph">
-<p>replace the specified MessagingUser</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="parameters_19">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 16.6666%;">
-<col style="width: 50%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Type</th>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Path</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>name</strong><br>
-<em>required</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Name of MessagingUser to replace. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Path</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>namespace</strong><br>
-<em>required</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>object name and auth scope, such as for teams and projects</p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Body</strong></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>body</strong><br>
-<em>required</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
 <h6 id="responses_19">Responses</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -6512,7 +6945,7 @@ communicate with it using python example AMQP clients.</p>
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -6523,7 +6956,7 @@ communicate with it using python example AMQP clients.</p>
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -6555,24 +6988,21 @@ communicate with it using python example AMQP clients.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>auth</p>
+<p>addressspaces</p>
 </li>
 <li>
 <p>enmasse_v1alpha1</p>
-</li>
-<li>
-<p>user</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_deleteauthenmassev1alpha1namespacedmessaginguser">DELETE /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
+<h5 id="_deleteenmassev1alpha1namespacedaddressspace">DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}</h5>
 <div class="sect5">
 <h6 id="description_20">Description</h6>
 <div class="paragraph">
-<p>delete a MessagingUser</p>
+<p>delete an AddressSpace</p>
 </div>
 </div>
 <div class="sect5">
@@ -6602,7 +7032,7 @@ communicate with it using python example AMQP clients.</p>
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>Name of MessagingUser to delete. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').</p>
+<p>Name of AddressSpace to delete</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>string</p>
@@ -6693,6 +7123,713 @@ communicate with it using python example AMQP clients.</p>
 <div class="ulist">
 <ul>
 <li>
+<p>addressspaces</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_createauthenmassev1alpha1namespacedmessaginguser">POST /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers</h5>
+<div class="sect5">
+<h6 id="description_21">Description</h6>
+<div class="paragraph">
+<p>create a MessagingUser</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_21">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Body</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>body</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_21">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>201</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Created</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="consumes_9">Consumes</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="produces_21">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_22">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>auth</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+<li>
+<p>user</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_listauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers</h5>
+<div class="sect5">
+<h6 id="description_22">Description</h6>
+<div class="paragraph">
+<p>list objects of kind MessagingUser</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_22">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Query</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>labelSelector</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>A selector to restrict the list of returned objects by their labels. Defaults to everything.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_22">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguserlist">io.enmasse.user.v1alpha1.MessagingUserList</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="produces_22">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_23">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>auth</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+<li>
+<p>user</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_readauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
+<div class="sect5">
+<h6 id="description_23">Description</h6>
+<div class="paragraph">
+<p>read the specified MessagingUser</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_23">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Name of MessagingUser to read. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_23">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>404</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Not found</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="consumes_10">Consumes</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="produces_23">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_24">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>auth</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+<li>
+<p>user</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_replaceauthenmassev1alpha1namespacedmessaginguser">PUT /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
+<div class="sect5">
+<h6 id="description_24">Description</h6>
+<div class="paragraph">
+<p>replace the specified MessagingUser</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_24">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Name of MessagingUser to replace. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Body</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>body</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_24">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>201</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Created</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="produces_24">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_25">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>auth</p>
+</li>
+<li>
+<p>enmasse_v1alpha1</p>
+</li>
+<li>
+<p>user</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_deleteauthenmassev1alpha1namespacedmessaginguser">DELETE /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
+<div class="sect5">
+<h6 id="description_25">Description</h6>
+<div class="paragraph">
+<p>delete a MessagingUser</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="parameters_25">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Name of MessagingUser to delete. Must include addressSpace and dot separator in the name (that is, 'myspace.user1').</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>Path</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespace</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object name and auth scope, such as for teams and projects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="responses_25">Responses</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 70%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>200</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>OK</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_status">Status</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>401</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Unauthorized</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>404</strong></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Not found</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>No Content</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="produces_25">Produces</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="tags_26">Tags</h6>
+<div class="ulist">
+<ul>
+<li>
 <p>auth</p>
 </li>
 <li>
@@ -6775,6 +7912,992 @@ communicate with it using python example AMQP clients.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>integer (int32)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_addressplan">io.enmasse.admin.v1alpha1.AddressPlan</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>addressType</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>apiVersion</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (admin.enmasse.io/v1alpha1)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>displayName</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>displayOrder</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>kind</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (AddressPlan)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>longDescription</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>metadata</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_objectmeta">ObjectMeta</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>requiredResources</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_addressplan_requiredresources">requiredResources</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>shortDescription</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>uuid</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_admin_v1alpha1_addressplan_requiredresources" class="paragraph">
+<p><strong>requiredResources</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>credit</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>number</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_addressplanlist">io.enmasse.admin.v1alpha1.AddressPlanList</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>apiVersion</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (admin.enmasse.io/v1alpha1)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>items</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_addressplan">io.enmasse.admin.v1alpha1.AddressPlan</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>kind</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (AddressPlanList)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>addressPlans</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; string &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>addressSpaceType</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>apiVersion</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (admin.enmasse.io/v1alpha1)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>displayName</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>displayOrder</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>kind</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (AddressSpacePlan)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>longDescription</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>metadata</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_objectmeta">ObjectMeta</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>resources</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_addressspaceplan_resources">resources</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>shortDescription</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>uuid</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_admin_v1alpha1_addressspaceplan_resources" class="paragraph">
+<p><strong>resources</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>max</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>number</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>min</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>number</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_addressspaceplanlist">io.enmasse.admin.v1alpha1.AddressSpacePlanList</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>apiVersion</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (admin.enmasse.io/v1alpha1)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>items</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>kind</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (AddressSpacePlanList)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_brokeredinfraconfig">io.enmasse.admin.v1alpha1.BrokeredInfraConfig</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>apiVersion</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (admin.enmasse.io/v1alpha1)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>kind</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (BrokeredInfraConfig)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>metadata</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_objectmeta">ObjectMeta</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>spec</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspec">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpec</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_brokeredinfraconfiglist">io.enmasse.admin.v1alpha1.BrokeredInfraConfigList</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>apiVersion</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (admin.enmasse.io/v1alpha1)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>items</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfig">io.enmasse.admin.v1alpha1.BrokeredInfraConfig</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>kind</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (BrokeredInfraConfigList)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspec">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpec</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>admin</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecadmin">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpecAdmin</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>broker</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecbroker">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpecBroker</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>version</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecadmin">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpecAdmin</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>resources</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecadmin_resources">resources</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecadmin_resources" class="paragraph">
+<p><strong>resources</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>memory</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecbroker">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpecBroker</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>addressFullPolicy</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (PAGE, BLOCK, FAIL)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>resources</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecbroker_resources">resources</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecbroker_resources" class="paragraph">
+<p><strong>resources</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>memory</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>storage</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfig">io.enmasse.admin.v1alpha1.StandardInfraConfig</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>apiVersion</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (admin.enmasse.io/v1alpha1)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>kind</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (StandardInfraConfig)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>metadata</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_objectmeta">ObjectMeta</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>spec</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspec">io.enmasse.admin.v1alpha1.StandardInfraConfigSpec</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfiglist">io.enmasse.admin.v1alpha1.StandardInfraConfigList</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>apiVersion</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (admin.enmasse.io/v1alpha1)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>items</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_standardinfraconfig">io.enmasse.admin.v1alpha1.StandardInfraConfig</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>kind</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (StandardInfraConfigList)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfigspec">io.enmasse.admin.v1alpha1.StandardInfraConfigSpec</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>admin</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecadmin">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecAdmin</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>broker</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecbroker">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecBroker</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>router</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecrouter">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecRouter</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>version</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecadmin">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecAdmin</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>resources</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecadmin_resources">resources</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecadmin_resources" class="paragraph">
+<p><strong>resources</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>memory</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecbroker">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecBroker</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>addressFullPolicy</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (PAGE, BLOCK, FAIL)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>resources</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecbroker_resources">resources</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecbroker_resources" class="paragraph">
+<p><strong>resources</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>memory</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>storage</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecrouter">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecRouter</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>linkCapacity</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>resources</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecrouter_resources">resources</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecrouter_resources" class="paragraph">
+<p><strong>resources</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>memory</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -7698,7 +9821,7 @@ communicate with it using python example AMQP clients.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-10-04 13:42:20 UTC
+Last updated 2018-10-17 19:34:22 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
