@@ -786,7 +786,7 @@ spec:
 <p>Retrieve console URL:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].host}</pre>
+<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</pre>
 </div>
 </div>
 </li>
@@ -1119,7 +1119,7 @@ spec:
 <p>Retrieve console URL:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].host}</pre>
+<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</pre>
 </div>
 </div>
 </li>
@@ -2208,8 +2208,6 @@ annotation. For more information, see <a href="#con-address-space-plans-messagin
 kind: BrokeredInfraConfig
 metadata:
   name: brokered-infra-config-example
-  annotations:
-    enmasse.io/template-name: brokered-space-infra
 spec:
   version: 0.23.0
   admin:
@@ -2248,10 +2246,6 @@ annotation. For more information, see <a href="#con-address-space-plans-messagin
 kind: StandardInfraConfig
 metadata:
   name: myconfig
-  annotations:
-    enmasse.io/template-name: standard-space-infra
-    enmasse.io/queue-template-name: queue-persisted
-    enmasse.io/topic-template-name: topic-persisted
 spec:
   version: 0.23.0
   admin:
@@ -3125,7 +3119,7 @@ spec:
 <p>Retrieve console URL:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].host}</pre>
+<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</pre>
 </div>
 </div>
 </li>
@@ -3175,7 +3169,7 @@ spec:
 <p>Retrieve console URL:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].host}</pre>
+<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</pre>
 </div>
 </div>
 </li>
@@ -9781,7 +9775,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-10-24 19:57:19 UTC
+Last updated 2018-10-26 11:19:35 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
