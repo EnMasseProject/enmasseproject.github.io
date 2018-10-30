@@ -487,8 +487,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#upgrading_enmasse">3.3. Upgrading EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#upgrading-enmasse-okd">3.3.1. Upgrading EnMasse on Kubernetes</a></li>
-<li><a href="#upgrading-enmasse-kube">3.3.2. Upgrading EnMasse on Kubernetes</a></li>
+<li><a href="#upgrading-enmasse-okd">3.3.1. Upgrading EnMasse on OpenShift</a></li>
+<li><a href="#upgrading-enmasse-kube">3.3.2. Upgrading EnMasse on OpenShift</a></li>
 </ul>
 </li>
 <li><a href="#monitoring_enmasse">3.4. Monitoring EnMasse</a>
@@ -773,7 +773,7 @@ metadata:
   name: myspace
 spec:
   type: standard
-  plan: unlimited-standard</code></pre>
+  plan: standard-unlimited</code></pre>
 </div>
 </div>
 </li>
@@ -831,7 +831,7 @@ spec:
 <li>
 <p>Create an address definition:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/standard-pooled-queue.yaml">standard-pooled-queue.yaml</a></div>
+<div class="title"><a href="resources/standard-small-queue.yaml">standard-small-queue.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: Address
@@ -840,7 +840,7 @@ metadata:
 spec:
     address: myqueue
     type: queue
-    plan: pooled-queue</code></pre>
+    plan: standard-small-queue</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -860,7 +860,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Create the address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">oc create -f standard-pooled-queue.yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">oc create -f standard-small-queue.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -1122,7 +1122,7 @@ metadata:
   name: myspace
 spec:
   type: standard
-  plan: unlimited-standard</code></pre>
+  plan: standard-unlimited</code></pre>
 </div>
 </div>
 </li>
@@ -1180,7 +1180,7 @@ spec:
 <li>
 <p>Create an address definition:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/standard-pooled-queue.yaml">standard-pooled-queue.yaml</a></div>
+<div class="title"><a href="resources/standard-small-queue.yaml">standard-small-queue.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: Address
@@ -1189,7 +1189,7 @@ metadata:
 spec:
     address: myqueue
     type: queue
-    plan: pooled-queue</code></pre>
+    plan: standard-small-queue</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1209,7 +1209,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Create the address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl create -f standard-pooled-queue.yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl create -f standard-small-queue.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -2720,7 +2720,7 @@ spec:
 <div class="sect2">
 <h3 id="upgrading_enmasse">3.3. Upgrading EnMasse</h3>
 <div class="sect3">
-<h4 id="upgrading-enmasse-okd">3.3.1. Upgrading EnMasse on Kubernetes</h4>
+<h4 id="upgrading-enmasse-okd">3.3.1. Upgrading EnMasse on OpenShift</h4>
 <div class="paragraph">
 <p>EnMasse supports upgrades between minor versions using cloud native tools and the same
 mechanism used to apply configuration changes.  When upgrading, the updated infrastructure
@@ -2876,7 +2876,7 @@ configuration of the new version will trigger the upgrade to start.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="upgrading-enmasse-kube">3.3.2. Upgrading EnMasse on Kubernetes</h4>
+<h4 id="upgrading-enmasse-kube">3.3.2. Upgrading EnMasse on OpenShift</h4>
 <div class="paragraph">
 <p>EnMasse supports upgrades between minor versions using cloud native tools and the same
 mechanism used to apply configuration changes.  When upgrading, the updated infrastructure
@@ -3323,7 +3323,7 @@ metadata:
   name: myspace
 spec:
   type: standard <b class="conum">(1)</b>
-  plan: unlimited-standard <b class="conum">(2)</b></code></pre>
+  plan: standard-unlimited <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -3351,7 +3351,7 @@ metadata:
   name: myspace
 spec:
   type: standard <b class="conum">(1)</b>
-  plan: unlimited-standard <b class="conum">(2)</b>
+  plan: standard-unlimited <b class="conum">(2)</b>
   authenticationService:
     type: standard <b class="conum">(3)</b>
   endpoints: <b class="conum">(4)</b>
@@ -3501,7 +3501,7 @@ metadata:
   name: myspace
 spec:
   type: standard
-  plan: unlimited-standard</code></pre>
+  plan: standard-unlimited</code></pre>
 </div>
 </div>
 </li>
@@ -3573,7 +3573,7 @@ metadata:
   name: myspace
 spec:
   type: standard <b class="conum">(1)</b>
-  plan: unlimited-standard <b class="conum">(2)</b></code></pre>
+  plan: standard-unlimited <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -3601,7 +3601,7 @@ metadata:
   name: myspace
 spec:
   type: standard <b class="conum">(1)</b>
-  plan: unlimited-standard <b class="conum">(2)</b>
+  plan: standard-unlimited <b class="conum">(2)</b>
   authenticationService:
     type: standard <b class="conum">(3)</b>
   endpoints: <b class="conum">(4)</b>
@@ -3735,7 +3735,7 @@ metadata:
   name: myspace
 spec:
   type: standard
-  plan: unlimited-standard</code></pre>
+  plan: standard-unlimited</code></pre>
 </div>
 </div>
 </li>
@@ -3803,7 +3803,7 @@ metadata:
 spec:
     address: myqueue <b class="conum">(2)</b>
     type: queue <b class="conum">(3)</b>
-    plan: pooled-queue <b class="conum">(4)</b></code></pre>
+    plan: standard-small-queue <b class="conum">(4)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -3831,7 +3831,7 @@ spec:
 <li>
 <p>Create an address definition:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/standard-pooled-queue.yaml">standard-pooled-queue.yaml</a></div>
+<div class="title"><a href="resources/standard-small-queue.yaml">standard-small-queue.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: Address
@@ -3840,7 +3840,7 @@ metadata:
 spec:
     address: myqueue
     type: queue
-    plan: pooled-queue</code></pre>
+    plan: standard-small-queue</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -3860,7 +3860,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Create the address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">oc create -f standard-pooled-queue.yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">oc create -f standard-small-queue.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -3930,7 +3930,7 @@ metadata:
 spec:
     address: myqueue <b class="conum">(2)</b>
     type: queue <b class="conum">(3)</b>
-    plan: pooled-queue <b class="conum">(4)</b></code></pre>
+    plan: standard-small-queue <b class="conum">(4)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -3958,7 +3958,7 @@ spec:
 <li>
 <p>Create an address definition:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/standard-pooled-queue.yaml">standard-pooled-queue.yaml</a></div>
+<div class="title"><a href="resources/standard-small-queue.yaml">standard-small-queue.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: Address
@@ -3967,7 +3967,7 @@ metadata:
 spec:
     address: myqueue
     type: queue
-    plan: pooled-queue</code></pre>
+    plan: standard-small-queue</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -3987,7 +3987,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Create the address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl create -f standard-pooled-queue.yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl create -f standard-small-queue.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -10457,7 +10457,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-10-29 11:39:46 UTC
+Last updated 2018-10-30 10:39:57 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
