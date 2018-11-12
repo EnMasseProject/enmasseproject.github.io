@@ -495,7 +495,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#monitoring-oc-oc">3.4.1. Monitoring EnMasse on OpenShift</a></li>
 <li><a href="#monitoring-kube-kube">3.4.2. Monitoring EnMasse on Kubernetes</a></li>
-<li><a href="#using-qdstat-messaging">3.4.3. Using qdstat</a></li>
+<li><a href="#using-qdstat-okd">3.4.3. Using qdstat on OpenShift</a></li>
+<li><a href="#using-qdstat-kube">3.4.4. Using qdstat on Kubernetes</a></li>
+</ul>
+</li>
+<li><a href="#uninstalling_enmasse">3.5. Uninstalling EnMasse</a>
+<ul class="sectlevel3">
+<li><a href="#uninstalling-openshift-okd">3.5.1. Uninstalling EnMasse on OpenShift</a></li>
+<li><a href="#uninstalling-kubernetes-kube">3.5.2. Uninstalling EnMasse on Kubernetes</a></li>
 </ul>
 </li>
 </ul>
@@ -679,7 +686,7 @@ OpenShift with clients for sending and receiving messages.</p>
 <li>
 <p>To install EnMasse, the OpenShift client tools are required. You can download the OpenShift
 Origin client from <a href="https://github.com/openshift/origin/releases" target="_blank" rel="noopener">OpenShift Origin</a>. EnMasse has
-been tested to work with the latest stable release of the OpenShift Origin Client.</p>
+been tested to work with the latest stable release of the OpenShift Origin client.</p>
 </li>
 <li>
 <p>An OpenShift cluster is required. If you do not have an OpenShift cluster available, see
@@ -687,7 +694,7 @@ been tested to work with the latest stable release of the OpenShift Origin Clien
 on your machine.</p>
 </li>
 <li>
-<p>A user on the OpenShift cluster with <code>cluster-admin</code> permissions is required, in order to set up the required cluster roles and API services.</p>
+<p>A user on the OpenShift cluster with <code>cluster-admin</code> permissions is required to set up the required cluster roles and API services.</p>
 </li>
 </ul>
 </div>
@@ -898,6 +905,14 @@ spec:
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc create -f <em>user-example1.yaml</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Confirm that the user was created:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get messagingusers</pre>
 </div>
 </div>
 </li>
@@ -1229,6 +1244,14 @@ spec:
 </div>
 </div>
 </li>
+<li>
+<p>Confirm that the user was created:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get messagingusers</pre>
+</div>
+</div>
+</li>
 </ol>
 </div>
 <div class="ulist">
@@ -1349,7 +1372,7 @@ infrastructure configuration and plans.</p>
 <li>
 <p>To install EnMasse, the OpenShift client tools are required. You can download the OpenShift
 Origin client from <a href="https://github.com/openshift/origin/releases" target="_blank" rel="noopener">OpenShift Origin</a>. EnMasse has
-been tested to work with the latest stable release of the OpenShift Origin Client.</p>
+been tested to work with the latest stable release of the OpenShift Origin client.</p>
 </li>
 <li>
 <p>An OpenShift cluster is required. If you do not have an OpenShift cluster available, see
@@ -1357,7 +1380,7 @@ been tested to work with the latest stable release of the OpenShift Origin Clien
 on your machine.</p>
 </li>
 <li>
-<p>A user on the OpenShift cluster with <code>cluster-admin</code> permissions is required, in order to set up the required cluster roles and API services.</p>
+<p>A user on the OpenShift cluster with <code>cluster-admin</code> permissions is required to set up the required cluster roles and API services.</p>
 </li>
 </ul>
 </div>
@@ -1486,110 +1509,225 @@ api_server=True
 service_catalog=True
 register_api_server=True
 keycloak_admin_password=admin
-authentication_services=["standard"]</code></pre>
+authentication_services=["standard"]
+enable_monitoring=False</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The following Ansible configuration settings are supported:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Ansible Configuration Settings</caption>
+<caption class="title">Table 1. Ansible configuration settings</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
 <col style="width: 25%;">
 <col style="width: 25%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Required</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default value</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Required</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>namespace</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the namespace where EnMasse is installed.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>yes</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">namespace</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the namespace where EnMasse is installed.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>enable_rbac</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to enable RBAC authentication of REST APIs</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>True</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enable_rbac</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable RBAC authentication of REST APIs.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">True</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>service_catalog</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to enable integration with the Service Catalog</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>False</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">service_catalog</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable integration with the Service Catalog.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>authentication_services</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the list of authentication services to deploy. Supported values are <code>none</code> and <code>standard</code>.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>none</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">authentication_services</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the list of authentication services to deploy. <code>none</code> and <code>standard</code> are supported.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>none</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>keycloak_admin_password</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the admin password to use for the <code>standard</code> authentication service Keycloak instance</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>yes (if <code>standard</code> authentication service is enabled)</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">keycloak_admin_password</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the admin password to use for the standard authentication service Keycloak instance.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">yes (if <code>standard</code> authentication service is enabled)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>api_server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to enable the REST API server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>True</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">api_server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable the REST API server.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">True</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>register_api_server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to register the API server with Kubernetes master</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>False</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">register_api_server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to register the API server with Kubernetes master.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>secure_api_server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to enable mutual TLS for the API server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>False</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">secure_api_server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable mutual TLS for the API server.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>enable_monitoring</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to enable the monitoring services</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enable_monitoring</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable the monitoring services</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>smtp_server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the SMTP server used to send alert emails</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">smtp_server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the SMTP server used to send alert emails</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>smtp_username</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the username used to authenticate to the SMTP server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">smtp_username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the username used to authenticate to the SMTP server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>smtp_password</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the password used to authenticate to the SMTP server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">smtp_password</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the password used to authenticate to the SMTP server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>smtp_from_address</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the from address displayed in alert emails</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">smtp_from_address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the from address displayed in alert emails</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sysadmin_email</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the email address to which alerts are sent</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>sysadmin_email</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the email address to which alerts are sent</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 </tbody>
 </table>
@@ -3147,7 +3285,7 @@ data:
 <p>List all broker pods and choose the pod for the relevant address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get pods -l name=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+<pre class="nowrap">oc get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
 </div>
 </div>
 </li>
@@ -3525,7 +3663,7 @@ data:
 <p>List all broker pods and choose the pod for the relevant address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl get pods -l name=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+<pre class="nowrap">kubectl get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
 </div>
 </div>
 </li>
@@ -3542,26 +3680,31 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="using-qdstat-messaging">3.4.3. Using qdstat</h4>
+<h4 id="using-qdstat-okd">3.4.3. Using qdstat on OpenShift</h4>
 <div class="paragraph">
 <p>You can use <code>qdstat</code> to monitor the EnMasse service.</p>
 </div>
 <div class="sect4">
-<h5 id="view-connections-qdstat-messaging">Viewing router connections using qdstat</h5>
+<h5 id="view-connections-qdstat-okd">Viewing router connections using qdstat</h5>
 <div class="paragraph">
 <p>You can view the router connections using <code>qdstat</code>.</p>
 </div>
-<div class="ulist">
+<div class="olist arabic">
 <div class="title">Procedure</div>
-<ul>
+<ol class="arabic">
 <li>
-<p>On the command line, run the following command:</p>
-</li>
-</ul>
-</div>
+<p>On the command line, run the following command to obtain the <code>podname</code> value needed in the following step:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">qdstat -c
+<pre class="nowrap">oc get pods</pre>
+</div>
+</div>
+</li>
+<li>
+<p>On the command line, run the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc exec -n <em>namespace</em> -it qdrouterd-<em>podname</em> -- qdstat -c
 
 Connections
   id   host                 container                             role    dir  security                              authentication                tenant
@@ -3571,23 +3714,31 @@ Connections
   567  127.0.0.1:43546      b240c652-82df-48dd-b54e-3b8bbaef16c6  normal  in   no-security                           PLAIN</pre>
 </div>
 </div>
+</li>
+</ol>
+</div>
 </div>
 <div class="sect4">
-<h5 id="view-router-addresses-qdstat-messaging">Viewing router addresses using qdstat</h5>
+<h5 id="view-router-addresses-qdstat-okd">Viewing router addresses using qdstat</h5>
 <div class="paragraph">
 <p>You can view the router addresses using <code>qdstat</code>.</p>
 </div>
-<div class="ulist">
+<div class="olist arabic">
 <div class="title">Procedure</div>
-<ul>
+<ol class="arabic">
 <li>
-<p>On the command line, run the following command:</p>
-</li>
-</ul>
-</div>
+<p>On the command line, run the following command to obtain the <code>podname</code> value needed in the following step:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">qdstat -a
+<pre class="nowrap">oc get pods</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc exec -n <em>namespace</em> -it qdrouterd-<em>podname</em> -- qdstat -a
 
 Router Addresses
   class     addr                   phs  distrib       in-proc  local  remote  cntnr  in     out    thru  to-proc  from-proc
@@ -3607,23 +3758,31 @@ Router Addresses
   local     temp.xg+y8I_Tr4Y94LA        balanced      0        1      0       0      0      5      0     0        5</pre>
 </div>
 </div>
+</li>
+</ol>
+</div>
 </div>
 <div class="sect4">
-<h5 id="view-router-links-qdstat-messaging">Viewing router links using qdstat</h5>
+<h5 id="view-router-links-qdstat-okd">Viewing router links using qdstat</h5>
 <div class="paragraph">
 <p>You can view the router links using <code>qdstat</code>.</p>
 </div>
-<div class="ulist">
+<div class="olist arabic">
 <div class="title">Procedure</div>
-<ul>
+<ol class="arabic">
 <li>
-<p>On the command line, run the following command:</p>
-</li>
-</ul>
-</div>
+<p>On the command line, run the following command to obtain the <code>podname</code> value needed in the following step:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">qdstat -l
+<pre class="nowrap">oc get pods</pre>
+</div>
+</div>
+</li>
+<li>
+<p>On the command line, run the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc exec -n <em>namespace</em> -it qdrouterd-<em>podname</em> -- qdstat -l
 
 Router Links
   type      dir  conn id  id  peer  class   addr                  phs  cap  undel  unsett  del   presett  psdrop  acc   rej  rel  mod  admin    oper
@@ -3636,23 +3795,31 @@ Router Links
   endpoint  out  645      27        local   temp.0BrHJ1O+fi6whyg       50   0      0       0     0        0       0     0    0    0    enabled  up</pre>
 </div>
 </div>
+</li>
+</ol>
+</div>
 </div>
 <div class="sect4">
-<h5 id="view-link-routes-qdstat-messaging">Viewing link routes using qdstat</h5>
+<h5 id="view-link-routes-qdstat-okd">Viewing link routes using qdstat</h5>
 <div class="paragraph">
 <p>You can view the link routes using <code>qdstat</code>.</p>
 </div>
-<div class="ulist">
+<div class="olist arabic">
 <div class="title">Procedure</div>
-<ul>
+<ol class="arabic">
 <li>
-<p>On the command line, run the following command:</p>
-</li>
-</ul>
-</div>
+<p>On the command line, run the following command to obtain the <code>podname</code> value needed in the following step:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">qdstat --linkroutes
+<pre class="nowrap">oc get pods</pre>
+</div>
+</div>
+</li>
+<li>
+<p>On the command line, run the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc exec -n <em>namespace</em> -it qdrouterd-<em>podname</em> -- qdstat --linkroutes
 
 Link Routes
   address  dir  distrib       status
@@ -3660,6 +3827,257 @@ Link Routes
   $lwt     in   linkBalanced  inactive
   $lwt     out  linkBalanced  inactive</pre>
 </div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="using-qdstat-kube">3.4.4. Using qdstat on Kubernetes</h4>
+<div class="paragraph">
+<p>You can use <code>qdstat</code> to monitor the EnMasse service.</p>
+</div>
+<div class="sect4">
+<h5 id="view-connections-qdstat-kube">Viewing router connections using qdstat</h5>
+<div class="paragraph">
+<p>You can view the router connections using <code>qdstat</code>.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>On the command line, run the following command to obtain the <code>podname</code> value needed in the following step:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get pods</pre>
+</div>
+</div>
+</li>
+<li>
+<p>On the command line, run the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl exec -n <em>namespace</em> -it qdrouterd-<em>podname</em> -- qdstat -c
+
+Connections
+  id   host                 container                             role    dir  security                              authentication                tenant
+  =========================================================================================================================================================
+  3    172.17.0.9:34998     admin-78794c68c8-9jdd6                normal  in   TLSv1.2(ECDHE-RSA-AES128-GCM-SHA256)  CN=admin,O=io.enmasse(x.509)
+  12   172.30.188.174:5671  27803a14-42d2-6148-9491-a6c1e69e875a  normal  out  TLSv1.2(ECDHE-RSA-AES128-GCM-SHA256)  x.509
+  567  127.0.0.1:43546      b240c652-82df-48dd-b54e-3b8bbaef16c6  normal  in   no-security                           PLAIN</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="view-router-addresses-qdstat-kube">Viewing router addresses using qdstat</h5>
+<div class="paragraph">
+<p>You can view the router addresses using <code>qdstat</code>.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>On the command line, run the following command to obtain the <code>podname</code> value needed in the following step:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get pods</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl exec -n <em>namespace</em> -it qdrouterd-<em>podname</em> -- qdstat -a
+
+Router Addresses
+  class     addr                   phs  distrib       in-proc  local  remote  cntnr  in     out    thru  to-proc  from-proc
+  ===========================================================================================================================
+  local     $_management_internal       closest       1        0      0       0      0      0      0     588      588
+  link-in   $lwt                        linkBalanced  0        0      0       0      0      0      0     0        0
+  link-out  $lwt                        linkBalanced  0        0      0       0      0      0      0     0        0
+  mobile    $management            0    closest       1        0      0       0      601    0      0     601      0
+  local     $management                 closest       1        0      0       0      2,925  0      0     2,925    0
+  local     qdhello                     flood         1        0      0       0      0      0      0     0        5,856
+  local     qdrouter                    flood         1        0      0       0      0      0      0     0        0
+  topo      qdrouter                    flood         1        0      0       0      0      0      0     0        196
+  local     qdrouter.ma                 multicast     1        0      0       0      0      0      0     0        0
+  topo      qdrouter.ma                 multicast     1        0      0       0      0      0      0     0        0
+  local     temp.VTXOKyyWsq7OEei        balanced      0        1      0       0      0      0      0     0        0
+  local     temp.k2RGQNPe6sDMvz4        balanced      0        1      0       0      0      3,511  0     0        3,511
+  local     temp.xg+y8I_Tr4Y94LA        balanced      0        1      0       0      0      5      0     0        5</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="view-router-links-qdstat-kube">Viewing router links using qdstat</h5>
+<div class="paragraph">
+<p>You can view the router links using <code>qdstat</code>.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>On the command line, run the following command to obtain the <code>podname</code> value needed in the following step:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get pods</pre>
+</div>
+</div>
+</li>
+<li>
+<p>On the command line, run the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl exec -n <em>namespace</em> -it qdrouterd-<em>podname</em> -- qdstat -l
+
+Router Links
+  type      dir  conn id  id  peer  class   addr                  phs  cap  undel  unsett  del   presett  psdrop  acc   rej  rel  mod  admin    oper
+  ====================================================================================================================================================
+  endpoint  in   3        8                                            250  0      0       3829  0        0       3829  0    0    0    enabled  up
+  endpoint  out  3        9         local   temp.k2RGQNPe6sDMvz4       250  0      0       3829  3829     0       0     0    0    0    enabled  up
+  endpoint  in   12       10                                           250  0      0       5     0        0       5     0    0    0    enabled  up
+  endpoint  out  12       11        local   temp.xg+y8I_Tr4Y94LA       250  0      0       5     5        0       0     0    0    0    enabled  up
+  endpoint  in   645      26        mobile  $management           0    50   0      0       1     0        0       1     0    0    0    enabled  up
+  endpoint  out  645      27        local   temp.0BrHJ1O+fi6whyg       50   0      0       0     0        0       0     0    0    0    enabled  up</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="view-link-routes-qdstat-kube">Viewing link routes using qdstat</h5>
+<div class="paragraph">
+<p>You can view the link routes using <code>qdstat</code>.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>On the command line, run the following command to obtain the <code>podname</code> value needed in the following step:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get pods</pre>
+</div>
+</div>
+</li>
+<li>
+<p>On the command line, run the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl exec -n <em>namespace</em> -it qdrouterd-<em>podname</em> -- qdstat --linkroutes
+
+Link Routes
+  address  dir  distrib       status
+  ======================================
+  $lwt     in   linkBalanced  inactive
+  $lwt     out  linkBalanced  inactive</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="uninstalling_enmasse">3.5. Uninstalling EnMasse</h3>
+<div class="sect3">
+<h4 id="uninstalling-openshift-okd">3.5.1. Uninstalling EnMasse on OpenShift</h4>
+<div class="sect4">
+<h5 id="uninstalling-okd">Uninstalling EnMasse</h5>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a user with <code>cluster-admin</code> privileges:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u system:admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete the project where EnMasse is deployed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete project <em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete the rolebinding in the <code>kube-system</code> namespace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete rolebindings -l app=enmasse -n kube-system</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete "cluster level" resources:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete clusterrolebindings -l app=enmasse
+oc delete clusterroles -l app=enmasse
+oc delete apiservices -l app=enmasse
+oc delete oauthclients -l app=enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Delete the service catalog integration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete clusterservicebrokers -l app=enmasse</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="uninstalling-kubernetes-kube">3.5.2. Uninstalling EnMasse on Kubernetes</h4>
+<div class="sect4">
+<h5 id="uninstalling-kube">Uninstalling EnMasse</h5>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Delete the namespace where EnMasse is deployed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl delete namespace <em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete the rolebinding in the <code>kube-system</code> namespace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl delete rolebindings -l app=enmasse -n kube-system</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete "cluster level" resources:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl delete clusterrolebindings -l app=enmasse
+kubectl delete clusterroles -l app=enmasse
+kubectl delete apiservices -l app=enmasse</pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -3755,13 +4173,25 @@ messaging tenant.</p>
 <div class="sect4">
 <h5 id="con-standard-queue-messaging">Queue</h5>
 <div class="paragraph">
-<p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases where you want to decouple the producer and consumer. A queue can be sharded across multiple storage units; however, message order is no longer guaranteed.</p>
+<p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases where you want to decouple the producer and consumer. A queue can be sharded across multiple storage units. Message ordering might be lost for queues in the standard address space.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="con-standard-topic-messaging">Topic</h5>
 <div class="paragraph">
 <p>The topic address type supports the publish-subscribe messaging pattern where there are 1..N producers and 1..M consumers. Each message published to a topic address is forwarded to all subscribers for that address. A subscriber can also be durable, in which case messages are kept until the subscriber has acknowledged them.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If you create a subscription on a topic, any senders to that topic must specify the <code>topic</code> capability.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect5">
 <h6 id="hierarchical_topics_and_wildcards">Hierarchical topics and wildcards</h6>
@@ -3849,8 +4279,8 @@ transactions, message groups, and selectors on queues and topics.</p>
 <div class="paragraph">
 <p>The queue address type is a store-and-forward queue. This address type is appropriate for
 implementing a distributed work queue, handling traffic bursts, and other use cases where you want
-to decouple the producer and consumer. A queue in the brokered address spaces supports selectors,
-message groups, transactions, and other JMS features.</p>
+to decouple the producer and consumer. A queue in the brokered address space supports selectors,
+message groups, transactions, and other JMS features. Message order can be lost with released messages.</p>
 </div>
 </div>
 <div class="sect4">
@@ -4142,7 +4572,7 @@ spec:
 <p>Retrieving the base64-encoded PEM certificate for the messaging endpoint:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert</pre>
+<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert}</pre>
 </div>
 </div>
 </li>
@@ -4150,7 +4580,7 @@ spec:
 <p>Retrieving the host name for the messaging endpoint:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost</pre>
+<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</pre>
 </div>
 </div>
 </li>
@@ -4391,7 +4821,7 @@ spec:
 <p>Retrieving the base64-encoded PEM certificate for the messaging endpoint:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert</pre>
+<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert}</pre>
 </div>
 </div>
 </li>
@@ -4399,7 +4829,7 @@ spec:
 <p>Retrieving the host name for the messaging endpoint:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost</pre>
+<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</pre>
 </div>
 </div>
 </li>
@@ -4924,6 +5354,14 @@ spec:
 </div>
 </div>
 </li>
+<li>
+<p>Confirm that the user was created:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get messagingusers</pre>
+</div>
+</div>
+</li>
 </ol>
 </div>
 <div class="ulist">
@@ -5088,6 +5526,14 @@ spec:
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">kubectl create -f <em>user-example1.yaml</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Confirm that the user was created:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get messagingusers</pre>
 </div>
 </div>
 </li>
@@ -11145,7 +11591,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-11-05 17:15:10 UTC
+Last updated 2018-11-12 11:37:34 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
