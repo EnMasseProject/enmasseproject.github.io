@@ -595,7 +595,7 @@ what you need to set up and manage EnMasse as a service administrator or a messa
 <p>Built-in authentication and authorization of clients and identity management</p>
 </li>
 <li>
-<p>Runs on Kubernetes: deploy on-premise or in the cloud</p>
+<p>Runs on Kubernetes and OpenShift: deploy on-premise or in the cloud</p>
 </li>
 <li>
 <p>Different messaging patterns such as request-response, publish-subscribe and events</p>
@@ -644,7 +644,7 @@ what you need to set up and manage EnMasse as a service administrator or a messa
 <div class="sectionbody">
 <div class="paragraph">
 <p>This guide will walk through the process of setting up EnMasse on
-Kubernetes with clients for sending and receiving messages.</p>
+OpenShift with clients for sending and receiving messages.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -973,7 +973,7 @@ except KeyboardInterrupt: pass</code></pre>
 </ol>
 </div>
 <div class="paragraph">
-<p>We have seen how to set up EnMasse on Kubernetes, and how to communicate with it using an AMQP client.</p>
+<p>We have seen how to set up EnMasse on OpenShift, and how to communicate with it using an AMQP client.</p>
 </div>
 </div>
 </div>
@@ -1246,7 +1246,7 @@ enable_monitoring=False</code></pre>
 <p>register_api_server</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies whether to register the API server with Kubernetes master</p>
+<p>Specifies whether to register the API server with OpenShift master</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>False</p>
@@ -1376,7 +1376,7 @@ enable_monitoring=False</code></pre>
 <h4 id="installing-using-manual-steps-messaging">3.1.5. Installing EnMasse manually</h4>
 <div class="paragraph">
 <p>The manual deployment procedure can be performed on any platform
-supporting the Kubernetes client.</p>
+supporting the OpenShift client.</p>
 </div>
 <div class="sect4">
 <h5 id="creating-project-messaging">Creating the project for EnMasse</h5>
@@ -1507,7 +1507,7 @@ sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/api-server/*.
 <div class="sect4">
 <h5 id="deploying-service-broker-messaging">(Optional) Deploying the service broker</h5>
 <div class="paragraph">
-<p>The service broker provides an implementation of the Open Service Broker API that integrates with the Kubernetes Service Catalog.</p>
+<p>The service broker provides an implementation of the Open Service Broker API that integrates with the OpenShift Service Catalog.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -2845,9 +2845,7 @@ message groups, transactions, and other JMS features. Message order can be lost 
 <div class="sect2">
 <h3 id="managing-address-spaces-messaging">4.5. Managing address spaces</h3>
 <div class="paragraph">
-<p>EnMasse is configured to support managing address spaces using the
-Kubernetes and
-OpenShift command-line tools.</p>
+<p>EnMasse is configured to support managing address spaces using the OpenShift command-line tools.</p>
 </div>
 <div class="sect3">
 <h4 id="minimal_example">4.5.1. Minimal example</h4>
@@ -3106,7 +3104,7 @@ spec:
 <div class="sect2">
 <h3 id="managing-addresses-messaging">4.6. Managing addresses</h3>
 <div class="paragraph">
-<p>EnMasse is configured to support managing address using the Kubernetes command-line tools and the EnMasse Console.</p>
+<p>EnMasse is configured to support managing address using the OpenShift command-line tools and the EnMasse Console.</p>
 </div>
 <div class="sect3">
 <h4 id="example">4.6.1. Example</h4>
@@ -3433,8 +3431,8 @@ addresses.</p>
 <div class="sect2">
 <h3 id="managing-users-messaging">4.10. Managing users</h3>
 <div class="paragraph">
-<p>EnMasse user management is only supported when using the <code>standard</code> authentication service. On Kubernetes, users can
-be managed using the Kubernetes command-line tools.</p>
+<p>EnMasse user management is only supported when using the <code>standard</code> authentication service. On OpenShift, users can
+be managed using the OpenShift command-line tools.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -3629,9 +3627,7 @@ spec:
 </ul>
 </div>
 <div class="paragraph">
-<p>To connect to the messaging service from outside the OpenShift
-or Kubernetes
-cluster, TLS must be used with SNI set to specify the fully qualified host name for the address space. The port used is 443.</p>
+<p>To connect to the messaging service from outside the OpenShift cluster, TLS must be used with SNI set to specify the fully qualified host name for the address space. The port used is 443.</p>
 </div>
 <div class="paragraph">
 <p>The messaging protocols supported depends on the type of address space used. For more information, see the  <a href="#con-address-space-messaging">address space</a> section.</p>
@@ -9550,7 +9546,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-11-15 19:37:22 UTC
+Last updated 2018-11-20 17:47:21 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
