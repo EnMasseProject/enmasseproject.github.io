@@ -432,11 +432,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Documentation for EnMasse</h1>
+<h1>Documentation for EnMasse on OpenShift</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#overview">1. Overview</a>
+<li><a href="#overview-messaging">1. Overview</a>
 <ul class="sectlevel2">
 <li><a href="#features">1.1. Features</a>
 <ul class="sectlevel3">
@@ -446,61 +446,60 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
-<li><a href="#getting_started">2. Getting Started</a>
+<li><a href="#quickstart-messaging-gs">2. Getting started</a>
 <ul class="sectlevel2">
-<li><a href="#quickstart-on-openshift-messaging-gs-okd">2.1. EnMasse on OpenShift</a>
-<ul class="sectlevel3">
-<li><a href="#downloading-messaging-gs-okd">2.1.1. Downloading EnMasse</a></li>
-<li><a href="#installing-using-bundle-messaging-gs-okd">2.1.2. Installing EnMasse using a YAML bundle</a></li>
-<li><a href="#create-address-space-cli-messaging-gs-okd">2.1.3. Creating address spaces using the command line</a></li>
-<li><a href="#create-address-cli-messaging-gs-okd">2.1.4. Creating addresses using the command line</a></li>
-<li><a href="#proc-creating-users-cli-messaging-gs-okd">2.1.5. Creating users using the command line</a></li>
-<li><a href="#send-receive-messaging-gs-okd">2.1.6. Sending and receiving messages</a></li>
+<li><a href="#downloading-messaging-gs">2.1. Downloading EnMasse</a></li>
+<li><a href="#installing-using-bundle-messaging-gs">2.2. Installing EnMasse using a YAML bundle</a></li>
+<li><a href="#create-address-space-cli-messaging-gs">2.3. Creating address spaces using the command line</a></li>
+<li><a href="#create-address-cli-messaging-gs">2.4. Creating addresses using the command line</a></li>
+<li><a href="#proc-creating-users-cli-messaging-gs">2.5. Creating users using the command line</a></li>
+<li><a href="#send-receive-messaging-gs">2.6. Sending and receiving messages</a></li>
 </ul>
 </li>
-<li><a href="#quickstart-on-kubernetes-messaging-gs-kube">2.2. EnMasse on Kubernetes</a>
-<ul class="sectlevel3">
-<li><a href="#downloading-messaging-gs-kube">2.2.1. Downloading EnMasse</a></li>
-<li><a href="#installing-using-bundle-messaging-gs-kube">2.2.2. Installing EnMasse using a YAML bundle</a></li>
-<li><a href="#create-address-space-cli-messaging-gs-kube">2.2.3. Creating address spaces using the command line</a></li>
-<li><a href="#create-address-cli-messaging-gs-kube">2.2.4. Creating addresses using the command line</a></li>
-<li><a href="#proc-creating-users-cli-messaging-gs-kube">2.2.5. Creating users using the command line</a></li>
-<li><a href="#send-receive-messaging-gs-kube">2.2.6. Sending and receiving messages</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#service_admin_guide">3. Service Admin Guide</a>
+<li><a href="#'service-admin-guide-messaging">3. Service admin guide</a>
 <ul class="sectlevel2">
-<li><a href="#installing_enmasse">3.1. Installing EnMasse</a>
+<li><a href="#installing-messaging">3.1. Installing EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#installing-on-openshift-okd">3.1.1. Installing EnMasse on OpenShift</a></li>
-<li><a href="#installing-on-kubernetes-kube">3.1.2. Installing EnMasse on Kubernetes</a></li>
+<li><a href="#downloading-messaging">3.1.1. Downloading EnMasse</a></li>
+<li><a href="#installing-using-bundle-messaging">3.1.2. Installing EnMasse using a YAML bundle</a></li>
+<li><a href="#installing-using-template-messaging">3.1.3. Installing EnMasse using OpenShift template</a></li>
+<li><a href="#installing-using-ansible-messaging">3.1.4. Installing EnMasse using Ansible</a></li>
+<li><a href="#installing-using-manual-steps-messaging">3.1.5. Installing EnMasse manually</a></li>
 </ul>
 </li>
-<li><a href="#configuring_enmasse">3.2. Configuring EnMasse</a>
+<li><a href="#configuring-messaging">3.2. Configuring EnMasse</a>
 <ul class="sectlevel3">
 <li><a href="#con-address-space-plans-messaging">3.2.1. Address space plans</a></li>
-<li><a href="#con-address-plans-messaging">3.2.2. Address plans</a></li>
-<li><a href="#infrastructure-configuration-messaging">3.2.3. Infrastructure configuration</a></li>
+<li><a href="#create-address-space-plans-cli-messaging">3.2.2. Creating address space plans</a></li>
+<li><a href="#con-address-plans-messaging">3.2.3. Address plans</a></li>
+<li><a href="#create-address-plans-cli-messaging">3.2.4. Creating address plans</a></li>
+<li><a href="#infrastructure-configuration-messaging">3.2.5. Infrastructure configuration</a></li>
+<li><a href="#applying-infra-config-changes-messaging">3.2.6. Applying infrastructure configuration</a></li>
 </ul>
 </li>
-<li><a href="#upgrading_enmasse">3.3. Upgrading EnMasse</a>
+<li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#upgrading-enmasse-okd">3.3.1. Upgrading EnMasse on OpenShift</a></li>
-<li><a href="#upgrading-enmasse-kube">3.3.2. Upgrading EnMasse on OpenShift</a></li>
+<li><a href="#upgrading-enmasse-using-bundle-messaging">3.3.1. Upgrading EnMasse using a YAML bundle</a></li>
+<li><a href="#upgrading-enmasse-using-template-messaging">3.3.2. Upgrading EnMasse using Template</a></li>
+<li><a href="#upgrading-enmasse-using-ansible-messaging">3.3.3. Upgrading EnMasse using Ansible</a></li>
 </ul>
 </li>
-<li><a href="#monitoring_enmasse">3.4. Monitoring EnMasse</a>
+<li><a href="#monitoring-messaging">3.4. Monitoring EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#monitoring-oc-oc">3.4.1. Monitoring EnMasse on OpenShift</a></li>
-<li><a href="#monitoring-kube-kube">3.4.2. Monitoring EnMasse on Kubernetes</a></li>
-<li><a href="#using-qdstat-messaging">3.4.3. Using qdstat</a></li>
+<li><a href="#deploy-prometheus-messaging">3.4.1. Deploying Prometheus</a></li>
+<li><a href="#deploy-kube-state-metrics-messaging">3.4.2. Deploying kube-state-metrics</a></li>
+<li><a href="#deploy-alertmanager-messaging">3.4.3. Deploying Alertmanager</a></li>
+<li><a href="#deploy-grafana-messaging">3.4.4. Deploying Grafana</a></li>
+<li><a href="#restart-component-messaging">3.4.5. Restarting a component</a></li>
+<li><a href="#get-logs-broker-messaging">3.4.6. Viewing router logs</a></li>
+<li><a href="#get-logs-router-messaging">3.4.7. Viewing broker logs</a></li>
+<li><a href="#ref-view-message-connection-stats-table-messaging">3.4.8. Viewing message and connection statistics using the EnMasse Console</a></li>
 </ul>
 </li>
+<li><a href="#uninstalling-messaging">3.5. Uninstalling EnMasse</a></li>
 </ul>
 </li>
-<li><a href="#tenant_guide">4. Tenant Guide</a>
+<li><a href="#tenant-guide-messaging">4. Tenant guide</a>
 <ul class="sectlevel2">
 <li><a href="#con-address-space-messaging">4.1. Address space</a></li>
 <li><a href="#con-address-messaging">4.2. Address</a></li>
@@ -514,69 +513,45 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#assembly-brokered-address-types-messaging">4.4.1. Brokered address types</a></li>
 </ul>
 </li>
-<li><a href="#managing-address-spaces-messaging-okd">4.5. Managing address spaces on OpenShift</a>
+<li><a href="#managing-address-spaces-messaging">4.5. Managing address spaces</a>
 <ul class="sectlevel3">
 <li><a href="#minimal_example">4.5.1. Minimal example</a></li>
 <li><a href="#advanced_example">4.5.2. Advanced example</a></li>
 <li><a href="#example_address_space_status_output">4.5.3. Example address space status output</a></li>
-<li><a href="#create-address-space-cli-messaging-okd">4.5.4. Creating address spaces using the command line</a></li>
-<li><a href="#retrieving-address-space-information-messaging-okd">4.5.5. Example commands for retrieving address space information</a></li>
+<li><a href="#create-address-space-cli-messaging">4.5.4. Creating address spaces using the command line</a></li>
+<li><a href="#retrieving-address-space-information-messaging">4.5.5. Example commands for retrieving address space information</a></li>
 </ul>
 </li>
-<li><a href="#managing-address-spaces-messaging-kube">4.6. Managing address spaces on Kubernetes</a>
+<li><a href="#managing-addresses-messaging">4.6. Managing addresses</a>
 <ul class="sectlevel3">
-<li><a href="#minimal_example_2">4.6.1. Minimal example</a></li>
-<li><a href="#advanced_example_2">4.6.2. Advanced example</a></li>
-<li><a href="#example_address_space_status_output_2">4.6.3. Example address space status output</a></li>
-<li><a href="#create-address-space-cli-messaging-kube">4.6.4. Creating address spaces using the command line</a></li>
-<li><a href="#retrieving-address-space-information-messaging-kube">4.6.5. Example commands for retrieving address space information</a></li>
+<li><a href="#example">4.6.1. Example</a></li>
+<li><a href="#create-address-cli-messaging">4.6.2. Creating addresses using the command line</a></li>
+<li><a href="#create-address-console-messaging">4.6.3. Creating addresses using the EnMasse Console</a></li>
 </ul>
 </li>
-<li><a href="#managing-addresses-messaging-okd">4.7. Managing addresses on OpenShift</a>
+<li><a href="#logging-into-console-messaging">4.7. Accessing the EnMasse Console</a></li>
+<li><a href="#ref-console-address-filtering-messaging">4.8. Using the EnMasse Console address filtering</a></li>
+<li><a href="#con-user-model-messaging">4.9. User model</a>
 <ul class="sectlevel3">
-<li><a href="#example">4.7.1. Example</a></li>
-<li><a href="#create-address-cli-messaging-okd">4.7.2. Creating addresses using the command line</a></li>
-<li><a href="#create-address-console-messaging-okd">4.7.3. Creating addresses using the EnMasse Console</a></li>
+<li><a href="#authentication">4.9.1. Authentication</a></li>
+<li><a href="#authorization">4.9.2. Authorization</a></li>
 </ul>
 </li>
-<li><a href="#managing-addresses-messaging-kube">4.8. Managing addresses on Kubernetes</a>
+<li><a href="#managing-users-messaging">4.10. Managing users</a>
 <ul class="sectlevel3">
-<li><a href="#example_2">4.8.1. Example</a></li>
-<li><a href="#create-address-cli-messaging-kube">4.8.2. Creating addresses using the command line</a></li>
-<li><a href="#create-address-console-messaging-kube">4.8.3. Creating addresses using the EnMasse Console</a></li>
+<li><a href="#proc-creating-users-cli-messaging">4.10.1. Creating users using the command line</a></li>
+<li><a href="#proc-deleting-users-cli-messaging">4.10.2. Deleting users using the command line</a></li>
+<li><a href="#proc-managing-user-permissions-cli-messaging">4.10.3. Managing user permissions using the command line</a></li>
 </ul>
 </li>
-<li><a href="#logging-into-console-messaging">4.9. Accessing the EnMasse Console</a></li>
-<li><a href="#ref-console-address-filtering-messaging">4.10. Using the EnMasse Console address filtering</a></li>
-<li><a href="#con-user-model-messaging">4.11. User model</a>
+<li><a href="#assembly-connecting-applications-messaging">4.11. Connecting applications to EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#authentication">4.11.1. Authentication</a></li>
-<li><a href="#authorization">4.11.2. Authorization</a></li>
-</ul>
-</li>
-<li><a href="#managing-users-managing-users-oc">4.12. Managing users on OpenShift</a>
-<ul class="sectlevel3">
-<li><a href="#proc-creating-users-cli-managing-users-oc">4.12.1. Creating users using the command line</a></li>
-<li><a href="#proc-deleting-users-cli-managing-users-oc">4.12.2. Deleting users using the command line</a></li>
-<li><a href="#proc-managing-user-permissions-cli-managing-users-oc">4.12.3. Managing user permissions using the command line</a></li>
-</ul>
-</li>
-<li><a href="#managing-users-kube-managing-users-kube">4.13. Managing users on Kubernetes</a>
-<ul class="sectlevel3">
-<li><a href="#proc-creating-users-cli-managing-users-kube">4.13.1. Creating users using the command line</a></li>
-<li><a href="#proc-deleting-users-cli-managing-users-kube">4.13.2. Deleting users using the command line</a></li>
-<li><a href="#proc-managing-user-permissions-cli-managing-users-kube">4.13.3. Managing user permissions using the command line</a></li>
-</ul>
-</li>
-<li><a href="#assembly-connecting-applications-messaging">4.14. Connecting applications to EnMasse</a>
-<ul class="sectlevel3">
-<li><a href="#client-examples-messaging">4.14.1. Client examples</a></li>
-<li><a href="#ref-python-example-messaging">4.14.2. Apache Qpid Proton Python example</a></li>
+<li><a href="#client-examples-messaging">4.11.1. Client examples</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#rest_api_reference">Appendix A: REST API Reference</a>
+<li><a href="#rest_api_reference">Appendix A: REST API reference</a>
 <ul class="sectlevel2">
 <li><a href="#enmasse_rest_api">A.1. EnMasse REST API</a>
 <ul class="sectlevel3">
@@ -604,10 +579,10 @@ what you need to set up and manage EnMasse as a service administrator or a messa
 </div>
 </div>
 <div class="sect1">
-<h2 id="overview">1. Overview</h2>
+<h2 id="overview-messaging">1. Overview</h2>
 <div class="sectionbody">
-<div id="enmasse_overview" class="paragraph">
-<p>EnMasse is an open source project for managed, self-service messaging on <a href="https://kubernetes.io">Kubernetes</a>. EnMasse can run on your own infrastructure or in the cloud, and simplifies running a messaging infrastructure for your organization.</p>
+<div class="paragraph">
+<p>EnMasse is an open source project for managed, self-service messaging on <a href="https://kubernetes.io">Kubernetes</a> and <a href="https://openshift.com">OpenShift</a>. EnMasse can run on your own infrastructure or in the cloud, and simplifies running a messaging infrastructure for your organization.</p>
 </div>
 <div class="paragraph">
 <p>The service admin can deploy and manage messaging infrastructure, while messaging tenants can request messaging resources, both using both cloud-native APIs and tools.</p>
@@ -620,7 +595,7 @@ what you need to set up and manage EnMasse as a service administrator or a messa
 <p>Built-in authentication and authorization of clients and identity management</p>
 </li>
 <li>
-<p>Runs on Kubernetes: deploy on-premise or in the cloud</p>
+<p>Runs on Kubernetes and OpenShift: deploy on-premise or in the cloud</p>
 </li>
 <li>
 <p>Different messaging patterns such as request-response, publish-subscribe and events</p>
@@ -665,10 +640,8 @@ what you need to set up and manage EnMasse as a service administrator or a messa
 </div>
 </div>
 <div class="sect1">
-<h2 id="getting_started">2. Getting Started</h2>
+<h2 id="quickstart-messaging-gs">2. Getting started</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="quickstart-on-openshift-messaging-gs-okd">2.1. EnMasse on OpenShift</h3>
 <div class="paragraph">
 <p>This guide will walk through the process of setting up EnMasse on
 OpenShift with clients for sending and receiving messages.</p>
@@ -679,7 +652,7 @@ OpenShift with clients for sending and receiving messages.</p>
 <li>
 <p>To install EnMasse, the OpenShift client tools are required. You can download the OpenShift
 Origin client from <a href="https://github.com/openshift/origin/releases" target="_blank" rel="noopener">OpenShift Origin</a>. EnMasse has
-been tested to work with the latest stable release of the OpenShift Origin Client.</p>
+been tested to work with the latest stable release of the OpenShift Origin client.</p>
 </li>
 <li>
 <p>An OpenShift cluster is required. If you do not have an OpenShift cluster available, see
@@ -687,12 +660,12 @@ been tested to work with the latest stable release of the OpenShift Origin Clien
 on your machine.</p>
 </li>
 <li>
-<p>A user on the OpenShift cluster with <code>cluster-admin</code> permissions is required, in order to set up the required cluster roles and API services.</p>
+<p>A user on the OpenShift cluster with <code>cluster-admin</code> permissions is required to set up the required cluster roles and API services.</p>
 </li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="downloading-messaging-gs-okd">2.1.1. Downloading EnMasse</h4>
+<div class="sect2">
+<h3 id="downloading-messaging-gs">2.1. Downloading EnMasse</h3>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
@@ -702,8 +675,8 @@ on your machine.</p>
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="installing-using-bundle-messaging-gs-okd">2.1.2. Installing EnMasse using a YAML bundle</h4>
+<div class="sect2">
+<h3 id="installing-using-bundle-messaging-gs">2.2. Installing EnMasse using a YAML bundle</h3>
 <div class="paragraph">
 <p>The simplest way to install EnMasse is to use the predefined YAML bundles.</p>
 </div>
@@ -745,8 +718,8 @@ on your machine.</p>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="create-address-space-cli-messaging-gs-okd">2.1.3. Creating address spaces using the command line</h4>
+<div class="sect2">
+<h3 id="create-address-space-cli-messaging-gs">2.3. Creating address spaces using the command line</h3>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -769,7 +742,6 @@ on your machine.</p>
 <li>
 <p>Create an address space definition:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/standard-address-space.yaml">standard-address-space.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: AddressSpace
@@ -803,15 +775,14 @@ spec:
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="create-address-cli-messaging-gs-okd">2.1.4. Creating addresses using the command line</h4>
+<div class="sect2">
+<h3 id="create-address-cli-messaging-gs">2.4. Creating addresses using the command line</h3>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p>Create an address definition:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/standard-small-queue.yaml">standard-small-queue.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: Address
@@ -855,8 +826,8 @@ Prefixing the name with the address space name is required to ensure addresses f
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="proc-creating-users-cli-messaging-gs-okd">2.1.5. Creating users using the command line</h4>
+<div class="sect2">
+<h3 id="proc-creating-users-cli-messaging-gs">2.5. Creating users using the command line</h3>
 <div class="paragraph">
 <p>In EnMasse users can be created using standard command-line tools.</p>
 </div>
@@ -874,7 +845,6 @@ Prefixing the name with the address space name is required to ensure addresses f
 <li>
 <p>Save the user definition to a file:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/user-example1.yaml">user-example1.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: user.enmasse.io/v1alpha1
 kind: MessagingUser
@@ -901,6 +871,14 @@ spec:
 </div>
 </div>
 </li>
+<li>
+<p>Confirm that the user was created:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get messagingusers</pre>
+</div>
+</div>
+</li>
 </ol>
 </div>
 <div class="ulist">
@@ -912,8 +890,8 @@ spec:
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="send-receive-messaging-gs-okd">2.1.6. Sending and receiving messages</h4>
+<div class="sect2">
+<h3 id="send-receive-messaging-gs">2.6. Sending and receiving messages</h3>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -999,347 +977,16 @@ except KeyboardInterrupt: pass</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="quickstart-on-kubernetes-messaging-gs-kube">2.2. EnMasse on Kubernetes</h3>
-<div class="paragraph">
-<p>This guide will walk through the process of setting up EnMasse on
-Kubernetes with clients for sending and receiving messages.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisite</div>
-<ul>
-<li>
-<p>To install EnMasse, you must have Kubernetes installed. You can use <a href="https://github.com/kubernetes/minikube">minikube</a> if you want to install EnMasse on your laptop.</p>
-</li>
-<li>
-<p>A user on the Kubernetes cluster with <code>cluster-admin</code> permissions is required, in order to set up the required cluster roles and API services.</p>
-</li>
-</ul>
-</div>
-<div class="sect3">
-<h4 id="downloading-messaging-gs-kube">2.2.1. Downloading EnMasse</h4>
-<div class="ulist">
-<div class="title">Procedure</div>
-<ul>
-<li>
-<p>Download one of the releases from the <a href="https://github.com/EnMasseProject/enmasse/releases">GitHub repository</a> and unpack it.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="installing-using-bundle-messaging-gs-kube">2.2.2. Installing EnMasse using a YAML bundle</h4>
-<div class="paragraph">
-<p>The simplest way to install EnMasse is to use the predefined YAML bundles.</p>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create the namespace where you want to deploy EnMasse:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create namespace <em>enmasse-infra</em>
-kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a certificate to use with the <code>standard</code> authentication service. For testing purposes, you can create a self-signed certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mkdir -p standard-authservice-cert
-openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standard-authservice.<em>enmasse-infra</em>.svc.cluster.local" -out standard-authservice-cert/tls.crt -keyout standard-authservice-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a secret with the <code>standard</code> authentication service certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create secret tls standard-authservice-cert --cert=standard-authservice-cert/tls.crt --key=standard-authservice-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a certificate to use with the API server. For testing purposes, you can create a self-signed certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mkdir -p api-server-cert/
-openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-server.<em>enmasse-infra</em>.svc.cluster.local" -out api-server-cert/tls.crt -keyout api-server-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a secret containing the API server certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create secret tls api-server-cert --cert=api-server-cert/tls.crt --key=api-server-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy using the <code>enmasse-with-standard-authservice</code> bundle:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f install/bundles/enmasse-with-standard-authservice</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="create-address-space-cli-messaging-gs-kube">2.2.3. Creating address spaces using the command line</h4>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create an address space definition:</p>
-<div class="listingblock">
-<div class="title"><a href="resources/standard-address-space.yaml">standard-address-space.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
-kind: AddressSpace
-metadata:
-  name: myspace
-spec:
-  type: standard
-  plan: standard-unlimited</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create -f standard-address-space.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Check the status of the address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.isReady}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The address space is ready for use when the above command outputs <code>true</code>.</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="create-address-cli-messaging-gs-kube">2.2.4. Creating addresses using the command line</h4>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create an address definition:</p>
-<div class="listingblock">
-<div class="title"><a href="resources/standard-small-queue.yaml">standard-small-queue.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
-kind: Address
-metadata:
-    name: myspace.myqueue
-spec:
-    address: myqueue
-    type: queue
-    plan: standard-small-queue</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-Prefixing the name with the address space name is required to ensure addresses from different address spaces do not collide.
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Create the address:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl create -f standard-small-queue.yaml</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>List the addresses:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addresses -o yaml</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="proc-creating-users-cli-messaging-gs-kube">2.2.5. Creating users using the command line</h4>
-<div class="paragraph">
-<p>In EnMasse users can be created using standard command-line tools.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>You must have already created an <a href="#con-address-space-messaging">address space</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Save the user definition to a file:</p>
-<div class="listingblock">
-<div class="title"><a href="resources/user-example1.yaml">user-example1.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: user.enmasse.io/v1alpha1
-kind: MessagingUser
-metadata:
-  name: myspace.user1
-spec:
-  username: user1
-  authentication:
-    type: password
-    password: cGFzc3dvcmQ= # Base64 encoded
-  authorization:
-    - addresses: ["myqueue", "queue1", "queue2", "topic*"]
-      operations: ["send", "recv"]
-    - addresses: ["anycast1"]
-      operations: ["send"]</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the user and associated user permissions:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create -f <em>user-example1.yaml</em></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="ulist">
-<div class="title">Additional resources</div>
-<ul>
-<li>
-<p><a href="#_overview">Rest API Reference</a></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="send-receive-messaging-gs-kube">2.2.6. Sending and receiving messages</h4>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>Installed <a href="https://qpid.apache.org/proton/index.html">Apache Qpid Proton</a> Python bindings.</p>
-</li>
-<li>
-<p>An address space named <code>myspace</code> must be created.</p>
-</li>
-<li>
-<p>An address named <code>myqueue</code> must be created.</p>
-</li>
-<li>
-<p>A user named <code>user1</code> with password "password" must be created.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Save Python client example to a file:</p>
-<div class="listingblock">
-<div class="title"><a href="resources/client-example1.py">client-example1.py</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-python hljs" data-lang="python">from __future__ import print_function, unicode_literals
-import optparse
-from proton import Message
-from proton.handlers import MessagingHandler
-from proton.reactor import Container
-
-class HelloWorld(MessagingHandler):
-    def __init__(self, url):
-        super(HelloWorld, self).__init__()
-        self.url = url
-
-    def on_start(self, event):
-        event.container.create_receiver(self.url)
-        event.container.create_sender(self.url)
-
-    def on_sendable(self, event):
-        event.sender.send(Message(body="Hello World!"))
-        event.sender.close()
-
-    def on_message(self, event):
-        print("Received: " + event.message.body)
-        event.connection.close()
-
-parser = optparse.OptionParser(usage="usage: %prog [options]")
-parser.add_option("-u", "--url", default="amqps://localhost:5672/myqueue",
-                  help="url to use for sending and receiving messages")
-opts, args = parser.parse_args()
-
-try:
-    Container(HelloWorld(opts.url)).run()
-except KeyboardInterrupt: pass</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Retrieve the address space messaging endpoint host name:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Use the output as the host name in the following step.</p>
-</div>
-</li>
-<li>
-<p>Run the client:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">python client-example1.py -u amqps://user1:password@messaging.example1.com:443/myqueue</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>We have seen how to set up EnMasse on Kubernetes, and how to communicate with it using an AMQP client.</p>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="sect1">
-<h2 id="service_admin_guide">3. Service Admin Guide</h2>
+<h2 id="'service-admin-guide-messaging">3. Service admin guide</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The service administrator guide provides resources on how to set up and manage EnMasse,
-infrastructure configuration and plans.</p>
+infrastructure configuration, and plans.</p>
 </div>
 <div class="sect2">
-<h3 id="installing_enmasse">3.1. Installing EnMasse</h3>
-<div class="sect3">
-<h4 id="installing-on-openshift-okd">3.1.1. Installing EnMasse on OpenShift</h4>
+<h3 id="installing-messaging">3.1. Installing EnMasse</h3>
 <div class="paragraph">
 <p>EnMasse can be installed using automated <a href="https://www.ansible.com/">Ansible</a> playbooks, the OpenShift template, or the manual steps.</p>
 </div>
@@ -1349,7 +996,7 @@ infrastructure configuration and plans.</p>
 <li>
 <p>To install EnMasse, the OpenShift client tools are required. You can download the OpenShift
 Origin client from <a href="https://github.com/openshift/origin/releases" target="_blank" rel="noopener">OpenShift Origin</a>. EnMasse has
-been tested to work with the latest stable release of the OpenShift Origin Client.</p>
+been tested to work with the latest stable release of the OpenShift Origin client.</p>
 </li>
 <li>
 <p>An OpenShift cluster is required. If you do not have an OpenShift cluster available, see
@@ -1357,12 +1004,12 @@ been tested to work with the latest stable release of the OpenShift Origin Clien
 on your machine.</p>
 </li>
 <li>
-<p>A user on the OpenShift cluster with <code>cluster-admin</code> permissions is required, in order to set up the required cluster roles and API services.</p>
+<p>A user on the OpenShift cluster with <code>cluster-admin</code> permissions is required to set up the required cluster roles and API services.</p>
 </li>
 </ul>
 </div>
-<div class="sect4">
-<h5 id="downloading-okd">Downloading EnMasse</h5>
+<div class="sect3">
+<h4 id="downloading-messaging">3.1.1. Downloading EnMasse</h4>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
@@ -1372,8 +1019,8 @@ on your machine.</p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="installing-using-bundle-okd">Installing EnMasse using a YAML bundle</h5>
+<div class="sect3">
+<h4 id="installing-using-bundle-messaging">3.1.2. Installing EnMasse using a YAML bundle</h4>
 <div class="paragraph">
 <p>The simplest way to install EnMasse is to use the predefined YAML bundles.</p>
 </div>
@@ -1415,8 +1062,8 @@ on your machine.</p>
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="installing-using-template-okd">Installing EnMasse using OpenShift template</h5>
+<div class="sect3">
+<h4 id="installing-using-template-messaging">3.1.3. Installing EnMasse using OpenShift template</h4>
 <div class="paragraph">
 <p>Installing EnMasse using the OpenShift template is useful for evaluating EnMasse. For a
 production setup, it is recommended to use one of the following installation methods instead:</p>
@@ -1424,13 +1071,13 @@ production setup, it is recommended to use one of the following installation met
 <div class="ulist">
 <ul>
 <li>
-<p><a href="#installing-using-bundle-okd">Installing EnMasse using a YAML bundle</a></p>
+<p><a href="#installing-using-bundle-messaging">Installing EnMasse using a YAML bundle</a></p>
 </li>
 <li>
-<p><a href="#installing-using-ansible-okd">Installing EnMasse using Ansible</a></p>
+<p><a href="#installing-using-ansible-messaging">Installing EnMasse using Ansible</a></p>
 </li>
 <li>
-<p><a href="#installing-using-manual-steps-okd">Installing EnMasse manually</a></p>
+<p><a href="#installing-using-manual-steps-messaging">Installing EnMasse manually</a></p>
 </li>
 </ul>
 </div>
@@ -1464,8 +1111,8 @@ production setup, it is recommended to use one of the following installation met
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="installing-using-ansible-okd">Installing EnMasse using Ansible</h5>
+<div class="sect3">
+<h4 id="installing-using-ansible-messaging">3.1.4. Installing EnMasse using Ansible</h4>
 <div class="paragraph">
 <p>Installing EnMasse using Ansible requires creating an inventory file with the variables for
 configuring the system. Example inventory files can be found in the <code>ansible/inventory</code> folder.</p>
@@ -1494,103 +1141,217 @@ enable_monitoring=False</code></pre>
 <p>The following Ansible configuration settings are supported:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Ansible Configuration Settings</caption>
+<caption class="title">Table 1. Ansible configuration settings</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
 <col style="width: 25%;">
 <col style="width: 25%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Required</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default value</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Required</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>namespace</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the namespace where EnMasse is installed.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>yes</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">namespace</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the namespace where EnMasse is installed.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>enable_rbac</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to enable RBAC authentication of REST APIs</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>True</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enable_rbac</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable RBAC authentication of REST APIs.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">True</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>service_catalog</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to enable integration with the Service Catalog</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>False</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">service_catalog</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable integration with the Service Catalog.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>authentication_services</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the list of authentication services to deploy. Supported values are <code>none</code> and <code>standard</code>.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>none</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">authentication_services</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the list of authentication services to deploy. <code>none</code> and <code>standard</code> are supported.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>none</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>keycloak_admin_password</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the admin password to use for the <code>standard</code> authentication service Keycloak instance</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>yes (if <code>standard</code> authentication service is enabled)</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">keycloak_admin_password</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the admin password to use for the standard authentication service Keycloak instance.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">yes (if <code>standard</code> authentication service is enabled)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>api_server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to enable the REST API server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>True</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">api_server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable the REST API server.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">True</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>register_api_server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to register the API server with OpenShift master</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>False</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">register_api_server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to register the API server with Kubernetes master.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>secure_api_server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to enable mutual TLS for the API server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>False</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">secure_api_server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable mutual TLS for the API server.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>enable_monitoring</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to enable the monitoring services</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enable_monitoring</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether to enable the monitoring services</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>smtp_server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the SMTP server used to send alert emails</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">smtp_server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the SMTP server used to send alert emails</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>smtp_username</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the username used to authenticate to the SMTP server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">smtp_username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the username used to authenticate to the SMTP server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>smtp_password</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the password used to authenticate to the SMTP server</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">smtp_password</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the password used to authenticate to the SMTP server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>smtp_from_address</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the from address displayed in alert emails</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">smtp_from_address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the from address displayed in alert emails</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sysadmin_email</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the email address to which alerts are sent</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not applicable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>sysadmin_email</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the email address to which alerts are sent</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Not applicable</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
 </tr>
 </tbody>
 </table>
@@ -1611,14 +1372,14 @@ enable_monitoring=False</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="installing-using-manual-steps-okd">Installing EnMasse manually</h5>
+<div class="sect3">
+<h4 id="installing-using-manual-steps-messaging">3.1.5. Installing EnMasse manually</h4>
 <div class="paragraph">
 <p>The manual deployment procedure can be performed on any platform
 supporting the OpenShift client.</p>
 </div>
-<div class="sect5">
-<h6 id="creating-project-okd">Creating the project for EnMasse</h6>
+<div class="sect4">
+<h5 id="creating-project-messaging">Creating the project for EnMasse</h5>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
@@ -1633,14 +1394,14 @@ supporting the OpenShift client.</p>
 </ul>
 </div>
 </div>
-<div class="sect5">
-<h6 id="deploying-auth-services-okd">Deploying authentication services</h6>
+<div class="sect4">
+<h5 id="deploying-auth-services-messaging">Deploying authentication services</h5>
 <div class="paragraph">
 <p>EnMasse requires at least one authentication service to be deployed. The authentication service
 can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code>external</code> (not managed by EnMasse).</p>
 </div>
-<div class="sect6">
-<h7 id="deploying_the_none_authentication_service">Deploying the <code>none</code> authentication service</h7>
+<div class="sect5">
+<h6 id="deploying_the_none_authentication_service">Deploying the <code>none</code> authentication service</h6>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1655,8 +1416,8 @@ can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code
 </ol>
 </div>
 </div>
-<div class="sect6">
-<h7 id="deploying_the_standard_authentication_service">Deploying the <code>standard</code> authentication service</h7>
+<div class="sect5">
+<h6 id="deploying_the_standard_authentication_service">Deploying the <code>standard</code> authentication service</h6>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1680,8 +1441,8 @@ can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code
 </div>
 </div>
 </div>
-<div class="sect5">
-<h6 id="deploying-address-space-controller-okd">Deploying the Address Space Controller</h6>
+<div class="sect4">
+<h5 id="deploying-address-space-controller-messaging">Deploying the Address Space Controller</h5>
 <div class="paragraph">
 <p>The Address Space Controller is responsible for creating the infrastructure used by address spaces.</p>
 </div>
@@ -1707,8 +1468,8 @@ can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code
 </ol>
 </div>
 </div>
-<div class="sect5">
-<h6 id="deploying-api-server-okd">Deploying the API server</h6>
+<div class="sect4">
+<h5 id="deploying-api-server-messaging">Deploying the API server</h5>
 <div class="paragraph">
 <p>The API server provides a REST API for creating address spaces and addresses. It can also serve as an aggregated API server if it is registered as an API service.</p>
 </div>
@@ -1743,8 +1504,8 @@ sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/api-server/*.
 </ol>
 </div>
 </div>
-<div class="sect5">
-<h6 id="deploying-service-broker-okd">(Optional) Deploying the service broker</h6>
+<div class="sect4">
+<h5 id="deploying-service-broker-messaging">(Optional) Deploying the service broker</h5>
 <div class="paragraph">
 <p>The service broker provides an implementation of the Open Service Broker API that integrates with the OpenShift Service Catalog.</p>
 </div>
@@ -1789,291 +1550,8 @@ sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/cluster-servi
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="installing-on-kubernetes-kube">3.1.2. Installing EnMasse on Kubernetes</h4>
-<div class="paragraph">
-<p>These steps follow the manual deployment procedure and work on any platform supporting the <code>kubectl</code> command-line client.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisite</div>
-<ul>
-<li>
-<p>To install EnMasse, you must have Kubernetes installed. You can use <a href="https://github.com/kubernetes/minikube">minikube</a> if you want to install EnMasse on your laptop.</p>
-</li>
-<li>
-<p>A user on the Kubernetes cluster with <code>cluster-admin</code> permissions is required, in order to set up the required cluster roles and API services.</p>
-</li>
-</ul>
-</div>
-<div class="sect4">
-<h5 id="downloading-kube">Downloading EnMasse</h5>
-<div class="ulist">
-<div class="title">Procedure</div>
-<ul>
-<li>
-<p>Download one of the releases from the <a href="https://github.com/EnMasseProject/enmasse/releases">GitHub repository</a> and unpack it.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="installing-using-bundle-kube">Installing EnMasse using a YAML bundle</h5>
-<div class="paragraph">
-<p>The simplest way to install EnMasse is to use the predefined YAML bundles.</p>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create the namespace where you want to deploy EnMasse:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create namespace <em>enmasse-infra</em>
-kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a certificate to use with the <code>standard</code> authentication service. For testing purposes, you can create a self-signed certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mkdir -p standard-authservice-cert
-openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standard-authservice.<em>enmasse-infra</em>.svc.cluster.local" -out standard-authservice-cert/tls.crt -keyout standard-authservice-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a secret with the <code>standard</code> authentication service certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create secret tls standard-authservice-cert --cert=standard-authservice-cert/tls.crt --key=standard-authservice-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a certificate to use with the API server. For testing purposes, you can create a self-signed certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mkdir -p api-server-cert/
-openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-server.<em>enmasse-infra</em>.svc.cluster.local" -out api-server-cert/tls.crt -keyout api-server-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a secret containing the API server certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create secret tls api-server-cert --cert=api-server-cert/tls.crt --key=api-server-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy using the <code>enmasse-with-standard-authservice</code> bundle:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f install/bundles/enmasse-with-standard-authservice</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect4">
-<h5 id="installing-using-manual-steps-kube">Installing EnMasse manually</h5>
-<div class="paragraph">
-<p>The manual deployment procedure can be performed on any platform
-supporting the Kubernetes client.</p>
-</div>
-<div class="sect5">
-<h6 id="creating-project-kube">Creating the project for EnMasse</h6>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create the <code><em>enmasse-infra</em></code> namespace:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create namespace <em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Set the <code><em>enmasse-infra</em></code> namespace as the default namespace:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect5">
-<h6 id="deploying-auth-services-kube">Deploying authentication services</h6>
-<div class="paragraph">
-<p>EnMasse requires at least one authentication service to be deployed. The authentication service
-can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code>external</code> (not managed by EnMasse).</p>
-</div>
-<div class="sect6">
-<h7 id="deploying_the_none_authentication_service_2">Deploying the <code>none</code> authentication service</h7>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create a certificate to use with the <code>none</code> authentication service. For testing purposes, you can create a self-signed certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mkdir -p none-authservice-cert
-openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=none-authservice.<em>enmasse-infra</em>.svc.cluster.local" -out none-authservice-cert/tls.crt -keyout none-authservice-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a secret with the <code>none</code> authentication service certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create secret tls none-authservice-cert --cert=none-authservice-cert/tls.crt --key=none-authservice-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the <code>none</code> authentication service:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create -f ./install/components/none-authservice</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect6">
-<h7 id="deploying_the_standard_authentication_service_2">Deploying the <code>standard</code> authentication service</h7>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>(Optional) Replace namespace if you want to deploy to something other than <code>enmasse-infra</code>:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/standard-authservice/*RoleBinding*.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a certificate to use with the <code>standard</code> authentication service. For testing purposes, you can create a self-signed certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mkdir -p standard-authservice-cert
-openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standard-authservice.<em>enmasse-infra</em>.svc.cluster.local" -out standard-authservice-cert/tls.crt -keyout standard-authservice-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a secret with the <code>standard</code> authentication service certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create secret tls standard-authservice-cert --cert=standard-authservice-cert/tls.crt --key=standard-authservice-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the <code>standard</code> authentication service:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create -f ./install/components/standard-authservice</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect5">
-<h6 id="deploying-address-space-controller-kube">Deploying the Address Space Controller</h6>
-<div class="paragraph">
-<p>The Address Space Controller is responsible for creating the infrastructure used by address spaces.</p>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>(Optional) Replace namespace if you want to deploy to something other than <code>enmasse-infra</code>:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/address-space-controller/*.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy the Address Space Controller</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f install/components/address-space-controller</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect5">
-<h6 id="deploying-api-server-kube">Deploying the API server</h6>
-<div class="paragraph">
-<p>The API server provides a REST API for creating address spaces and addresses. It can also serve as an aggregated API server if it is registered as an API service.</p>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>(Optional) Replace namespace if you want to deploy to something other than <code>enmasse-infra</code> (and substitute <code>enmasse-infra</code> in subsequent steps):</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/api-service/*.yaml
-sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/api-server/*.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Register API service</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f install/components/api-service</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a certificate to use with the API server. For testing purposes, you can create a self-signed certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mkdir -p api-server-cert/
-openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-server.<em>enmasse-infra</em>.svc.cluster.local" -out api-server-cert/tls.crt -keyout api-server-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a secret containing the API server certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create secret tls api-server-cert --cert=api-server-cert/tls.crt --key=api-server-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy the API Server</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f install/components/api-server/</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-</div>
 <div class="sect2">
-<h3 id="configuring_enmasse">3.2. Configuring EnMasse</h3>
+<h3 id="configuring-messaging">3.2. Configuring EnMasse</h3>
 <div class="sect3">
 <h4 id="con-address-space-plans-messaging">3.2.1. Address space plans</h4>
 <div class="paragraph">
@@ -2086,7 +1564,6 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 <p>Plans are configured as custom resources. The following example shows a plan for the standard address space:</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="resources/restrictive-plan.yaml">restrictive-plan.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
 kind: AddressSpacePlan
@@ -2107,13 +1584,10 @@ addressPlans:
 - small-anycast
 resources:
 - name: router
-  min: 0.0
   max: 2.0
 - name: broker
-  min: 0.0
   max: 2.0
 - name: aggregate
-  min: 0.0
   max: 2.0</code></pre>
 </div>
 </div>
@@ -2141,8 +1615,9 @@ resources:
 points to an infrastructure configuration that must exist when an address space using this plan is created.
 For more information on infrastructure configurations, see <a href="#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
 </div>
-<div class="sect4">
-<h5 id="create-address-space-plans-cli-okd">Creating address space plans on OpenShift</h5>
+</div>
+<div class="sect3">
+<h4 id="create-address-space-plans-cli-messaging">3.2.2. Creating address space plans</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2165,7 +1640,6 @@ For more information on infrastructure configurations, see <a href="#infrastruct
 <li>
 <p>Create an address space plan definition:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/restrictive-plan.yaml">restrictive-plan.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
 kind: AddressSpacePlan
@@ -2186,13 +1660,10 @@ addressPlans:
 - small-anycast
 resources:
 - name: router
-  min: 0.0
   max: 2.0
 - name: broker
-  min: 0.0
   max: 2.0
 - name: aggregate
-  min: 0.0
   max: 2.0</code></pre>
 </div>
 </div>
@@ -2216,68 +1687,8 @@ resources:
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="create-address-space-plans-cli-kube">Creating address space plans on Kubernetes</h5>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create an address space plan definition:</p>
-<div class="listingblock">
-<div class="title"><a href="resources/restrictive-plan.yaml">restrictive-plan.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
-kind: AddressSpacePlan
-metadata:
-  name: restrictive-plan
-  labels:
-    app: enmasse
-  annotations:
-    enmasse.io/defined-by: default
-displayName: Restrictive Plan
-displayOrder: 0
-shortDescription: A plan with restrictive quotas
-longDescription: A plan with restrictive quotas for the standard address space
-uuid: 74b9a40e-117e-11e8-b4e1-507b9def37d9
-addressSpaceType: standard
-addressPlans:
-- small-queue
-- small-anycast
-resources:
-- name: router
-  min: 0.0
-  max: 2.0
-- name: broker
-  min: 0.0
-  max: 2.0
-- name: aggregate
-  min: 0.0
-  max: 2.0</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the address space plan:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create -f restrictive-plan.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Verify that schema has been updated and contains the plan:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspaceschema standard -o yaml</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
 <div class="sect3">
-<h4 id="con-address-plans-messaging">3.2.2. Address plans</h4>
+<h4 id="con-address-plans-messaging">3.2.3. Address plans</h4>
 <div class="paragraph">
 <p>Address plans specify the expected resource usage of a given address. The sum of the resource usage for all resource types determines the amount of infrastructure provisioned for an address space. A single router and broker pod has a maximum usage of one. If a new address requires additional resources and the resource consumption is within the address space plan limits, a new pod will be created automatically to handle the increased load.</p>
 </div>
@@ -2291,7 +1702,6 @@ resources:
 <p>In the <a href="#con-address-space-plans-messaging">Address space plans</a> section, the address space plan references two address plans: <code>small-queue</code> and <code>small-anycast</code>. These address plans are stored as custom resources and are defined as follows:</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="resources/small-queue-plan.yaml">small-queue-plan.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
 kind: AddressPlan
@@ -2338,7 +1748,6 @@ requiredResources:
 <p>The <code>small-anycast</code> plan does not consume any broker resources, and can provision two routers at the expense of not being able to create any brokers:</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="resources/small-anycast-plan.yaml">small-anycast-plan.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
 kind: AddressPlan
@@ -2360,8 +1769,9 @@ requiredResources:
 <div class="paragraph">
 <p>With this plan, up to 10 addresses can be created.</p>
 </div>
-<div class="sect4">
-<h5 id="create-address-plans-cli-okd">Creating address plans on OpenShift</h5>
+</div>
+<div class="sect3">
+<h4 id="create-address-plans-cli-messaging">3.2.4. Creating address plans</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2384,7 +1794,6 @@ requiredResources:
 <li>
 <p>Create an address plan definition:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/small-anycast-plan.yaml">small-anycast-plan.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
 kind: AddressPlan
@@ -2423,56 +1832,8 @@ requiredResources:
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="create-address-plans-cli-kube">Creating address plans on Kubernetes</h5>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create an address plan definition:</p>
-<div class="listingblock">
-<div class="title"><a href="resources/small-anycast-plan.yaml">small-anycast-plan.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
-kind: AddressPlan
-metadata:
-  name: small-anycast
-  labels:
-    app: enmasse
-displayName: Small anycast plan
-displayOrder: 0
-shortDescription: A plan for small anycast addresses
-longDescription: A plan for small anycast addresses that consume little resources
-uuid: cb61f440-1184-11e8-adda-507b9def37d9
-addressType: anycast
-requiredResources:
-- name: router
-  credit: 0.2</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the address plan:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create -f small-anycast-plan.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Verify that schema has been updated and contains the plan:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspaceschema standard -o yaml</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
 <div class="sect3">
-<h4 id="infrastructure-configuration-messaging">3.2.3. Infrastructure configuration</h4>
+<h4 id="infrastructure-configuration-messaging">3.2.5. Infrastructure configuration</h4>
 <div class="paragraph">
 <p>EnMasse creates infrastructure components such as routers, brokers, and consoles. These
 components can be configured while the system is running, and EnMasse automatically updates
@@ -2495,7 +1856,6 @@ spaces. The brokered infra configuration is referenced by address space plans us
 annotation. For more information, see <a href="#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="resources/brokered-infra-config-example.yaml">brokered-infra-config-example.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
 kind: BrokeredInfraConfig
@@ -2533,7 +1893,6 @@ spaces. The standard infra configuration is referenced by address space plans us
 annotation. For more information, see <a href="#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="resources/standard-infra-config-example.yaml">standard-infra-config-example.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
 kind: StandardInfraConfig
@@ -2552,7 +1911,8 @@ spec:
   router:
     resources:
       memory: 256Mi
-    linkCapcity: 1000</code></pre>
+    linkCapcity: 1000
+    minReplicas: 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2570,8 +1930,9 @@ the <code>.broker.resources.storage</code> setting does not configure existing b
 <p>The <code>router</code> object specifies the settings you can configure for the <code>router</code> components.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="applying-infra-config-changes-okd">Applying infrastructure configuration on OpenShift</h5>
+</div>
+<div class="sect3">
+<h4 id="applying-infra-config-changes-messaging">3.2.6. Applying infrastructure configuration</h4>
 <div class="paragraph">
 <p>You can edit existing configurations or create new ones.</p>
 </div>
@@ -2605,7 +1966,6 @@ the <code>.broker.resources.storage</code> setting does not configure existing b
 <li>
 <p>Create infrastructure configuration:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/standard-infra-config-example.yaml">standard-infra-config-example.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
 kind: StandardInfraConfig
@@ -2624,7 +1984,8 @@ spec:
   router:
     resources:
       memory: 256Mi
-    linkCapcity: 1000</code></pre>
+    linkCapcity: 1000
+    minReplicas: 1</code></pre>
 </div>
 </div>
 </li>
@@ -2650,76 +2011,9 @@ spec:
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="applying-infra-config-changes-kube">Applying infrastructure configuration on Kubernetes</h5>
-<div class="paragraph">
-<p>You can edit existing configurations or create new ones.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>An infrastructure configuration change that you want to apply. For more information, see <a href="#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create infrastructure configuration:</p>
-<div class="listingblock">
-<div class="title"><a href="resources/standard-infra-config-example.yaml">standard-infra-config-example.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1alpha1
-kind: StandardInfraConfig
-metadata:
-  name: myconfig
-spec:
-  version: 0.23.0
-  admin:
-    resources:
-      memory: 256Mi
-  broker:
-    resources:
-      memory: 2Gi
-      storage: 100Gi
-    addressFullPolicy: PAGE
-  router:
-    resources:
-      memory: 256Mi
-    linkCapcity: 1000</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Apply the configuration changes:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f standard-infra-config-example.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Monitor the pods while they are restarted:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get pods -w</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The configuration changes will be applied within a couple of minutes.</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
-<h3 id="upgrading_enmasse">3.3. Upgrading EnMasse</h3>
-<div class="sect3">
-<h4 id="upgrading-enmasse-okd">3.3.1. Upgrading EnMasse on OpenShift</h4>
+<h3 id="upgrading-messaging">3.3. Upgrading EnMasse</h3>
 <div class="paragraph">
 <p>EnMasse supports upgrades between minor versions using cloud native tools and the same
 mechanism used to apply configuration changes.  When upgrading, the updated infrastructure
@@ -2728,13 +2022,13 @@ configuration of the new version will trigger the upgrade to start.</p>
 <div class="paragraph">
 <p>Upgrading EnMasse is done by applying the YAML files for the new version.</p>
 </div>
-<div class="sect4">
-<h5 id="upgrading-enmasse-using-bundle-okd">Upgrading EnMasse on OpenShift using a YAML bundle</h5>
+<div class="sect3">
+<h4 id="upgrading-enmasse-using-bundle-messaging">3.3.1. Upgrading EnMasse using a YAML bundle</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>A new release of EnMasse. For more information, see <a href="#downloading-okd">Downloading EnMasse</a>.</p>
+<p>A new release of EnMasse. For more information, see <a href="#downloading-messaging">Downloading EnMasse</a>.</p>
 </li>
 </ul>
 </div>
@@ -2779,13 +2073,13 @@ configuration of the new version will trigger the upgrade to start.</p>
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="upgrading-enmasse-using-template-okd">Upgrading EnMasse on OpenShift using Template</h5>
+<div class="sect3">
+<h4 id="upgrading-enmasse-using-template-messaging">3.3.2. Upgrading EnMasse using Template</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>A new release of EnMasse. For more information, see <a href="#downloading-okd">Downloading EnMasse</a>.</p>
+<p>A new release of EnMasse. For more information, see <a href="#downloading-messaging">Downloading EnMasse</a>.</p>
 </li>
 </ul>
 </div>
@@ -2830,13 +2124,13 @@ configuration of the new version will trigger the upgrade to start.</p>
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="upgrading-enmasse-using-ansible-okd">Upgrading EnMasse on OpenShift using Ansible</h5>
+<div class="sect3">
+<h4 id="upgrading-enmasse-using-ansible-messaging">3.3.3. Upgrading EnMasse using Ansible</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>A new release of EnMasse. For more information, see <a href="#downloading-okd">Downloading EnMasse</a>.</p>
+<p>A new release of EnMasse. For more information, see <a href="#downloading-messaging">Downloading EnMasse</a>.</p>
 </li>
 </ul>
 </div>
@@ -2874,73 +2168,16 @@ configuration of the new version will trigger the upgrade to start.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="upgrading-enmasse-kube">3.3.2. Upgrading EnMasse on OpenShift</h4>
-<div class="paragraph">
-<p>EnMasse supports upgrades between minor versions using cloud native tools and the same
-mechanism used to apply configuration changes.  When upgrading, the updated infrastructure
-configuration of the new version will trigger the upgrade to start.</p>
-</div>
-<div class="paragraph">
-<p>Upgrading EnMasse is done by applying the YAML files for the new version.</p>
-</div>
-<div class="sect4">
-<h5 id="upgrading-enmasse-using-bundle-kube">Upgrading EnMasse on Kubernetes using a YAML bundle</h5>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>A new release of EnMasse. For more information, see <a href="#downloading-kube">Downloading EnMasse</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Select the namespace where EnMasse is installed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Apply the new release bundle:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f install/bundles/enmasse-with-standard-authservice</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Monitor pods while they are restarted:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get pods -w</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The upgrade should cause all pods to be restarted within a couple of minutes.</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
 <div class="sect2">
-<h3 id="monitoring_enmasse">3.4. Monitoring EnMasse</h3>
-<div class="sect3">
-<h4 id="monitoring-oc-oc">3.4.1. Monitoring EnMasse on OpenShift</h4>
+<h3 id="monitoring-messaging">3.4. Monitoring EnMasse</h3>
 <div class="paragraph">
 <p>Monitoring services run frequent health checks  on EnMasse and send alerts when health checks
 fail. Health is assessed using Prometheus and <code>kube-state-metrics</code>. Alerting is implemented with
 <code>Alertmanager</code>. Grafana is also configured to provide a dashboard of the current status of health
 checks.</p>
 </div>
-<div class="sect4">
-<h5 id="deploy-prometheus-oc">Deploying Prometheus</h5>
+<div class="sect3">
+<h4 id="deploy-prometheus-messaging">3.4.1. Deploying Prometheus</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2963,8 +2200,8 @@ checks.</p>
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="deploy-kube-state-metrics-oc">Deploying kube-state-metrics</h5>
+<div class="sect3">
+<h4 id="deploy-kube-state-metrics-messaging">3.4.2. Deploying kube-state-metrics</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2987,8 +2224,8 @@ checks.</p>
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="deploy-alertmanager-oc">Deploying Alertmanager</h5>
+<div class="sect3">
+<h4 id="deploy-alertmanager-messaging">3.4.3. Deploying Alertmanager</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -3064,8 +2301,8 @@ data:
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="deploy-grafana-oc">Deploying Grafana</h5>
+<div class="sect3">
+<h4 id="deploy-grafana-messaging">3.4.4. Deploying Grafana</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -3078,7 +2315,7 @@ data:
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Replace the namespace with the namespace {ProcuctName} is currently deployed to:</p>
+<p>Replace the namespace with the namespace EnMasse is currently deployed to:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">sed -i 's/enmasse-infra/_my-namespace_/' install/components/grafana/*.yaml</pre>
@@ -3096,8 +2333,8 @@ data:
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="restart-component-oc">Restarting a component</h5>
+<div class="sect3">
+<h4 id="restart-component-messaging">3.4.5. Restarting a component</h4>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
@@ -3115,8 +2352,8 @@ data:
 <p>The component will be automatically restarted in a new pod.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="get-logs-broker-oc">Viewing router logs</h5>
+<div class="sect3">
+<h4 id="get-logs-broker-messaging">3.4.6. Viewing router logs</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -3139,8 +2376,8 @@ data:
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="get-logs-router-oc">Viewing broker logs</h5>
+<div class="sect3">
+<h4 id="get-logs-router-messaging">3.4.7. Viewing broker logs</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -3148,7 +2385,7 @@ data:
 <p>List all broker pods and choose the pod for the relevant address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get pods -l name=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+<pre class="nowrap">oc get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
 </div>
 </div>
 </li>
@@ -3163,8 +2400,8 @@ data:
 </ol>
 </div>
 </div>
-<div class="sect4">
-<h5 id="ref-view-message-connection-stats-table-oc">Viewing message and connection statistics using the EnMasse Console</h5>
+<div class="sect3">
+<h4 id="ref-view-message-connection-stats-table-messaging">3.4.8. Viewing message and connection statistics using the EnMasse Console</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -3309,369 +2546,65 @@ data:
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="monitoring-kube-kube">3.4.2. Monitoring EnMasse on Kubernetes</h4>
-<div class="paragraph">
-<p>Monitoring services run frequent health checks  on EnMasse and send alerts when health checks
-fail. Health is assessed using Prometheus and <code>kube-state-metrics</code>. Alerting is implemented with
-<code>Alertmanager</code>. Grafana is also configured to provide a dashboard of the current status of health
-checks.</p>
-</div>
-<div class="sect4">
-<h5 id="deploy-prometheus-kube">Deploying Prometheus</h5>
+<div class="sect2">
+<h3 id="uninstalling-messaging">3.5. Uninstalling EnMasse</h3>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Replace the namespace with the namespace EnMasse is currently deployed to:</p>
+<p>Log in as a user with <code>cluster-admin</code> privileges:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/_my-namespace_/' install/components/prometheus/*.yaml</pre>
+<pre class="nowrap">oc login -u system:admin</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Create the Prometheus deployment:</p>
+<p>Delete the rolebinding in the <code>kube-system</code> namespace:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f ./install/components/prometheus</pre>
+<pre class="nowrap">oc delete rolebindings -l app=enmasse -n kube-system</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete "cluster level" resources:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete clusterrolebindings -l app=enmasse
+oc delete crd -l app=enmasse
+oc delete clusterroles -l app=enmasse
+oc delete apiservices -l app=enmasse
+oc delete oauthclients -l app=enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Delete the service catalog integration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete clusterservicebrokers -l app=enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete the project where EnMasse is deployed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete project <em>enmasse-infra</em></pre>
 </div>
 </div>
 </li>
 </ol>
-</div>
-</div>
-<div class="sect4">
-<h5 id="deploy-kube-state-metrics-kube">Deploying kube-state-metrics</h5>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Replace the namespace with the namespace EnMasse is currently deployed to:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/_my-namespace_/' install/components/kube-state-metrics/*.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the <code>kube-state-metrics</code> deployment:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f ./install/components/kube-state-metrics</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect4">
-<h5 id="deploy-alertmanager-kube">Deploying Alertmanager</h5>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>You must have already installed Prometheus and <code>kube-state-metrics</code>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Replace the namespace with the namespace EnMasse is currently deployed to:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/_my-namespace_/' install/components/alertmanager/*.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the <code>Alertmanager</code> deployment:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f ./install/components/alertmanager</pre>
-</div>
-</div>
-</li>
-<li>
-<p>(Optional) Configure <code>Alertmanager</code> to send emails using a custom configmap with the relevant SMTP details:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f ./alertmanager-configmap.yaml</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>An example <code>Alertmanager</code> config map:</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: enmasse
-  name: alertmanager-config
-data:
-  alertmanager.yml: |
-    global:
-      resolve_timeout: 5m
-      smtp_smarthost: localhost
-      smtp_from: alerts@localhost
-      smtp_auth_username: admin
-      smtp_auth_password: password
-    route:
-      group_by: ['alertname']
-      group_wait: 60s
-      group_interval: 60s
-      repeat_interval: 1h
-      receiver: 'sysadmins'
-    receivers:
-    - name: 'sysadmins'
-      email_configs:
-      - to: sysadmin@localhost
-    inhibit_rules:
-      - source_match:
-          severity: 'critical'
-        target_match:
-          severity: 'warning'
-        equal: ['alertname']</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="deploy-grafana-kube">Deploying Grafana</h5>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>You must have already installed Prometheus and <code>kube-state-metrics</code>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Replace the namespace with the namespace {ProcuctName} is currently deployed to:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/_my-namespace_/' install/components/grafana/*.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the Grafana deployment:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f ./install/components/grafana</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect4">
-<h5 id="restart-component-kube">Restarting a component</h5>
-<div class="ulist">
-<div class="title">Procedure</div>
-<ul>
-<li>
-<p>Delete the component&#8217;s pod:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl delete pod -l name=<em>component</em></pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The component will be automatically restarted in a new pod.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="get-logs-broker-kube">Viewing router logs</h5>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>List all router pods and choose the pod for the relevant address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get pods -l name=qdrouterd -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Display the logs for the pod:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl logs <em>pod</em> -c router</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect4">
-<h5 id="get-logs-router-kube">Viewing broker logs</h5>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>List all broker pods and choose the pod for the relevant address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get pods -l name=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Display the logs for the pod:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl logs <em>pod</em></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="using-qdstat-messaging">3.4.3. Using qdstat</h4>
-<div class="paragraph">
-<p>You can use <code>qdstat</code> to monitor the EnMasse service.</p>
-</div>
-<div class="sect4">
-<h5 id="view-connections-qdstat-messaging">Viewing router connections using qdstat</h5>
-<div class="paragraph">
-<p>You can view the router connections using <code>qdstat</code>.</p>
-</div>
-<div class="ulist">
-<div class="title">Procedure</div>
-<ul>
-<li>
-<p>On the command line, run the following command:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">qdstat -c
-
-Connections
-  id   host                 container                             role    dir  security                              authentication                tenant
-  =========================================================================================================================================================
-  3    172.17.0.9:34998     admin-78794c68c8-9jdd6                normal  in   TLSv1.2(ECDHE-RSA-AES128-GCM-SHA256)  CN=admin,O=io.enmasse(x.509)
-  12   172.30.188.174:5671  27803a14-42d2-6148-9491-a6c1e69e875a  normal  out  TLSv1.2(ECDHE-RSA-AES128-GCM-SHA256)  x.509
-  567  127.0.0.1:43546      b240c652-82df-48dd-b54e-3b8bbaef16c6  normal  in   no-security                           PLAIN</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="view-router-addresses-qdstat-messaging">Viewing router addresses using qdstat</h5>
-<div class="paragraph">
-<p>You can view the router addresses using <code>qdstat</code>.</p>
-</div>
-<div class="ulist">
-<div class="title">Procedure</div>
-<ul>
-<li>
-<p>On the command line, run the following command:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">qdstat -a
-
-Router Addresses
-  class     addr                   phs  distrib       in-proc  local  remote  cntnr  in     out    thru  to-proc  from-proc
-  ===========================================================================================================================
-  local     $_management_internal       closest       1        0      0       0      0      0      0     588      588
-  link-in   $lwt                        linkBalanced  0        0      0       0      0      0      0     0        0
-  link-out  $lwt                        linkBalanced  0        0      0       0      0      0      0     0        0
-  mobile    $management            0    closest       1        0      0       0      601    0      0     601      0
-  local     $management                 closest       1        0      0       0      2,925  0      0     2,925    0
-  local     qdhello                     flood         1        0      0       0      0      0      0     0        5,856
-  local     qdrouter                    flood         1        0      0       0      0      0      0     0        0
-  topo      qdrouter                    flood         1        0      0       0      0      0      0     0        196
-  local     qdrouter.ma                 multicast     1        0      0       0      0      0      0     0        0
-  topo      qdrouter.ma                 multicast     1        0      0       0      0      0      0     0        0
-  local     temp.VTXOKyyWsq7OEei        balanced      0        1      0       0      0      0      0     0        0
-  local     temp.k2RGQNPe6sDMvz4        balanced      0        1      0       0      0      3,511  0     0        3,511
-  local     temp.xg+y8I_Tr4Y94LA        balanced      0        1      0       0      0      5      0     0        5</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="view-router-links-qdstat-messaging">Viewing router links using qdstat</h5>
-<div class="paragraph">
-<p>You can view the router links using <code>qdstat</code>.</p>
-</div>
-<div class="ulist">
-<div class="title">Procedure</div>
-<ul>
-<li>
-<p>On the command line, run the following command:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">qdstat -l
-
-Router Links
-  type      dir  conn id  id  peer  class   addr                  phs  cap  undel  unsett  del   presett  psdrop  acc   rej  rel  mod  admin    oper
-  ====================================================================================================================================================
-  endpoint  in   3        8                                            250  0      0       3829  0        0       3829  0    0    0    enabled  up
-  endpoint  out  3        9         local   temp.k2RGQNPe6sDMvz4       250  0      0       3829  3829     0       0     0    0    0    enabled  up
-  endpoint  in   12       10                                           250  0      0       5     0        0       5     0    0    0    enabled  up
-  endpoint  out  12       11        local   temp.xg+y8I_Tr4Y94LA       250  0      0       5     5        0       0     0    0    0    enabled  up
-  endpoint  in   645      26        mobile  $management           0    50   0      0       1     0        0       1     0    0    0    enabled  up
-  endpoint  out  645      27        local   temp.0BrHJ1O+fi6whyg       50   0      0       0     0        0       0     0    0    0    enabled  up</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="view-link-routes-qdstat-messaging">Viewing link routes using qdstat</h5>
-<div class="paragraph">
-<p>You can view the link routes using <code>qdstat</code>.</p>
-</div>
-<div class="ulist">
-<div class="title">Procedure</div>
-<ul>
-<li>
-<p>On the command line, run the following command:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">qdstat --linkroutes
-
-Link Routes
-  address  dir  distrib       status
-  ======================================
-  $lwt     in   linkBalanced  inactive
-  $lwt     out  linkBalanced  inactive</pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="tenant_guide">4. Tenant Guide</h2>
+<h2 id="tenant-guide-messaging">4. Tenant guide</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The tenant guide provides resources on how to manage address spaces, addresses,and users as a
+<p>The tenant guide provides resources on how to manage address spaces, addresses, and users as a
 messaging tenant.</p>
 </div>
 <div class="sect2">
@@ -3756,13 +2689,25 @@ messaging tenant.</p>
 <div class="sect4">
 <h5 id="con-standard-queue-messaging">Queue</h5>
 <div class="paragraph">
-<p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases where you want to decouple the producer and consumer. A queue can be sharded across multiple storage units; however, message order is no longer guaranteed.</p>
+<p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases where you want to decouple the producer and consumer. A queue can be sharded across multiple storage units. Message ordering might be lost for queues in the standard address space.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="con-standard-topic-messaging">Topic</h5>
 <div class="paragraph">
 <p>The topic address type supports the publish-subscribe messaging pattern where there are 1..N producers and 1..M consumers. Each message published to a topic address is forwarded to all subscribers for that address. A subscriber can also be durable, in which case messages are kept until the subscriber has acknowledged them.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If you create a subscription on a topic, any senders to that topic must specify the <code>topic</code> capability.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect5">
 <h6 id="hierarchical_topics_and_wildcards">Hierarchical topics and wildcards</h6>
@@ -3850,8 +2795,8 @@ transactions, message groups, and selectors on queues and topics.</p>
 <div class="paragraph">
 <p>The queue address type is a store-and-forward queue. This address type is appropriate for
 implementing a distributed work queue, handling traffic bursts, and other use cases where you want
-to decouple the producer and consumer. A queue in the brokered address spaces supports selectors,
-message groups, transactions, and other JMS features.</p>
+to decouple the producer and consumer. A queue in the brokered address space supports selectors,
+message groups, transactions, and other JMS features. Message order can be lost with released messages.</p>
 </div>
 </div>
 <div class="sect4">
@@ -3895,11 +2840,9 @@ message groups, transactions, and other JMS features.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="managing-address-spaces-messaging-okd">4.5. Managing address spaces on OpenShift</h3>
+<h3 id="managing-address-spaces-messaging">4.5. Managing address spaces</h3>
 <div class="paragraph">
-<p>EnMasse is configured to support managing address spaces using the
-Kubernetes and
-OpenShift command-line tools.</p>
+<p>EnMasse is configured to support managing address spaces using the OpenShift command-line tools.</p>
 </div>
 <div class="sect3">
 <h4 id="minimal_example">4.5.1. Minimal example</h4>
@@ -3907,7 +2850,6 @@ OpenShift command-line tools.</p>
 <p>The minimal example shows the smallest set of options needed to create an <code>AddressSpace</code>.</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="resources/address-space-example1.yaml">address-space-example1.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: AddressSpace
@@ -3935,7 +2877,6 @@ spec:
 <p>The advanced example show how you can configure the authentication service and endpoints of an <code>AddressSpace</code>.</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="resources/address-space-example2.yaml">address-space-example2.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: AddressSpace
@@ -4008,7 +2949,6 @@ its state and endpoints. The following output is an example of the output you ca
 <code>oc get addressspace myspace -o yaml</code>:</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="resources/address-space-output-example1.yaml">address-space-output-example1.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: AddressSpace
@@ -4062,7 +3002,7 @@ status:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-space-cli-messaging-okd">4.5.4. Creating address spaces using the command line</h4>
+<h4 id="create-address-space-cli-messaging">4.5.4. Creating address spaces using the command line</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -4085,7 +3025,6 @@ status:
 <li>
 <p>Create an address space definition:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/standard-address-space.yaml">standard-address-space.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: AddressSpace
@@ -4120,7 +3059,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="retrieving-address-space-information-messaging-okd">4.5.5. Example commands for retrieving address space information</h4>
+<h4 id="retrieving-address-space-information-messaging">4.5.5. Example commands for retrieving address space information</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4143,7 +3082,7 @@ spec:
 <p>Retrieving the base64-encoded PEM certificate for the messaging endpoint:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert</pre>
+<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert}</pre>
 </div>
 </div>
 </li>
@@ -4151,7 +3090,7 @@ spec:
 <p>Retrieving the host name for the messaging endpoint:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost</pre>
+<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</pre>
 </div>
 </div>
 </li>
@@ -4160,263 +3099,13 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="managing-address-spaces-messaging-kube">4.6. Managing address spaces on Kubernetes</h3>
-<div class="paragraph">
-<p>EnMasse is configured to support managing address spaces using the
-Kubernetes and
-OpenShift command-line tools.</p>
-</div>
-<div class="sect3">
-<h4 id="minimal_example_2">4.6.1. Minimal example</h4>
-<div class="paragraph">
-<p>The minimal example shows the smallest set of options needed to create an <code>AddressSpace</code>.</p>
-</div>
-<div class="listingblock">
-<div class="title"><a href="resources/address-space-example1.yaml">address-space-example1.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
-kind: AddressSpace
-metadata:
-  name: myspace
-spec:
-  type: standard <b class="conum">(1)</b>
-  plan: standard-unlimited <b class="conum">(2)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
-</li>
-<li>
-<p>The address space plan depends on the address space type and what has been configured by the EnMasse admin.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="advanced_example_2">4.6.2. Advanced example</h4>
-<div class="paragraph">
-<p>The advanced example show how you can configure the authentication service and endpoints of an <code>AddressSpace</code>.</p>
-</div>
-<div class="listingblock">
-<div class="title"><a href="resources/address-space-example2.yaml">address-space-example2.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
-kind: AddressSpace
-metadata:
-  name: myspace
-spec:
-  type: standard <b class="conum">(1)</b>
-  plan: standard-unlimited <b class="conum">(2)</b>
-  authenticationService:
-    type: standard <b class="conum">(3)</b>
-  endpoints: <b class="conum">(4)</b>
-    - name: messaging
-      service: messaging
-      expose: <b class="conum">(5)</b>
-        type: route
-        routeHost: messaging.example.com
-        routeTlsTermination: passthrough
-        routeServicePort: amqps
-      cert: <b class="conum">(6)</b>
-        provider: certBundle
-        tlsKey: ZXhhbXBsZSAtbgo=
-        tlsCert: ZXhhbXBsZSAtbgo=
-    - name: mqtt
-      service: mqtt
-      expose:
-        type: loadbalancer
-        loadBalancerPorts:
-        - mqtt
-        - mqtts
-      cert:
-        provider: selfsigned
-    - name: console
-      service: console
-      expose:
-        type: route
-        routeTlsTermination: reencrypt
-        routeServicePort: https
-      cert:
-        provider: openshift</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
-</li>
-<li>
-<p>The address space plan depends on the address space type and what has been configured by the EnMasse admin.</p>
-</li>
-<li>
-<p>The authentication service type can be <code>none</code>, <code>standard</code> or <code>external</code>. External requires an additional field, <code>details</code>, including <code>host</code> and <code>port</code> information.</p>
-</li>
-<li>
-<p>The endpoints that must be configured for the <code>AddressSpace</code>.  Endpoints can specity either <code>messaging</code>, <code>console</code> or <code>mqtt</code> services. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
-</li>
-<li>
-<p>Expose the configuration of an endpoint. Endpoints can be kept internal to the cluster, or exposed using an OpenShift route or a load-balancer service.</p>
-</li>
-<li>
-<p>The certificate configuration can be used to specify how the endpoint certificate is provided.  The provider can be <code>selfsigned</code> (default), <code>wildcard</code> (requires it to be enabled by the EnMasse admin), <code>openshift</code> (signed by the OpenShift cluster CA), or <code>certBundle</code> (base64-encoded PEM key and certificate).</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="example_address_space_status_output_2">4.6.3. Example address space status output</h4>
-<div class="paragraph">
-<p>The <code>AddressSpace</code> resource contains a <code>status</code> field that can be used to retrieve information about
-its state and endpoints. The following output is an example of the output you can get from running
-<code>oc get addressspace myspace -o yaml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="title"><a href="resources/address-space-output-example1.yaml">address-space-output-example1.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
-kind: AddressSpace
-metadata:
-  name: myspace
-spec:
-  ...
-status:
-  isReady: false <b class="conum">(1)</b>
-  messages:
-    - "One or more deployments are not ready: "
-  endpointStatuses: <b class="conum">(2)</b>
-    - name: messaging
-      cert: aGVsbG8= <b class="conum">(3)</b>
-      serviceHost: messaging-123.enmasse-infra.svc <b class="conum">(4)</b>
-      servicePorts: <b class="conum">(5)</b>
-        - name: amqp
-          port: 5672
-        - name: amqps
-          port: 5671
-      externalHost: messaging.example.com <b class="conum">(6)</b>
-      externalPorts: <b class="conum">(7)</b>
-        - name: amqps
-          port: 443</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>The <code>status.isReady</code> field can be either <code>true</code> or <code>false</code>.</p>
-</li>
-<li>
-<p>The <code>status.endpointStatuses</code> field provides information about available endpoints for this address space.</p>
-</li>
-<li>
-<p>The <code>cert</code> field contains the base64-encoded certificate for a given endpoint.</p>
-</li>
-<li>
-<p>The <code>serviceHost</code> field contains the cluster-internal host name for a given endpoint.</p>
-</li>
-<li>
-<p>The <code>servicePorts</code> field contains the available ports for the cluster-internal host.</p>
-</li>
-<li>
-<p>The <code>externalHost</code> field contains the external host name for a given endpoint.</p>
-</li>
-<li>
-<p>The <code>externalPorts</code> field contains the available ports for the external host.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="create-address-space-cli-messaging-kube">4.6.4. Creating address spaces using the command line</h4>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create an address space definition:</p>
-<div class="listingblock">
-<div class="title"><a href="resources/standard-address-space.yaml">standard-address-space.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
-kind: AddressSpace
-metadata:
-  name: myspace
-spec:
-  type: standard
-  plan: standard-unlimited</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create -f standard-address-space.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Check the status of the address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.isReady}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The address space is ready for use when the above command outputs <code>true</code>.</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="retrieving-address-space-information-messaging-kube">4.6.5. Example commands for retrieving address space information</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Retrieving the EnMasse Console host name:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Retrieving the status of an address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.isReady}</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Retrieving the base64-encoded PEM certificate for the messaging endpoint:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Retrieving the host name for the messaging endpoint:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="managing-addresses-messaging-okd">4.7. Managing addresses on OpenShift</h3>
+<h3 id="managing-addresses-messaging">4.6. Managing addresses</h3>
 <div class="paragraph">
 <p>EnMasse is configured to support managing address using the OpenShift command-line tools and the EnMasse Console.</p>
 </div>
 <div class="sect3">
-<h4 id="example">4.7.1. Example</h4>
+<h4 id="example">4.6.1. Example</h4>
 <div class="listingblock">
-<div class="title"><a href="resources/address-example1.yaml">address-example1.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: Address
@@ -4446,14 +3135,13 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-cli-messaging-okd">4.7.2. Creating addresses using the command line</h4>
+<h4 id="create-address-cli-messaging">4.6.2. Creating addresses using the command line</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p>Create an address definition:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/standard-small-queue.yaml">standard-small-queue.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
 kind: Address
@@ -4498,7 +3186,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-console-messaging-okd">4.7.3. Creating addresses using the EnMasse Console</h4>
+<h4 id="create-address-console-messaging">4.6.3. Creating addresses using the EnMasse Console</h4>
 <div class="paragraph">
 <p>You can create new addresses using the EnMasse Console. The type of addresses that you can create are determined by the type of address space.</p>
 </div>
@@ -4506,7 +3194,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have created an address space. For more information see <a href="#create-address-space-cli-messaging-okd">Creating address spaces using the command line</a>.</p>
+<p>You must have created an address space. For more information see <a href="#create-address-space-cli-messaging">Creating address spaces using the command line</a>.</p>
 </li>
 </ul>
 </div>
@@ -4536,139 +3224,12 @@ Prefixing the name with the address space name is required to ensure addresses f
 </div>
 </div>
 <div class="sect2">
-<h3 id="managing-addresses-messaging-kube">4.8. Managing addresses on Kubernetes</h3>
-<div class="paragraph">
-<p>EnMasse is configured to support managing address using the Kubernetes command-line tools and the EnMasse Console.</p>
-</div>
-<div class="sect3">
-<h4 id="example_2">4.8.1. Example</h4>
-<div class="listingblock">
-<div class="title"><a href="resources/address-example1.yaml">address-example1.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
-kind: Address
-metadata:
-    name: myspace.myqueue <b class="conum">(1)</b>
-spec:
-    address: myqueue <b class="conum">(2)</b>
-    type: queue <b class="conum">(3)</b>
-    plan: standard-small-queue <b class="conum">(4)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>The address name must be prefixed with the address space name and a dot. Address names can only include alphanumeric characters.</p>
-</li>
-<li>
-<p>The address is the messaging address this address resource represents.</p>
-</li>
-<li>
-<p>The address type dictates the semantics of this address.</p>
-</li>
-<li>
-<p>The address plan describes the resource usage for the address.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="create-address-cli-messaging-kube">4.8.2. Creating addresses using the command line</h4>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create an address definition:</p>
-<div class="listingblock">
-<div class="title"><a href="resources/standard-small-queue.yaml">standard-small-queue.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
-kind: Address
-metadata:
-    name: myspace.myqueue
-spec:
-    address: myqueue
-    type: queue
-    plan: standard-small-queue</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-Prefixing the name with the address space name is required to ensure addresses from different address spaces do not collide.
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Create the address:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl create -f standard-small-queue.yaml</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>List the addresses:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addresses -o yaml</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="create-address-console-messaging-kube">4.8.3. Creating addresses using the EnMasse Console</h4>
-<div class="paragraph">
-<p>You can create new addresses using the EnMasse Console. The type of addresses that you can create are determined by the type of address space.</p>
-</div>
+<h3 id="logging-into-console-messaging">4.7. Accessing the EnMasse Console</h3>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have created an address space. For more information see <a href="#create-address-space-cli-messaging-kube">Creating address spaces using the command line</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in to the EnMasse Console. For more information, see <a href="#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
-</li>
-<li>
-<p>Click <strong>New</strong>. The Create new address window opens.</p>
-</li>
-<li>
-<p>Type a name and select the address type. If selecting <strong>subscription</strong>, from the <strong>Topic</strong> list select the topic name to which you want to create a subscription.</p>
-</li>
-<li>
-<p>Click <strong>Next</strong>.</p>
-</li>
-<li>
-<p>Select a plan and click <strong>Next</strong>.</p>
-</li>
-<li>
-<p>Click <strong>Create</strong>. Your address is displayed in the EnMasse Console.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="logging-into-console-messaging">4.9. Accessing the EnMasse Console</h3>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>You must have obtained the host name for the EnMasse Console. For more information about how to obtain the host name, see the first step in <a href="#retrieving-address-space-information-messaging-okd">Example commands for retrieving address space information</a>.</p>
+<p>You must have obtained the host name for the EnMasse Console. For more information about how to obtain the host name, see the first step in <a href="#retrieving-address-space-information-messaging">Example commands for retrieving address space information</a>.</p>
 </li>
 </ul>
 </div>
@@ -4685,7 +3246,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 </div>
 </div>
 <div class="sect2">
-<h3 id="ref-console-address-filtering-messaging">4.10. Using the EnMasse Console address filtering</h3>
+<h3 id="ref-console-address-filtering-messaging">4.8. Using the EnMasse Console address filtering</h3>
 <div class="paragraph">
 <p>The address name filtering feature in the EnMasse Console uses regular expressions. Also, filters are cumulative.</p>
 </div>
@@ -4752,18 +3313,17 @@ Prefixing the name with the address space name is required to ensure addresses f
 </table>
 </div>
 <div class="sect2">
-<h3 id="con-user-model-messaging">4.11. User model</h3>
+<h3 id="con-user-model-messaging">4.9. User model</h3>
 <div class="paragraph">
 <p>You can create users to access messaging clients and the EnMasse Console through user definition files, which specify the authentication type and authorization policies.</p>
 </div>
 <div class="paragraph">
-<p>Users are configured as <code>MessagingUser</code> resources. Users can only be created, deleted, read, updated and listed.</p>
+<p>Users are configured as <code>MessagingUser</code> resources. Users can only be created, deleted, read, updated, and listed.</p>
 </div>
 <div class="paragraph">
 <p>The following example shows the <code>user-example1.yaml</code> file:</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="resources/user-example1.yaml">user-example1.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: user.enmasse.io/v1alpha1
 kind: MessagingUser
@@ -4805,7 +3365,7 @@ spec:
 <code>spec.authorization</code> defines the authorization policies for that user.</p>
 </div>
 <div class="sect3">
-<h4 id="authentication">4.11.1. Authentication</h4>
+<h4 id="authentication">4.9.1. Authentication</h4>
 <div class="paragraph">
 <p>The supported values for the authentication type are <code>password</code> and <code>federated</code>.</p>
 </div>
@@ -4849,7 +3409,7 @@ identity provider.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="authorization">4.11.2. Authorization</h4>
+<h4 id="authorization">4.9.2. Authorization</h4>
 <div class="paragraph">
 <p>In addition, authorization policies can be defined using operations and addresses. Valid operations
 are <code>send</code>, <code>recv</code>, <code>view</code>, and <code>manage</code>. If addresses are not specified, operations will be applied to all
@@ -4866,7 +3426,7 @@ addresses.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="managing-users-managing-users-oc">4.12. Managing users on OpenShift</h3>
+<h3 id="managing-users-messaging">4.10. Managing users</h3>
 <div class="paragraph">
 <p>EnMasse user management is only supported when using the <code>standard</code> authentication service. On OpenShift, users can
 be managed using the OpenShift command-line tools.</p>
@@ -4880,7 +3440,7 @@ be managed using the OpenShift command-line tools.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="proc-creating-users-cli-managing-users-oc">4.12.1. Creating users using the command line</h4>
+<h4 id="proc-creating-users-cli-messaging">4.10.1. Creating users using the command line</h4>
 <div class="paragraph">
 <p>In EnMasse users can be created using standard command-line tools.</p>
 </div>
@@ -4898,7 +3458,6 @@ be managed using the OpenShift command-line tools.</p>
 <li>
 <p>Save the user definition to a file:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/user-example1.yaml">user-example1.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: user.enmasse.io/v1alpha1
 kind: MessagingUser
@@ -4925,6 +3484,14 @@ spec:
 </div>
 </div>
 </li>
+<li>
+<p>Confirm that the user was created:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get messagingusers</pre>
+</div>
+</div>
+</li>
 </ol>
 </div>
 <div class="ulist">
@@ -4937,7 +3504,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-deleting-users-cli-managing-users-oc">4.12.2. Deleting users using the command line</h4>
+<h4 id="proc-deleting-users-cli-messaging">4.10.2. Deleting users using the command line</h4>
 <div class="paragraph">
 <p>Users can be deleted using standard command-line tools.</p>
 </div>
@@ -4983,7 +3550,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-managing-user-permissions-cli-managing-users-oc">4.12.3. Managing user permissions using the command line</h4>
+<h4 id="proc-managing-user-permissions-cli-messaging">4.10.3. Managing user permissions using the command line</h4>
 <div class="paragraph">
 <p>You can edit the permissions for an existing user using the command line.</p>
 </div>
@@ -4991,7 +3558,7 @@ spec:
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created a user. For more information see <a href="#proc-creating-users-cli-managing-users-oc">Creating users using the command line</a>.</p>
+<p>You must have already created a user. For more information see <a href="#proc-creating-users-cli-messaging">Creating users using the command line</a>.</p>
 </li>
 </ul>
 </div>
@@ -5033,174 +3600,7 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="managing-users-kube-managing-users-kube">4.13. Managing users on Kubernetes</h3>
-<div class="paragraph">
-<p>EnMasse user management is only supported when using the <code>standard</code> authentication service. On Kubernetes, users can
-be managed using a Kubernetes native REST API and custom resources using the command-line tools.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>You must have already created an <a href="#con-address-space-messaging">address space</a>.</p>
-</li>
-</ul>
-</div>
-<div class="sect3">
-<h4 id="proc-creating-users-cli-managing-users-kube">4.13.1. Creating users using the command line</h4>
-<div class="paragraph">
-<p>In EnMasse users can be created using standard command-line tools.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>You must have already created an <a href="#con-address-space-messaging">address space</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Save the user definition to a file:</p>
-<div class="listingblock">
-<div class="title"><a href="resources/user-example1.yaml">user-example1.yaml</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: user.enmasse.io/v1alpha1
-kind: MessagingUser
-metadata:
-  name: myspace.user1
-spec:
-  username: user1
-  authentication:
-    type: password
-    password: cGFzc3dvcmQ= # Base64 encoded
-  authorization:
-    - addresses: ["myqueue", "queue1", "queue2", "topic*"]
-      operations: ["send", "recv"]
-    - addresses: ["anycast1"]
-      operations: ["send"]</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the user and associated user permissions:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create -f <em>user-example1.yaml</em></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="ulist">
-<div class="title">Additional resources</div>
-<ul>
-<li>
-<p><a href="#_overview">Rest API Reference</a></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="proc-deleting-users-cli-managing-users-kube">4.13.2. Deleting users using the command line</h4>
-<div class="paragraph">
-<p>Users can be deleted using standard command-line tools.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>An address space must have been created.</p>
-</li>
-<li>
-<p>A user must have been created.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>List the current users:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get messagingusers</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Delete the desired user:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl delete messaginguser <em>myspace.user1</em></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="ulist">
-<div class="title">Additional resources</div>
-<ul>
-<li>
-<p><a href="#_overview">Rest API Reference</a></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="proc-managing-user-permissions-cli-managing-users-kube">4.13.3. Managing user permissions using the command line</h4>
-<div class="paragraph">
-<p>You can edit the permissions for an existing user using the command line.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>You must have already created a user. For more information see <a href="#proc-creating-users-cli-managing-users-oc">Creating users using the command line</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Retrieve the user whose permissions you want to edit:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get messaginguser <em>myspace.user1</em> -o yaml > <em>user1-example.yaml</em></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Make the desired permissions change and save the file.</p>
-</li>
-<li>
-<p>From the command line, run the following command to apply the change:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f <em>user-example1.yaml</em></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The new user permissions are applied.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="ulist">
-<div class="title">Additional resources</div>
-<ul>
-<li>
-<p><a href="#enmasse_rest_api">EnMasse REST API</a></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="assembly-connecting-applications-messaging">4.14. Connecting applications to EnMasse</h3>
+<h3 id="assembly-connecting-applications-messaging">4.11. Connecting applications to EnMasse</h3>
 <div class="paragraph">
 <p>You can connect your application to EnMasse using one of the following client examples.</p>
 </div>
@@ -5224,19 +3624,15 @@ spec:
 </ul>
 </div>
 <div class="paragraph">
-<p>To connect to the messaging service from outside the OpenShift
-or Kubernetes
-cluster, TLS must be used with SNI set to specify the fully qualified host name for the address space. The port used is 443.</p>
+<p>To connect to the messaging service from outside the OpenShift cluster, TLS must be used with SNI set to specify the fully qualified host name for the address space. The port used is 443.</p>
 </div>
 <div class="paragraph">
 <p>The messaging protocols supported depends on the type of address space used. For more information, see the  <a href="#con-address-space-messaging">address space</a> section.</p>
 </div>
 <div class="sect3">
-<h4 id="client-examples-messaging">4.14.1. Client examples</h4>
-
-</div>
-<div class="sect3">
-<h4 id="ref-python-example-messaging">4.14.2. Apache Qpid Proton Python example</h4>
+<h4 id="client-examples-messaging">4.11.1. Client examples</h4>
+<div class="sect4">
+<h5 id="ref-python-example-messaging">Apache Qpid Proton Python example</h5>
 <div class="paragraph">
 <p>You can use the following Apache Qpid Proton Python example to connect your application to EnMasse. This example assumes you have created an address of type <code>queue</code> named <code>myqueue</code>.</p>
 </div>
@@ -5267,6 +3663,7 @@ class HelloWorld(MessagingHandler):
         event.connection.close()
 
 Container(HelloWorld("amqps://<em>messaging-route-hostname</em>:443", "myqueue")).run()</code></pre>
+</div>
 </div>
 </div>
 <div class="sect4">
@@ -5517,7 +3914,7 @@ namespace Test
 </div>
 </div>
 <div class="sect1">
-<h2 id="rest_api_reference">Appendix A: REST API Reference</h2>
+<h2 id="rest_api_reference">Appendix A: REST API reference</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="enmasse_rest_api">A.1. EnMasse REST API</h3>
@@ -9569,15 +7966,6 @@ namespace Test
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>min</strong><br>
-<em>required</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>number</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>name</strong><br>
 <em>required</em></p>
 </div></div></td>
@@ -9763,11 +8151,55 @@ namespace Test
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>networkPolicy</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspec_networkpolicy">networkPolicy</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>version</strong><br>
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspec_networkpolicy" class="paragraph">
+<p><strong>networkPolicy</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>egress</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_k8s_api_networking_v1_networkpolicyegressrule">io.k8s.api.networking.v1.NetworkPolicyEgressRule</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>ingress</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_k8s_api_networking_v1_networkpolicyingressrule">io.k8s.api.networking.v1.NetworkPolicyIngressRule</a> &gt; array</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -10026,6 +8458,15 @@ namespace Test
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>networkPolicy</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspec_networkpolicy">networkPolicy</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>router</strong><br>
 <em>optional</em></p>
 </div></div></td>
@@ -10040,6 +8481,41 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_admin_v1alpha1_standardinfraconfigspec_networkpolicy" class="paragraph">
+<p><strong>networkPolicy</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>egress</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_k8s_api_networking_v1_networkpolicyegressrule">io.k8s.api.networking.v1.NetworkPolicyEgressRule</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>ingress</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_k8s_api_networking_v1_networkpolicyingressrule">io.k8s.api.networking.v1.NetworkPolicyIngressRule</a> &gt; array</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -10187,7 +8663,16 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
+<p>integer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>minReplicas</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
 </div></div></td>
 </tr>
 <tr>
@@ -11139,6 +9624,367 @@ namespace Test
 <p><em>Type</em> : enum (queue, topic, anycast, multicast)</p>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_io_k8s_api_networking_v1_ipblock">io.k8s.api.networking.v1.IPBlock</h5>
+<div class="paragraph">
+<p>IPBlock describes a particular CIDR (Ex. "192.168.1.1/24") that is allowed to the pods matched by a NetworkPolicySpec&#8217;s podSelector. The except entry describes CIDRs that should not be included within this rule.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>cidr</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>CIDR is a string representing the IP Block Valid examples are "192.168.1.1/24"</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>except</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Except is a slice of CIDRs that should not be included within an IP Block Valid examples are "192.168.1.1/24" Except values will be rejected if they are outside the CIDR range</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; string &gt; array</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_k8s_api_networking_v1_networkpolicyegressrule">io.k8s.api.networking.v1.NetworkPolicyEgressRule</h5>
+<div class="paragraph">
+<p>NetworkPolicyEgressRule describes a particular set of traffic that is allowed out of pods matched by a NetworkPolicySpec&#8217;s podSelector. The traffic must match both ports and to. This type is beta-level in 1.8</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>ports</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>List of destination ports for outgoing traffic. Each item in this list is combined using a logical OR. If this field is empty or missing, this rule matches all ports (traffic not restricted by port). If this field is present and contains at least one item, then this rule allows traffic only if the traffic matches at least one port in the list.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_k8s_api_networking_v1_networkpolicyport">io.k8s.api.networking.v1.NetworkPolicyPort</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>to</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>List of destinations for outgoing traffic of pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all destinations (traffic not restricted by destination). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the to list.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_k8s_api_networking_v1_networkpolicypeer">io.k8s.api.networking.v1.NetworkPolicyPeer</a> &gt; array</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_k8s_api_networking_v1_networkpolicyingressrule">io.k8s.api.networking.v1.NetworkPolicyIngressRule</h5>
+<div class="paragraph">
+<p>NetworkPolicyIngressRule describes a particular set of traffic that is allowed to the pods matched by a NetworkPolicySpec&#8217;s podSelector. The traffic must match both ports and from.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>from</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>List of sources which should be able to access the pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all sources (traffic not restricted by source). If this field is present and contains at least on item, this rule allows traffic only if the traffic matches at least one item in the from list.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_k8s_api_networking_v1_networkpolicypeer">io.k8s.api.networking.v1.NetworkPolicyPeer</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>ports</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>List of ports which should be made accessible on the pods selected for this rule. Each item in this list is combined using a logical OR. If this field is empty or missing, this rule matches all ports (traffic not restricted by port). If this field is present and contains at least one item, then this rule allows traffic only if the traffic matches at least one port in the list.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_k8s_api_networking_v1_networkpolicyport">io.k8s.api.networking.v1.NetworkPolicyPort</a> &gt; array</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_k8s_api_networking_v1_networkpolicypeer">io.k8s.api.networking.v1.NetworkPolicyPeer</h5>
+<div class="paragraph">
+<p>NetworkPolicyPeer describes a peer to allow traffic from. Only certain combinations of fields are allowed</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>ipBlock</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_k8s_api_networking_v1_ipblock">io.k8s.api.networking.v1.IPBlock</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>namespaceSelector</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Selects Namespaces using cluster-scoped labels. This field follows standard label selector semantics; if present but empty, it selects all namespaces.</p>
+</div>
+<div class="paragraph">
+<p>If PodSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects all Pods in the Namespaces selected by NamespaceSelector.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_k8s_apimachinery_pkg_apis_meta_v1_labelselector">io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelector</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>podSelector</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>This is a label selector which selects Pods. This field follows standard label selector semantics; if present but empty, it selects all pods.</p>
+</div>
+<div class="paragraph">
+<p>If NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the Pods matching PodSelector in the policy&#8217;s own Namespace.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_k8s_apimachinery_pkg_apis_meta_v1_labelselector">io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelector</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_k8s_api_networking_v1_networkpolicyport">io.k8s.api.networking.v1.NetworkPolicyPort</h5>
+<div class="paragraph">
+<p>NetworkPolicyPort describes a port to allow traffic on</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>port</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_k8s_apimachinery_pkg_util_intstr_intorstring">io.k8s.apimachinery.pkg.util.intstr.IntOrString</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>protocol</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>The protocol (TCP or UDP) which traffic must match. If not specified, this field defaults to TCP.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_k8s_apimachinery_pkg_apis_meta_v1_labelselector">io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelector</h5>
+<div class="paragraph">
+<p>A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>matchExpressions</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>matchExpressions is a list of label selector requirements. The requirements are ANDed.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_k8s_apimachinery_pkg_apis_meta_v1_labelselectorrequirement">io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelectorRequirement</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>matchLabels</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; string, string &gt; map</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_k8s_apimachinery_pkg_apis_meta_v1_labelselectorrequirement">io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelectorRequirement</h5>
+<div class="paragraph">
+<p>A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>key</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>key is the label key that the selector applies to.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>operator</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>operator represents a key&#8217;s relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>values</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; string &gt; array</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_io_k8s_apimachinery_pkg_util_intstr_intorstring">io.k8s.apimachinery.pkg.util.intstr.IntOrString</h5>
+<div class="paragraph">
+<p>IntOrString is a type that can hold an int32 or a string. When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type. This allows you to have, for example, a JSON field that can accept a name or number.</p>
+</div>
+<div class="paragraph">
+<p><em>Type</em> : string (int-or-string)</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -11146,7 +9992,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-11-30 12:06:45 UTC
+Last updated 2018-12-06 12:07:42 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
