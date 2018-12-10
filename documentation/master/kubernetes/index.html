@@ -436,7 +436,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#overview-messaging">1. Overview</a>
+<li><a href="#enmasse-overview-messaging">1. Overview</a>
 <ul class="sectlevel2">
 <li><a href="#features">1.1. Features</a>
 <ul class="sectlevel3">
@@ -575,10 +575,10 @@ what you need to set up and manage EnMasse as a service administrator or a messa
 </div>
 </div>
 <div class="sect1">
-<h2 id="overview-messaging">1. Overview</h2>
+<h2 id="enmasse-overview-messaging">1. Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>EnMasse is an open source project for managed, self-service messaging on <a href="https://kubernetes.io">Kubernetes</a> and <a href="https://openshift.com">OpenShift</a>. EnMasse can run on your own infrastructure or in the cloud, and simplifies running a messaging infrastructure for your organization.</p>
+<p>EnMasse is an open source project for managed, self-service messaging on <a href="https://kubernetes.io" target="_blank" rel="noopener">Kubernetes</a> and <a href="https://openshift.com" target="_blank" rel="noopener">OpenShift</a>. EnMasse can run on your own infrastructure or in the cloud, and simplifies running a messaging infrastructure for your organization.</p>
 </div>
 <div class="paragraph">
 <p>The service admin can deploy and manage messaging infrastructure, while messaging tenants can request messaging resources, both using both cloud-native APIs and tools.</p>
@@ -605,7 +605,7 @@ what you need to set up and manage EnMasse as a service administrator or a messa
 <p>EnMasse can be used for many purposes, such as moving your messaging infrastructure to the cloud without depending on a specific cloud provider, building a scalable messaging backbone for IoT, or just as a cloud-ready version of a message broker.</p>
 </div>
 <div class="paragraph">
-<p>EnMasse can provision different types of messaging depending on your use case. A user can request messaging resources by creating an <a href="#con-address-space-messaging">address space</a>.</p>
+<p>EnMasse can provision different types of messaging depending on your use case. A user can request messaging resources by creating an <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">address space</a>.</p>
 </div>
 <div class="paragraph">
 <p>EnMasse currently supports a <code>standard</code> and a <code>brokered</code> address space type, each with different semantics.</p>
@@ -827,7 +827,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created an <a href="#con-address-space-messaging">address space</a>.</p>
+<p>You must have already created an <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">address space</a>.</p>
 </li>
 </ul>
 </div>
@@ -872,14 +872,6 @@ spec:
 </div>
 </li>
 </ol>
-</div>
-<div class="ulist">
-<div class="title">Additional resources</div>
-<ul>
-<li>
-<p><a href="#_overview">Rest API Reference</a></p>
-</li>
-</ul>
 </div>
 </div>
 <div class="sect2">
@@ -1322,7 +1314,7 @@ resources:
 <div class="paragraph">
 <p>The other fields are used by the EnMasse Console UI. Note the annotation <code>enmasse.io/defined-by</code>, which
 points to an infrastructure configuration that must exist when an address space using this plan is created.
-For more information on infrastructure configurations, see <a href="#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
+For more information about infrastructure configurations, see <a href="http://enmasse.io/documentation/master/kubernetes/#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1392,7 +1384,7 @@ resources:
 <p>EnMasse includes a default set of address plans that are sufficient for most use cases.</p>
 </div>
 <div class="paragraph">
-<p>In the <a href="#con-address-space-plans-messaging">Address space plans</a> section, the address space plan references two address plans: <code>small-queue</code> and <code>small-anycast</code>. These address plans are stored as custom resources and are defined as follows:</p>
+<p>In the <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a> section, the address space plan references two address plans: <code>small-queue</code> and <code>small-anycast</code>. These address plans are stored as custom resources and are defined as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1519,7 +1511,7 @@ default infrastructure configuration or create new configurations.</p>
 </div>
 <div class="paragraph">
 <p>Infrastructure configurations can be referred to from one or more address space plans. For more information
-about address space plans, see <a href="#con-address-space-plans-messaging">Address space plans</a>.</p>
+about address space plans, see <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="paragraph">
 <p>Infrastructure configuration can be managed for both <code>brokered</code> and <code>standard</code> infrastructure
@@ -1529,8 +1521,8 @@ using <code>BrokeredInfraConfig</code> and <code>StandardInfraConfig</code> reso
 <h5 id="con-brokered-infra-config-messaging">Brokered infrastructure configuration</h5>
 <div class="paragraph">
 <p><code>BrokeredInfraConfig</code> resources is used to configure infrastructure deployed by <code>brokered</code> address
-spaces. The brokered infra configuration is referenced by address space plans using a <code>enmasse.io/defined-by</code>
-annotation. For more information, see <a href="#con-address-space-plans-messaging">Address space plans</a>.</p>
+spaces. The brokered infrastructure configuration is referenced by address space plans using a <code>enmasse.io/defined-by</code>
+annotation. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1552,22 +1544,22 @@ spec:
 </div>
 <div class="paragraph">
 <p>The <code>version</code> field specifies the EnMasse version used. When upgrading, EnMasse uses
-this field whether to upgrade the infrastructure to the requested version.</p>
+this field to determine whether to upgrade the infrastructure to the requested version.</p>
 </div>
 <div class="paragraph">
 <p>The <code>admin</code> object specifies the settings you can configure for the <code>admin</code> components.</p>
 </div>
 <div class="paragraph">
 <p>The <code>broker</code> object specifies the settings you can configure for the <code>broker</code> components. Changing
-the <code>.broker.resources.storage</code> setting does not configure existing broker storage size.</p>
+the <code>.broker.resources.storage</code> setting does not configure the existing broker storage size.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="con-standard-infra-config-messaging">Standard infrastructure configuration</h5>
 <div class="paragraph">
 <p><code>StandardInfraConfig</code> resources is used to configure infrastructure deployed by <code>standard</code> address
-spaces. The standard infra configuration is referenced by address space plans using a <code>enmasse.io/defined-by</code>
-annotation. For more information, see <a href="#con-address-space-plans-messaging">Address space plans</a>.</p>
+spaces. The standard infrastructure configuration is referenced by address space plans using a <code>enmasse.io/defined-by</code>
+annotation. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1594,14 +1586,14 @@ spec:
 </div>
 <div class="paragraph">
 <p>The <code>version</code> field specifies the EnMasse version used. When upgrading, EnMasse uses
-this field whether to upgrade the infrastructure to the requested version.</p>
+this field to determine whether to upgrade the infrastructure to the requested version.</p>
 </div>
 <div class="paragraph">
 <p>The <code>admin</code> object specifies the settings you can configure for the <code>admin</code> components.</p>
 </div>
 <div class="paragraph">
 <p>The <code>broker</code> object specifies the settings you can configure for the <code>broker</code> components. Changing
-the <code>.broker.resources.storage</code> setting does not configure existing broker storage size.</p>
+the <code>.broker.resources.storage</code> setting does not configure the existing broker storage size.</p>
 </div>
 <div class="paragraph">
 <p>The <code>router</code> object specifies the settings you can configure for the <code>router</code> components.</p>
@@ -1617,7 +1609,7 @@ the <code>.broker.resources.storage</code> setting does not configure existing b
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>An infrastructure configuration change that you want to apply. For more information, see <a href="#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
+<p>An infrastructure configuration change that you want to apply. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
 </li>
 </ul>
 </div>
@@ -1689,7 +1681,7 @@ configuration of the new version will trigger the upgrade to start.</p>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>A new release of EnMasse. For more information, see <a href="#downloading-messaging">Downloading EnMasse</a>.</p>
+<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#downloading-messaging">Downloading EnMasse</a>.</p>
 </li>
 </ul>
 </div>
@@ -2160,10 +2152,10 @@ messaging tenant.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Standard</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#con-standard-address-space-messaging">Standard</a></p>
 </li>
 <li>
-<p>Brokered</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#con-brokered-address-space-messaging">Brokered</a></p>
 </li>
 </ul>
 </div>
@@ -2720,7 +2712,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have created an address space. For more information see <a href="#create-address-space-cli-messaging">Creating address spaces using the command line</a>.</p>
+<p>You must have created an address space. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#create-address-space-cli-messaging">Creating an address space</a>.</p>
 </li>
 </ul>
 </div>
@@ -2728,7 +2720,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Log in to the EnMasse Console. For more information, see <a href="#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
+<p>Log in to the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
 </li>
 <li>
 <p>Click <strong>New</strong>. The Create new address window opens.</p>
@@ -2755,7 +2747,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have obtained the host name for the EnMasse Console. For more information about how to obtain the host name, see the first step in <a href="#retrieving-address-space-information-messaging">Example commands for retrieving address space information</a>.</p>
+<p>You must have obtained the host name for the EnMasse Console. For more information about how to obtain the host name, see the first bullet point in <a href="http://enmasse.io/documentation/master/kubernetes/#retrieving-address-space-information-messaging">Example commands for retrieving address space information</a>.</p>
 </li>
 </ul>
 </div>
@@ -2941,14 +2933,6 @@ identity provider.</p>
 are <code>send</code>, <code>recv</code>, <code>view</code>, and <code>manage</code>. If addresses are not specified, operations will be applied to all
 addresses.</p>
 </div>
-<div class="ulist">
-<div class="title">Additional resources</div>
-<ul>
-<li>
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">MessagingUser definition</a></p>
-</li>
-</ul>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -2961,7 +2945,7 @@ be managed using the Kubernetes command-line tools.</p>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created an <a href="#con-address-space-messaging">address space</a>.</p>
+<p>You must have already created an <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">address space</a>.</p>
 </li>
 </ul>
 </div>
@@ -2974,7 +2958,7 @@ be managed using the Kubernetes command-line tools.</p>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created an <a href="#con-address-space-messaging">address space</a>.</p>
+<p>You must have already created an <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">address space</a>.</p>
 </li>
 </ul>
 </div>
@@ -3020,14 +3004,6 @@ spec:
 </li>
 </ol>
 </div>
-<div class="ulist">
-<div class="title">Additional resources</div>
-<ul>
-<li>
-<p><a href="#_overview">Rest API Reference</a></p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect3">
 <h4 id="proc-deleting-users-cli-messaging">4.10.2. Deleting users using the command line</h4>
@@ -3066,14 +3042,6 @@ spec:
 </li>
 </ol>
 </div>
-<div class="ulist">
-<div class="title">Additional resources</div>
-<ul>
-<li>
-<p><a href="#_overview">Rest API Reference</a></p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect3">
 <h4 id="proc-managing-user-permissions-cli-messaging">4.10.3. Managing user permissions using the command line</h4>
@@ -3084,7 +3052,7 @@ spec:
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created a user. For more information see <a href="#proc-creating-users-cli-messaging">Creating users using the command line</a>.</p>
+<p>You must have already created a user. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#proc-creating-users-cli-messaging">Creating users using the command line</a>.</p>
 </li>
 </ul>
 </div>
@@ -3115,14 +3083,6 @@ spec:
 </li>
 </ol>
 </div>
-<div class="ulist">
-<div class="title">Additional resources</div>
-<ul>
-<li>
-<p><a href="#enmasse_rest_api">EnMasse REST API</a></p>
-</li>
-</ul>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -3133,19 +3093,19 @@ spec:
 <div class="ulist">
 <ul>
 <li>
-<p><a href="#ref-python-example-messaging">Apache Qpid Proton Python</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-python-example-messaging">Apache Qpid Proton Python</a></p>
 </li>
 <li>
-<p><a href="#ref-jms-example-messaging">Apache Qpid JMS</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-jms-example-messaging">Apache Qpid JMS</a></p>
 </li>
 <li>
-<p><a href="#ref-javascript-example-messaging">Rhea JavaScript Client</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-javascript-example-messaging">Rhea JavaScript Client</a></p>
 </li>
 <li>
-<p><a href="#ref-cpp-example-messaging">Apache Qpid Proton C++</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-cpp-example-messaging">Apache Qpid Proton C++</a></p>
 </li>
 <li>
-<p><a href="#ref-dotnet-example-messaging">AMQP.Net Lite</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-dotnet-example-messaging">AMQP.Net Lite</a></p>
 </li>
 </ul>
 </div>
@@ -3153,7 +3113,7 @@ spec:
 <p>To connect to the messaging service from outside the Kubernetes cluster, TLS must be used with SNI set to specify the fully qualified host name for the address space. The port used is 443.</p>
 </div>
 <div class="paragraph">
-<p>The messaging protocols supported depends on the type of address space used. For more information, see the  <a href="#con-address-space-messaging">address space</a> section.</p>
+<p>The messaging protocols supported depends on the type of address space used. For more information about address space types, see  <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">Address space</a>.</p>
 </div>
 <div class="sect3">
 <h4 id="client-examples-messaging">4.11.1. Client examples</h4>
@@ -9518,7 +9478,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-12-06 12:07:42 UTC
+Last updated 2018-12-10 21:52:02 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
