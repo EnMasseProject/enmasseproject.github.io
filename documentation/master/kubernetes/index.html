@@ -675,6 +675,9 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 </div>
 <div class="sect2">
 <h3 id="create-address-space-cli-messaging-gs">2.3. Creating address spaces using the command line</h3>
+<div class="paragraph">
+<p>In EnMasse, you create address spaces using standard command-line tools.</p>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -708,7 +711,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>The address space is ready for use when the above command outputs <code>true</code>.</p>
+<p>The address space is ready for use when the previous command outputs <code>true</code>.</p>
 </div>
 </li>
 </ol>
@@ -716,6 +719,9 @@ spec:
 </div>
 <div class="sect2">
 <h3 id="create-address-cli-messaging-gs">2.4. Creating addresses using the command line</h3>
+<div class="paragraph">
+<p>You can create addresses using the command line.</p>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -836,7 +842,7 @@ spec:
 <p>An address named <code>myqueue</code> must be created.</p>
 </li>
 <li>
-<p>A user named <code>user1</code> with password "password" must be created.</p>
+<p>A user named <code>user1</code> with password <code>password</code> must be created.</p>
 </li>
 </ul>
 </div>
@@ -897,7 +903,7 @@ except KeyboardInterrupt: pass</code></pre>
 <p>Run the client:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">python client-example1.py -u amqps://user1:password@messaging.example1.com:443/myqueue</pre>
+<pre class="nowrap">python client-example1.py -u amqps://user1:password@<em>messaging.example1.com</em>:443/myqueue</pre>
 </div>
 </div>
 </li>
@@ -1038,11 +1044,23 @@ supporting the Kubernetes client.</p>
 <div class="sect4">
 <h5 id="deploying-auth-services-messaging">Deploying authentication services</h5>
 <div class="paragraph">
-<p>EnMasse requires at least one authentication service to be deployed. The authentication service
-can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code>external</code> (not managed by EnMasse).</p>
+<p>EnMasse requires at least one authentication service to be deployed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>none</code> (allow all),</p>
+</li>
+<li>
+<p><code>standard</code> (Keycloak), or</p>
+</li>
+<li>
+<p><code>external</code> (not managed by EnMasse).</p>
+</li>
+</ul>
 </div>
 <div class="sect5">
-<h6 id="deploying_the_none_authentication_service">Deploying the <code>none</code> authentication service</h6>
+<h6 id="proc-deploying-none-auth-service-messaging">Deploying the <code>none</code> authentication service</h6>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1075,12 +1093,12 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=none-au
 </div>
 </div>
 <div class="sect5">
-<h6 id="deploying_the_standard_authentication_service">Deploying the <code>standard</code> authentication service</h6>
+<h6 id="proc-deploying-standard-auth-service-messaging">Deploying the <code>standard</code> authentication service</h6>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>(Optional) Replace namespace if you want to deploy to something other than <code>enmasse-infra</code>:</p>
+<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/standard-authservice/*RoleBinding*.yaml</pre>
@@ -1125,7 +1143,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>(Optional) Replace namespace if you want to deploy to something other than <code>enmasse-infra</code>:</p>
+<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/address-space-controller/*.yaml</pre>
@@ -1152,7 +1170,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>(Optional) Replace namespace if you want to deploy to something other than <code>enmasse-infra</code> (and substitute <code>enmasse-infra</code> in subsequent steps):</p>
+<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/api-service/*.yaml
@@ -1467,7 +1485,7 @@ using <code>BrokeredInfraConfig</code> and <code>StandardInfraConfig</code> reso
 <div class="sect4">
 <h5 id="con-brokered-infra-config-messaging">Brokered infrastructure configuration</h5>
 <div class="paragraph">
-<p><code>BrokeredInfraConfig</code> resources is used to configure infrastructure deployed by <code>brokered</code> address
+<p><code>BrokeredInfraConfig</code> resources are used to configure infrastructure deployed by <code>brokered</code> address
 spaces. The brokered infrastructure configuration is referenced by address space plans using a <code>enmasse.io/defined-by</code>
 annotation. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
@@ -1478,7 +1496,7 @@ kind: BrokeredInfraConfig
 metadata:
   name: brokered-infra-config-example
 spec:
-  version: 0.23.0
+  version: 0.26-SNAPSHOT
   admin:
     resources:
       memory: 256Mi
@@ -1504,7 +1522,7 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 <div class="sect4">
 <h5 id="con-standard-infra-config-messaging">Standard infrastructure configuration</h5>
 <div class="paragraph">
-<p><code>StandardInfraConfig</code> resources is used to configure infrastructure deployed by <code>standard</code> address
+<p><code>StandardInfraConfig</code> resources are used to configure infrastructure deployed by <code>standard</code> address
 spaces. The standard infrastructure configuration is referenced by address space plans using a <code>enmasse.io/defined-by</code>
 annotation. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
@@ -1515,7 +1533,7 @@ kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: 0.23.0
+  version: 0.26-SNAPSHOT
   admin:
     resources:
       memory: 256Mi
@@ -1572,7 +1590,7 @@ kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: 0.23.0
+  version: 0.26-SNAPSHOT
   admin:
     resources:
       memory: 256Mi
@@ -2281,7 +2299,7 @@ can vary between EnMasse installations.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-01-14 09:20:31 UTC
+Last updated 2019-01-17 20:16:36 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
