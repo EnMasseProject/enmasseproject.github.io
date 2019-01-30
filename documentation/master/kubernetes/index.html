@@ -2562,42 +2562,56 @@ spec:
 </div>
 <div class="sect3">
 <h4 id="retrieving-address-space-information-messaging">4.1.10. Example commands for retrieving address space information</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Retrieving the EnMasse Console host name:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</pre>
+<div class="paragraph">
+<p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
 </div>
-</div>
-</li>
-<li>
-<p>Retrieving the status of an address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.isReady}</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Retrieving the base64-encoded PEM certificate for the messaging endpoint:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert}</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Retrieving the host name for the messaging endpoint:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Retrieving address space information commands table</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">To retrieve the&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">Run this command:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>EnMasse Console host name</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>status of an address space</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.isReady}</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>base64-encoded PEM certificate for the messaging endpoint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert}</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>host name for the messaging endpoint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="replace-address-space-cli-messaging">4.1.11. Replacing address spaces using the command line</h4>
@@ -2614,7 +2628,7 @@ quota. If it does not, an error is provided on the <code>AddressSpace</code> res
 <p>Update address space definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -2772,7 +2786,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Update an address definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: Address
 metadata:
     name: myspace.myqueue
@@ -2878,7 +2892,7 @@ spec:
 <p>The address name filtering feature in the EnMasse Console uses regular expressions. Also, filters are cumulative.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. EnMasse Console address name filtering behavior</caption>
+<caption class="title">Table 2. EnMasse Console address name filtering behavior</caption>
 <colgroup>
 <col style="width: 34%;">
 <col style="width: 33%;">
@@ -2950,7 +2964,7 @@ spec:
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Message statistics reference table</caption>
+<caption class="title">Table 3. Message statistics reference table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3037,7 +3051,7 @@ spec:
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Connection statistics reference table</caption>
+<caption class="title">Table 4. Connection statistics reference table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3197,8 +3211,18 @@ identity provider.</p>
 <h4 id="authorization">4.4.2. Authorization</h4>
 <div class="paragraph">
 <p>In addition, authorization policies can be defined using operations and addresses. Valid operations
-are <code>send</code>, <code>recv</code>, <code>view</code>, and <code>manage</code>. If addresses are not specified, operations will be applied to all
-addresses.</p>
+are <code>send</code>, <code>recv</code>, <code>view</code>, and <code>manage</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>manage</code> and <code>view</code> operations apply to all addresses in the address space.</p>
+</div>
+<div class="paragraph">
+<p>In the <code>standard</code> address space, the asterisk wildcard can be used at the end of an address. The address <code>top*</code>
+matches addresses <code>topic</code> and <code>topic/sub</code>.</p>
+</div>
+<div class="paragraph">
+<p>In the <code>brokered</code> address space, the plus sign and asterisk wildcards can be used at the end of an address to match a single word (plus sign) or all words (asterisk) after the forward slash delimiter. So, the address <code>topic/+</code> matches
+<code>topic/sub</code> but not <code>topic/s/sub</code>.  The address <code>topic/*</code> matches <code>topic/sub</code> and <code>topic/s/sub</code>.</p>
 </div>
 </div>
 </div>
@@ -9958,7 +9982,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-01-22 14:36:06 UTC
+Last updated 2019-01-30 09:03:02 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
