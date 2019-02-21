@@ -714,10 +714,26 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 </div>
 </li>
 <li>
-<p>Deploy using the <code>enmasse-with-standard-authservice</code> bundle:</p>
+<p>Deploy the standard authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f install/bundles/enmasse-with-standard-authservice</pre>
+<pre class="nowrap">kubectl apply -f install/components/standard-authservice</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy using the <code>enmasse</code> bundle:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/bundles/enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install example plans and infrastructure configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/components/example-plans</pre>
 </div>
 </div>
 </li>
@@ -943,7 +959,7 @@ except KeyboardInterrupt: pass</code></pre>
 <p>Retrieve the address space messaging endpoint host name:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</pre>
+<pre class="highlightjs highlight nowrap"><code>kubectl get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="messaging")].externalHost}'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -954,7 +970,7 @@ except KeyboardInterrupt: pass</code></pre>
 <p>Run the client:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">python client-example1.py -u amqps://user1:password@<em>messaging.example1.com</em>:443/myqueue</pre>
+<pre class="highlightjs highlight nowrap"><code>python client-example1.py -u amqps://user1:password@<em>messaging.example1.com</em>:443/myqueue</code></pre>
 </div>
 </div>
 </li>
@@ -1052,10 +1068,26 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 </div>
 </li>
 <li>
-<p>Deploy using the <code>enmasse-with-standard-authservice</code> bundle:</p>
+<p>Deploy the standard authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f install/bundles/enmasse-with-standard-authservice</pre>
+<pre class="nowrap">kubectl apply -f install/components/standard-authservice</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy using the <code>enmasse</code> bundle:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/bundles/enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install example plans and infrastructure configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/components/example-plans</pre>
 </div>
 </div>
 </li>
@@ -1206,6 +1238,22 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">kubectl apply -f install/components/address-space-controller</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="deploying-example-plans-messaging">Deploying the example plans and infrastructure configuration</h5>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Install the example plans:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/components/example-plans</pre>
 </div>
 </div>
 </li>
@@ -1716,7 +1764,7 @@ configuration of the new version will trigger the upgrade to start.</p>
 <p>Apply the new release bundle:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f install/bundles/enmasse-with-standard-authservice</pre>
+<pre class="nowrap">kubectl apply -f install/bundles/enmasse</pre>
 </div>
 </div>
 </li>
@@ -2040,7 +2088,7 @@ data:
 <p>List all broker pods and choose the pod for the relevant address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+<pre class="highlightjs highlight nowrap"><code>kubectl get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</code></pre>
 </div>
 </div>
 </li>
@@ -2048,7 +2096,7 @@ data:
 <p>Display the logs for the pod:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl logs <em>pod</em></pre>
+<pre class="highlightjs highlight nowrap"><code>kubectl logs <em>pod</em></code></pre>
 </div>
 </div>
 </li>
@@ -2061,14 +2109,6 @@ data:
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
-<li>
-<p>Delete the rolebinding in the <code>kube-system</code> namespace:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl delete rolebindings -l app=enmasse -n kube-system</pre>
-</div>
-</div>
-</li>
 <li>
 <p>Delete "cluster level" resources:</p>
 <div class="listingblock">
@@ -2583,7 +2623,7 @@ spec:
 <p>EnMasse Console host name</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</code></p>
+<p><code>kubectl get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="console")].externalHost}'</code></p>
 </div></div></td>
 </tr>
 <tr>
@@ -2599,7 +2639,7 @@ spec:
 <p>base64-encoded PEM certificate for the messaging endpoint</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert}</code></p>
+<p><code>kubectl get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="messaging")].cert}'</code></p>
 </div></div></td>
 </tr>
 <tr>
@@ -2607,7 +2647,7 @@ spec:
 <p>host name for the messaging endpoint</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</code></p>
+<p><code>kubectl get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="messaging")].externalHost}'</code></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -3354,7 +3394,7 @@ spec:
 <p>Retrieve the user whose permissions you want to edit:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl get messaginguser <em>myspace.user1</em> -o yaml > <em>user1-example.yaml</em></pre>
+<pre class="nowrap">kubectl get messaginguser <em>myspace.user1</em> -o yaml > <em>user-example1.yaml</em></pre>
 </div>
 </div>
 </li>
@@ -9982,7 +10022,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-01-31 22:08:51 UTC
+Last updated 2019-02-21 17:02:56 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">

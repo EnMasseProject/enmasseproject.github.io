@@ -462,9 +462,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#downloading-messaging">3.1.1. Downloading EnMasse</a></li>
 <li><a href="#installing-using-bundle-messaging">3.1.2. Installing EnMasse using a YAML bundle</a></li>
-<li><a href="#installing-using-template-messaging">3.1.3. Installing EnMasse using OpenShift template</a></li>
-<li><a href="#installing-using-ansible-messaging">3.1.4. Installing EnMasse using Ansible</a></li>
-<li><a href="#installing-using-manual-steps-messaging">3.1.5. Installing EnMasse manually</a></li>
+<li><a href="#installing-using-ansible-messaging">3.1.3. Installing EnMasse using Ansible</a></li>
+<li><a href="#installing-using-manual-steps-messaging">3.1.4. Installing EnMasse manually</a></li>
 </ul>
 </li>
 <li><a href="#configuring-messaging">3.2. Configuring EnMasse</a>
@@ -693,7 +692,7 @@ on your machine.</p>
 <p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/bundles/enmasse-with-standard-authservice/*.yaml</pre>
+<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/bundles/enmasse/*.yaml</pre>
 </div>
 </div>
 </li>
@@ -706,10 +705,26 @@ on your machine.</p>
 </div>
 </li>
 <li>
-<p>Deploy using the <code>enmasse-with-standard-authservice</code> bundle:</p>
+<p>Deploy the standard authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f install/bundles/enmasse-with-standard-authservice</pre>
+<pre class="nowrap">oc apply -f install/components/standard-authservice</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy using the <code>enmasse</code> bundle:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/bundles/enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install example plans and infrastructure configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/example-plans</pre>
 </div>
 </div>
 </li>
@@ -951,7 +966,7 @@ except KeyboardInterrupt: pass</code></pre>
 <p>Retrieve the address space messaging endpoint host name:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</pre>
+<pre class="highlightjs highlight nowrap"><code>oc get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="messaging")].externalHost}'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -962,7 +977,7 @@ except KeyboardInterrupt: pass</code></pre>
 <p>Run the client:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">python client-example1.py -u amqps://user1:password@<em>messaging.example1.com</em>:443/myqueue</pre>
+<pre class="highlightjs highlight nowrap"><code>python client-example1.py -u amqps://user1:password@<em>messaging.example1.com</em>:443/myqueue</code></pre>
 </div>
 </div>
 </li>
@@ -1035,7 +1050,7 @@ on your machine.</p>
 <p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/bundles/enmasse-with-standard-authservice/*.yaml</pre>
+<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/bundles/enmasse/*.yaml</pre>
 </div>
 </div>
 </li>
@@ -1048,10 +1063,26 @@ on your machine.</p>
 </div>
 </li>
 <li>
-<p>Deploy using the <code>enmasse-with-standard-authservice</code> bundle:</p>
+<p>Deploy the standard authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f install/bundles/enmasse-with-standard-authservice</pre>
+<pre class="nowrap">oc apply -f install/components/standard-authservice</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy using the <code>enmasse</code> bundle:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/bundles/enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install example plans and infrastructure configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/example-plans</pre>
 </div>
 </div>
 </li>
@@ -1059,56 +1090,7 @@ on your machine.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="installing-using-template-messaging">3.1.3. Installing EnMasse using OpenShift template</h4>
-<div class="paragraph">
-<p>Installing EnMasse using the OpenShift template is useful for evaluating EnMasse. For a
-production setup, it is recommended to use one of the following installation methods instead:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#installing-using-bundle-messaging">Installing EnMasse using a YAML bundle</a></p>
-</li>
-<li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#installing-using-ansible-messaging">Installing EnMasse using Ansible</a></p>
-</li>
-<li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#installing-using-manual-steps-messaging">Installing EnMasse manually</a></p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in as a user with <code>cluster-admin</code> privileges:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the project where you want to deploy EnMasse:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc new-project <em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy using <code>enmasse-with-standard-authservice.yaml</code> template:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc process -f install/templates/enmasse-with-standard-authservice.yaml NAMESPACE=<em>enmasse-infra</em> | oc apply -f -</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="installing-using-ansible-messaging">3.1.4. Installing EnMasse using Ansible</h4>
+<h4 id="installing-using-ansible-messaging">3.1.3. Installing EnMasse using Ansible</h4>
 <div class="paragraph">
 <p>Installing EnMasse using Ansible requires creating an inventory file with the variables for
 configuring the system. Example inventory files can be found in the <code>ansible/inventory</code> folder.</p>
@@ -1267,6 +1249,21 @@ enable_monitoring=False</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>install_example_plans</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to install example plans and infrastructure configs</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>True</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>enable_monitoring</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -1275,11 +1272,11 @@ enable_monitoring=False</code></pre>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Not applicable</p>
 </div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>no</p>
 </div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>smtp_server</p>
 </div></div></td>
@@ -1289,11 +1286,11 @@ enable_monitoring=False</code></pre>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Not applicable</p>
 </div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>no</p>
 </div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>smtp_username</p>
 </div></div></td>
@@ -1303,11 +1300,11 @@ enable_monitoring=False</code></pre>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Not applicable</p>
 </div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>no</p>
 </div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>smtp_password</p>
 </div></div></td>
@@ -1317,11 +1314,11 @@ enable_monitoring=False</code></pre>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Not applicable</p>
 </div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>no</p>
 </div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>smtp_from_address</p>
 </div></div></td>
@@ -1331,11 +1328,11 @@ enable_monitoring=False</code></pre>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Not applicable</p>
 </div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>no</p>
 </div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>sysadmin_email</p>
 </div></div></td>
@@ -1344,9 +1341,6 @@ enable_monitoring=False</code></pre>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Not applicable</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1369,7 +1363,7 @@ enable_monitoring=False</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="installing-using-manual-steps-messaging">3.1.5. Installing EnMasse manually</h4>
+<h4 id="installing-using-manual-steps-messaging">3.1.4. Installing EnMasse manually</h4>
 <div class="paragraph">
 <p>The manual deployment procedure can be performed on any platform
 supporting the OpenShift client.</p>
@@ -1470,6 +1464,22 @@ supporting the OpenShift client.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc apply -f install/components/address-space-controller</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="deploying-example-plans-messaging">Deploying the example plans and infrastructure configuration</h5>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Install the example plans:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/example-plans</pre>
 </div>
 </div>
 </li>
@@ -2063,7 +2073,7 @@ configuration of the new version will trigger the upgrade to start.</p>
 <p>Apply the new release bundle:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f install/bundles/enmasse-with-standard-authservice</pre>
+<pre class="nowrap">oc apply -f install/bundles/enmasse</pre>
 </div>
 </div>
 </li>
@@ -2114,7 +2124,7 @@ configuration of the new version will trigger the upgrade to start.</p>
 <p>Apply the new release template:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc process -f install/templates/enmasse-with-standard-authservice.yaml NAMESPACE=<em>enmasse-infra</em> | oc apply -f -</pre>
+<pre class="nowrap">oc process -f install/templates/{ProductTemplateName} NAMESPACE=<em>enmasse-infra</em> | oc apply -f -</pre>
 </div>
 </div>
 </li>
@@ -2481,7 +2491,7 @@ data:
 <p>List all broker pods and choose the pod for the relevant address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+<pre class="highlightjs highlight nowrap"><code>oc get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</code></pre>
 </div>
 </div>
 </li>
@@ -2489,7 +2499,7 @@ data:
 <p>Display the logs for the pod:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc logs <em>pod</em></pre>
+<pre class="highlightjs highlight nowrap"><code>oc logs <em>pod</em></code></pre>
 </div>
 </div>
 </li>
@@ -2507,14 +2517,6 @@ data:
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Delete the rolebinding in the <code>kube-system</code> namespace:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc delete rolebindings -l app=enmasse -n kube-system</pre>
 </div>
 </div>
 </li>
@@ -3065,7 +3067,7 @@ spec:
 <p>EnMasse Console host name</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</code></p>
+<p><code>oc get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="console")].externalHost}'</code></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3081,7 +3083,7 @@ spec:
 <p>base64-encoded PEM certificate for the messaging endpoint</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert}</code></p>
+<p><code>oc get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="messaging")].cert}'</code></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3089,7 +3091,7 @@ spec:
 <p>host name for the messaging endpoint</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</code></p>
+<p><code>oc get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="messaging")].externalHost}'</code></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -3852,7 +3854,7 @@ spec:
 <p>Retrieve the user whose permissions you want to edit:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get messaginguser <em>myspace.user1</em> -o yaml > <em>user1-example.yaml</em></pre>
+<pre class="nowrap">oc get messaginguser <em>myspace.user1</em> -o yaml > <em>user-example1.yaml</em></pre>
 </div>
 </div>
 </li>
@@ -10480,7 +10482,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-01-31 22:08:51 UTC
+Last updated 2019-02-21 17:02:56 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
