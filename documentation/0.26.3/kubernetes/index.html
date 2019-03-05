@@ -432,7 +432,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Documentation for EnMasse on OpenShift</h1>
+<h1>Documentation for EnMasse on Kubernetes</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -462,9 +462,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#downloading-messaging">3.1.1. Downloading EnMasse</a></li>
 <li><a href="#installing-using-bundle-messaging">3.1.2. Installing EnMasse using a YAML bundle</a></li>
-<li><a href="#installing-using-template-messaging">3.1.3. Installing EnMasse using OpenShift template</a></li>
-<li><a href="#installing-using-ansible-messaging">3.1.4. Installing EnMasse using Ansible</a></li>
-<li><a href="#installing-using-manual-steps-messaging">3.1.5. Installing EnMasse manually</a></li>
+<li><a href="#installing-using-manual-steps-messaging">3.1.3. Installing EnMasse manually</a></li>
 </ul>
 </li>
 <li><a href="#configuring-messaging">3.2. Configuring EnMasse</a>
@@ -480,8 +478,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
 <ul class="sectlevel3">
 <li><a href="#upgrading-enmasse-using-bundle-messaging">3.3.1. Upgrading EnMasse using a YAML bundle</a></li>
-<li><a href="#upgrading-enmasse-using-template-messaging">3.3.2. Upgrading EnMasse using the release template</a></li>
-<li><a href="#upgrading-enmasse-using-ansible-messaging">3.3.3. Upgrading EnMasse using Ansible</a></li>
 </ul>
 </li>
 <li><a href="#monitoring-messaging">3.4. Monitoring EnMasse</a>
@@ -607,7 +603,7 @@ what you need to set up and manage EnMasse as a service administrator or a messa
 <p>EnMasse can be used for many purposes, such as moving your messaging infrastructure to the cloud without depending on a specific cloud provider, building a scalable messaging backbone for IoT, or just as a cloud-ready version of a message broker.</p>
 </div>
 <div class="paragraph">
-<p>EnMasse can provision different types of messaging depending on your use case. A user can request messaging resources by creating an <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-messaging">address space</a>.</p>
+<p>EnMasse can provision different types of messaging depending on your use case. A user can request messaging resources by creating an <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">address space</a>.</p>
 </div>
 <div class="paragraph">
 <p>EnMasse currently supports a <code>standard</code> and a <code>brokered</code> address space type, each with different semantics.</p>
@@ -642,23 +638,16 @@ what you need to set up and manage EnMasse as a service administrator or a messa
 <div class="sectionbody">
 <div class="paragraph">
 <p>This guide will walk through the process of setting up EnMasse on
-OpenShift with clients for sending and receiving messages.</p>
+Kubernetes with clients for sending and receiving messages.</p>
 </div>
 <div class="ulist">
-<div class="title">Prerequisites</div>
+<div class="title">Prerequisite</div>
 <ul>
 <li>
-<p>To install EnMasse, the OpenShift client tools are required. You can download the OpenShift
-Origin client from <a href="https://github.com/openshift/origin/releases" target="_blank" rel="noopener">OpenShift Origin</a>. EnMasse has
-been tested to work with the latest stable release of the OpenShift Origin client.</p>
+<p>To install EnMasse, you must have Kubernetes installed. You can use <a href="https://github.com/kubernetes/minikube">minikube</a> if you want to install EnMasse on your laptop.</p>
 </li>
 <li>
-<p>An OpenShift cluster is required. If you do not have an OpenShift cluster available, see
-<a href="https://github.com/minishift/minishift" target="_blank" rel="noopener">Minishift</a> for an example of how to run a local instance of OpenShift
-on your machine.</p>
-</li>
-<li>
-<p>A user on the OpenShift cluster with <code>cluster-admin</code> permissions is required to set up the required cluster roles and API services.</p>
+<p>A user on the Kubernetes cluster with <code>cluster-admin</code> permissions is required, in order to set up the required cluster roles and API services.</p>
 </li>
 </ul>
 </div>
@@ -682,26 +671,45 @@ on your machine.</p>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Log in as a user with <code>cluster-admin</code> privileges:</p>
+<p>Create the namespace where you want to deploy EnMasse:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
+<pre class="nowrap">kubectl create namespace <em>enmasse-infra</em>
+kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
 </div>
 </div>
 </li>
 <li>
-<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
+<p>Create a certificate to use with the <code>standard</code> authentication service. For testing purposes, you can create a self-signed certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/bundles/enmasse-with-standard-authservice/*.yaml</pre>
+<pre class="nowrap">mkdir -p standard-authservice-cert
+openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standard-authservice.<em>enmasse-infra</em>.svc.cluster.local" -out standard-authservice-cert/tls.crt -keyout standard-authservice-cert/tls.key</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Create the project where you want to deploy EnMasse:</p>
+<p>Create a secret with the <code>standard</code> authentication service certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc new-project <em>enmasse-infra</em></pre>
+<pre class="nowrap">kubectl create secret tls standard-authservice-cert --cert=standard-authservice-cert/tls.crt --key=standard-authservice-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a certificate to use with the API server. For testing purposes, you can create a self-signed certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mkdir -p api-server-cert/
+openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-server.<em>enmasse-infra</em>.svc.cluster.local" -out api-server-cert/tls.crt -keyout api-server-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a secret containing the API server certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create secret tls api-server-cert --cert=api-server-cert/tls.crt --key=api-server-cert/tls.key</pre>
 </div>
 </div>
 </li>
@@ -709,7 +717,7 @@ on your machine.</p>
 <p>Deploy using the <code>enmasse-with-standard-authservice</code> bundle:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f install/bundles/enmasse-with-standard-authservice</pre>
+<pre class="nowrap">kubectl apply -f install/bundles/enmasse-with-standard-authservice</pre>
 </div>
 </div>
 </li>
@@ -724,22 +732,6 @@ on your machine.</p>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
-<li>
-<p>Log in as a messaging tenant:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u developer</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the project for the messaging application:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc new-project myapp</pre>
-</div>
-</div>
-</li>
 <li>
 <p>Create an address space definition:</p>
 <div class="listingblock">
@@ -758,7 +750,7 @@ spec:
 <p>Create the address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f standard-address-space.yaml</pre>
+<pre class="nowrap">kubectl create -f standard-address-space.yaml</pre>
 </div>
 </div>
 </li>
@@ -766,7 +758,7 @@ spec:
 <p>Check the status of the address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.isReady}</pre>
+<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.isReady}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -815,7 +807,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Create the address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">oc create -f standard-small-queue.yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl create -f standard-small-queue.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -823,7 +815,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>List the addresses:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">oc get addresses -o yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addresses -o yaml</code></pre>
 </div>
 </div>
 </li>
@@ -839,7 +831,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created an <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-messaging">address space</a>.</p>
+<p>You must have already created an <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">address space</a>.</p>
 </li>
 </ul>
 </div>
@@ -871,7 +863,7 @@ spec:
 <p>Create the user and associated user permissions:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f <em>user-example1.yaml</em></pre>
+<pre class="nowrap">kubectl create -f <em>user-example1.yaml</em></pre>
 </div>
 </div>
 </li>
@@ -879,7 +871,7 @@ spec:
 <p>Confirm that the user was created:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get messagingusers</pre>
+<pre class="nowrap">kubectl get messagingusers</pre>
 </div>
 </div>
 </li>
@@ -951,7 +943,7 @@ except KeyboardInterrupt: pass</code></pre>
 <p>Retrieve the address space messaging endpoint host name:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</pre>
+<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -969,7 +961,7 @@ except KeyboardInterrupt: pass</code></pre>
 </ol>
 </div>
 <div class="paragraph">
-<p>We have seen how to set up EnMasse on OpenShift, and how to communicate with it using an AMQP client.</p>
+<p>We have seen how to set up EnMasse on Kubernetes, and how to communicate with it using an AMQP client.</p>
 </div>
 </div>
 </div>
@@ -984,23 +976,16 @@ infrastructure configuration, and plans.</p>
 <div class="sect2">
 <h3 id="installing-messaging">3.1. Installing EnMasse</h3>
 <div class="paragraph">
-<p>EnMasse can be installed using automated <a href="https://www.ansible.com/">Ansible</a> playbooks, the OpenShift template, or the manual steps.</p>
+<p>These steps follow the manual deployment procedure and work on any platform supporting the <code>kubectl</code> command-line client.</p>
 </div>
 <div class="ulist">
-<div class="title">Prerequisites</div>
+<div class="title">Prerequisite</div>
 <ul>
 <li>
-<p>To install EnMasse, the OpenShift client tools are required. You can download the OpenShift
-Origin client from <a href="https://github.com/openshift/origin/releases" target="_blank" rel="noopener">OpenShift Origin</a>. EnMasse has
-been tested to work with the latest stable release of the OpenShift Origin client.</p>
+<p>To install EnMasse, you must have Kubernetes installed. You can use <a href="https://github.com/kubernetes/minikube">minikube</a> if you want to install EnMasse on your laptop.</p>
 </li>
 <li>
-<p>An OpenShift cluster is required. If you do not have an OpenShift cluster available, see
-<a href="https://github.com/minishift/minishift" target="_blank" rel="noopener">Minishift</a> for an example of how to run a local instance of OpenShift
-on your machine.</p>
-</li>
-<li>
-<p>A user on the OpenShift cluster with <code>cluster-admin</code> permissions is required to set up the required cluster roles and API services.</p>
+<p>A user on the Kubernetes cluster with <code>cluster-admin</code> permissions is required, in order to set up the required cluster roles and API services.</p>
 </li>
 </ul>
 </div>
@@ -1024,26 +1009,45 @@ on your machine.</p>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Log in as a user with <code>cluster-admin</code> privileges:</p>
+<p>Create the namespace where you want to deploy EnMasse:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
+<pre class="nowrap">kubectl create namespace <em>enmasse-infra</em>
+kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
 </div>
 </div>
 </li>
 <li>
-<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
+<p>Create a certificate to use with the <code>standard</code> authentication service. For testing purposes, you can create a self-signed certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/bundles/enmasse-with-standard-authservice/*.yaml</pre>
+<pre class="nowrap">mkdir -p standard-authservice-cert
+openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standard-authservice.<em>enmasse-infra</em>.svc.cluster.local" -out standard-authservice-cert/tls.crt -keyout standard-authservice-cert/tls.key</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Create the project where you want to deploy EnMasse:</p>
+<p>Create a secret with the <code>standard</code> authentication service certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc new-project <em>enmasse-infra</em></pre>
+<pre class="nowrap">kubectl create secret tls standard-authservice-cert --cert=standard-authservice-cert/tls.crt --key=standard-authservice-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a certificate to use with the API server. For testing purposes, you can create a self-signed certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mkdir -p api-server-cert/
+openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-server.<em>enmasse-infra</em>.svc.cluster.local" -out api-server-cert/tls.crt -keyout api-server-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a secret containing the API server certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create secret tls api-server-cert --cert=api-server-cert/tls.crt --key=api-server-cert/tls.key</pre>
 </div>
 </div>
 </li>
@@ -1051,7 +1055,7 @@ on your machine.</p>
 <p>Deploy using the <code>enmasse-with-standard-authservice</code> bundle:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f install/bundles/enmasse-with-standard-authservice</pre>
+<pre class="nowrap">kubectl apply -f install/bundles/enmasse-with-standard-authservice</pre>
 </div>
 </div>
 </li>
@@ -1059,335 +1063,33 @@ on your machine.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="installing-using-template-messaging">3.1.3. Installing EnMasse using OpenShift template</h4>
-<div class="paragraph">
-<p>Installing EnMasse using the OpenShift template is useful for evaluating EnMasse. For a
-production setup, it is recommended to use one of the following installation methods instead:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#installing-using-bundle-messaging">Installing EnMasse using a YAML bundle</a></p>
-</li>
-<li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#installing-using-ansible-messaging">Installing EnMasse using Ansible</a></p>
-</li>
-<li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#installing-using-manual-steps-messaging">Installing EnMasse manually</a></p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in as a user with <code>cluster-admin</code> privileges:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the project where you want to deploy EnMasse:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc new-project <em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy using <code>enmasse-with-standard-authservice.yaml</code> template:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc process -f install/templates/enmasse-with-standard-authservice.yaml NAMESPACE=<em>enmasse-infra</em> | oc apply -f -</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="installing-using-ansible-messaging">3.1.4. Installing EnMasse using Ansible</h4>
-<div class="paragraph">
-<p>Installing EnMasse using Ansible requires creating an inventory file with the variables for
-configuring the system. Example inventory files can be found in the <code>ansible/inventory</code> folder.</p>
-</div>
-<div class="paragraph">
-<p>An example inventory file that enables both the API server and service broker integration:</p>
-</div>
-<div class="listingblock">
-<div class="title"><a href="service_admin/example.inventory">example.inventory</a></div>
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code>[enmasse]
-localhost ansible_connection=local
-
-[enmasse:vars]
-namespace=enmasse-infra
-enable_rbac=False
-api_server=True
-service_catalog=True
-register_api_server=True
-keycloak_admin_password=admin
-authentication_services=["standard"]
-enable_monitoring=False</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The following Ansible configuration settings are supported:</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Ansible configuration settings</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-<th class="tableblock halign-left valign-top">Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>namespace</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the namespace where EnMasse is installed.</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Not applicable</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>yes</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>enable_rbac</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies whether to enable RBAC authentication of REST APIs</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>True</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>service_catalog</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies whether to enable integration with the Service Catalog</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>False</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>authentication_services</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the list of authentication services to deploy. Supported values are <code>none</code> and <code>standard</code>.</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>none</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>keycloak_admin_password</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the admin password to use for the <code>standard</code> authentication service Keycloak instance</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Not applicable</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>yes (if <code>standard</code> authentication service is enabled)</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>api_server</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies whether to enable the REST API server</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>True</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>register_api_server</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies whether to register the API server with OpenShift master</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>False</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>secure_api_server</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies whether to enable mutual TLS for the API server</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>False</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>enable_monitoring</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies whether to enable the monitoring services</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Not applicable</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>smtp_server</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the SMTP server used to send alert emails</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Not applicable</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>smtp_username</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the username used to authenticate to the SMTP server</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Not applicable</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>smtp_password</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the password used to authenticate to the SMTP server</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Not applicable</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>smtp_from_address</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the from address displayed in alert emails</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Not applicable</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>sysadmin_email</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the email address to which alerts are sent</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Not applicable</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>no</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>(Optional) Create an inventory file.</p>
-</li>
-<li>
-<p>Run the Ansible playbook:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">ansible-playbook -i <em>inventory-file</em> ansible/playbooks/openshift/deploy_all.yml</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="installing-using-manual-steps-messaging">3.1.5. Installing EnMasse manually</h4>
+<h4 id="installing-using-manual-steps-messaging">3.1.3. Installing EnMasse manually</h4>
 <div class="paragraph">
 <p>The manual deployment procedure can be performed on any platform
-supporting the OpenShift client.</p>
+supporting the Kubernetes client.</p>
 </div>
 <div class="sect4">
 <h5 id="creating-project-messaging">Creating the project for EnMasse</h5>
-<div class="ulist">
+<div class="olist arabic">
 <div class="title">Procedure</div>
-<ul>
+<ol class="arabic">
 <li>
-<p>Create the <code><em>enmasse-infra</em></code> project:</p>
+<p>Create the <code><em>enmasse-infra</em></code> namespace:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc new-project <em>enmasse-infra</em></pre>
+<pre class="nowrap">kubectl create namespace <em>enmasse-infra</em></pre>
 </div>
 </div>
 </li>
-</ul>
+<li>
+<p>Set the <code><em>enmasse-infra</em></code> namespace as the default namespace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect4">
@@ -1414,10 +1116,27 @@ supporting the OpenShift client.</p>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
+<p>Create a certificate to use with the <code>none</code> authentication service. For testing purposes, you can create a self-signed certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mkdir -p none-authservice-cert
+openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=none-authservice.<em>enmasse-infra</em>.svc.cluster.local" -out none-authservice-cert/tls.crt -keyout none-authservice-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a secret with the <code>none</code> authentication service certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create secret tls none-authservice-cert --cert=none-authservice-cert/tls.crt --key=none-authservice-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
 <p>Create the <code>none</code> authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./install/components/none-authservice</pre>
+<pre class="nowrap">kubectl create -f ./install/components/none-authservice</pre>
 </div>
 </div>
 </li>
@@ -1438,10 +1157,27 @@ supporting the OpenShift client.</p>
 </div>
 </li>
 <li>
+<p>Create a certificate to use with the <code>standard</code> authentication service. For testing purposes, you can create a self-signed certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mkdir -p standard-authservice-cert
+openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standard-authservice.<em>enmasse-infra</em>.svc.cluster.local" -out standard-authservice-cert/tls.crt -keyout standard-authservice-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a secret with the <code>standard</code> authentication service certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create secret tls standard-authservice-cert --cert=standard-authservice-cert/tls.crt --key=standard-authservice-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
 <p>Create the <code>standard</code> authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./install/components/standard-authservice</pre>
+<pre class="nowrap">kubectl create -f ./install/components/standard-authservice</pre>
 </div>
 </div>
 </li>
@@ -1469,7 +1205,7 @@ supporting the OpenShift client.</p>
 <p>Deploy the Address Space Controller</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f install/components/address-space-controller</pre>
+<pre class="nowrap">kubectl apply -f install/components/address-space-controller</pre>
 </div>
 </div>
 </li>
@@ -1497,7 +1233,24 @@ sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/api-server/*.
 <p>Register API service</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f install/components/api-service</pre>
+<pre class="nowrap">kubectl apply -f install/components/api-service</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a certificate to use with the API server. For testing purposes, you can create a self-signed certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mkdir -p api-server-cert/
+openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-server.<em>enmasse-infra</em>.svc.cluster.local" -out api-server-cert/tls.crt -keyout api-server-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a secret containing the API server certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create secret tls api-server-cert --cert=api-server-cert/tls.crt --key=api-server-cert/tls.key</pre>
 </div>
 </div>
 </li>
@@ -1505,51 +1258,7 @@ sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/api-server/*.
 <p>Deploy the API Server</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f install/components/api-server/</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect4">
-<h5 id="deploying-service-broker-messaging">(Optional) Deploying the service broker</h5>
-<div class="paragraph">
-<p>The service broker provides an implementation of the Open Service Broker API that integrates with the OpenShift Service Catalog.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>The service broker requires the <code>standard</code> authentication service to be deployed.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/service-broker/*.yaml
-sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/cluster-service-broker/*.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy the Service Broker:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc apply -f install/components/service-broker</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Register the Service Broker with the OpenShift Service Catalog:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc apply -f install/components/cluster-service-broker</pre>
+<pre class="nowrap">kubectl apply -f install/components/api-server/</pre>
 </div>
 </div>
 </li>
@@ -1621,7 +1330,7 @@ resources:
 <div class="paragraph">
 <p>The other fields are used by the EnMasse Console UI. Note the annotation <code>enmasse.io/defined-by</code>, which
 points to an infrastructure configuration that must exist when an address space using this plan is created.
-For more information about infrastructure configurations, see <a href="http://enmasse.io/documentation/master/openshift/#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
+For more information about infrastructure configurations, see <a href="http://enmasse.io/documentation/master/kubernetes/#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1629,22 +1338,6 @@ For more information about infrastructure configurations, see <a href="http://en
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
-<li>
-<p>Log in as a service admin:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Select the project where EnMasse is installed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
 <li>
 <p>Create an address space plan definition:</p>
 <div class="listingblock">
@@ -1680,7 +1373,7 @@ resources:
 <p>Create the address space plan:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f restrictive-plan.yaml</pre>
+<pre class="nowrap">kubectl create -f restrictive-plan.yaml</pre>
 </div>
 </div>
 </li>
@@ -1688,7 +1381,7 @@ resources:
 <p>Verify that schema has been updated and contains the plan:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspaceschema standard -o yaml</pre>
+<pre class="nowrap">kubectl get addressspaceschema standard -o yaml</pre>
 </div>
 </div>
 </li>
@@ -1707,7 +1400,7 @@ resources:
 <p>EnMasse includes a default set of address plans that are sufficient for most use cases.</p>
 </div>
 <div class="paragraph">
-<p>In the <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-plans-messaging">Address space plans</a> section, the address space plan references two address plans: <code>small-queue</code> and <code>small-anycast</code>. These address plans are stored as custom resources and are defined as follows:</p>
+<p>In the <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a> section, the address space plan references two address plans: <code>small-queue</code> and <code>small-anycast</code>. These address plans are stored as custom resources and are defined as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1784,22 +1477,6 @@ requiredResources:
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Log in as a service admin:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Select the project where EnMasse is installed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-<li>
 <p>Create an address plan definition:</p>
 <div class="listingblock">
 <div class="content">
@@ -1825,7 +1502,7 @@ requiredResources:
 <p>Create the address plan:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f small-anycast-plan.yaml</pre>
+<pre class="nowrap">kubectl create -f small-anycast-plan.yaml</pre>
 </div>
 </div>
 </li>
@@ -1833,7 +1510,7 @@ requiredResources:
 <p>Verify that schema has been updated and contains the plan:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspaceschema standard -o yaml</pre>
+<pre class="nowrap">kubectl get addressspaceschema standard -o yaml</pre>
 </div>
 </div>
 </li>
@@ -1850,7 +1527,7 @@ default infrastructure configuration or create new configurations.</p>
 </div>
 <div class="paragraph">
 <p>Infrastructure configurations can be referred to from one or more address space plans. For more information
-about address space plans, see <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-plans-messaging">Address space plans</a>.</p>
+about address space plans, see <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="paragraph">
 <p>Infrastructure configuration can be managed for both <code>brokered</code> and <code>standard</code> infrastructure
@@ -1861,7 +1538,7 @@ using <code>BrokeredInfraConfig</code> and <code>StandardInfraConfig</code> reso
 <div class="paragraph">
 <p><code>BrokeredInfraConfig</code> resources are used to configure infrastructure deployed by <code>brokered</code> address
 spaces. The brokered infrastructure configuration is referenced by address space plans using a <code>enmasse.io/defined-by</code>
-annotation. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-plans-messaging">Address space plans</a>.</p>
+annotation. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1898,7 +1575,7 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 <div class="paragraph">
 <p><code>StandardInfraConfig</code> resources are used to configure infrastructure deployed by <code>standard</code> address
 spaces. The standard infrastructure configuration is referenced by address space plans using a <code>enmasse.io/defined-by</code>
-annotation. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-plans-messaging">Address space plans</a>.</p>
+annotation. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1948,29 +1625,13 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>An infrastructure configuration change that you want to apply. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
+<p>An infrastructure configuration change that you want to apply. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
 </li>
 </ul>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
-<li>
-<p>Log in as a service operator:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u developer</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Select the project where EnMasse is installed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc project enmasse</pre>
-</div>
-</div>
-</li>
 <li>
 <p>Create infrastructure configuration:</p>
 <div class="listingblock">
@@ -2001,7 +1662,7 @@ spec:
 <p>Apply the configuration changes:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f standard-infra-config-example.yaml</pre>
+<pre class="nowrap">kubectl apply -f standard-infra-config-example.yaml</pre>
 </div>
 </div>
 </li>
@@ -2009,7 +1670,7 @@ spec:
 <p>Monitor the pods while they are restarted:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get pods -w</pre>
+<pre class="nowrap">kubectl get pods -w</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2036,7 +1697,7 @@ configuration of the new version will trigger the upgrade to start.</p>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Downloading EnMasse</a>.</p>
+<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#downloading-messaging">Downloading EnMasse</a>.</p>
 </li>
 </ul>
 </div>
@@ -2044,18 +1705,10 @@ configuration of the new version will trigger the upgrade to start.</p>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Log in as a service operator:</p>
+<p>Select the namespace where EnMasse is installed:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Select the project where EnMasse is installed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
+<pre class="nowrap">kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
 </div>
 </div>
 </li>
@@ -2063,7 +1716,7 @@ configuration of the new version will trigger the upgrade to start.</p>
 <p>Apply the new release bundle:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f install/bundles/enmasse-with-standard-authservice</pre>
+<pre class="nowrap">kubectl apply -f install/bundles/enmasse-with-standard-authservice</pre>
 </div>
 </div>
 </li>
@@ -2071,105 +1724,11 @@ configuration of the new version will trigger the upgrade to start.</p>
 <p>Monitor pods while they are restarted:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get pods -w</pre>
+<pre class="nowrap">kubectl get pods -w</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The upgrade should cause all pods to be restarted within a couple of minutes.</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="upgrading-enmasse-using-template-messaging">3.3.2. Upgrading EnMasse using the release template</h4>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Downloading EnMasse</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in as a service operator:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Select the project where EnMasse is installed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Apply the new release template:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc process -f install/templates/enmasse-with-standard-authservice.yaml NAMESPACE=<em>enmasse-infra</em> | oc apply -f -</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Monitor the pods while they are restarted:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc get pods -w</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The upgrade should cause all pods to be restarted within a couple of minutes.</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="upgrading-enmasse-using-ansible-messaging">3.3.3. Upgrading EnMasse using Ansible</h4>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Downloading EnMasse</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in as a service operator:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Run the Ansible playbook from the new release:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">ansible-playbook -i <em>inventory-file</em> ansible/playbooks/openshift/deploy_all.yml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Monitor pods while they are restarted:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc get pods -w</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The pods restart and become active within several minutes.</p>
 </div>
 </li>
 </ol>
@@ -2206,7 +1765,7 @@ checks.</p>
 <p>Create the Prometheus deployment:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f ./install/components/prometheus</pre>
+<pre class="nowrap">kubectl apply -f ./install/components/prometheus</pre>
 </div>
 </div>
 </li>
@@ -2230,7 +1789,7 @@ checks.</p>
 <p>Create the <code>kube-state-metrics</code> deployment:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f ./install/components/kube-state-metrics</pre>
+<pre class="nowrap">kubectl apply -f ./install/components/kube-state-metrics</pre>
 </div>
 </div>
 </li>
@@ -2262,7 +1821,7 @@ checks.</p>
 <p>Create the <code>Alertmanager</code> deployment:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f ./install/components/alertmanager</pre>
+<pre class="nowrap">kubectl apply -f ./install/components/alertmanager</pre>
 </div>
 </div>
 </li>
@@ -2270,7 +1829,7 @@ checks.</p>
 <p>(Optional) Configure <code>Alertmanager</code> to send emails using a custom configmap with the relevant SMTP details:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f ./alertmanager-configmap.yaml</pre>
+<pre class="nowrap">kubectl apply -f ./alertmanager-configmap.yaml</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2339,7 +1898,7 @@ data:
 <p>Create the Grafana deployment:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f ./install/components/grafana</pre>
+<pre class="nowrap">kubectl apply -f ./install/components/grafana</pre>
 </div>
 </div>
 </li>
@@ -2350,7 +1909,7 @@ data:
 <div class="sect3">
 <h4 id="config-monitoring-messaging">3.4.2. Monitor EnMasse with existing infrastructure</h4>
 <div class="paragraph">
-<p>EnMasse can also be monitored using an existing Prometheus server and optionally <code>kube-state-metrics</code> for the relevant OpenShift infrastructure.</p>
+<p>EnMasse can also be monitored using an existing Prometheus server and optionally <code>kube-state-metrics</code> for the relevant Kubernetes infrastructure.</p>
 </div>
 <div class="sect4">
 <h5 id="scrape-metrics-messaging">Exposed metrics</h5>
@@ -2438,7 +1997,7 @@ data:
 <p>Delete the component&#8217;s pod:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc delete pod -l name=<em>component</em></pre>
+<pre class="nowrap">kubectl delete pod -l name=<em>component</em></pre>
 </div>
 </div>
 </li>
@@ -2457,7 +2016,7 @@ data:
 <p>List all router pods and choose the pod for the relevant address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get pods -l name=qdrouterd -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+<pre class="nowrap">kubectl get pods -l name=qdrouterd -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
 </div>
 </div>
 </li>
@@ -2465,7 +2024,7 @@ data:
 <p>Display the logs for the pod:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc logs <em>pod</em> -c router</pre>
+<pre class="nowrap">kubectl logs <em>pod</em> -c router</pre>
 </div>
 </div>
 </li>
@@ -2481,7 +2040,7 @@ data:
 <p>List all broker pods and choose the pod for the relevant address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+<pre class="nowrap">kubectl get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
 </div>
 </div>
 </li>
@@ -2489,7 +2048,7 @@ data:
 <p>Display the logs for the pod:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc logs <em>pod</em></pre>
+<pre class="nowrap">kubectl logs <em>pod</em></pre>
 </div>
 </div>
 </li>
@@ -2503,18 +2062,10 @@ data:
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Log in as a user with <code>cluster-admin</code> privileges:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
 <p>Delete the rolebinding in the <code>kube-system</code> namespace:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc delete rolebindings -l app=enmasse -n kube-system</pre>
+<pre class="nowrap">kubectl delete rolebindings -l app=enmasse -n kube-system</pre>
 </div>
 </div>
 </li>
@@ -2522,27 +2073,18 @@ data:
 <p>Delete "cluster level" resources:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc delete clusterrolebindings -l app=enmasse
-oc delete crd -l app=enmasse
-oc delete clusterroles -l app=enmasse
-oc delete apiservices -l app=enmasse
-oc delete oauthclients -l app=enmasse</pre>
+<pre class="nowrap">kubectl delete clusterrolebindings -l app=enmasse
+kubectl delete crd -l app=enmasse
+kubectl delete clusterroles -l app=enmasse
+kubectl delete apiservices -l app=enmasse</pre>
 </div>
 </div>
 </li>
 <li>
-<p>(Optional) Delete the service catalog integration:</p>
+<p>Delete the namespace where EnMasse is deployed:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc delete clusterservicebrokers -l app=enmasse</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Delete the project where EnMasse is deployed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc delete project <em>enmasse-infra</em></pre>
+<pre class="nowrap">kubectl delete namespace <em>enmasse-infra</em></pre>
 </div>
 </div>
 </li>
@@ -2561,8 +2103,8 @@ messaging tenant.</p>
 <div class="sect2">
 <h3 id="managing-address-spaces-messaging">4.1. Managing address spaces</h3>
 <div class="paragraph">
-<p>EnMasse is configured to support managing address spaces using the OpenShift command-line
-tools. Address spaces are managed like any other OpenShift resource using <code>oc</code>.</p>
+<p>EnMasse is configured to support managing address spaces using the Kubernetes command-line
+tools. Address spaces are managed like any other Kubernetes resource using <code>kubectl</code>.</p>
 </div>
 <div class="sect3">
 <h4 id="con-address-space-messaging">4.1.1. Address space</h4>
@@ -2575,10 +2117,10 @@ tools. Address spaces are managed like any other OpenShift resource using <code>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#con-standard-address-space-messaging">Standard</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#con-standard-address-space-messaging">Standard</a></p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#con-brokered-address-space-messaging">Brokered</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#con-brokered-address-space-messaging">Brokered</a></p>
 </li>
 </ul>
 </div>
@@ -2807,18 +2349,10 @@ can vary between EnMasse installations.</p>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Log in as a messaging tenant:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u developer</pre>
-</div>
-</div>
-</li>
-<li>
 <p>Retrieve the schema with available plans (replace <code>standard</code> with <code>brokered</code> for the brokered address space type):</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">oc get addressspaceschema standard -o yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addressspaceschema standard -o yaml</code></pre>
 </div>
 </div>
 </li>
@@ -2847,7 +2381,7 @@ spec:
 <p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
 </li>
 <li>
-<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. See <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
+<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. See <a href="http://enmasse.io/documentation/master/kubernetes/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
 </li>
 </ol>
 </div>
@@ -2905,7 +2439,7 @@ spec:
 <p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
 </li>
 <li>
-<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. See <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
+<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. See <a href="http://enmasse.io/documentation/master/kubernetes/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
 </li>
 <li>
 <p>The authentication service type can be <code>none</code>, <code>standard</code> or <code>external</code>. <code>External</code> requires an additional field, <code>details</code>, which includes <code>host</code> and <code>port</code> information.</p>
@@ -2927,7 +2461,7 @@ spec:
 <div class="paragraph">
 <p>The <code>AddressSpace</code> resource contains a <code>status</code> field that can be used to retrieve information about
 its state and endpoints. The following output is an example of the output you can get from running
-<code>oc get addressspace myspace -o yaml</code>:</p>
+<code>kubectl get addressspace myspace -o yaml</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2991,22 +2525,6 @@ status:
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Log in as a messaging tenant:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u developer</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the project for the messaging application:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc new-project myapp</pre>
-</div>
-</div>
-</li>
-<li>
 <p>Create an address space definition:</p>
 <div class="listingblock">
 <div class="content">
@@ -3024,7 +2542,7 @@ spec:
 <p>Create the address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f standard-address-space.yaml</pre>
+<pre class="nowrap">kubectl create -f standard-address-space.yaml</pre>
 </div>
 </div>
 </li>
@@ -3032,7 +2550,7 @@ spec:
 <p>Check the status of the address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.isReady}</pre>
+<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.isReady}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3048,7 +2566,7 @@ spec:
 <p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Retrieving address space information commands table</caption>
+<caption class="title">Table 1. Retrieving address space information commands table</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -3065,7 +2583,7 @@ spec:
 <p>EnMasse Console host name</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</code></p>
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</code></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3073,7 +2591,7 @@ spec:
 <p>status of an address space</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>oc get addressspace myspace -o jsonpath={.status.isReady}</code></p>
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.isReady}</code></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3081,7 +2599,7 @@ spec:
 <p>base64-encoded PEM certificate for the messaging endpoint</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert}</code></p>
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert}</code></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3089,7 +2607,7 @@ spec:
 <p>host name for the messaging endpoint</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>oc get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</code></p>
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</code></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -3106,22 +2624,6 @@ quota. If it does not, an error is provided on the <code>AddressSpace</code> res
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
-<li>
-<p>Log in as a messaging tenant:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u developer</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Select the project for the messaging application:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc project myapp</pre>
-</div>
-</div>
-</li>
 <li>
 <p>Update address space definition:</p>
 <div class="listingblock">
@@ -3140,7 +2642,7 @@ spec:
 <p>Replace the address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc replace -f standard-address-space-replace.yaml</pre>
+<pre class="nowrap">kubectl replace -f standard-address-space-replace.yaml</pre>
 </div>
 </div>
 </li>
@@ -3148,7 +2650,7 @@ spec:
 <p>Check the status of the address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace myspace -o jsonpath={.status.isReady}</pre>
+<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.isReady}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3162,9 +2664,9 @@ spec:
 <div class="sect2">
 <h3 id="managing-addresses-messaging">4.2. Managing addresses</h3>
 <div class="paragraph">
-<p>EnMasse is configured to support managing addresses using the OpenShift command-line tools
-and the EnMasse Console. <code>Address</code> resources can be managed like any other OpenShift
-API resource using <code>oc</code>.</p>
+<p>EnMasse is configured to support managing addresses using the Kubernetes command-line tools
+and the EnMasse Console. <code>Address</code> resources can be managed like any other Kubernetes
+API resource using <code>kubectl</code>.</p>
 </div>
 <div class="sect3">
 <h4 id="con-address-messaging">4.2.1. Address</h4>
@@ -3215,7 +2717,7 @@ spec:
 <p>The address type dictates the semantics of this address.</p>
 </li>
 <li>
-<p>The address plan describes the resource usage for the address. See <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
+<p>The address plan describes the resource usage for the address. See <a href="http://enmasse.io/documentation/master/kubernetes/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
 </li>
 </ol>
 </div>
@@ -3260,7 +2762,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Create the address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">oc create -f standard-small-queue.yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl create -f standard-small-queue.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -3268,7 +2770,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>List the addresses:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">oc get addresses -o yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addresses -o yaml</code></pre>
 </div>
 </div>
 </li>
@@ -3299,7 +2801,7 @@ spec:
 <p>Replace the address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">oc replace -f standard-xlarge-queue.yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl replace -f standard-xlarge-queue.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -3307,7 +2809,7 @@ spec:
 <p>List the addresses:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">oc get addresses -o yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addresses -o yaml</code></pre>
 </div>
 </div>
 </li>
@@ -3326,7 +2828,7 @@ spec:
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have obtained the host name for the EnMasse Console. For more information about how to obtain the host name, see  <a href="http://enmasse.io/documentation/master/openshift/#retrieving-address-space-information-messaging">Example commands for retrieving address space information</a>.</p>
+<p>You must have obtained the host name for the EnMasse Console. For more information about how to obtain the host name, see  <a href="http://enmasse.io/documentation/master/kubernetes/#retrieving-address-space-information-messaging">Example commands for retrieving address space information</a>.</p>
 </li>
 </ul>
 </div>
@@ -3356,7 +2858,7 @@ spec:
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have created an address space. For more information see <a href="http://enmasse.io/documentation/master/openshift/#create-address-space-cli-messaging">Creating an address space</a>.</p>
+<p>You must have created an address space. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#create-address-space-cli-messaging">Creating an address space</a>.</p>
 </li>
 </ul>
 </div>
@@ -3364,7 +2866,7 @@ spec:
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Log in to the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
+<p>Log in to the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
 </li>
 <li>
 <p>Click <strong>New</strong>. The Create new address window opens.</p>
@@ -3390,7 +2892,7 @@ spec:
 <p>The address name filtering feature in the EnMasse Console uses regular expressions. Also, filters are cumulative.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. EnMasse Console address name filtering behavior</caption>
+<caption class="title">Table 2. EnMasse Console address name filtering behavior</caption>
 <colgroup>
 <col style="width: 34%;">
 <col style="width: 33%;">
@@ -3462,7 +2964,7 @@ spec:
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Message statistics reference table</caption>
+<caption class="title">Table 3. Message statistics reference table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3549,7 +3051,7 @@ spec:
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Connection statistics reference table</caption>
+<caption class="title">Table 4. Connection statistics reference table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3727,14 +3229,14 @@ matches addresses <code>topic</code> and <code>topic/sub</code>.</p>
 <div class="sect2">
 <h3 id="managing-users-messaging">4.5. Managing users</h3>
 <div class="paragraph">
-<p>EnMasse user management is only supported when using the <code>standard</code> authentication service. On OpenShift, users can
-be managed using the OpenShift command-line tools.</p>
+<p>EnMasse user management is only supported when using the <code>standard</code> authentication service. On Kubernetes, users can
+be managed using the Kubernetes command-line tools.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created an <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-messaging">address space</a>.</p>
+<p>You must have already created an <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">address space</a>.</p>
 </li>
 </ul>
 </div>
@@ -3747,7 +3249,7 @@ be managed using the OpenShift command-line tools.</p>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created an <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-messaging">address space</a>.</p>
+<p>You must have already created an <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">address space</a>.</p>
 </li>
 </ul>
 </div>
@@ -3779,7 +3281,7 @@ spec:
 <p>Create the user and associated user permissions:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f <em>user-example1.yaml</em></pre>
+<pre class="nowrap">kubectl create -f <em>user-example1.yaml</em></pre>
 </div>
 </div>
 </li>
@@ -3787,7 +3289,7 @@ spec:
 <p>Confirm that the user was created:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get messagingusers</pre>
+<pre class="nowrap">kubectl get messagingusers</pre>
 </div>
 </div>
 </li>
@@ -3817,7 +3319,7 @@ spec:
 <p>List the current users:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get messagingusers</pre>
+<pre class="nowrap">kubectl get messagingusers</pre>
 </div>
 </div>
 </li>
@@ -3825,7 +3327,7 @@ spec:
 <p>Delete the desired user:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc delete messaginguser <em>myspace.user1</em></pre>
+<pre class="nowrap">kubectl delete messaginguser <em>myspace.user1</em></pre>
 </div>
 </div>
 </li>
@@ -3841,7 +3343,7 @@ spec:
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created a user. For more information see <a href="http://enmasse.io/documentation/master/openshift/#proc-creating-users-cli-messaging">Creating users using the command line</a>.</p>
+<p>You must have already created a user. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#proc-creating-users-cli-messaging">Creating users using the command line</a>.</p>
 </li>
 </ul>
 </div>
@@ -3852,7 +3354,7 @@ spec:
 <p>Retrieve the user whose permissions you want to edit:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get messaginguser <em>myspace.user1</em> -o yaml > <em>user1-example.yaml</em></pre>
+<pre class="nowrap">kubectl get messaginguser <em>myspace.user1</em> -o yaml > <em>user1-example.yaml</em></pre>
 </div>
 </div>
 </li>
@@ -3863,7 +3365,7 @@ spec:
 <p>From the command line, run the following command to apply the change:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f <em>user-example1.yaml</em></pre>
+<pre class="nowrap">kubectl apply -f <em>user-example1.yaml</em></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3882,27 +3384,27 @@ spec:
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#ref-python-example-messaging">Apache Qpid Proton Python</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-python-example-messaging">Apache Qpid Proton Python</a></p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#ref-jms-example-messaging">Apache Qpid JMS</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-jms-example-messaging">Apache Qpid JMS</a></p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#ref-javascript-example-messaging">Rhea JavaScript Client</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-javascript-example-messaging">Rhea JavaScript Client</a></p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#ref-cpp-example-messaging">Apache Qpid Proton C++</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-cpp-example-messaging">Apache Qpid Proton C++</a></p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#ref-dotnet-example-messaging">AMQP.Net Lite</a></p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-dotnet-example-messaging">AMQP.Net Lite</a></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>To connect to the messaging service from outside the OpenShift cluster, TLS must be used with SNI set to specify the fully qualified host name for the address space. The port used is 443.</p>
+<p>To connect to the messaging service from outside the Kubernetes cluster, TLS must be used with SNI set to specify the fully qualified host name for the address space. The port used is 443.</p>
 </div>
 <div class="paragraph">
-<p>The messaging protocols supported depends on the type of address space used. For more information about address space types, see  <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-messaging">Address space</a>.</p>
+<p>The messaging protocols supported depends on the type of address space used. For more information about address space types, see  <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">Address space</a>.</p>
 </div>
 <div class="sect3">
 <h4 id="client-examples-messaging">4.6.1. Client examples</h4>
@@ -10480,7 +9982,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-03-05 15:35:41 UTC
+Last updated 2019-03-05 21:46:41 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
