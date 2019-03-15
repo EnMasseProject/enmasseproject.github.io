@@ -474,6 +474,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#create-address-plans-cli-messaging">3.2.4. Creating address plans</a></li>
 <li><a href="#infrastructure-configuration-messaging">3.2.5. Infrastructure configuration</a></li>
 <li><a href="#applying-infra-config-changes-messaging">3.2.6. Applying infrastructure configuration</a></li>
+<li><a href="#con-authentication-services-messaging">3.2.7. Authentication services</a></li>
+<li><a href="#proc-deploying-standard-auth-service-messaging">3.2.8. Deploying the <code>standard</code> authentication service</a></li>
+<li><a href="#proc-deploying-none-auth-service-messaging">3.2.9. Deploying the <code>none</code> authentication service</a></li>
+<li><a href="#con-external-authentication-service-api-messaging">3.2.10. External authentication service API</a></li>
 </ul>
 </li>
 <li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
@@ -531,8 +535,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#con-user-model-messaging">4.4. User model</a>
 <ul class="sectlevel3">
-<li><a href="#authentication">4.4.1. Authentication</a></li>
-<li><a href="#authorization">4.4.2. Authorization</a></li>
+<li><a href="#authentication_2">4.4.1. Authentication</a></li>
+<li><a href="#authorization_2">4.4.2. Authorization</a></li>
 </ul>
 </li>
 <li><a href="#managing-users-messaging">4.5. Managing users</a>
@@ -706,14 +710,6 @@ on your machine.</p>
 </div>
 </li>
 <li>
-<p>Deploy the standard authentication service:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc apply -f install/components/standard-authservice</pre>
-</div>
-</div>
-</li>
-<li>
 <p>Deploy using the <code>enmasse</code> bundle:</p>
 <div class="listingblock">
 <div class="content">
@@ -726,6 +722,14 @@ on your machine.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc apply -f install/components/example-plans</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install example authentication service:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/example-authservice</pre>
 </div>
 </div>
 </li>
@@ -1063,14 +1067,6 @@ on your machine.</p>
 </div>
 </li>
 <li>
-<p>Deploy the standard authentication service:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc apply -f install/components/standard-authservice</pre>
-</div>
-</div>
-</li>
-<li>
 <p>Deploy using the <code>enmasse</code> bundle:</p>
 <div class="listingblock">
 <div class="content">
@@ -1083,6 +1079,14 @@ on your machine.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc apply -f install/components/example-plans</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install example authentication service:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/example-authservice</pre>
 </div>
 </div>
 </li>
@@ -1416,62 +1420,19 @@ supporting the OpenShift client.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="deploying-auth-services-messaging">Deploying authentication services</h5>
-<div class="paragraph">
-<p>EnMasse requires at least one authentication service to be deployed:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>none</code> (allow all),</p>
-</li>
-<li>
-<p><code>standard</code> (Keycloak), or</p>
-</li>
-<li>
-<p><code>external</code> (not managed by EnMasse).</p>
-</li>
-</ul>
-</div>
-<div class="sect5">
-<h6 id="proc-deploying-none-auth-service-messaging">Deploying the <code>none</code> authentication service</h6>
+<h5 id="proc-deploying-example-authservice-messaging">Deploying the example authentication service</h5>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Create the <code>none</code> authentication service:</p>
+<p>Install the example authentication service:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc create -f ./install/components/none-authservice</pre>
+<pre class="nowrap">oc apply -f install/components/example-authservice</pre>
 </div>
 </div>
 </li>
 </ol>
-</div>
-</div>
-<div class="sect5">
-<h6 id="proc-deploying-standard-auth-service-messaging">Deploying the <code>standard</code> authentication service</h6>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/standard-authservice/*RoleBinding*.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the <code>standard</code> authentication service:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc create -f ./install/components/standard-authservice</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
 </div>
 </div>
 <div class="sect4">
@@ -2048,6 +2009,284 @@ spec:
 </div>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="con-authentication-services-messaging">3.2.7. Authentication services</h4>
+<div class="paragraph">
+<p>Authentication services are used to configure the authentication and authorization endpoints
+available to messaging clients. The authentication services are configured by the EnMasse
+service operator, and are selected when creating an address space.</p>
+</div>
+<div class="paragraph">
+<p>An authentication service has a type, which can either be <code>none</code>, <code>standard</code>, or <code>external</code>. The
+<code>none</code> authentication service type allows all clients to send and receive messages to any address.</p>
+</div>
+<div class="paragraph">
+<p>The <code>standard</code> authentication service type uses a Keycloak instance to store user
+credentials and access policies. This authentication service also allows managing users using the
+<code>MessagingUser</code> custom resource.</p>
+</div>
+<div class="paragraph">
+<p>The <code>external</code> authentication service allows configuring an external provider of authentication and
+authorization policies through an AMQP SASL handshake. This can be used to implement a bridge for
+your existing identity management system.</p>
+</div>
+<div class="paragraph">
+<p>Authentication services are configured as custom resources. The following example shows an
+authentication service of type <code>standard</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
+kind: AuthenticationService
+metadata:
+  name: standard
+spec:
+  type: standard <b class="conum">(1)</b>
+  standard:
+    credentialsSecret: <b class="conum">(2)</b>
+      name: my-admin-credentials
+    certificateSecret <b class="conum">(3)</b>
+      name: my-authservice-certificate
+    resources: <b class="conum">(4)</b>
+      requests:
+        memory: 2Gi
+      limits:
+        memory: 2Gi
+    storage: <b class="conum">(5)</b>
+      type: persistent-claim
+      size: 5Gi
+    datasource: <b class="conum">(6)</b>
+      type: postgresql
+      host: example.com
+      port: 5432
+      database: authdb</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The type can be specified as <code>none</code>, <code>standard</code>, or <code>external</code>.</p>
+</li>
+<li>
+<p>(Optional) The secret must contain the <code>admin.username</code> field for the user and the <code>admin.password</code> field for the password of the Keycloak admin user. If not specified, a random password will be generated and stored in a secret.</p>
+</li>
+<li>
+<p>(Optional on OpenShift) A custom certificate can be specified. On OpenShift, a certificate is automatically created if not specified.</p>
+</li>
+<li>
+<p>(Optional) Resource limits for the Keycloak instance can be specified.</p>
+</li>
+<li>
+<p>(Optional) The storage type can be specified as <code>ephemeral</code> or <code>persistent-claim</code>. For <code>persistent-claim</code>, you should also configure the size of the claim. The default type is <code>ephemeral</code>.</p>
+</li>
+<li>
+<p>(Optional) Specifies the datasource to be used by Keycloak. The default option is the embedded <code>h2</code> datasource. For production usage, the <code>postgresql</code> datasource is recommended.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>An <code>external</code> authentication service can be configured using the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
+kind: AuthenticationService
+metadata:
+  name: my-im-system
+spec:
+  type: external
+  realm: myrealm <b class="conum">(1)</b>
+  external:
+    host: example.com <b class="conum">(2)</b>
+    port: 5671 <b class="conum">(3)</b>
+    caCertSercret: <b class="conum">(4)</b>
+      name: my-ca-cert</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Optional) The <code>realm</code> is passed in the authentication request. If not specified, an identifier in the form of <em>namespace-addressspace</em> is used as the realm.</p>
+</li>
+<li>
+<p>The host name of the external authentication service.</p>
+</li>
+<li>
+<p>The port of the external authentication service.</p>
+</li>
+<li>
+<p>(Optional) The CA certificate to trust when connecting to the authentication service.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The external authentication service must implement the API described in <a href="http://enmasse.io/documentation/master/openshift/#con-external-authentication-service-api-messaging" class="bare">http://enmasse.io/documentation/master/openshift/#con-external-authentication-service-api-messaging</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="proc-deploying-standard-auth-service-messaging">3.2.8. Deploying the <code>standard</code> authentication service</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a service admin</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Select namespace where EnMasse is installed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create an <code>AuthenticationService</code> definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
+kind: AuthenticationService
+metadata:
+  name: standard-authservice
+spec:
+  type: standard</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the authentication service:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create -f standard-authservice.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="proc-deploying-none-auth-service-messaging">3.2.9. Deploying the <code>none</code> authentication service</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a service admin</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Select namespace where EnMasse is installed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create an <code>AuthenticationService</code> definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
+kind: AuthenticationService
+metadata:
+  name: none-authservice
+spec:
+  type: none</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the authentication service:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create -f none-authservice.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="con-external-authentication-service-api-messaging">3.2.10. External authentication service API</h4>
+<div class="paragraph">
+<p>An <code>external</code> authentication service must implement an AMQP SASL handshake, read the connection
+properties of the client, and respond with the expected connection properties containing the
+authentication and authorization information. The authentication service is queried by the address
+space components such as the router and broker, whenever a new connection is established to the
+messaging endpoints.</p>
+</div>
+<div class="sect4">
+<h5 id="authentication">Authentication</h5>
+<div class="paragraph">
+<p>The requested identity of the client can be read from the SASL handshake <code>username</code>. The
+implementation can then authenticate the user.</p>
+</div>
+<div class="paragraph">
+<p>The authenticated identity will be returned in the <code>authenticated-identity</code> map with the following
+key/values. While this example uses JSON, it should be set as an AMQP map on the connection
+property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
+    "authenticated-identity": {
+        "sub": "myid",
+        "preferred_username": "myuser"
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="authorization">Authorization</h5>
+<div class="paragraph">
+<p>Authorization is a capability that can be requested by the client using the <code>ADDRESS-AUTHZ</code>
+connection capability. If this is set on the connection, the server responds with this
+capability in the offered capabilities, and add the authorization information to the connection
+properties.</p>
+</div>
+<div class="paragraph">
+<p>The authorization information is stored within a map that correlates the address to a list of operations allowed on
+that address. The following connection property information contains the policies for the addresses
+<code>myqueue</code> and <code>mytopic</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
+    "address-authz": {
+        "myqueue": [
+          "send",
+          "recv"
+        ],
+        "mytopic": [
+          "send"
+        ]
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The allowed operations are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>send</code> - User can send to the address.</p>
+</li>
+<li>
+<p><code>recv</code> - User can receive from the address.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -3594,7 +3833,7 @@ spec:
 <code>spec.authorization</code> defines the authorization policies for that user.</p>
 </div>
 <div class="sect3">
-<h4 id="authentication">4.4.1. Authentication</h4>
+<h4 id="authentication_2">4.4.1. Authentication</h4>
 <div class="paragraph">
 <p>The supported values for the authentication type are <code>password</code> and <code>federated</code>.</p>
 </div>
@@ -3638,7 +3877,7 @@ identity provider.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="authorization">4.4.2. Authorization</h4>
+<h4 id="authorization_2">4.4.2. Authorization</h4>
 <div class="paragraph">
 <p>In addition, authorization policies can be defined using operations and addresses. Valid operations
 are <code>send</code>, <code>recv</code>, <code>view</code>, and <code>manage</code>.</p>
@@ -10999,7 +11238,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-03-15 21:33:19 UTC
+Last updated 2019-03-15 21:38:11 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
