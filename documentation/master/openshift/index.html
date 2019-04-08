@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.3">
+<meta name="generator" content="Asciidoctor 2.0.6">
 <title>Using EnMasse</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -513,22 +513,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#con-standard-address-space-messaging">4.1.2. Standard address space</a></li>
 <li><a href="#con-brokered-address-space-messaging">4.1.3. Brokered address space</a></li>
 <li><a href="#con-tenant-address-space-plans-messaging">4.1.4. Address space plans</a></li>
-<li><a href="#proc-list-available-plans-messaging">4.1.5. Listing available plans using the command line</a></li>
+<li><a href="#proc-list-available-address-space-plans-messaging">4.1.5. Listing available address space plans using the command line</a></li>
 <li><a href="#ref-address-space-example-messaging">4.1.6. Address space example</a></li>
 <li><a href="#ref-address-space-example-auth-service-messaging">4.1.7. Address space example using authentication service</a></li>
-<li><a href="#ref-address-space-example-exports-messaging">4.1.8. Address space example exports</a></li>
-<li><a href="#ref-example-address-space-output-messaging">4.1.9. Example address space status output</a></li>
-<li><a href="#create-address-space-cli-messaging">4.1.10. Creating address spaces using the command line</a></li>
-<li><a href="#retrieving-address-space-information-messaging">4.1.11. Example commands for retrieving address space information</a></li>
-<li><a href="#replace-address-space-cli-messaging">4.1.12. Replacing address spaces using the command line</a></li>
+<li><a href="#proc-list-available-auth-services-messaging">4.1.8. Listing available authentication services using the command line</a></li>
+<li><a href="#ref-address-space-example-exports-messaging">4.1.9. Address space example exports</a></li>
+<li><a href="#ref-example-address-space-output-messaging">4.1.10. Example address space status output</a></li>
+<li><a href="#create-address-space-cli-messaging">4.1.11. Creating address spaces using the command line</a></li>
+<li><a href="#retrieving-address-space-information-messaging">4.1.12. Example commands for retrieving address space information</a></li>
+<li><a href="#replace-address-space-cli-messaging">4.1.13. Replacing address spaces using the command line</a></li>
 </ul>
 </li>
 <li><a href="#managing-addresses-messaging">4.2. Managing addresses</a>
 <ul class="sectlevel3">
 <li><a href="#con-address-messaging">4.2.1. Address</a></li>
 <li><a href="#con-tenant-address-plans-messaging">4.2.2. Address plans</a></li>
-<li><a href="#create-address-cli-messaging">4.2.3. Creating addresses using the command line</a></li>
-<li><a href="#replace-address-cli-messaging">4.2.4. Replacing addresses using the command line</a></li>
+<li><a href="#proc-list-available-address-plans-messaging">4.2.3. Listing available address plans using the command line</a></li>
+<li><a href="#create-address-cli-messaging">4.2.4. Creating addresses using the command line</a></li>
+<li><a href="#replace-address-cli-messaging">4.2.5. Replacing addresses using the command line</a></li>
 </ul>
 </li>
 <li><a href="#assembly-using-console-messaging">4.3. Using the EnMasse Console</a>
@@ -559,13 +561,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
-<li><a href="#rest_api_reference">Appendix A: REST API reference</a>
+<li><a href="#ref-brokered-infra-config-fields-messaging">Appendix A: Brokered infrastructure configuration fields</a></li>
+<li><a href="#ref-standard-infra-config-fields-messaging">Appendix B: Standard infrastructure configuration fields</a></li>
+<li><a href="#rest_api_reference">Appendix C: REST API reference</a>
 <ul class="sectlevel2">
-<li><a href="#enmasse_rest_api">A.1. EnMasse REST API</a>
+<li><a href="#enmasse_rest_api">C.1. EnMasse REST API</a>
 <ul class="sectlevel3">
-<li><a href="#_overview">A.1.1. Overview</a></li>
-<li><a href="#_paths">A.1.2. Paths</a></li>
-<li><a href="#_definitions">A.1.3. Definitions</a></li>
+<li><a href="#_overview">C.1.1. Overview</a></li>
+<li><a href="#_paths">C.1.2. Paths</a></li>
+<li><a href="#_definitions">C.1.3. Definitions</a></li>
 </ul>
 </li>
 </ul>
@@ -1725,6 +1729,7 @@ spec:
   displayOrder: 0
   shortDescription: A plan for small queues
   longDescription: A plan for small queues that consume little resources
+  partitions: 1
   addressType: queue
   resources:
     router: 0.2
@@ -1751,7 +1756,23 @@ spec:
 <p>A single router can support five instances of addresses and broker can support three instances of addresses with this plan. If the number of addresses with this plan increases to four, another broker is created. If it increases further to six, another router is created as well.</p>
 </div>
 <div class="paragraph">
-<p>Note, however, that although the address space plan allows two routers and two brokers to be deployed, it only allows two pods to be deployed in total. This means that the address space is restricted to three addresses with the <code>small-queue</code> plan.</p>
+<p>In the <code>standard</code> address space, address plans for the <code>queue</code> address type may contain a field
+<code>partitions</code>, which allows a queue to be sharded accross multiple brokers for HA and improved performance. Specifying an amount of <code>broker</code> resource above 1 will automatically cause a queue to be partitioned.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+A sharded queue no longer guarantees message ordering.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Although the example address space plan in <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-plans-messaging">Address space plans</a> allows two routers and two brokers to be deployed, it only allows two pods to be deployed in total. This means that the address space is restricted to three addresses with the <code>small-queue</code> plan.</p>
 </div>
 <div class="paragraph">
 <p>The <code>small-anycast</code> plan does not consume any broker resources, and can provision two routers at the expense of not being able to create any brokers:</p>
@@ -1862,6 +1883,9 @@ using <code>BrokeredInfraConfig</code> and <code>StandardInfraConfig</code> reso
 spaces. The brokered infrastructure configuration is referenced by address space plans in their
 <code>spec.infraConfigRef</code> field. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
+<div class="paragraph">
+<p>For detailed information about the available brokered infrastructure configuration fields, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-brokered-infra-config-fields-messaging">Brokered infrastructure configuration fields table</a>.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
@@ -1903,7 +1927,7 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 <code>spec.priorityClassName</code>, <code>spec.tolerations</code> and <code>spec.affinity</code>.</p>
 </div>
 <div class="paragraph">
-<p>See <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/priority_preemption.html">Pod priority</a>, <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/taints_tolerations.html">Taints and tolerations</a>, and <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/pod_affinity.html">Affinity and anti-affinity</a> for more information.</p>
+<p>For more information see <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/priority_preemption.html">Pod priority</a>, <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/taints_tolerations.html">Taints and tolerations</a>, and <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/pod_affinity.html">Affinity and anti-affinity</a>.</p>
 </div>
 </div>
 <div class="sect4">
@@ -1912,6 +1936,9 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 <p><code>StandardInfraConfig</code> resources are used to configure infrastructure deployed by <code>standard</code> address
 spaces. The standard infrastructure configuration is referenced by address space plans in their
 <code>spec.infraConfigRef</code> field. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-plans-messaging">Address space plans</a>.</p>
+</div>
+<div class="paragraph">
+<p>For detailed information about the available standard infrastructure configuration fields, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-standard-infra-config-fields-messaging">Standard infrastructure configuration fields table</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1934,6 +1961,13 @@ spec:
       memory: 256Mi
     linkCapcity: 1000
     minReplicas: 1
+    policy:
+      maxConnections: 1000
+      maxConnectionsPerHost: 1
+      maxConnectionsPerUser: 10
+      maxSessionsPerConnection: 10
+      maxSendersPerConnection: 5
+      maxReceiversPerConnection: 5
     podTemplate:
       spec:
         affinity:
@@ -2057,7 +2091,7 @@ spec:
 <div class="paragraph">
 <p>Authentication services are used to configure the authentication and authorization endpoints
 available to messaging clients. The authentication services are configured by the EnMasse
-service operator, and are selected when creating an address space.</p>
+service operator, and are specified when creating an address space.</p>
 </div>
 <div class="paragraph">
 <p>An authentication service has a type, which can either be <code>none</code>, <code>standard</code>, or <code>external</code>. The
@@ -2123,7 +2157,7 @@ spec:
 <p>(Optional) The storage type can be specified as <code>ephemeral</code> or <code>persistent-claim</code>. For <code>persistent-claim</code>, you should also configure the size of the claim. The default type is <code>ephemeral</code>.</p>
 </li>
 <li>
-<p>(Optional) Specifies the datasource to be used by Keycloak. The default option is the embedded <code>h2</code> datasource. For production usage, the <code>postgresql</code> datasource is recommended.</p>
+<p>(Optional) Specifies the data source to be used by Keycloak. The default option is the embedded <code>h2</code> data source. For production usage, the <code>postgresql</code> data source is recommended.</p>
 </li>
 </ol>
 </div>
@@ -2142,7 +2176,7 @@ spec:
   external:
     host: example.com <b class="conum">(2)</b>
     port: 5671 <b class="conum">(3)</b>
-    caCertSercret: <b class="conum">(4)</b>
+    caCertSecret: <b class="conum">(4)</b>
       name: my-ca-cert</code></pre>
 </div>
 </div>
@@ -2163,7 +2197,7 @@ spec:
 </ol>
 </div>
 <div class="paragraph">
-<p>The external authentication service must implement the API described in <a href="http://enmasse.io/documentation/master/openshift/#con-external-authentication-service-api-messaging" class="bare">http://enmasse.io/documentation/master/openshift/#con-external-authentication-service-api-messaging</a>.</p>
+<p>The external authentication service must implement the API described in <a href="http://enmasse.io/documentation/master/openshift/#con-external-authentication-service-api-messaging">External authentication service API</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -3023,9 +3057,9 @@ can vary between EnMasse installations.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-list-available-plans-messaging">4.1.5. Listing available plans using the command line</h4>
+<h4 id="proc-list-available-address-space-plans-messaging">4.1.5. Listing available address space plans using the command line</h4>
 <div class="paragraph">
-<p>You can list the address space plans available for your address space.</p>
+<p>You can list the address space plans available for your address space type.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -3039,10 +3073,10 @@ can vary between EnMasse installations.</p>
 </div>
 </li>
 <li>
-<p>Retrieve the schema with available plans (replace <code>standard</code> with <code>brokered</code> for the brokered address space type):</p>
+<p>Retrieve the schema showing available address space plans (replace <code>standard</code> with <code>brokered</code> for the brokered address space type):</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">oc get addressspaceschema standard -o yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">oc get addressspaceschema standard -o jsonpath='{.spec.plans[*].name}'</code></pre>
 </div>
 </div>
 </li>
@@ -3071,7 +3105,7 @@ spec:
 <p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
 </li>
 <li>
-<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. See <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
+<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. To view your available address space plans, see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-address-space-plans-messaging">Listing available address space plans</a>.</p>
 </li>
 </ol>
 </div>
@@ -3091,7 +3125,7 @@ spec:
   type: standard <b class="conum">(1)</b>
   plan: standard-unlimited <b class="conum">(2)</b>
   authenticationService:
-    type: standard <b class="conum">(3)</b>
+    name: standard-authservice <b class="conum">(3)</b>
   endpoints: <b class="conum">(4)</b>
     - name: messaging
       service: messaging
@@ -3134,10 +3168,10 @@ spec:
 <p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
 </li>
 <li>
-<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. See <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
+<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. To view your available address space plans, see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-address-space-plans-messaging">Listing available address space plans</a>.</p>
 </li>
 <li>
-<p>The authentication service type can be <code>none</code>, <code>standard</code> or <code>external</code>. <code>External</code> requires an additional field, <code>details</code>, which includes <code>host</code> and <code>port</code> information.</p>
+<p>The authentication service name depends on the available authentication services configured by the EnMasse administrator. To view the available authentication services for your address space type, see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-auth-services-messaging">Listing available authentication services</a>.</p>
 </li>
 <li>
 <p>The endpoints that must be configured for the <code>AddressSpace</code>.  Endpoints can specify either <code>messaging</code>, <code>console</code>, or <code>mqtt</code> services. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only. Endpoints can be changed by replacing the address space.</p>
@@ -3149,13 +3183,40 @@ spec:
 <p>The certificate configuration can be used to specify how the endpoint certificate is provided.  The provider can be <code>selfsigned</code> (default), <code>wildcard</code> (requires it to be enabled by the EnMasse administrator), <code>openshift</code> (signed by the OpenShift cluster CA), or <code>certBundle</code> (base64-encoded PEM key and certificate). When using the <code>certBundle</code> provider, the certificate can be rotated by updating the <code>tlsKey</code> and <code>tlsCert</code> values and replacing the address space.</p>
 </li>
 <li>
-<p>The endpoint information can be exported into a <code>ConfigMap</code>, <code>Secret</code> or <code>Service</code> within the same namespace as the <code>AddressSpace</code>. This provides applications running on OpenShift with a way to inject endpoint information or provide a proxy service in the same namespace as the application. See <a href="http://enmasse.io/documentation/master/openshift/#ref-address-space-example-exports-messaging]">example exports format</a> for details.</p>
+<p>The endpoint information can be exported into a <code>ConfigMap</code>, <code>Secret</code>, or <code>Service</code> within the same namespace as the <code>AddressSpace</code>. This provides applications running on OpenShift with a way to inject endpoint information or provide a proxy service in the same namespace as the application. For more information see <a href="http://enmasse.io/documentation/master/openshift/#ref-address-space-example-exports-messaging]">example exports format</a>.</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-address-space-example-exports-messaging">4.1.8. Address space example exports</h4>
+<h4 id="proc-list-available-auth-services-messaging">4.1.8. Listing available authentication services using the command line</h4>
+<div class="paragraph">
+<p>You can list the authentication services available for your address space type.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a messaging tenant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u developer</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Retrieve the schema with the authentication services listed (replace <code>standard</code> with <code>brokered</code> for the brokered address space type):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">oc get addressspaceschema standard -o jsonpath='{.spec.authenticationServices}'</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ref-address-space-example-exports-messaging">4.1.9. Address space example exports</h4>
 <div class="paragraph">
 <p>This example shows the format used by the <code>ConfigMap</code> and <code>Secret</code> export types:</p>
 </div>
@@ -3170,7 +3231,7 @@ ca.crt: // PEM formatted CA</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-example-address-space-output-messaging">4.1.9. Example address space status output</h4>
+<h4 id="ref-example-address-space-output-messaging">4.1.10. Example address space status output</h4>
 <div class="paragraph">
 <p>The <code>AddressSpace</code> resource contains a <code>status</code> field that can be used to retrieve information about
 its state and endpoints. The following output is an example of the output you can get from running
@@ -3230,7 +3291,7 @@ status:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-space-cli-messaging">4.1.10. Creating address spaces using the command line</h4>
+<h4 id="create-address-space-cli-messaging">4.1.11. Creating address spaces using the command line</h4>
 <div class="paragraph">
 <p>In EnMasse, you create address spaces using standard command-line tools.</p>
 </div>
@@ -3290,7 +3351,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="retrieving-address-space-information-messaging">4.1.11. Example commands for retrieving address space information</h4>
+<h4 id="retrieving-address-space-information-messaging">4.1.12. Example commands for retrieving address space information</h4>
 <div class="paragraph">
 <p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
 </div>
@@ -3343,7 +3404,7 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="replace-address-space-cli-messaging">4.1.12. Replacing address spaces using the command line</h4>
+<h4 id="replace-address-space-cli-messaging">4.1.13. Replacing address spaces using the command line</h4>
 <div class="paragraph">
 <p>Address spaces can be replaced in order to change the plan, endpoints, or network policies, or
 to replace certificates if using the <code>certBundle</code> certificate provider. When changing the plan,
@@ -3462,14 +3523,41 @@ spec:
 <p>The address type dictates the semantics of this address.</p>
 </li>
 <li>
-<p>The address plan describes the resource usage for the address. See <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
+<p>The address plan describes the resource usage for the address. For more information about how to view the available plans see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-address-plans-messaging">Listing available address plans</a>.</p>
 </li>
 </ol>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-cli-messaging">4.2.3. Creating addresses using the command line</h4>
+<h4 id="proc-list-available-address-plans-messaging">4.2.3. Listing available address plans using the command line</h4>
+<div class="paragraph">
+<p>You can list the address plans available for an address type, such as <code>queue</code>.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a messaging tenant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u developer</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Retrieve the schema with the address plans listed (replace <code>standard</code> with <code>brokered</code> for the brokered address space type):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">oc get addressspaceschema standard -o 'jsonpath={.spec.addressTypes[?(@.name=="queue")].plans[*].name}'</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="create-address-cli-messaging">4.2.4. Creating addresses using the command line</h4>
 <div class="paragraph">
 <p>You can create addresses using the command line.</p>
 </div>
@@ -3523,7 +3611,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 </div>
 </div>
 <div class="sect3">
-<h4 id="replace-address-cli-messaging">4.2.4. Replacing addresses using the command line</h4>
+<h4 id="replace-address-cli-messaging">4.2.5. Replacing addresses using the command line</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -4504,12 +4592,462 @@ namespace Test
 </div>
 </div>
 <div class="sect1">
-<h2 id="rest_api_reference">Appendix A: REST API reference</h2>
+<h2 id="ref-brokered-infra-config-fields-messaging">Appendix A: Brokered infrastructure configuration fields</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This table shows the fields available for the brokered infrastructure configuration and a brief description.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. Brokered infrastructure configuration fields table</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Field</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Description</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>version</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the EnMasse version used. When upgrading, EnMasse uses this field to determine whether to upgrade the infrastructure to the requested version.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>admin.resources.memory</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the amount of memory allocated to the admin pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>admin.podTemplate.metadata.labels</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the labels added to the admin pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>admin.podTemplate.spec.priorityClassName</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the priority class to use for the admin pod so you can prioritize admin pods over other pods in the OpenShift cluster.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>admin.podTemplate.spec.affinity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the affinity settings for the admin pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>admin.podTemplate.spec.tolerations</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the toleration settings for the admin pod, which allows this pod to run on certain nodes that other pods cannot run on.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.resources.memory</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the amount of memory allocated to the broker.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.resources.storage</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the amount of storage requested for the broker.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.podTemplate.metadata.labels</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the labels added to the broker pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.podTemplate.spec.priorityClassName</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the priority class to use for the broker pod so you can prioritize broker pods over other pods in the OpenShift cluster.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.podTemplate.spec.affinity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the affinity settings for the broker pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.podTemplate.spec.tolerations</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the toleration settings for the broker pod, which allows this pod to run on certain nodes that other pods cannot run on.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.resources.addressFullPolicy</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies action taken when a queue is full: <code>BLOCK</code>, <code>FAIL</code>, <code>PAGE</code>, <code>DROP</code>. The default value is <code>PAGE</code>. For more information see the <a href="https://activemq.apache.org/artemis/docs/latest/address-model.html" target="_blank" rel="noopener">Apache ActiveMQ Artemis documentation</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.storageClassName</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies what storage class to use for the persistent volume for the broker.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.updatePersistentVolumeClaim</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>If the persistent volume supports resizing, setting this value to <code>true</code> allows the broker storage to be resized.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.resources.memory</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the amount of memory allocated to the router.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.resources.linkCapcity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the default number of credits issued on AMQP links for the router.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.resources.minReplicas</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the minimum number of router pods to run; a minimum of two are required for high availability (HA) configuration.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.podTemplate.metadata.labels</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the labels added to the router pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.podTemplate.spec.priorityClassName</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the priority class to use for the router pod so you can prioritize router pods over other pods in the OpenShift cluster.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.podTemplate.spec.affinity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the affinity settings for the router pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.podTemplate.spec.tolerations</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the toleration settings for the router pod, which allows this pod to run on certain nodes that other pods cannot run on.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.idleTimeout</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the AMQP idle timeout to use for all router listeners.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.workerThreads</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the number of worker threads to use for the router.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ref-standard-infra-config-fields-messaging">Appendix B: Standard infrastructure configuration fields</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This table shows the fields available for the standard infrastructure configuration and a brief description.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. Standard infrastructure configuration fields table</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Field</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Description</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>version</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the EnMasse version used. When upgrading, EnMasse uses this field to determine whether to upgrade the infrastructure to the requested version.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>admin.resources.memory</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the amount of memory allocated to the admin pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>admin.podTemplate.metadata.labels</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the labels added to the admin pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>admin.podTemplate.spec.priorityClassName</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the priority class to use for the admin pod so you can prioritize admin pods over other pods in the OpenShift cluster.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>admin.podTemplate.spec.affinity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the affinity settings for the admin pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>admin.podTemplate.spec.tolerations</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the toleration settings for the admin pod, which allow this pod to run on certain nodes on which other pods cannot run.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.resources.memory</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the amount of memory allocated to the broker.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.resources.storage</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the amount of storage requested for the broker.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.podTemplate.metadata.labels</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the labels added to the broker pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.podTemplate.spec.priorityClassName</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the priority class to use for the broker pod so you can prioritize broker pods over other pods in the OpenShift cluster.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.podTemplate.spec.affinity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the affinity settings for the broker pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.podTemplate.spec.tolerations</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the toleration settings for the broker pod, which allow this pod to run on certain nodes on which other pods cannot run.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.connectorIdleTimeout</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the AMQP idle timeout to use for connection to router.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.connectorWorkerThreads</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the number of worker threads of the connection to the router.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.resources.addressFullPolicy</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies action taken when a queue is full: <code>BLOCK</code>, <code>FAIL</code>, <code>PAGE</code>, <code>DROP</code>. The default value is <code>PAGE</code>. For more information see the <a href="https://activemq.apache.org/artemis/docs/latest/address-model.html" target="_blank" rel="noopener">Apache ActiveMQ Artemis documentation</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.storageClassName</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies what storage class to use for the persistent volume for the broker.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.updatePersistentVolumeClaim</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>If the persistent volume supports resizing, setting this value to <code>true</code> allows the broker storage to be resized.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.resources.memory</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the amount of memory allocated to the router.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.resources.linkCapcity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the default number of credits issued on AMQP links for the router.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.resources.minReplicas</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the minimum number of router pods to run; a minimum of two are required for high availability (HA) configuration.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.podTemplate.metadata.labels</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the labels added to the router pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.podTemplate.spec.priorityClassName</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the priority class to use for the router pod so you can prioritize router pods over other pods in the OpenShift cluster.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.podTemplate.spec.affinity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the affinity settings for the router pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.podTemplate.spec.tolerations</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the toleration settings for the router pod, which allow this pod to run on certain nodes on which other pods cannot run.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.idleTimeout</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the AMQP idle timeout to use for all router listeners.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.workerThreads</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the number of worker threads to use for the router.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rest_api_reference">Appendix C: REST API reference</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="enmasse_rest_api">A.1. EnMasse REST API</h3>
+<h3 id="enmasse_rest_api">C.1. EnMasse REST API</h3>
 <div class="sect3">
-<h4 id="_overview">A.1.1. Overview</h4>
+<h4 id="_overview">C.1.1. Overview</h4>
 <div class="paragraph">
 <p>This is the EnMasse API specification.</p>
 </div>
@@ -4562,7 +5100,7 @@ namespace Test
 </div>
 </div>
 <div class="sect3">
-<h4 id="_paths">A.1.2. Paths</h4>
+<h4 id="_paths">C.1.2. Paths</h4>
 <div class="sect4">
 <h5 id="_createadminenmassev1beta2namespacedaddressspaceplan">POST /apis/admin.enmasse.io/v1beta2/namespaces/{namespace}/addressspaceplans</h5>
 <div class="sect5">
@@ -8600,7 +9138,7 @@ namespace Test
 </div>
 </div>
 <div class="sect3">
-<h4 id="_definitions">A.1.3. Definitions</h4>
+<h4 id="_definitions">C.1.3. Definitions</h4>
 <div class="sect4">
 <h5 id="_jsonpatchrequest">JsonPatchRequest</h5>
 <table class="tableblock frame-all grid-all stretch">
@@ -9661,6 +10199,15 @@ namespace Test
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>policy</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_admin_v1beta1_standardinfraconfigspecrouter_policy">policy</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>resources</strong><br>
 <em>optional</em></p>
 </div></div></td>
@@ -9671,6 +10218,77 @@ namespace Test
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>workerThreads</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_admin_v1beta1_standardinfraconfigspecrouter_policy" class="paragraph">
+<p><strong>policy</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>maxConnections</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>maxConnectionsPerHost</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>maxConnectionsPerUser</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>maxReceiversPerConnection</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>maxSendersPerConnection</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>maxSessionsPerConnection</strong><br>
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
@@ -9851,6 +10469,15 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>partitions</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
 </div></div></td>
 </tr>
 <tr>
@@ -11639,7 +12266,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-03-29 08:12:15 UTC
+Last updated 2019-04-08 12:14:13 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
