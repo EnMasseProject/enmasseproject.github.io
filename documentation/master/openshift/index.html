@@ -561,8 +561,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
-<li><a href="#ref-brokered-infra-config-fields-messaging">Appendix A: Brokered infrastructure configuration fields</a></li>
-<li><a href="#ref-standard-infra-config-fields-messaging">Appendix B: Standard infrastructure configuration fields</a></li>
+<li><a href="#'iot-guide-messaging-iot">5. Internet of Things (IoT) guide</a>
+<ul class="sectlevel2">
+<li><a href="#installing-using-bundle-messaging-iot">5.1. Installing EnMasse using a YAML bundle</a></li>
+<li><a href="#installing-services-messaging-iot">5.2. Installing IoT services</a></li>
+<li><a href="#iot-creating-project-messaging-iot">5.3. Creating an IoT project</a></li>
+<li><a href="#iot-creating-device-messaging-iot">5.4. Creating an IoT device</a></li>
+<li><a href="#iot-telemetry-messaging-iot">5.5. Sending and receiving telemetry data</a>
+<ul class="sectlevel3">
+<li><a href="#starting_telemetry_consumer">5.5.1. Starting telemetry consumer</a></li>
+<li><a href="#sending_telemetry_data">5.5.2. Sending telemetry data</a></li>
+</ul>
+</li>
+<li><a href="#iot-event-messaging-iot">5.6. Sending and receiving event data</a>
+<ul class="sectlevel3">
+<li><a href="#starting_event_consumer">5.6.1. Starting event consumer</a></li>
+<li><a href="#sending_event_data">5.6.2. Sending event data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#ref-brokered-infra-config-fields-messaging-iot">Appendix A: Brokered infrastructure configuration fields</a></li>
+<li><a href="#ref-standard-infra-config-fields-messaging-iot">Appendix B: Standard infrastructure configuration fields</a></li>
 <li><a href="#rest_api_reference">Appendix C: REST API reference</a>
 <ul class="sectlevel2">
 <li><a href="#enmasse_rest_api">C.1. EnMasse REST API</a>
@@ -4592,7 +4612,275 @@ namespace Test
 </div>
 </div>
 <div class="sect1">
-<h2 id="ref-brokered-infra-config-fields-messaging">Appendix A: Brokered infrastructure configuration fields</h2>
+<h2 id="'iot-guide-messaging-iot">5. Internet of Things (IoT) guide</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The IoT guide provides resources on how to set up and manage EnMasse IoT features.</p>
+</div>
+<div class="sect2">
+<h3 id="installing-using-bundle-messaging-iot">5.1. Installing EnMasse using a YAML bundle</h3>
+<div class="paragraph">
+<p>The simplest way to install EnMasse is to use the predefined YAML bundles.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a user with <code>cluster-admin</code> privileges:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u system:admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/bundles/enmasse/*.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the project where you want to deploy EnMasse:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc new-project <em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy using the <code>enmasse</code> bundle:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/bundles/enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install example plans and infrastructure configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/example-plans</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install the <code>standard</code> authentication service:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/example-authservices/standard-authservice.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="installing-services-messaging-iot">5.2. Installing IoT services</h3>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Deploy the IoT bundles:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/preview-bundles/iot</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Install an example IoT infrastructure configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/iot/examples/iot-config.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="iot-creating-project-messaging-iot">5.3. Creating an IoT project</h3>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Change to a non-admin user:</p>
+</li>
+<li>
+<p>Create a <em>managed</em> IoT Project:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc new-project myapp
+oc create -f iot/examples/iot-project-managed.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Wait for the resources to be ready:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get addressspace -w
+oc get iotproject -w</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a messaging consumer user:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create -f iot/examples/iot-user.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="iot-creating-device-messaging-iot">5.4. Creating an IoT device</h3>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Register a device:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' --data-binary '{"device-id": "4711"}' https://$(oc -n enmasse-infra get routes device-registry --template='{{ .spec.host }}')/registration/myapp.iot</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add credentials for a device:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' --data-binary '{"device-id": "4711","type": "hashed-password","auth-id": "sensor1","secrets": [{"hash-function" : "sha-512","pwd-plain":"'hono-secret'"}]}' https://$(oc -n enmasse-infra get routes device-registry --template='{{ .spec.host }}')/credentials/myapp.iot</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="iot-telemetry-messaging-iot">5.5. Sending and receiving telemetry data</h3>
+<div class="sect3">
+<h4 id="starting_telemetry_consumer">5.5.1. Starting telemetry consumer</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In Hono project run:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cd cli</pre>
+</div>
+</div>
+</li>
+<li>
+<p>At least once run:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mvn package -am</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Get the messaging endpoint certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].cert} | base64 --decode > target/config/hono-demo-certs-jar/tls.crt</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run the consumer application:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mvn spring-boot:run -Drun.arguments=--hono.client.host=$(oc -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].externalHost}),--hono.client.port=443,--hono.client.username=consumer,--hono.client.password=foobar,--tenant.id=myapp.iot,--hono.client.trustStorePath=target/config/hono-demo-certs-jar/tls.crt,--message.type=telemetry</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sending_telemetry_data">5.5.2. Sending telemetry data</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Send telemetry message using HTTP:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -u sensor1@myapp.iot:hono-secret -H 'Content-Type: application/json' --data-binary '{"temp": 5}' https://$(oc -n enmasse-infra get route iot-http-adapter --template='{{.spec.host}}')/telemetry</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="iot-event-messaging-iot">5.6. Sending and receiving event data</h3>
+<div class="sect3">
+<h4 id="starting_event_consumer">5.6.1. Starting event consumer</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In Hono project run:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cd cli</pre>
+</div>
+</div>
+</li>
+<li>
+<p>At least once run:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mvn package -am</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Get the messaging endpoint certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].cert} | base64 --decode > target/config/hono-demo-certs-jar/tls.crt</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run the consumer application:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mvn spring-boot:run -Drun.arguments=--hono.client.host=$(oc -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].externalHost}),--hono.client.port=443,--hono.client.username=consumer,--hono.client.password=foobar,--tenant.id=myapp.iot,--hono.client.trustStorePath=target/config/hono-demo-certs-jar/tls.crt,--message.type=event</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sending_event_data">5.6.2. Sending event data</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Send event message using HTTP:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -u sensor1@myapp.iot:hono-secret -H 'Content-Type: application/json' --data-binary '{"temp": 5}' https://$(oc -n enmasse-infra get route iot-http-adapter --template='{{.spec.host}}')/event</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ref-brokered-infra-config-fields-messaging-iot">Appendix A: Brokered infrastructure configuration fields</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This table shows the fields available for the brokered infrastructure configuration and a brief description.</p>
@@ -4809,7 +5097,7 @@ namespace Test
 </div>
 </div>
 <div class="sect1">
-<h2 id="ref-standard-infra-config-fields-messaging">Appendix B: Standard infrastructure configuration fields</h2>
+<h2 id="ref-standard-infra-config-fields-messaging-iot">Appendix B: Standard infrastructure configuration fields</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This table shows the fields available for the standard infrastructure configuration and a brief description.</p>
@@ -12266,7 +12554,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-08 12:14:13 UTC
+Last updated 2019-04-08 13:11:55 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
