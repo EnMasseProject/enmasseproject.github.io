@@ -467,21 +467,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#downloading-messaging">3.1.1. Downloading EnMasse</a></li>
 <li><a href="#installing-using-bundle-messaging">3.1.2. Installing EnMasse using a YAML bundle</a></li>
-<li><a href="#installing-using-manual-steps-messaging">3.1.3. Installing EnMasse manually</a></li>
+<li><a href="#installing-using-olm-messaging">3.1.3. Installing EnMasse using Operator Marketplace</a></li>
 </ul>
 </li>
 <li><a href="#configuring-messaging">3.2. Configuring EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#con-address-space-plans-messaging">3.2.1. Address space plans</a></li>
-<li><a href="#create-address-space-plans-cli-messaging">3.2.2. Creating address space plans</a></li>
-<li><a href="#con-address-plans-messaging">3.2.3. Address plans</a></li>
-<li><a href="#create-address-plans-cli-messaging">3.2.4. Creating address plans</a></li>
-<li><a href="#infrastructure-configuration-messaging">3.2.5. Infrastructure configuration</a></li>
-<li><a href="#applying-infra-config-changes-messaging">3.2.6. Applying infrastructure configuration</a></li>
-<li><a href="#con-authentication-services-messaging">3.2.7. Authentication services</a></li>
-<li><a href="#proc-deploying-standard-auth-service-messaging">3.2.8. Deploying the <code>standard</code> authentication service</a></li>
-<li><a href="#proc-deploying-none-auth-service-messaging">3.2.9. Deploying the <code>none</code> authentication service</a></li>
-<li><a href="#con-external-authentication-service-api-messaging">3.2.10. External authentication service API</a></li>
+<li><a href="#minimal-service-configuration-messaging">3.2.1. Minimal service configuration</a></li>
+<li><a href="#con-address-space-plans-messaging">3.2.2. Address space plans</a></li>
+<li><a href="#create-address-space-plans-cli-messaging">3.2.3. Creating address space plans</a></li>
+<li><a href="#con-address-plans-messaging">3.2.4. Address plans</a></li>
+<li><a href="#create-address-plans-cli-messaging">3.2.5. Creating address plans</a></li>
+<li><a href="#infrastructure-configuration-messaging">3.2.6. Infrastructure configuration</a></li>
+<li><a href="#applying-infra-config-changes-messaging">3.2.7. Applying infrastructure configuration</a></li>
+<li><a href="#con-authentication-services-messaging">3.2.8. Authentication services</a></li>
+<li><a href="#proc-deploying-standard-auth-service-messaging">3.2.9. Deploying the <code>standard</code> authentication service</a></li>
+<li><a href="#proc-deploying-none-auth-service-messaging">3.2.10. Deploying the <code>none</code> authentication service</a></li>
+<li><a href="#con-external-authentication-service-api-messaging">3.2.11. External authentication service API</a></li>
 </ul>
 </li>
 <li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
@@ -494,9 +495,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#deploy-monitoring-infrastructure-messaging">3.4.1. Installing monitoring infrastructure</a></li>
 <li><a href="#deploy-service-monitors-messaging">3.4.2. Deploying service monitors</a></li>
 <li><a href="#deploy-prometheus-rules-messaging">3.4.3. Deploying Prometheus Rules for alerting</a></li>
-<li><a href="#restart-component-messaging">3.4.4. Restarting a component</a></li>
-<li><a href="#get-logs-broker-messaging">3.4.5. Viewing router logs</a></li>
-<li><a href="#get-logs-router-messaging">3.4.6. Viewing broker logs</a></li>
+<li><a href="#deploy-grafana-dashboards-messaging">3.4.4. Deploying Grafana dashboards for graphing metrics</a></li>
+<li><a href="#restart-component-messaging">3.4.5. Restarting a component</a></li>
+<li><a href="#get-logs-broker-messaging">3.4.6. Viewing router logs</a></li>
+<li><a href="#get-logs-router-messaging">3.4.7. Viewing broker logs</a></li>
 </ul>
 </li>
 <li><a href="#uninstalling-messaging">3.5. Uninstalling EnMasse</a></li>
@@ -504,56 +506,57 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#tenant-guide-messaging">4. Tenant guide</a>
 <ul class="sectlevel2">
-<li><a href="#managing-address-spaces-messaging">4.1. Managing address spaces</a>
+<li><a href="#minimal-tenant-configuration-messaging">4.1. Minimal tenant configuration</a></li>
+<li><a href="#managing-address-spaces-messaging">4.2. Managing address spaces</a>
 <ul class="sectlevel3">
-<li><a href="#con-address-space-messaging">4.1.1. Address space</a></li>
-<li><a href="#con-standard-address-space-messaging">4.1.2. Standard address space</a></li>
-<li><a href="#con-brokered-address-space-messaging">4.1.3. Brokered address space</a></li>
-<li><a href="#con-tenant-address-space-plans-messaging">4.1.4. Address space plans</a></li>
-<li><a href="#proc-list-available-address-space-plans-messaging">4.1.5. Listing available address space plans using the command line</a></li>
-<li><a href="#ref-address-space-example-messaging">4.1.6. Address space example</a></li>
-<li><a href="#ref-address-space-example-auth-service-messaging">4.1.7. Address space example using authentication service</a></li>
-<li><a href="#proc-list-available-auth-services-messaging">4.1.8. Listing available authentication services using the command line</a></li>
-<li><a href="#ref-address-space-example-exports-messaging">4.1.9. Address space example exports</a></li>
-<li><a href="#ref-example-address-space-output-messaging">4.1.10. Example address space status output</a></li>
-<li><a href="#create-address-space-cli-messaging">4.1.11. Creating address spaces using the command line</a></li>
-<li><a href="#retrieving-address-space-information-messaging">4.1.12. Example commands for retrieving address space information</a></li>
-<li><a href="#replace-address-space-cli-messaging">4.1.13. Replacing address spaces using the command line</a></li>
+<li><a href="#con-address-space-messaging">4.2.1. Address space</a></li>
+<li><a href="#con-standard-address-space-messaging">4.2.2. Standard address space</a></li>
+<li><a href="#con-brokered-address-space-messaging">4.2.3. Brokered address space</a></li>
+<li><a href="#con-tenant-address-space-plans-messaging">4.2.4. Address space plans</a></li>
+<li><a href="#proc-list-available-address-space-plans-messaging">4.2.5. Listing available address space plans using the command line</a></li>
+<li><a href="#ref-address-space-example-messaging">4.2.6. Address space example</a></li>
+<li><a href="#ref-address-space-example-auth-service-messaging">4.2.7. Address space example using authentication service</a></li>
+<li><a href="#proc-list-available-auth-services-messaging">4.2.8. Listing available authentication services using the command line</a></li>
+<li><a href="#ref-address-space-example-exports-messaging">4.2.9. Address space example exports</a></li>
+<li><a href="#ref-example-address-space-output-messaging">4.2.10. Example address space status output</a></li>
+<li><a href="#create-address-space-cli-messaging">4.2.11. Creating address spaces using the command line</a></li>
+<li><a href="#retrieving-address-space-information-messaging">4.2.12. Example commands for retrieving address space information</a></li>
+<li><a href="#replace-address-space-cli-messaging">4.2.13. Replacing address spaces using the command line</a></li>
 </ul>
 </li>
-<li><a href="#managing-addresses-messaging">4.2. Managing addresses</a>
+<li><a href="#managing-addresses-messaging">4.3. Managing addresses</a>
 <ul class="sectlevel3">
-<li><a href="#con-address-messaging">4.2.1. Address</a></li>
-<li><a href="#con-tenant-address-plans-messaging">4.2.2. Address plans</a></li>
-<li><a href="#proc-list-available-address-plans-messaging">4.2.3. Listing available address plans using the command line</a></li>
-<li><a href="#create-address-cli-messaging">4.2.4. Creating addresses using the command line</a></li>
-<li><a href="#replace-address-cli-messaging">4.2.5. Replacing addresses using the command line</a></li>
+<li><a href="#con-address-messaging">4.3.1. Address</a></li>
+<li><a href="#con-tenant-address-plans-messaging">4.3.2. Address plans</a></li>
+<li><a href="#proc-list-available-address-plans-messaging">4.3.3. Listing available address plans using the command line</a></li>
+<li><a href="#create-address-cli-messaging">4.3.4. Creating addresses using the command line</a></li>
+<li><a href="#replace-address-cli-messaging">4.3.5. Replacing addresses using the command line</a></li>
 </ul>
 </li>
-<li><a href="#assembly-using-console-messaging">4.3. Using the EnMasse Console</a>
+<li><a href="#assembly-using-console-messaging">4.4. Using the EnMasse Console</a>
 <ul class="sectlevel3">
-<li><a href="#logging-into-console-messaging">4.3.1. Accessing the EnMasse Console</a></li>
-<li><a href="#create-address-console-messaging">4.3.2. Creating addresses using the EnMasse Console</a></li>
-<li><a href="#ref-console-address-filtering-messaging">4.3.3. Using the EnMasse Console address filtering</a></li>
-<li><a href="#ref-view-message-connection-stats-table-messaging">4.3.4. Viewing message and connection statistics using the EnMasse Console</a></li>
+<li><a href="#logging-into-console-messaging">4.4.1. Accessing the EnMasse Console</a></li>
+<li><a href="#create-address-console-messaging">4.4.2. Creating addresses using the EnMasse Console</a></li>
+<li><a href="#ref-console-address-filtering-messaging">4.4.3. Using the EnMasse Console address filtering</a></li>
+<li><a href="#ref-view-message-connection-stats-table-messaging">4.4.4. Viewing message and connection statistics using the EnMasse Console</a></li>
 </ul>
 </li>
-<li><a href="#con-user-model-messaging">4.4. User model</a>
+<li><a href="#con-user-model-messaging">4.5. User model</a>
 <ul class="sectlevel3">
-<li><a href="#authentication_2">4.4.1. Authentication</a></li>
-<li><a href="#authorization_2">4.4.2. Authorization</a></li>
+<li><a href="#authentication_2">4.5.1. Authentication</a></li>
+<li><a href="#authorization_2">4.5.2. Authorization</a></li>
 </ul>
 </li>
-<li><a href="#managing-users-messaging">4.5. Managing users</a>
+<li><a href="#managing-users-messaging">4.6. Managing users</a>
 <ul class="sectlevel3">
-<li><a href="#proc-creating-users-cli-messaging">4.5.1. Creating users using the command line</a></li>
-<li><a href="#proc-deleting-users-cli-messaging">4.5.2. Deleting users using the command line</a></li>
-<li><a href="#proc-managing-user-permissions-cli-messaging">4.5.3. Managing user permissions using the command line</a></li>
+<li><a href="#proc-creating-users-cli-messaging">4.6.1. Creating users using the command line</a></li>
+<li><a href="#proc-deleting-users-cli-messaging">4.6.2. Deleting users using the command line</a></li>
+<li><a href="#proc-managing-user-permissions-cli-messaging">4.6.3. Managing user permissions using the command line</a></li>
 </ul>
 </li>
-<li><a href="#assembly-connecting-applications-messaging">4.6. Connecting applications to EnMasse</a>
+<li><a href="#assembly-connecting-applications-messaging">4.7. Connecting applications to EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#client-examples-messaging">4.6.1. Client examples</a></li>
+<li><a href="#client-examples-messaging">4.7.1. Client examples</a></li>
 </ul>
 </li>
 </ul>
@@ -853,6 +856,26 @@ Prefixing the name with the address space name is required to ensure addresses f
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
+<p>To correctly base64 encode a password for the user definition file, run the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">echo -n password | base64 #cGFzc3dvcmQ=</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Be sure to use the <code>-n</code> parameter when running this command. Not specifying that parameter will result in an improperly coded password and cause log-in issues.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
 <p>Save the user definition to a file:</p>
 <div class="listingblock">
 <div class="content">
@@ -989,7 +1012,8 @@ infrastructure configuration, and plans.</p>
 <div class="sect2">
 <h3 id="installing-messaging">3.1. Installing EnMasse</h3>
 <div class="paragraph">
-<p>These steps follow the manual deployment procedure and work on any platform supporting the <code>kubectl</code> command-line client.</p>
+<p>EnMasse can be installed by applying the YAML files using the <code>kubectl</code> command-line tool or
+by using the Operator Marketplace.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisite</div>
@@ -1075,153 +1099,156 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 </div>
 </div>
 <div class="sect3">
-<h4 id="installing-using-manual-steps-messaging">3.1.3. Installing EnMasse manually</h4>
+<h4 id="installing-using-olm-messaging">3.1.3. Installing EnMasse using Operator Marketplace</h4>
 <div class="paragraph">
-<p>The manual deployment procedure can be performed on any platform
-supporting the Kubernetes client.</p>
+<p>If the version of EnMasse you want to install is not available in the <a href="https://www.operatorhub.io" target="_blank" rel="noopener">Operator
+Hub</a>, you can install a custom <code>OperatorSource</code> for EnMasse following these steps.</p>
 </div>
-<div class="sect4">
-<h5 id="creating-project-messaging">Creating the project for EnMasse</h5>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
 <li>
-<p>Create the <code><em>enmasse-infra</em></code> namespace:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create namespace <em>enmasse-infra</em></pre>
-</div>
-</div>
+<p><a href="https://github.com/operator-framework/operator-lifecycle-manager">Operator Lifecycle Manager</a> must be installed.</p>
 </li>
 <li>
-<p>Set the <code><em>enmasse-infra</em></code> namespace as the default namespace:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
-</div>
-</div>
+<p><a href="https://github.com/operator-framework/operator-marketplace">Operator Marketplace</a> must be installed.</p>
 </li>
-</ol>
-</div>
-</div>
-<div class="sect4">
-<h5 id="proc-deploying-example-authservice-messaging">Deploying the example authentication service</h5>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Install the <code>standard</code> authentication service:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f install/components/example-authservices/standard-authservice.yaml</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect4">
-<h5 id="deploying-address-space-controller-messaging">Deploying the Address Space Controller</h5>
-<div class="paragraph">
-<p>The Address Space Controller is responsible for creating the infrastructure used by address spaces.</p>
+</ul>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command:</p>
+<p>Create an <code>OperatorSource</code>:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/address-space-controller/*.yaml</pre>
+<pre class="nowrap">cat &lt;&lt;EOF | kubectl apply -f -
+apiVersion: operators.coreos.com/v1
+kind: OperatorSource
+metadata:
+  name: enmasse-operators
+  namespace: marketplace
+spec:
+  type: appregistry
+  endpoint: https://quay.io/cnr
+  registryNamespace: enmasse
+  displayName: "EnMasse Operators"
+  publisher: "EnMasse"
+EOF</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Deploy the Address Space Controller</p>
+<p>Create a <code>CatalogSourceConfig</code> to enable the operator on your Kubernetes cluster:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl apply -f install/components/address-space-controller</pre>
+<pre class="nowrap">cat &lt;&lt;EOF | kubectl apply -f -
+apiVersion: operators.coreos.com/v1
+kind: CatalogSourceConfig
+metadata:
+  name: installed-enmasse-operators
+  namespace: marketplace
+spec:
+  csDisplayName: EnMasse Operators
+  csPublisher: EnMasse
+  packages: enmasse
+  targetNamespace: operators
+EOF</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a <code>Subscription</code> to install the operator and receive updates:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cat &lt;&lt;EOF | kubectl apply -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: enmasse
+  namespace: operators
+spec:
+  channel: alpha
+  name: enmasse
+  source: enmasse-operators
+  sourceNamespace: operators
+EOF</pre>
 </div>
 </div>
 </li>
 </ol>
-</div>
-</div>
-<div class="sect4">
-<h5 id="deploying-example-plans-messaging">Deploying the example plans and infrastructure configuration</h5>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Install the example plans:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f install/components/example-plans</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect4">
-<h5 id="deploying-api-server-messaging">Deploying the API server</h5>
-<div class="paragraph">
-<p>The API server provides a REST API for creating address spaces and addresses. It can also serve as an aggregated API server if it is registered as an API service.</p>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/api-service/*.yaml
-sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/api-server/*.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Register API service</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f install/components/api-service</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a certificate to use with the API server. For testing purposes, you can create a self-signed certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mkdir -p api-server-cert/
-openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-server.<em>enmasse-infra</em>.svc.cluster.local" -out api-server-cert/tls.crt -keyout api-server-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a secret containing the API server certificate:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create secret tls api-server-cert --cert=api-server-cert/tls.crt --key=api-server-cert/tls.key</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy the API Server</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl apply -f install/components/api-server/</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="configuring-messaging">3.2. Configuring EnMasse</h3>
 <div class="sect3">
-<h4 id="con-address-space-plans-messaging">3.2.1. Address space plans</h4>
+<h4 id="minimal-service-configuration-messaging">3.2.1. Minimal service configuration</h4>
+<div class="paragraph">
+<p>Configuring EnMasse for production takes some time and consideration. The following procedure will get
+you started with a minimal service configuration. For a more complete example, navigate to the
+<code>install/components/example-plans</code> folder of the EnMasse distribution. All of the commands
+must be run in the namespace where EnMasse is installed.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Save the example configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">apiVersion: admin.enmasse.io/v1beta1
+kind: StandardInfraConfig
+metadata:
+  name: default
+spec:
+---
+apiVersion: admin.enmasse.io/v1beta2
+kind: AddressPlan
+metadata:
+  name: standard-small-queue
+spec:
+  addressType: queue
+  resources:
+    router: 0.01
+    broker: 0.1
+---
+apiVersion: admin.enmasse.io/v1beta2
+kind: AddressSpacePlan
+metadata:
+  name: standard-small
+spec:
+  addressSpaceType: standard
+  infraConfigRef: default
+  addressPlans:
+  - standard-small-queue
+  resourceLimits:
+    router: 2.0
+    broker: 3.0
+    aggregate: 4.0
+---
+apiVersion: admin.enmasse.io/v1beta1
+kind: AuthenticationService
+metadata:
+  name: none-authservice
+spec:
+  type: none</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Apply the example configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f service-config.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="con-address-space-plans-messaging">3.2.2. Address space plans</h4>
 <div class="paragraph">
 <p>Address space plans are used to configure quotas and control the resources consumed by address spaces. Address space plans are configured by the EnMasse service operator and are selected when creating an address space.</p>
 </div>
@@ -1284,7 +1311,7 @@ For more information about infrastructure configurations, see <a href="http://en
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-space-plans-cli-messaging">3.2.2. Creating address space plans</h4>
+<h4 id="create-address-space-plans-cli-messaging">3.2.3. Creating address space plans</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1335,7 +1362,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-address-plans-messaging">3.2.3. Address plans</h4>
+<h4 id="con-address-plans-messaging">3.2.4. Address plans</h4>
 <div class="paragraph">
 <p>Address plans specify the expected resource usage of a given address. The sum of the resource usage for all resource types determines the amount of infrastructure provisioned for an address space. A single router and broker pod has a maximum usage of one. If a new address requires additional resources and the resource consumption is within the address space plan limits, a new pod will be created automatically to handle the increased load.</p>
 </div>
@@ -1432,7 +1459,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-plans-cli-messaging">3.2.4. Creating address plans</h4>
+<h4 id="create-address-plans-cli-messaging">3.2.5. Creating address plans</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1477,7 +1504,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="infrastructure-configuration-messaging">3.2.5. Infrastructure configuration</h4>
+<h4 id="infrastructure-configuration-messaging">3.2.6. Infrastructure configuration</h4>
 <div class="paragraph">
 <p>EnMasse creates infrastructure components such as routers, brokers, and consoles. These
 components can be configured while the system is running, and EnMasse automatically updates
@@ -1529,7 +1556,8 @@ spec:
 </div>
 <div class="paragraph">
 <p>The <code>version</code> field specifies the EnMasse version used. When upgrading, EnMasse uses
-this field to determine whether to upgrade the infrastructure to the requested version.</p>
+this field to determine whether to upgrade the infrastructure to the requested version. If omitted,
+the version will be assumed to be the same as the controllers reading the config.</p>
 </div>
 <div class="paragraph">
 <p>The <code>admin</code> object specifies the settings you can configure for the <code>admin</code> components.</p>
@@ -1601,7 +1629,8 @@ spec:
 </div>
 <div class="paragraph">
 <p>The <code>version</code> field specifies the EnMasse version used. When upgrading, EnMasse uses
-this field to determine whether to upgrade the infrastructure to the requested version.</p>
+this field to determine whether to upgrade the infrastructure to the requested version. If omitted,
+the version will be assumed to be the same as the controllers reading the config.</p>
 </div>
 <div class="paragraph">
 <p>The <code>admin</code> object specifies the settings you can configure for the <code>admin</code> components.</p>
@@ -1623,7 +1652,7 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 </div>
 </div>
 <div class="sect3">
-<h4 id="applying-infra-config-changes-messaging">3.2.6. Applying infrastructure configuration</h4>
+<h4 id="applying-infra-config-changes-messaging">3.2.7. Applying infrastructure configuration</h4>
 <div class="paragraph">
 <p>You can edit existing configurations or create new ones.</p>
 </div>
@@ -1687,7 +1716,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-authentication-services-messaging">3.2.7. Authentication services</h4>
+<h4 id="con-authentication-services-messaging">3.2.8. Authentication services</h4>
 <div class="paragraph">
 <p>Authentication services are used to configure the authentication and authorization endpoints
 available to messaging clients. The authentication services are configured by the EnMasse
@@ -1801,7 +1830,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-deploying-standard-auth-service-messaging">3.2.8. Deploying the <code>standard</code> authentication service</h4>
+<h4 id="proc-deploying-standard-auth-service-messaging">3.2.9. Deploying the <code>standard</code> authentication service</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1830,7 +1859,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-deploying-none-auth-service-messaging">3.2.9. Deploying the <code>none</code> authentication service</h4>
+<h4 id="proc-deploying-none-auth-service-messaging">3.2.10. Deploying the <code>none</code> authentication service</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1859,7 +1888,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-external-authentication-service-api-messaging">3.2.10. External authentication service API</h4>
+<h4 id="con-external-authentication-service-api-messaging">3.2.11. External authentication service API</h4>
 <div class="paragraph">
 <p>An <code>external</code> authentication service must implement an AMQP SASL handshake, read the connection
 properties of the client, and respond with the expected connection properties containing the
@@ -1995,7 +2024,7 @@ configuration of the new version will trigger the upgrade to start.</p>
 <div class="sect3">
 <h4 id="deploy-monitoring-infrastructure-messaging">3.4.1. Installing monitoring infrastructure</h4>
 <div class="paragraph">
-<p>If you do not have a pre-existing infrastructure for monitoring, you must install one, which includes Prometheus, Alertmanager, Grafana, and <code>kube-state-metrics</code>.</p>
+<p>If you do not have a pre-existing infrastructure for monitoring, you must install one, which includes Prometheus, Alertmanager, and <code>kube-state-metrics</code>.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -2150,7 +2179,42 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="restart-component-messaging">3.4.4. Restarting a component</h4>
+<h4 id="deploy-grafana-dashboards-messaging">3.4.4. Deploying Grafana dashboards for graphing metrics</h4>
+<div class="paragraph">
+<p>You must deploy Grafana dashboards to graph EnMasse metrics.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>A deployment of Grafana using the <a href="https://github.com/integr8ly/grafana-operator" target="_blank" rel="noopener">Grafana Operator</a> is required to deploy the Grafana dashboards.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Select the EnMasse namespace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl project <em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the <code>grafana-dashboards</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f /install/components/grafana</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="restart-component-messaging">3.4.5. Restarting a component</h4>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
@@ -2169,7 +2233,7 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="get-logs-broker-messaging">3.4.5. Viewing router logs</h4>
+<h4 id="get-logs-broker-messaging">3.4.6. Viewing router logs</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2193,7 +2257,7 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="get-logs-router-messaging">3.4.6. Viewing broker logs</h4>
+<h4 id="get-logs-router-messaging">3.4.7. Viewing broker logs</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2254,13 +2318,55 @@ kubectl delete apiservices -l app=enmasse</pre>
 messaging tenant.</p>
 </div>
 <div class="sect2">
-<h3 id="managing-address-spaces-messaging">4.1. Managing address spaces</h3>
+<h3 id="minimal-tenant-configuration-messaging">4.1. Minimal tenant configuration</h3>
+<div class="paragraph">
+<p>The following procedure will get you started with a minimal configuration for a messaging application.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Save the example configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-small
+---
+apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+  name: myspace.myqueue
+spec:
+  address: myqueue
+  type: queue
+  plan: standard-small-queue</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Apply the example configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f application-config.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="managing-address-spaces-messaging">4.2. Managing address spaces</h3>
 <div class="paragraph">
 <p>EnMasse is configured to support managing address spaces using the Kubernetes command-line
 tools. Address spaces are managed like any other Kubernetes resource using <code>kubectl</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="con-address-space-messaging">4.1.1. Address space</h4>
+<h4 id="con-address-space-messaging">4.2.1. Address space</h4>
 <div class="paragraph">
 <p>An address space is a group of addresses that can be accessed through a single connection (per protocol). This means that clients connected to the endpoints of an address space can send messages to or receive messages from any authorized address within that address space. An address space can support multiple protocols, as defined by the address space type.</p>
 </div>
@@ -2279,7 +2385,7 @@ tools. Address spaces are managed like any other Kubernetes resource using <code
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-standard-address-space-messaging">4.1.2. Standard address space</h4>
+<h4 id="con-standard-address-space-messaging">4.2.2. Standard address space</h4>
 <div class="paragraph">
 <p>The standard address space is the default address space in EnMasse. It consists of an AMQP router network in combination with attachable storage units. Clients connect to a message router, which forwards messages to or from one or more message brokers. This address space type is appropriate when you have many connections and addresses. However, the standard address space has the following limitations:</p>
 </div>
@@ -2415,7 +2521,7 @@ If you create a subscription on a topic, any senders to that topic must specify 
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-brokered-address-space-messaging">4.1.3. Brokered address space</h4>
+<h4 id="con-brokered-address-space-messaging">4.2.3. Brokered address space</h4>
 <div class="paragraph">
 <p>The brokered address space is designed to support broker-specific features, at the cost of limited
 scale in terms of the number of connections and addresses. This address space supports JMS
@@ -2495,7 +2601,7 @@ message groups, transactions, and other JMS features. Message order can be lost 
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-tenant-address-space-plans-messaging">4.1.4. Address space plans</h4>
+<h4 id="con-tenant-address-space-plans-messaging">4.2.4. Address space plans</h4>
 <div class="paragraph">
 <p>An address space is configured with an address space plan, which describes the allowed resource
 usage of that address space. The address space plans are configured by the service administrator and
@@ -2506,7 +2612,7 @@ can vary between EnMasse installations.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-list-available-address-space-plans-messaging">4.1.5. Listing available address space plans using the command line</h4>
+<h4 id="proc-list-available-address-space-plans-messaging">4.2.5. Listing available address space plans using the command line</h4>
 <div class="paragraph">
 <p>You can list the address space plans available for your address space type.</p>
 </div>
@@ -2525,7 +2631,7 @@ can vary between EnMasse installations.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-address-space-example-messaging">4.1.6. Address space example</h4>
+<h4 id="ref-address-space-example-messaging">4.2.6. Address space example</h4>
 <div class="paragraph">
 <p>This address space example shows only the required options to create an <code>AddressSpace</code>.</p>
 </div>
@@ -2552,7 +2658,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-address-space-example-auth-service-messaging">4.1.7. Address space example using authentication service</h4>
+<h4 id="ref-address-space-example-auth-service-messaging">4.2.7. Address space example using authentication service</h4>
 <div class="paragraph">
 <p>This address space example shows how you can configure the authentication service and endpoints of an <code>AddressSpace</code>.</p>
 </div>
@@ -2630,7 +2736,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-list-available-auth-services-messaging">4.1.8. Listing available authentication services using the command line</h4>
+<h4 id="proc-list-available-auth-services-messaging">4.2.8. Listing available authentication services using the command line</h4>
 <div class="paragraph">
 <p>You can list the authentication services available for your address space type.</p>
 </div>
@@ -2649,7 +2755,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-address-space-example-exports-messaging">4.1.9. Address space example exports</h4>
+<h4 id="ref-address-space-example-exports-messaging">4.2.9. Address space example exports</h4>
 <div class="paragraph">
 <p>This example shows the format used by the <code>ConfigMap</code> and <code>Secret</code> export types:</p>
 </div>
@@ -2664,7 +2770,7 @@ ca.crt: // PEM formatted CA</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-example-address-space-output-messaging">4.1.10. Example address space status output</h4>
+<h4 id="ref-example-address-space-output-messaging">4.2.10. Example address space status output</h4>
 <div class="paragraph">
 <p>The <code>AddressSpace</code> resource contains a <code>status</code> field that can be used to retrieve information about
 its state and endpoints. The following output is an example of the output you can get from running
@@ -2724,7 +2830,7 @@ status:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-space-cli-messaging">4.1.11. Creating address spaces using the command line</h4>
+<h4 id="create-address-space-cli-messaging">4.2.11. Creating address spaces using the command line</h4>
 <div class="paragraph">
 <p>In EnMasse, you create address spaces using standard command-line tools.</p>
 </div>
@@ -2768,7 +2874,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="retrieving-address-space-information-messaging">4.1.12. Example commands for retrieving address space information</h4>
+<h4 id="retrieving-address-space-information-messaging">4.2.12. Example commands for retrieving address space information</h4>
 <div class="paragraph">
 <p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
 </div>
@@ -2821,7 +2927,7 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="replace-address-space-cli-messaging">4.1.13. Replacing address spaces using the command line</h4>
+<h4 id="replace-address-space-cli-messaging">4.2.13. Replacing address spaces using the command line</h4>
 <div class="paragraph">
 <p>Address spaces can be replaced in order to change the plan, endpoints, or network policies, or
 to replace certificates if using the <code>certBundle</code> certificate provider. When changing the plan,
@@ -2869,14 +2975,14 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="managing-addresses-messaging">4.2. Managing addresses</h3>
+<h3 id="managing-addresses-messaging">4.3. Managing addresses</h3>
 <div class="paragraph">
 <p>EnMasse is configured to support managing addresses using the Kubernetes command-line tools
 and the EnMasse Console. <code>Address</code> resources can be managed like any other Kubernetes
 API resource using <code>kubectl</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="con-address-messaging">4.2.1. Address</h4>
+<h4 id="con-address-messaging">4.3.1. Address</h4>
 <div class="paragraph">
 <p>An address is part of an address space and represents a destination for sending and receiving messages. An address has a type, which defines the semantics of sending messages to and receiving messages from that address.</p>
 </div>
@@ -2885,7 +2991,7 @@ API resource using <code>kubectl</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-tenant-address-plans-messaging">4.2.2. Address plans</h4>
+<h4 id="con-tenant-address-plans-messaging">4.3.2. Address plans</h4>
 <div class="paragraph">
 <p>An address is configured with an address plan, which describes the resource usage of that address.
 The address plans are configured by the service administrator and can vary between EnMasse
@@ -2931,7 +3037,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-list-available-address-plans-messaging">4.2.3. Listing available address plans using the command line</h4>
+<h4 id="proc-list-available-address-plans-messaging">4.3.3. Listing available address plans using the command line</h4>
 <div class="paragraph">
 <p>You can list the address plans available for an address type, such as <code>queue</code>.</p>
 </div>
@@ -2950,7 +3056,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-cli-messaging">4.2.4. Creating addresses using the command line</h4>
+<h4 id="create-address-cli-messaging">4.3.4. Creating addresses using the command line</h4>
 <div class="paragraph">
 <p>You can create addresses using the command line.</p>
 </div>
@@ -3004,7 +3110,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 </div>
 </div>
 <div class="sect3">
-<h4 id="replace-address-cli-messaging">4.2.5. Replacing addresses using the command line</h4>
+<h4 id="replace-address-cli-messaging">4.3.5. Replacing addresses using the command line</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -3044,12 +3150,12 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="assembly-using-console-messaging">4.3. Using the EnMasse Console</h3>
+<h3 id="assembly-using-console-messaging">4.4. Using the EnMasse Console</h3>
 <div class="paragraph">
 <p>You can use the EnMasse Console to perform tasks such as creating an address and viewing message and connection statistics.</p>
 </div>
 <div class="sect3">
-<h4 id="logging-into-console-messaging">4.3.1. Accessing the EnMasse Console</h4>
+<h4 id="logging-into-console-messaging">4.4.1. Accessing the EnMasse Console</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -3076,7 +3182,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-console-messaging">4.3.2. Creating addresses using the EnMasse Console</h4>
+<h4 id="create-address-console-messaging">4.4.2. Creating addresses using the EnMasse Console</h4>
 <div class="paragraph">
 <p>You can create new addresses using the EnMasse Console. The type of addresses that you can create are determined by the type of address space.</p>
 </div>
@@ -3113,7 +3219,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-console-address-filtering-messaging">4.3.3. Using the EnMasse Console address filtering</h4>
+<h4 id="ref-console-address-filtering-messaging">4.4.3. Using the EnMasse Console address filtering</h4>
 <div class="paragraph">
 <p>The address name filtering feature in the EnMasse Console uses regular expressions. Also, filters are cumulative.</p>
 </div>
@@ -3180,7 +3286,7 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="ref-view-message-connection-stats-table-messaging">4.3.4. Viewing message and connection statistics using the EnMasse Console</h4>
+<h4 id="ref-view-message-connection-stats-table-messaging">4.4.4. Viewing message and connection statistics using the EnMasse Console</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -3338,7 +3444,7 @@ For the brokered address space only, on the Connections page, the number of send
 </div>
 </div>
 <div class="sect2">
-<h3 id="con-user-model-messaging">4.4. User model</h3>
+<h3 id="con-user-model-messaging">4.5. User model</h3>
 <div class="paragraph">
 <p>You can create users to access messaging clients and the EnMasse Console through user definition files, which specify the authentication type and authorization policies.</p>
 </div>
@@ -3390,7 +3496,7 @@ spec:
 <code>spec.authorization</code> defines the authorization policies for that user.</p>
 </div>
 <div class="sect3">
-<h4 id="authentication_2">4.4.1. Authentication</h4>
+<h4 id="authentication_2">4.5.1. Authentication</h4>
 <div class="paragraph">
 <p>The supported values for the authentication type are <code>password</code> and <code>federated</code>.</p>
 </div>
@@ -3434,7 +3540,7 @@ identity provider.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="authorization_2">4.4.2. Authorization</h4>
+<h4 id="authorization_2">4.5.2. Authorization</h4>
 <div class="paragraph">
 <p>In addition, authorization policies can be defined using operations and addresses. Valid operations
 are <code>send</code>, <code>recv</code>, <code>view</code>, and <code>manage</code>.</p>
@@ -3453,7 +3559,7 @@ matches addresses <code>topic</code> and <code>topic/sub</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="managing-users-messaging">4.5. Managing users</h3>
+<h3 id="managing-users-messaging">4.6. Managing users</h3>
 <div class="paragraph">
 <p>EnMasse user management is only supported when using the <code>standard</code> authentication service. On Kubernetes, users can
 be managed using the Kubernetes command-line tools.</p>
@@ -3467,7 +3573,7 @@ be managed using the Kubernetes command-line tools.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="proc-creating-users-cli-messaging">4.5.1. Creating users using the command line</h4>
+<h4 id="proc-creating-users-cli-messaging">4.6.1. Creating users using the command line</h4>
 <div class="paragraph">
 <p>In EnMasse users can be created using standard command-line tools.</p>
 </div>
@@ -3482,6 +3588,26 @@ be managed using the Kubernetes command-line tools.</p>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
+<li>
+<p>To correctly base64 encode a password for the user definition file, run the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">echo -n password | base64 #cGFzc3dvcmQ=</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Be sure to use the <code>-n</code> parameter when running this command. Not specifying that parameter will result in an improperly coded password and cause log-in issues.
+</td>
+</tr>
+</table>
+</div>
+</li>
 <li>
 <p>Save the user definition to a file:</p>
 <div class="listingblock">
@@ -3523,7 +3649,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-deleting-users-cli-messaging">4.5.2. Deleting users using the command line</h4>
+<h4 id="proc-deleting-users-cli-messaging">4.6.2. Deleting users using the command line</h4>
 <div class="paragraph">
 <p>Users can be deleted using standard command-line tools.</p>
 </div>
@@ -3561,7 +3687,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-managing-user-permissions-cli-messaging">4.5.3. Managing user permissions using the command line</h4>
+<h4 id="proc-managing-user-permissions-cli-messaging">4.6.3. Managing user permissions using the command line</h4>
 <div class="paragraph">
 <p>You can edit the permissions for an existing user using the command line.</p>
 </div>
@@ -3603,7 +3729,7 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="assembly-connecting-applications-messaging">4.6. Connecting applications to EnMasse</h3>
+<h3 id="assembly-connecting-applications-messaging">4.7. Connecting applications to EnMasse</h3>
 <div class="paragraph">
 <p>You can connect your application to EnMasse using one of the following client examples.</p>
 </div>
@@ -3633,7 +3759,7 @@ spec:
 <p>The messaging protocols supported depends on the type of address space used. For more information about address space types, see  <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">Address space</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="client-examples-messaging">4.6.1. Client examples</h4>
+<h4 id="client-examples-messaging">4.7.1. Client examples</h4>
 <div class="sect4">
 <h5 id="ref-python-example-messaging">Apache Qpid Proton Python example</h5>
 <div class="paragraph">
@@ -8845,7 +8971,7 @@ namespace Test
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>version</strong><br>
-<em>required</em></p>
+<em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>string</p>
@@ -9133,6 +9259,15 @@ namespace Test
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>containers</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_admin_v1beta1_infraconfigpodspec_containers">containers</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>priorityClassName</strong><br>
 <em>optional</em></p>
 </div></div></td>
@@ -9142,20 +9277,37 @@ namespace Test
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>resources</strong><br>
-<em>optional</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>object</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>tolerations</strong><br>
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>&lt; object &gt; array</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_admin_v1beta1_infraconfigpodspec_containers" class="paragraph">
+<p><strong>containers</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>resources</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -9311,7 +9463,7 @@ namespace Test
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>version</strong><br>
-<em>required</em></p>
+<em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>string</p>
@@ -11659,7 +11811,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-08 13:11:55 UTC
+Last updated 2019-04-12 21:21:02 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
