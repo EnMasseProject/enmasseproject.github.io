@@ -487,14 +487,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#monitoring-messaging">3.4. Monitoring EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#deploy-prometheus-messaging">3.4.1. Deploying Prometheus</a></li>
-<li><a href="#deploy-kube-state-metrics-messaging">3.4.2. Deploying kube-state-metrics</a></li>
-<li><a href="#deploy-alertmanager-messaging">3.4.3. Deploying Alertmanager</a></li>
-<li><a href="#deploy-grafana-messaging">3.4.4. Deploying Grafana</a></li>
-<li><a href="#restart-component-messaging">3.4.5. Restarting a component</a></li>
-<li><a href="#get-logs-broker-messaging">3.4.6. Viewing router logs</a></li>
-<li><a href="#get-logs-router-messaging">3.4.7. Viewing broker logs</a></li>
-<li><a href="#ref-view-message-connection-stats-table-messaging">3.4.8. Viewing message and connection statistics using the EnMasse Console</a></li>
+<li><a href="#deploy-monitoring-messaging">3.4.1. Deploying monitoring</a></li>
+<li><a href="#config-monitoring-messaging">3.4.2. Monitor EnMasse with existing infrastructure</a></li>
+<li><a href="#restart-component-messaging">3.4.3. Restarting a component</a></li>
+<li><a href="#get-logs-broker-messaging">3.4.4. Viewing router logs</a></li>
+<li><a href="#get-logs-router-messaging">3.4.5. Viewing broker logs</a></li>
 </ul>
 </li>
 <li><a href="#uninstalling-messaging">3.5. Uninstalling EnMasse</a></li>
@@ -502,52 +499,53 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#tenant-guide-messaging">4. Tenant guide</a>
 <ul class="sectlevel2">
-<li><a href="#con-address-space-messaging">4.1. Address space</a></li>
-<li><a href="#con-address-messaging">4.2. Address</a></li>
-<li><a href="#con-standard-address-space-messaging">4.3. Standard address space</a>
+<li><a href="#managing-address-spaces-messaging">4.1. Managing address spaces</a>
 <ul class="sectlevel3">
-<li><a href="#assembly-standard-address-types-messaging">4.3.1. Standard address types</a></li>
+<li><a href="#con-address-space-messaging">4.1.1. Address space</a></li>
+<li><a href="#con-standard-address-space-messaging">4.1.2. Standard address space</a></li>
+<li><a href="#con-brokered-address-space-messaging">4.1.3. Brokered address space</a></li>
+<li><a href="#con-tenant-address-space-plans-messaging">4.1.4. Address space plans</a></li>
+<li><a href="#proc-list-available-plans-messaging">4.1.5. Listing available plans using the command line</a></li>
+<li><a href="#ref-address-space-example-messaging">4.1.6. Address space example</a></li>
+<li><a href="#ref-address-space-example-auth-service-messaging">4.1.7. Address space example using authentication service</a></li>
+<li><a href="#ref-example-address-space-output-messaging">4.1.8. Example address space status output</a></li>
+<li><a href="#create-address-space-cli-messaging">4.1.9. Creating address spaces using the command line</a></li>
+<li><a href="#retrieving-address-space-information-messaging">4.1.10. Example commands for retrieving address space information</a></li>
+<li><a href="#replace-address-space-cli-messaging">4.1.11. Replacing address spaces using the command line</a></li>
 </ul>
 </li>
-<li><a href="#con-brokered-address-space-messaging">4.4. Brokered address space</a>
+<li><a href="#managing-addresses-messaging">4.2. Managing addresses</a>
 <ul class="sectlevel3">
-<li><a href="#assembly-brokered-address-types-messaging">4.4.1. Brokered address types</a></li>
+<li><a href="#con-address-messaging">4.2.1. Address</a></li>
+<li><a href="#con-tenant-address-plans-messaging">4.2.2. Address plans</a></li>
+<li><a href="#create-address-cli-messaging">4.2.3. Creating addresses using the command line</a></li>
+<li><a href="#replace-address-cli-messaging">4.2.4. Replacing addresses using the command line</a></li>
 </ul>
 </li>
-<li><a href="#managing-address-spaces-messaging">4.5. Managing address spaces</a>
+<li><a href="#assembly-using-console-messaging">4.3. Using the EnMasse Console</a>
 <ul class="sectlevel3">
-<li><a href="#minimal_example">4.5.1. Minimal example</a></li>
-<li><a href="#advanced_example">4.5.2. Advanced example</a></li>
-<li><a href="#example_address_space_status_output">4.5.3. Example address space status output</a></li>
-<li><a href="#create-address-space-cli-messaging">4.5.4. Creating address spaces using the command line</a></li>
-<li><a href="#retrieving-address-space-information-messaging">4.5.5. Example commands for retrieving address space information</a></li>
+<li><a href="#logging-into-console-messaging">4.3.1. Accessing the EnMasse Console</a></li>
+<li><a href="#create-address-console-messaging">4.3.2. Creating addresses using the EnMasse Console</a></li>
+<li><a href="#ref-console-address-filtering-messaging">4.3.3. Using the EnMasse Console address filtering</a></li>
+<li><a href="#ref-view-message-connection-stats-table-messaging">4.3.4. Viewing message and connection statistics using the EnMasse Console</a></li>
 </ul>
 </li>
-<li><a href="#managing-addresses-messaging">4.6. Managing addresses</a>
+<li><a href="#con-user-model-messaging">4.4. User model</a>
 <ul class="sectlevel3">
-<li><a href="#example">4.6.1. Example</a></li>
-<li><a href="#create-address-cli-messaging">4.6.2. Creating addresses using the command line</a></li>
-<li><a href="#create-address-console-messaging">4.6.3. Creating addresses using the EnMasse Console</a></li>
+<li><a href="#authentication">4.4.1. Authentication</a></li>
+<li><a href="#authorization">4.4.2. Authorization</a></li>
 </ul>
 </li>
-<li><a href="#logging-into-console-messaging">4.7. Accessing the EnMasse Console</a></li>
-<li><a href="#ref-console-address-filtering-messaging">4.8. Using the EnMasse Console address filtering</a></li>
-<li><a href="#con-user-model-messaging">4.9. User model</a>
+<li><a href="#managing-users-messaging">4.5. Managing users</a>
 <ul class="sectlevel3">
-<li><a href="#authentication">4.9.1. Authentication</a></li>
-<li><a href="#authorization">4.9.2. Authorization</a></li>
+<li><a href="#proc-creating-users-cli-messaging">4.5.1. Creating users using the command line</a></li>
+<li><a href="#proc-deleting-users-cli-messaging">4.5.2. Deleting users using the command line</a></li>
+<li><a href="#proc-managing-user-permissions-cli-messaging">4.5.3. Managing user permissions using the command line</a></li>
 </ul>
 </li>
-<li><a href="#managing-users-messaging">4.10. Managing users</a>
+<li><a href="#assembly-connecting-applications-messaging">4.6. Connecting applications to EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#proc-creating-users-cli-messaging">4.10.1. Creating users using the command line</a></li>
-<li><a href="#proc-deleting-users-cli-messaging">4.10.2. Deleting users using the command line</a></li>
-<li><a href="#proc-managing-user-permissions-cli-messaging">4.10.3. Managing user permissions using the command line</a></li>
-</ul>
-</li>
-<li><a href="#assembly-connecting-applications-messaging">4.11. Connecting applications to EnMasse</a>
-<ul class="sectlevel3">
-<li><a href="#client-examples-messaging">4.11.1. Client examples</a></li>
+<li><a href="#client-examples-messaging">4.6.1. Client examples</a></li>
 </ul>
 </li>
 </ul>
@@ -622,7 +620,7 @@ what you need to set up and manage EnMasse as a service administrator or a messa
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/overview/enmasse_overall_view.png" alt="Standard Address Space">
+<img src="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design/overview/enmasse_overall_view.png" alt="Standard Address Space">
 </div>
 </div>
 </div>
@@ -633,7 +631,7 @@ what you need to set up and manage EnMasse as a service administrator or a messa
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design_docs/overview/enmasse_brokered_view.png" alt="Brokered Address Space">
+<img src="https://raw.githubusercontent.com/EnMasseProject/enmasse/master/documentation/design/overview/enmasse_brokered_view.png" alt="Brokered Address Space">
 </div>
 </div>
 </div>
@@ -733,6 +731,9 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 </div>
 <div class="sect2">
 <h3 id="create-address-space-cli-messaging-gs">2.3. Creating address spaces using the command line</h3>
+<div class="paragraph">
+<p>In EnMasse, you create address spaces using standard command-line tools.</p>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -740,7 +741,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 <p>Create an address space definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -766,7 +767,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>The address space is ready for use when the above command outputs <code>true</code>.</p>
+<p>The address space is ready for use when the previous command outputs <code>true</code>.</p>
 </div>
 </li>
 </ol>
@@ -774,6 +775,9 @@ spec:
 </div>
 <div class="sect2">
 <h3 id="create-address-cli-messaging-gs">2.4. Creating addresses using the command line</h3>
+<div class="paragraph">
+<p>You can create addresses using the command line.</p>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -781,7 +785,7 @@ spec:
 <p>Create an address definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
 kind: Address
 metadata:
     name: myspace.myqueue
@@ -843,7 +847,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Save the user definition to a file:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: user.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: user.enmasse.io/v1beta1
 kind: MessagingUser
 metadata:
   name: myspace.user1
@@ -894,7 +898,7 @@ spec:
 <p>An address named <code>myqueue</code> must be created.</p>
 </li>
 <li>
-<p>A user named <code>user1</code> with password "password" must be created.</p>
+<p>A user named <code>user1</code> with password <code>password</code> must be created.</p>
 </li>
 </ul>
 </div>
@@ -904,7 +908,6 @@ spec:
 <li>
 <p>Save Python client example to a file:</p>
 <div class="listingblock">
-<div class="title"><a href="resources/client-example1.py">client-example1.py</a></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="python" class="language-python hljs">from __future__ import print_function, unicode_literals
 import optparse
@@ -955,7 +958,7 @@ except KeyboardInterrupt: pass</code></pre>
 <p>Run the client:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">python client-example1.py -u amqps://user1:password@messaging.example1.com:443/myqueue</pre>
+<pre class="nowrap">python client-example1.py -u amqps://user1:password@<em>messaging.example1.com</em>:443/myqueue</pre>
 </div>
 </div>
 </li>
@@ -1096,11 +1099,23 @@ supporting the Kubernetes client.</p>
 <div class="sect4">
 <h5 id="deploying-auth-services-messaging">Deploying authentication services</h5>
 <div class="paragraph">
-<p>EnMasse requires at least one authentication service to be deployed. The authentication service
-can be <code>none</code> (allow all), <code>standard</code> (Keycloak), or <code>external</code> (not managed by EnMasse).</p>
+<p>EnMasse requires at least one authentication service to be deployed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>none</code> (allow all),</p>
+</li>
+<li>
+<p><code>standard</code> (Keycloak), or</p>
+</li>
+<li>
+<p><code>external</code> (not managed by EnMasse).</p>
+</li>
+</ul>
 </div>
 <div class="sect5">
-<h6 id="deploying_the_none_authentication_service">Deploying the <code>none</code> authentication service</h6>
+<h6 id="proc-deploying-none-auth-service-messaging">Deploying the <code>none</code> authentication service</h6>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1133,12 +1148,12 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=none-au
 </div>
 </div>
 <div class="sect5">
-<h6 id="deploying_the_standard_authentication_service">Deploying the <code>standard</code> authentication service</h6>
+<h6 id="proc-deploying-standard-auth-service-messaging">Deploying the <code>standard</code> authentication service</h6>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>(Optional) Replace namespace if you want to deploy to something other than <code>enmasse-infra</code>:</p>
+<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/standard-authservice/*RoleBinding*.yaml</pre>
@@ -1183,7 +1198,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>(Optional) Replace namespace if you want to deploy to something other than <code>enmasse-infra</code>:</p>
+<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/address-space-controller/*.yaml</pre>
@@ -1210,7 +1225,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=standar
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>(Optional) Replace namespace if you want to deploy to something other than <code>enmasse-infra</code> (and substitute <code>enmasse-infra</code> in subsequent steps):</p>
+<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/components/api-service/*.yaml
@@ -1271,7 +1286,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
 kind: AddressSpacePlan
 metadata:
   name: restrictive-plan
@@ -1331,7 +1346,7 @@ For more information about infrastructure configurations, see <a href="http://en
 <p>Create an address space plan definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
 kind: AddressSpacePlan
 metadata:
   name: restrictive-plan
@@ -1393,7 +1408,7 @@ resources:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
 kind: AddressPlan
 metadata:
   name: small-queue
@@ -1439,7 +1454,7 @@ requiredResources:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
 kind: AddressPlan
 metadata:
   name: small-anycast
@@ -1469,7 +1484,7 @@ requiredResources:
 <p>Create an address plan definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
 kind: AddressPlan
 metadata:
   name: small-anycast
@@ -1525,18 +1540,18 @@ using <code>BrokeredInfraConfig</code> and <code>StandardInfraConfig</code> reso
 <div class="sect4">
 <h5 id="con-brokered-infra-config-messaging">Brokered infrastructure configuration</h5>
 <div class="paragraph">
-<p><code>BrokeredInfraConfig</code> resources is used to configure infrastructure deployed by <code>brokered</code> address
+<p><code>BrokeredInfraConfig</code> resources are used to configure infrastructure deployed by <code>brokered</code> address
 spaces. The brokered infrastructure configuration is referenced by address space plans using a <code>enmasse.io/defined-by</code>
 annotation. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
 kind: BrokeredInfraConfig
 metadata:
   name: brokered-infra-config-example
 spec:
-  version: 0.23.0
+  version: 0.26
   admin:
     resources:
       memory: 256Mi
@@ -1562,18 +1577,18 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 <div class="sect4">
 <h5 id="con-standard-infra-config-messaging">Standard infrastructure configuration</h5>
 <div class="paragraph">
-<p><code>StandardInfraConfig</code> resources is used to configure infrastructure deployed by <code>standard</code> address
+<p><code>StandardInfraConfig</code> resources are used to configure infrastructure deployed by <code>standard</code> address
 spaces. The standard infrastructure configuration is referenced by address space plans using a <code>enmasse.io/defined-by</code>
 annotation. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
 kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: 0.23.0
+  version: 0.26
   admin:
     resources:
       memory: 256Mi
@@ -1625,12 +1640,12 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 <p>Create infrastructure configuration:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
 kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: 0.23.0
+  version: 0.26
   admin:
     resources:
       memory: 256Mi
@@ -1727,13 +1742,18 @@ configuration of the new version will trigger the upgrade to start.</p>
 <div class="sect2">
 <h3 id="monitoring-messaging">3.4. Monitoring EnMasse</h3>
 <div class="paragraph">
+<p>You can monitor EnMasse by deploying built-in monitoring tools or using your pre-existing monitoring infrastructure.</p>
+</div>
+<div class="sect3">
+<h4 id="deploy-monitoring-messaging">3.4.1. Deploying monitoring</h4>
+<div class="paragraph">
 <p>Monitoring services run frequent health checks  on EnMasse and send alerts when health checks
 fail. Health is assessed using Prometheus and <code>kube-state-metrics</code>. Alerting is implemented with
 <code>Alertmanager</code>. Grafana is also configured to provide a dashboard of the current status of health
 checks.</p>
 </div>
-<div class="sect3">
-<h4 id="deploy-prometheus-messaging">3.4.1. Deploying Prometheus</h4>
+<div class="sect4">
+<h5 id="deploy-prometheus-messaging">Deploying Prometheus</h5>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1756,8 +1776,8 @@ checks.</p>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="deploy-kube-state-metrics-messaging">3.4.2. Deploying kube-state-metrics</h4>
+<div class="sect4">
+<h5 id="deploy-kube-state-metrics-messaging">Deploying kube-state-metrics</h5>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1780,8 +1800,8 @@ checks.</p>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="deploy-alertmanager-messaging">3.4.3. Deploying Alertmanager</h4>
+<div class="sect4">
+<h5 id="deploy-alertmanager-messaging">Deploying Alertmanager</h5>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -1857,8 +1877,8 @@ data:
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="deploy-grafana-messaging">3.4.4. Deploying Grafana</h4>
+<div class="sect4">
+<h5 id="deploy-grafana-messaging">Deploying Grafana</h5>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -1889,8 +1909,91 @@ data:
 </ol>
 </div>
 </div>
+</div>
 <div class="sect3">
-<h4 id="restart-component-messaging">3.4.5. Restarting a component</h4>
+<h4 id="config-monitoring-messaging">3.4.2. Monitor EnMasse with existing infrastructure</h4>
+<div class="paragraph">
+<p>EnMasse can also be monitored using an existing Prometheus server and optionally <code>kube-state-metrics</code> for the relevant Kubernetes infrastructure.</p>
+</div>
+<div class="sect4">
+<h5 id="scrape-metrics-messaging">Exposed metrics</h5>
+<div class="paragraph">
+<p>The Address Space Controller and API Server export Prometheus metrics about EnMasse&#8217;s health on port 8080. These metrics can be scraped using the services created during EnMasse installation and the following sample Prometheus scrape configuration.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>Prometheus' service account must have View privileges to the EnMasse namespace.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Add the following job to your Prometheus scrape configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">  - job_name: &lt;component-health&gt;
+    kubernetes_sd_configs:
+      - role: service
+        namespaces:
+          names:
+            - &lt;namespace&gt;
+    metrics_path: "/metrics"
+    relabel_configs:
+    - action: keep
+      regex: health.*
+      source_labels: [__meta_kubernetes_service_port_name]</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="config-alerts-messaging">Alerts</h5>
+<div class="paragraph">
+<p>You can enable alerts regarding the health of EnMasse resources.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Add the following rules to your Prometheus Rules configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">  - alert: Component_Health
+    annotations:
+      description: '{{ $labels.summary }}'
+      value: "{{ $value }}"
+      severity: warning
+    expr: health == 1
+    for: 60s
+  - alert: Address_Space_Health
+    annotations:
+      description: '{{ $labels.summary }}'
+      value: "{{ $value }}"
+      severity: warning
+    expr: address_spaces_not_ready_total &gt; 0
+    for: 300s
+  - alert: Address_Health
+    annotations:
+      description: '{{ $labels.summary }}'
+      value: "{{ $value }}"
+      severity: warning
+    expr: addresses_not_ready_total &gt; 0
+    for: 300s</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="restart-component-messaging">3.4.3. Restarting a component</h4>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
@@ -1909,7 +2012,7 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="get-logs-broker-messaging">3.4.6. Viewing router logs</h4>
+<h4 id="get-logs-broker-messaging">3.4.4. Viewing router logs</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1933,7 +2036,7 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="get-logs-router-messaging">3.4.7. Viewing broker logs</h4>
+<h4 id="get-logs-router-messaging">3.4.5. Viewing broker logs</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1956,8 +2059,906 @@ data:
 </ol>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="uninstalling-messaging">3.5. Uninstalling EnMasse</h3>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Delete the rolebinding in the <code>kube-system</code> namespace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl delete rolebindings -l app=enmasse -n kube-system</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete "cluster level" resources:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl delete clusterrolebindings -l app=enmasse
+kubectl delete crd -l app=enmasse
+kubectl delete clusterroles -l app=enmasse
+kubectl delete apiservices -l app=enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete the namespace where EnMasse is deployed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl delete namespace <em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="tenant-guide-messaging">4. Tenant guide</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The tenant guide provides resources on how to manage address spaces, addresses, and users as a
+messaging tenant.</p>
+</div>
+<div class="sect2">
+<h3 id="managing-address-spaces-messaging">4.1. Managing address spaces</h3>
+<div class="paragraph">
+<p>EnMasse is configured to support managing address spaces using the Kubernetes command-line
+tools. Address spaces are managed like any other Kubernetes resource using <code>kubectl</code>.</p>
+</div>
 <div class="sect3">
-<h4 id="ref-view-message-connection-stats-table-messaging">3.4.8. Viewing message and connection statistics using the EnMasse Console</h4>
+<h4 id="con-address-space-messaging">4.1.1. Address space</h4>
+<div class="paragraph">
+<p>An address space is a group of addresses that can be accessed through a single connection (per protocol). This means that clients connected to the endpoints of an address space can send messages to or receive messages from any authorized address within that address space. An address space can support multiple protocols, as defined by the address space type.</p>
+</div>
+<div class="paragraph">
+<p>EnMasse has two types of address spaces:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#con-standard-address-space-messaging">Standard</a></p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#con-brokered-address-space-messaging">Brokered</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="con-standard-address-space-messaging">4.1.2. Standard address space</h4>
+<div class="paragraph">
+<p>The standard address space is the default address space in EnMasse. It consists of an AMQP router network in combination with attachable storage units. Clients connect to a message router, which forwards messages to or from one or more message brokers. This address space type is appropriate when you have many connections and addresses. However, the standard address space has the following limitations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No transaction support</p>
+</li>
+<li>
+<p>No message ordering</p>
+</li>
+<li>
+<p>No selectors on queues</p>
+</li>
+<li>
+<p>No browsing on queues</p>
+</li>
+<li>
+<p>No message groups</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Clients connect and send and receive messages in this address space using the AMQP or MQTT protocols. Note that MQTT does not support qos2 or retained messages.</p>
+</div>
+<div class="sect4">
+<h5 id="assembly-standard-address-types-messaging">Standard address types</h5>
+<div class="paragraph">
+<p>The standard address space supports five different address types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>queue</p>
+</li>
+<li>
+<p>topic</p>
+</li>
+<li>
+<p>anycast</p>
+</li>
+<li>
+<p>multicast</p>
+</li>
+<li>
+<p>subscription</p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="con-standard-queue-messaging">Queue</h6>
+<div class="paragraph">
+<p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases where you want to decouple the producer and consumer. A queue can be sharded across multiple storage units. Message ordering might be lost for queues in the standard address space.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="con-standard-topic-messaging">Topic</h6>
+<div class="paragraph">
+<p>The topic address type supports the publish-subscribe messaging pattern where there are 1..N producers and 1..M consumers. Each message published to a topic address is forwarded to all subscribers for that address. A subscriber can also be durable, in which case messages are kept until the subscriber has acknowledged them.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If you create a subscription on a topic, any senders to that topic must specify the <code>topic</code> capability.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect6">
+<h7 id="hierarchical_topics_and_wildcards">Hierarchical topics and wildcards</h7>
+<div class="paragraph">
+<p>A client receiving from a topic address can specify a wildcard address with the topic address as the root. The wildcard behavior follows the MQTT syntax:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/</code> is a separator</p>
+</li>
+<li>
+<p><code>+</code> matches one level</p>
+</li>
+<li>
+<p><code>#</code> matches one or more levels</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So, for example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>a/#/b</code> matches <code>a/foo/b</code>, <code>a/bar/b</code>, and <code>a/foo/bar/b</code></p>
+</li>
+<li>
+<p><code>a/+/b</code> matches <code>a/foo/b</code> and <code>a/bar/b</code>, but would not match <code>a/foo/bar</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the standard address space, the first level must always be a defined topic address; that is, <code>#</code> and <code>+</code> are not valid as the first characters of a subscribing address.</p>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="con-standard-anycast-messaging">Anycast</h6>
+<div class="paragraph">
+<p>The anycast address type is a scalable direct address for sending messages to one consumer. Messages sent to an anycast address are not stored, but are instead forwarded directly to the consumer. This method makes this address type ideal for request-reply (RPC) uses or even work distribution. This is the cheapest address type as it does not require any persistence.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="con-standard-multicast-messaging">Multicast</h6>
+<div class="paragraph">
+<p>The multicast address type is a scalable direct address for sending messages to multiple consumers. Messages sent to a multicast address are forwarded to all consumers receiving messages on that address. Because message acknowledgments from consumers are not propagated to producers, only pre-settled messages can be sent to multicast addresses.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="con-standard-subscription-messaging">Subscription</h6>
+<div class="paragraph">
+<p>The subscription address type allows a subscription to be created for a topic that holds messages published to the topic even if the subscriber is not attached. The subscription is accessed by the consumer using &lt;topic-address&gt;::&lt;subscription-address&gt;. For example, for a subscription <code>mysub</code> on a topic <code>mytopic</code> the consumer consumes from the address <code>mytopic::mysub</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="con-brokered-address-space-messaging">4.1.3. Brokered address space</h4>
+<div class="paragraph">
+<p>The brokered address space is designed to support broker-specific features, at the cost of limited
+scale in terms of the number of connections and addresses. This address space supports JMS
+transactions, message groups, and selectors on queues and topics.</p>
+</div>
+<div class="paragraph">
+<p>Clients can connect and send and receive messages in this address space using the AMQP, CORE, OpenWire, and MQTT protocols.</p>
+</div>
+<div class="sect4">
+<h5 id="assembly-brokered-address-types-messaging">Brokered address types</h5>
+<div class="paragraph">
+<p>The brokered address space supports two address types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>queue</p>
+</li>
+<li>
+<p>topic</p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="con-brokered-queue-messaging">Queue</h6>
+<div class="paragraph">
+<p>The queue address type is a store-and-forward queue. This address type is appropriate for
+implementing a distributed work queue, handling traffic bursts, and other use cases where you want
+to decouple the producer and consumer. A queue in the brokered address space supports selectors,
+message groups, transactions, and other JMS features. Message order can be lost with released messages.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="con-brokered-topic-messaging">Topic</h6>
+<div class="paragraph">
+<p>The topic address type supports the publish-subscribe messaging pattern in which there are 1..N producers and 1..M consumers. Each message published to a topic address is forwarded to all subscribers for that address. A subscriber can also be durable, in which case messages are kept until the subscriber has acknowledged them.</p>
+</div>
+<div class="sect6">
+<h7 id="hierarchical_topics_and_wildcards_2">Hierarchical topics and wildcards</h7>
+<div class="paragraph">
+<p>A client receiving from a topic address can specify a wildcard address with the topic address as the root. The wildcard behavior follows the MQTT syntax:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/</code> is a separator</p>
+</li>
+<li>
+<p><code>+</code> matches one level</p>
+</li>
+<li>
+<p><code>#</code> matches one or more levels</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So, for example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>a/#/b</code> matches <code>a/foo/b</code>, <code>a/bar/b</code>, <code>a/foo/bar/b</code></p>
+</li>
+<li>
+<p><code>a/+/b</code> matches <code>a/foo/b</code> and <code>a/bar/b</code>, but would not match <code>a/foo/bar</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="con-tenant-address-space-plans-messaging">4.1.4. Address space plans</h4>
+<div class="paragraph">
+<p>An address space is configured with an address space plan, which describes the allowed resource
+usage of that address space. The address space plans are configured by the service administrator and
+can vary between EnMasse installations.</p>
+</div>
+<div class="paragraph">
+<p>The address space plan can be changed if the address space requires more, or less, resources.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="proc-list-available-plans-messaging">4.1.5. Listing available plans using the command line</h4>
+<div class="paragraph">
+<p>You can list the address space plans available for your address space.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Retrieve the schema with available plans (replace <code>standard</code> with <code>brokered</code> for the brokered address space type):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl get addressspaceschema standard -o yaml</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ref-address-space-example-messaging">4.1.6. Address space example</h4>
+<div class="paragraph">
+<p>This address space example shows only the required options to create an <code>AddressSpace</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard <b class="conum">(1)</b>
+  plan: standard-unlimited <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
+</li>
+<li>
+<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. See <a href="http://enmasse.io/documentation/master/kubernetes/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ref-address-space-example-auth-service-messaging">4.1.7. Address space example using authentication service</h4>
+<div class="paragraph">
+<p>This address space example shows how you can configure the authentication service and endpoints of an <code>AddressSpace</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard <b class="conum">(1)</b>
+  plan: standard-unlimited <b class="conum">(2)</b>
+  authenticationService:
+    type: standard <b class="conum">(3)</b>
+  endpoints: <b class="conum">(4)</b>
+    - name: messaging
+      service: messaging
+      expose: <b class="conum">(5)</b>
+        type: route
+        routeHost: messaging.example.com
+        routeTlsTermination: passthrough
+        routeServicePort: amqps
+      cert: <b class="conum">(6)</b>
+        provider: certBundle
+        tlsKey: ZXhhbXBsZSAtbgo=
+        tlsCert: ZXhhbXBsZSAtbgo=
+    - name: mqtt
+      service: mqtt
+      expose:
+        type: loadbalancer
+        loadBalancerPorts:
+        - mqtt
+        - mqtts
+      cert:
+        provider: selfsigned
+    - name: console
+      service: console
+      expose:
+        type: route
+        routeTlsTermination: reencrypt
+        routeServicePort: https
+      cert:
+        provider: openshift</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
+</li>
+<li>
+<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. See <a href="http://enmasse.io/documentation/master/kubernetes/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
+</li>
+<li>
+<p>The authentication service type can be <code>none</code>, <code>standard</code> or <code>external</code>. <code>External</code> requires an additional field, <code>details</code>, which includes <code>host</code> and <code>port</code> information.</p>
+</li>
+<li>
+<p>The endpoints that must be configured for the <code>AddressSpace</code>.  Endpoints can specify either <code>messaging</code>, <code>console</code>, or <code>mqtt</code> services. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only. Endpoints can be changed by replacing the address space.</p>
+</li>
+<li>
+<p>Exposes the configuration of an endpoint. Endpoints can be kept internal to the cluster, or exposed using an OpenShift route or a load-balancer service. Exposed configuration can be changed by replacing the address space.</p>
+</li>
+<li>
+<p>The certificate configuration can be used to specify how the endpoint certificate is provided.  The provider can be <code>selfsigned</code> (default), <code>wildcard</code> (requires it to be enabled by the EnMasse administrator), <code>openshift</code> (signed by the OpenShift cluster CA), or <code>certBundle</code> (base64-encoded PEM key and certificate). When using the <code>certBundle</code> provider, the certificate can be rotated by updating the <code>tlsKey</code> and <code>tlsCert</code> values and replacing the address space.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ref-example-address-space-output-messaging">4.1.8. Example address space status output</h4>
+<div class="paragraph">
+<p>The <code>AddressSpace</code> resource contains a <code>status</code> field that can be used to retrieve information about
+its state and endpoints. The following output is an example of the output you can get from running
+<code>kubectl get addressspace myspace -o yaml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  ...
+status:
+  isReady: false <b class="conum">(1)</b>
+  messages:
+    - "One or more deployments are not ready: "
+  endpointStatuses: <b class="conum">(2)</b>
+    - name: messaging
+      cert: aGVsbG8= <b class="conum">(3)</b>
+      serviceHost: messaging-123.enmasse-infra.svc <b class="conum">(4)</b>
+      servicePorts: <b class="conum">(5)</b>
+        - name: amqp
+          port: 5672
+        - name: amqps
+          port: 5671
+      externalHost: messaging.example.com <b class="conum">(6)</b>
+      externalPorts: <b class="conum">(7)</b>
+        - name: amqps
+          port: 443</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The <code>status.isReady</code> field can be either <code>true</code> or <code>false</code>.</p>
+</li>
+<li>
+<p>The <code>status.endpointStatuses</code> field provides information about available endpoints for this address space.</p>
+</li>
+<li>
+<p>The <code>cert</code> field contains the base64-encoded certificate for a given endpoint.</p>
+</li>
+<li>
+<p>The <code>serviceHost</code> field contains the cluster-internal host name for a given endpoint.</p>
+</li>
+<li>
+<p>The <code>servicePorts</code> field contains the available ports for the cluster-internal host.</p>
+</li>
+<li>
+<p>The <code>externalHost</code> field contains the external host name for a given endpoint.</p>
+</li>
+<li>
+<p>The <code>externalPorts</code> field contains the available ports for the external host.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="create-address-space-cli-messaging">4.1.9. Creating address spaces using the command line</h4>
+<div class="paragraph">
+<p>In EnMasse, you create address spaces using standard command-line tools.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create an address space definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-unlimited</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create -f standard-address-space.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check the status of the address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.isReady}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The address space is ready for use when the previous command outputs <code>true</code>.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="retrieving-address-space-information-messaging">4.1.10. Example commands for retrieving address space information</h4>
+<div class="paragraph">
+<p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Retrieving address space information commands table</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">To retrieve the&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">Run this command:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>EnMasse Console host name</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>status of an address space</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.isReady}</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>base64-encoded PEM certificate for the messaging endpoint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert}</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>host name for the messaging endpoint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="replace-address-space-cli-messaging">4.1.11. Replacing address spaces using the command line</h4>
+<div class="paragraph">
+<p>Address spaces can be replaced in order to change the plan, endpoints, or network policies, or
+to replace certificates if using the <code>certBundle</code> certificate provider. When changing the plan,
+EnMasse will attempt to apply the new plan if the current set of addresses fits within the new
+quota. If it does not, an error is provided on the <code>AddressSpace</code> resource.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Update address space definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-small</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Replace the address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl replace -f standard-address-space-replace.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check the status of the address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.isReady}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The address space is ready for use when the above command outputs <code>true</code>.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="managing-addresses-messaging">4.2. Managing addresses</h3>
+<div class="paragraph">
+<p>EnMasse is configured to support managing addresses using the Kubernetes command-line tools
+and the EnMasse Console. <code>Address</code> resources can be managed like any other Kubernetes
+API resource using <code>kubectl</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="con-address-messaging">4.2.1. Address</h4>
+<div class="paragraph">
+<p>An address is part of an address space and represents a destination for sending and receiving messages. An address has a type, which defines the semantics of sending messages to and receiving messages from that address.</p>
+</div>
+<div class="paragraph">
+<p>The types of addresses available in EnMasse depend on the address space type.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="con-tenant-address-plans-messaging">4.2.2. Address plans</h4>
+<div class="paragraph">
+<p>An address is configured with an address plan, which describes the resource usage of that address.
+The address plans are configured by the service administrator and can vary between EnMasse
+installations. The number of addresses that can be created, and what plans are available, depends on
+quota enforced by the address space plan.</p>
+</div>
+<div class="paragraph">
+<p>Some address types also support changing the <code>plan</code> field: <code>queue</code>, <code>anycast</code>, and <code>multicast</code>
+address types in the <code>standard</code> address space support changing the plan as long as the new plan
+does not exceed the allowed quota. For queues, addresses are dynamically migrated across brokers,
+which might cause reordering of messages.</p>
+</div>
+<div class="sect4">
+<h5 id="ref-address-example-messaging">Address example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+    name: myspace.myqueue <b class="conum">(1)</b>
+spec:
+    address: myqueue <b class="conum">(2)</b>
+    type: queue <b class="conum">(3)</b>
+    plan: standard-small-queue <b class="conum">(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The address name must be prefixed with the address space name and a dot. Address names can only include alphanumeric characters.</p>
+</li>
+<li>
+<p>The address is the messaging address this address resource represents.</p>
+</li>
+<li>
+<p>The address type dictates the semantics of this address.</p>
+</li>
+<li>
+<p>The address plan describes the resource usage for the address. See <a href="http://enmasse.io/documentation/master/kubernetes/#proc-list-available-plans-messaging">Listing available plans</a> for details on how to get the available plans.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="create-address-cli-messaging">4.2.3. Creating addresses using the command line</h4>
+<div class="paragraph">
+<p>You can create addresses using the command line.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create an address definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+    name: myspace.myqueue
+spec:
+    address: myqueue
+    type: queue
+    plan: standard-small-queue</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Prefixing the name with the address space name is required to ensure addresses from different address spaces do not collide.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Create the address:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl create -f standard-small-queue.yaml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>List the addresses:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl get addresses -o yaml</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="replace-address-cli-messaging">4.2.4. Replacing addresses using the command line</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Update an address definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+    name: myspace.myqueue
+spec:
+    address: myqueue
+    type: queue
+    plan: standard-xlarge-queue</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Replace the address:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl replace -f standard-xlarge-queue.yaml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>List the addresses:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl get addresses -o yaml</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="assembly-using-console-messaging">4.3. Using the EnMasse Console</h3>
+<div class="paragraph">
+<p>You can use the EnMasse Console to perform tasks such as creating an address and viewing message and connection statistics.</p>
+</div>
+<div class="sect3">
+<h4 id="logging-into-console-messaging">4.3.1. Accessing the EnMasse Console</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You must have obtained the host name for the EnMasse Console. For more information about how to obtain the host name, see  <a href="http://enmasse.io/documentation/master/kubernetes/#retrieving-address-space-information-messaging">Example commands for retrieving address space information</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In a web browser, navigate to <code>https://<em>console-host-name</em></code> where <code><em>console-host-name</em></code> is the EnMasse Console host name.</p>
+</li>
+<li>
+<p>Log in with your OpenShift user credentials. The EnMasse console opens.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/console-screenshot.png" alt="EnMasse console">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="create-address-console-messaging">4.3.2. Creating addresses using the EnMasse Console</h4>
+<div class="paragraph">
+<p>You can create new addresses using the EnMasse Console. The type of addresses that you can create are determined by the type of address space.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You must have created an address space. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#create-address-space-cli-messaging">Creating an address space</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
+</li>
+<li>
+<p>Click <strong>New</strong>. The Create new address window opens.</p>
+</li>
+<li>
+<p>Type a name and select the address type. If selecting <strong>subscription</strong>, from the <strong>Topic</strong> list select the topic name to which you want to create a subscription.</p>
+</li>
+<li>
+<p>Click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Select a plan and click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>. Your address is displayed in the EnMasse Console.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ref-console-address-filtering-messaging">4.3.3. Using the EnMasse Console address filtering</h4>
+<div class="paragraph">
+<p>The address name filtering feature in the EnMasse Console uses regular expressions. Also, filters are cumulative.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. EnMasse Console address name filtering behavior</caption>
+<colgroup>
+<col style="width: 34%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">To match&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">Use&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">Results in&#8230;&#8203;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The beginning of an expression only</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A caret followed by an expression: <code>^my</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>All addresses beginning with <code>my</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An expression</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The matching string: <code>my</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>All addresses containing <code>my</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The end of an expression only</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An expression followed by the dollar sign: <code>my$</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>All addresses ending with <code>my</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An exact expression</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A caret followed by an expression and a dollar sign: <code>^my$</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Only the address <code>my</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="ref-view-message-connection-stats-table-messaging">4.3.4. Viewing message and connection statistics using the EnMasse Console</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -1967,7 +2968,7 @@ data:
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Message statistics reference table</caption>
+<caption class="title">Table 3. Message statistics reference table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2054,7 +3055,7 @@ data:
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Connection statistics reference table</caption>
+<caption class="title">Table 4. Connection statistics reference table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2100,142 +3101,6 @@ data:
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="uninstalling-messaging">3.5. Uninstalling EnMasse</h3>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Delete the rolebinding in the <code>kube-system</code> namespace:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl delete rolebindings -l app=enmasse -n kube-system</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Delete "cluster level" resources:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl delete clusterrolebindings -l app=enmasse
-kubectl delete crd -l app=enmasse
-kubectl delete clusterroles -l app=enmasse
-kubectl delete apiservices -l app=enmasse</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Delete the namespace where EnMasse is deployed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl delete namespace <em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="tenant-guide-messaging">4. Tenant guide</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The tenant guide provides resources on how to manage address spaces, addresses, and users as a
-messaging tenant.</p>
-</div>
-<div class="sect2">
-<h3 id="con-address-space-messaging">4.1. Address space</h3>
-<div class="paragraph">
-<p>An address space is a group of addresses that can be accessed through a single connection (per protocol). This means that clients connected to the endpoints of an address space can send messages to or receive messages from any authorized address within that address space. An address space can support multiple protocols, as defined by the address space type.</p>
-</div>
-<div class="paragraph">
-<p>EnMasse has two types of address spaces:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#con-standard-address-space-messaging">Standard</a></p>
-</li>
-<li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#con-brokered-address-space-messaging">Brokered</a></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="con-address-messaging">4.2. Address</h3>
-<div class="paragraph">
-<p>An address is part of an address space and represents a destination for sending and receiving messages. An address has a type, which defines the semantics of sending messages to and receiving messages from that address.</p>
-</div>
-<div class="paragraph">
-<p>The types of addresses available in EnMasse depend on the address space type.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="con-standard-address-space-messaging">4.3. Standard address space</h3>
-<div class="paragraph">
-<p>The standard address space is the default address space in EnMasse. It consists of an AMQP router network in combination with attachable storage units. Clients connect to a message router, which forwards messages to or from one or more message brokers. This address space type is appropriate when you have many connections and addresses. However, the standard address space has the following limitations:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>No transaction support</p>
-</li>
-<li>
-<p>No message ordering</p>
-</li>
-<li>
-<p>No selectors on queues</p>
-</li>
-<li>
-<p>No browsing on queues</p>
-</li>
-<li>
-<p>No message groups</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Clients connect and send and receive messages in this address space using the AMQP or MQTT protocols. Note that MQTT does not support qos2 or retained messages.</p>
-</div>
-<div class="sect3">
-<h4 id="assembly-standard-address-types-messaging">4.3.1. Standard address types</h4>
-<div class="paragraph">
-<p>The standard address space supports five different address types:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>queue</p>
-</li>
-<li>
-<p>topic</p>
-</li>
-<li>
-<p>anycast</p>
-</li>
-<li>
-<p>multicast</p>
-</li>
-<li>
-<p>subscription</p>
-</li>
-</ul>
-</div>
-<div class="sect4">
-<h5 id="con-standard-queue-messaging">Queue</h5>
-<div class="paragraph">
-<p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases where you want to decouple the producer and consumer. A queue can be sharded across multiple storage units. Message ordering might be lost for queues in the standard address space.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="con-standard-topic-messaging">Topic</h5>
-<div class="paragraph">
-<p>The topic address type supports the publish-subscribe messaging pattern where there are 1..N producers and 1..M consumers. Each message published to a topic address is forwarded to all subscribers for that address. A subscriber can also be durable, in which case messages are kept until the subscriber has acknowledged them.</p>
-</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -2243,600 +3108,15 @@ messaging tenant.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-If you create a subscription on a topic, any senders to that topic must specify the <code>topic</code> capability.
+For the brokered address space only, on the Connections page, the number of senders is either <code>0</code> or <code>1</code>. As soon as one or more senders exist, <code>1</code> is displayed rather than reflecting the actual number of senders.
 </td>
 </tr>
 </table>
 </div>
-<div class="sect5">
-<h6 id="hierarchical_topics_and_wildcards">Hierarchical topics and wildcards</h6>
-<div class="paragraph">
-<p>A client receiving from a topic address can specify a wildcard address with the topic address as the root. The wildcard behavior follows the MQTT syntax:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>/</code> is a separator</p>
-</li>
-<li>
-<p><code>+</code> matches one level</p>
-</li>
-<li>
-<p><code>#</code> matches one or more levels</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>So, for example:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>a/#/b</code> matches <code>a/foo/b</code>, <code>a/bar/b</code>, and <code>a/foo/bar/b</code></p>
-</li>
-<li>
-<p><code>a/+/b</code> matches <code>a/foo/b</code> and <code>a/bar/b</code>, but would not match <code>a/foo/bar</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>In the standard address space, the first level must always be a defined topic address; that is, <code>#</code> and <code>+</code> are not valid as the first characters of a subscribing address.</p>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="con-standard-anycast-messaging">Anycast</h5>
-<div class="paragraph">
-<p>The anycast address type is a scalable direct address for sending messages to one consumer. Messages sent to an anycast address are not stored, but are instead forwarded directly to the consumer. This method makes this address type ideal for request-reply (RPC) uses or even work distribution. This is the cheapest address type as it does not require any persistence.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="con-standard-multicast-messaging">Multicast</h5>
-<div class="paragraph">
-<p>The multicast address type is a scalable direct address for sending messages to multiple consumers. Messages sent to a multicast address are forwarded to all consumers receiving messages on that address. Because message acknowledgments from consumers are not propagated to producers, only pre-settled messages can be sent to multicast addresses.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="con-standard-subscription-messaging">Subscription</h5>
-<div class="paragraph">
-<p>The subscription address type allows a subscription to be created for a topic that holds messages published to the topic even if the subscriber is not attached. The subscription is accessed by the consumer using &lt;topic-address&gt;::&lt;subscription-address&gt;. For example, for a subscription <code>mysub</code> on a topic <code>mytopic</code> the consumer consumes from the address <code>mytopic::mysub</code>.</p>
-</div>
-</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="con-brokered-address-space-messaging">4.4. Brokered address space</h3>
-<div class="paragraph">
-<p>The brokered address space is designed to support broker-specific features, at the cost of limited
-scale in terms of the number of connections and addresses. This address space supports JMS
-transactions, message groups, and selectors on queues and topics.</p>
-</div>
-<div class="paragraph">
-<p>Clients can connect and send and receive messages in this address space using the AMQP, CORE, OpenWire, and MQTT protocols.</p>
-</div>
-<div class="sect3">
-<h4 id="assembly-brokered-address-types-messaging">4.4.1. Brokered address types</h4>
-<div class="paragraph">
-<p>The brokered address space supports two address types:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>queue</p>
-</li>
-<li>
-<p>topic</p>
-</li>
-</ul>
-</div>
-<div class="sect4">
-<h5 id="con-brokered-queue-messaging">Queue</h5>
-<div class="paragraph">
-<p>The queue address type is a store-and-forward queue. This address type is appropriate for
-implementing a distributed work queue, handling traffic bursts, and other use cases where you want
-to decouple the producer and consumer. A queue in the brokered address space supports selectors,
-message groups, transactions, and other JMS features. Message order can be lost with released messages.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="con-brokered-topic-messaging">Topic</h5>
-<div class="paragraph">
-<p>The topic address type supports the publish-subscribe messaging pattern in which there are 1..N producers and 1..M consumers. Each message published to a topic address is forwarded to all subscribers for that address. A subscriber can also be durable, in which case messages are kept until the subscriber has acknowledged them.</p>
-</div>
-<div class="sect5">
-<h6 id="hierarchical_topics_and_wildcards_2">Hierarchical topics and wildcards</h6>
-<div class="paragraph">
-<p>A client receiving from a topic address can specify a wildcard address with the topic address as the root. The wildcard behavior follows the MQTT syntax:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>/</code> is a separator</p>
-</li>
-<li>
-<p><code>+</code> matches one level</p>
-</li>
-<li>
-<p><code>#</code> matches one or more levels</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>So, for example:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>a/#/b</code> matches <code>a/foo/b</code>, <code>a/bar/b</code>, <code>a/foo/bar/b</code></p>
-</li>
-<li>
-<p><code>a/+/b</code> matches <code>a/foo/b</code> and <code>a/bar/b</code>, but would not match <code>a/foo/bar</code></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="managing-address-spaces-messaging">4.5. Managing address spaces</h3>
-<div class="paragraph">
-<p>EnMasse is configured to support managing address spaces using the Kubernetes command-line tools.</p>
-</div>
-<div class="sect3">
-<h4 id="minimal_example">4.5.1. Minimal example</h4>
-<div class="paragraph">
-<p>The minimal example shows the smallest set of options needed to create an <code>AddressSpace</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1alpha1
-kind: AddressSpace
-metadata:
-  name: myspace
-spec:
-  type: standard <b class="conum">(1)</b>
-  plan: standard-unlimited <b class="conum">(2)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
-</li>
-<li>
-<p>The address space plan depends on the address space type and what has been configured by the EnMasse admin.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="advanced_example">4.5.2. Advanced example</h4>
-<div class="paragraph">
-<p>The advanced example show how you can configure the authentication service and endpoints of an <code>AddressSpace</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1alpha1
-kind: AddressSpace
-metadata:
-  name: myspace
-spec:
-  type: standard <b class="conum">(1)</b>
-  plan: standard-unlimited <b class="conum">(2)</b>
-  authenticationService:
-    type: standard <b class="conum">(3)</b>
-  endpoints: <b class="conum">(4)</b>
-    - name: messaging
-      service: messaging
-      expose: <b class="conum">(5)</b>
-        type: route
-        routeHost: messaging.example.com
-        routeTlsTermination: passthrough
-        routeServicePort: amqps
-      cert: <b class="conum">(6)</b>
-        provider: certBundle
-        tlsKey: ZXhhbXBsZSAtbgo=
-        tlsCert: ZXhhbXBsZSAtbgo=
-    - name: mqtt
-      service: mqtt
-      expose:
-        type: loadbalancer
-        loadBalancerPorts:
-        - mqtt
-        - mqtts
-      cert:
-        provider: selfsigned
-    - name: console
-      service: console
-      expose:
-        type: route
-        routeTlsTermination: reencrypt
-        routeServicePort: https
-      cert:
-        provider: openshift</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
-</li>
-<li>
-<p>The address space plan depends on the address space type and what has been configured by the EnMasse admin.</p>
-</li>
-<li>
-<p>The authentication service type can be <code>none</code>, <code>standard</code> or <code>external</code>. External requires an additional field, <code>details</code>, including <code>host</code> and <code>port</code> information.</p>
-</li>
-<li>
-<p>The endpoints that must be configured for the <code>AddressSpace</code>.  Endpoints can specity either <code>messaging</code>, <code>console</code> or <code>mqtt</code> services. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
-</li>
-<li>
-<p>Expose the configuration of an endpoint. Endpoints can be kept internal to the cluster, or exposed using an OpenShift route or a load-balancer service.</p>
-</li>
-<li>
-<p>The certificate configuration can be used to specify how the endpoint certificate is provided.  The provider can be <code>selfsigned</code> (default), <code>wildcard</code> (requires it to be enabled by the EnMasse admin), <code>openshift</code> (signed by the OpenShift cluster CA), or <code>certBundle</code> (base64-encoded PEM key and certificate).</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="example_address_space_status_output">4.5.3. Example address space status output</h4>
-<div class="paragraph">
-<p>The <code>AddressSpace</code> resource contains a <code>status</code> field that can be used to retrieve information about
-its state and endpoints. The following output is an example of the output you can get from running
-<code>kubectl get addressspace myspace -o yaml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1alpha1
-kind: AddressSpace
-metadata:
-  name: myspace
-spec:
-  ...
-status:
-  isReady: false <b class="conum">(1)</b>
-  messages:
-    - "One or more deployments are not ready: "
-  endpointStatuses: <b class="conum">(2)</b>
-    - name: messaging
-      cert: aGVsbG8= <b class="conum">(3)</b>
-      serviceHost: messaging-123.enmasse-infra.svc <b class="conum">(4)</b>
-      servicePorts: <b class="conum">(5)</b>
-        - name: amqp
-          port: 5672
-        - name: amqps
-          port: 5671
-      externalHost: messaging.example.com <b class="conum">(6)</b>
-      externalPorts: <b class="conum">(7)</b>
-        - name: amqps
-          port: 443</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>The <code>status.isReady</code> field can be either <code>true</code> or <code>false</code>.</p>
-</li>
-<li>
-<p>The <code>status.endpointStatuses</code> field provides information about available endpoints for this address space.</p>
-</li>
-<li>
-<p>The <code>cert</code> field contains the base64-encoded certificate for a given endpoint.</p>
-</li>
-<li>
-<p>The <code>serviceHost</code> field contains the cluster-internal host name for a given endpoint.</p>
-</li>
-<li>
-<p>The <code>servicePorts</code> field contains the available ports for the cluster-internal host.</p>
-</li>
-<li>
-<p>The <code>externalHost</code> field contains the external host name for a given endpoint.</p>
-</li>
-<li>
-<p>The <code>externalPorts</code> field contains the available ports for the external host.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="create-address-space-cli-messaging">4.5.4. Creating address spaces using the command line</h4>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create an address space definition:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1alpha1
-kind: AddressSpace
-metadata:
-  name: myspace
-spec:
-  type: standard
-  plan: standard-unlimited</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create the address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl create -f standard-address-space.yaml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Check the status of the address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.isReady}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The address space is ready for use when the above command outputs <code>true</code>.</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="retrieving-address-space-information-messaging">4.5.5. Example commands for retrieving address space information</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Retrieving the EnMasse Console host name:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'console\')].externalHost}</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Retrieving the status of an address space:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.isReady}</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Retrieving the base64-encoded PEM certificate for the messaging endpoint:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].cert}</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Retrieving the host name for the messaging endpoint:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">kubectl get addressspace myspace -o jsonpath={.status.endpointStatuses[?(@.name==\'messaging\')].externalHost}</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="managing-addresses-messaging">4.6. Managing addresses</h3>
-<div class="paragraph">
-<p>EnMasse is configured to support managing address using the Kubernetes command-line tools and the EnMasse Console.</p>
-</div>
-<div class="sect3">
-<h4 id="example">4.6.1. Example</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1alpha1
-kind: Address
-metadata:
-    name: myspace.myqueue <b class="conum">(1)</b>
-spec:
-    address: myqueue <b class="conum">(2)</b>
-    type: queue <b class="conum">(3)</b>
-    plan: standard-small-queue <b class="conum">(4)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>The address name must be prefixed with the address space name and a dot. Address names can only include alphanumeric characters.</p>
-</li>
-<li>
-<p>The address is the messaging address this address resource represents.</p>
-</li>
-<li>
-<p>The address type dictates the semantics of this address.</p>
-</li>
-<li>
-<p>The address plan describes the resource usage for the address.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="create-address-cli-messaging">4.6.2. Creating addresses using the command line</h4>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create an address definition:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1alpha1
-kind: Address
-metadata:
-    name: myspace.myqueue
-spec:
-    address: myqueue
-    type: queue
-    plan: standard-small-queue</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-Prefixing the name with the address space name is required to ensure addresses from different address spaces do not collide.
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Create the address:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl create -f standard-small-queue.yaml</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>List the addresses:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl get addresses -o yaml</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="create-address-console-messaging">4.6.3. Creating addresses using the EnMasse Console</h4>
-<div class="paragraph">
-<p>You can create new addresses using the EnMasse Console. The type of addresses that you can create are determined by the type of address space.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>You must have created an address space. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#create-address-space-cli-messaging">Creating an address space</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in to the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
-</li>
-<li>
-<p>Click <strong>New</strong>. The Create new address window opens.</p>
-</li>
-<li>
-<p>Type a name and select the address type. If selecting <strong>subscription</strong>, from the <strong>Topic</strong> list select the topic name to which you want to create a subscription.</p>
-</li>
-<li>
-<p>Click <strong>Next</strong>.</p>
-</li>
-<li>
-<p>Select a plan and click <strong>Next</strong>.</p>
-</li>
-<li>
-<p>Click <strong>Create</strong>. Your address is displayed in the EnMasse Console.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="logging-into-console-messaging">4.7. Accessing the EnMasse Console</h3>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>You must have obtained the host name for the EnMasse Console. For more information about how to obtain the host name, see the first bullet point in <a href="http://enmasse.io/documentation/master/kubernetes/#retrieving-address-space-information-messaging">Example commands for retrieving address space information</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>In a web browser, navigate to <code>https://<em>console-host-name</em></code> where <code><em>console-host-name</em></code> is the EnMasse Console host name.</p>
-</li>
-<li>
-<p>Log in with your OpenShift user credentials.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="ref-console-address-filtering-messaging">4.8. Using the EnMasse Console address filtering</h3>
-<div class="paragraph">
-<p>The address name filtering feature in the EnMasse Console uses regular expressions. Also, filters are cumulative.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. EnMasse Console address name filtering behavior</caption>
-<colgroup>
-<col style="width: 34%;">
-<col style="width: 33%;">
-<col style="width: 33%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">To match&#8230;&#8203;</th>
-<th class="tableblock halign-left valign-top">Use&#8230;&#8203;</th>
-<th class="tableblock halign-left valign-top">Results in&#8230;&#8203;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The beginning of an expression only</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>A caret followed by an expression: <code>^my</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>All addresses beginning with <code>my</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An expression</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The matching string: <code>my</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>All addresses containing <code>my</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The end of an expression only</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An expression followed by the dollar sign: <code>my$</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>All addresses ending with <code>my</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An exact expression</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>A caret followed by an expression and a dollar sign: <code>^my$</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Only the address <code>my</code></p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="con-user-model-messaging">4.9. User model</h3>
+<h3 id="con-user-model-messaging">4.4. User model</h3>
 <div class="paragraph">
 <p>You can create users to access messaging clients and the EnMasse Console through user definition files, which specify the authentication type and authorization policies.</p>
 </div>
@@ -2848,7 +3128,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: user.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: user.enmasse.io/v1beta1
 kind: MessagingUser
 metadata:
   name: myspace.user1
@@ -2888,7 +3168,7 @@ spec:
 <code>spec.authorization</code> defines the authorization policies for that user.</p>
 </div>
 <div class="sect3">
-<h4 id="authentication">4.9.1. Authentication</h4>
+<h4 id="authentication">4.4.1. Authentication</h4>
 <div class="paragraph">
 <p>The supported values for the authentication type are <code>password</code> and <code>federated</code>.</p>
 </div>
@@ -2932,16 +3212,26 @@ identity provider.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="authorization">4.9.2. Authorization</h4>
+<h4 id="authorization">4.4.2. Authorization</h4>
 <div class="paragraph">
 <p>In addition, authorization policies can be defined using operations and addresses. Valid operations
-are <code>send</code>, <code>recv</code>, <code>view</code>, and <code>manage</code>. If addresses are not specified, operations will be applied to all
-addresses.</p>
+are <code>send</code>, <code>recv</code>, <code>view</code>, and <code>manage</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>manage</code> and <code>view</code> operations apply to all addresses in the address space.</p>
+</div>
+<div class="paragraph">
+<p>In the <code>standard</code> address space, the asterisk wildcard can be used at the end of an address. The address <code>top*</code>
+matches addresses <code>topic</code> and <code>topic/sub</code>.</p>
+</div>
+<div class="paragraph">
+<p>In the <code>brokered</code> address space, the plus sign and asterisk wildcards can be used at the end of an address to match a single word (plus sign) or all words (asterisk) after the forward slash delimiter. So, the address <code>topic/+</code> matches
+<code>topic/sub</code> but not <code>topic/s/sub</code>.  The address <code>topic/*</code> matches <code>topic/sub</code> and <code>topic/s/sub</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="managing-users-messaging">4.10. Managing users</h3>
+<h3 id="managing-users-messaging">4.5. Managing users</h3>
 <div class="paragraph">
 <p>EnMasse user management is only supported when using the <code>standard</code> authentication service. On Kubernetes, users can
 be managed using the Kubernetes command-line tools.</p>
@@ -2955,7 +3245,7 @@ be managed using the Kubernetes command-line tools.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="proc-creating-users-cli-messaging">4.10.1. Creating users using the command line</h4>
+<h4 id="proc-creating-users-cli-messaging">4.5.1. Creating users using the command line</h4>
 <div class="paragraph">
 <p>In EnMasse users can be created using standard command-line tools.</p>
 </div>
@@ -2974,7 +3264,7 @@ be managed using the Kubernetes command-line tools.</p>
 <p>Save the user definition to a file:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: user.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: user.enmasse.io/v1beta1
 kind: MessagingUser
 metadata:
   name: myspace.user1
@@ -3011,7 +3301,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-deleting-users-cli-messaging">4.10.2. Deleting users using the command line</h4>
+<h4 id="proc-deleting-users-cli-messaging">4.5.2. Deleting users using the command line</h4>
 <div class="paragraph">
 <p>Users can be deleted using standard command-line tools.</p>
 </div>
@@ -3049,7 +3339,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-managing-user-permissions-cli-messaging">4.10.3. Managing user permissions using the command line</h4>
+<h4 id="proc-managing-user-permissions-cli-messaging">4.5.3. Managing user permissions using the command line</h4>
 <div class="paragraph">
 <p>You can edit the permissions for an existing user using the command line.</p>
 </div>
@@ -3091,7 +3381,7 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="assembly-connecting-applications-messaging">4.11. Connecting applications to EnMasse</h3>
+<h3 id="assembly-connecting-applications-messaging">4.6. Connecting applications to EnMasse</h3>
 <div class="paragraph">
 <p>You can connect your application to EnMasse using one of the following client examples.</p>
 </div>
@@ -3121,7 +3411,7 @@ spec:
 <p>The messaging protocols supported depends on the type of address space used. For more information about address space types, see  <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">Address space</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="client-examples-messaging">4.11.1. Client examples</h4>
+<h4 id="client-examples-messaging">4.6.1. Client examples</h4>
 <div class="sect4">
 <h5 id="ref-python-example-messaging">Apache Qpid Proton Python example</h5>
 <div class="paragraph">
@@ -3465,7 +3755,7 @@ namespace Test
 <div class="sect3">
 <h4 id="_paths">A.1.2. Paths</h4>
 <div class="sect4">
-<h5 id="_createadminenmassev1alpha1namespacedaddressspaceplan">POST /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans</h5>
+<h5 id="_createadminenmassev1alpha1namespacedaddressspaceplan">POST /apis/admin.enmasse.io/v1beta1/namespaces/{namespace}/addressspaceplans</h5>
 <div class="sect5">
 <h6 id="description">Description</h6>
 <div class="paragraph">
@@ -3515,7 +3805,7 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_addressspaceplan">io.enmasse.admin.v1beta1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -3545,7 +3835,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_addressspaceplan">io.enmasse.admin.v1beta1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3556,7 +3846,7 @@ namespace Test
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_addressspaceplan">io.enmasse.admin.v1beta1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3604,14 +3894,14 @@ namespace Test
 <p>admin</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_listadminenmassev1alpha1namespacedaddresspaceplan">GET /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans</h5>
+<h5 id="_listadminenmassev1alpha1namespacedaddresspaceplan">GET /apis/admin.enmasse.io/v1beta1/namespaces/{namespace}/addressspaceplans</h5>
 <div class="sect5">
 <h6 id="description_2">Description</h6>
 <div class="paragraph">
@@ -3693,7 +3983,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplanlist">io.enmasse.admin.v1alpha1.AddressSpacePlanList</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_addressspaceplanlist">io.enmasse.admin.v1beta1.AddressSpacePlanList</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3731,14 +4021,14 @@ namespace Test
 <p>admin</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_readadminenmassev1alpha1namespacedaddressspaceplan">GET /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans/{name}</h5>
+<h5 id="_readadminenmassev1alpha1namespacedaddressspaceplan">GET /apis/admin.enmasse.io/v1beta1/namespaces/{namespace}/addressspaceplans/{name}</h5>
 <div class="sect5">
 <h6 id="description_3">Description</h6>
 <div class="paragraph">
@@ -3820,7 +4110,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_addressspaceplan">io.enmasse.admin.v1beta1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3879,14 +4169,14 @@ namespace Test
 <p>admin</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_replaceadminenmassev1alpha1namespacedaddressspaceplan">PUT /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans/{name}</h5>
+<h5 id="_replaceadminenmassev1alpha1namespacedaddressspaceplan">PUT /apis/admin.enmasse.io/v1beta1/namespaces/{namespace}/addressspaceplans/{name}</h5>
 <div class="sect5">
 <h6 id="description_4">Description</h6>
 <div class="paragraph">
@@ -3951,7 +4241,7 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_addressspaceplan">io.enmasse.admin.v1beta1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -3981,7 +4271,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_addressspaceplan">io.enmasse.admin.v1beta1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -3992,7 +4282,7 @@ namespace Test
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_addressspaceplan">io.enmasse.admin.v1beta1.AddressSpacePlan</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4030,14 +4320,14 @@ namespace Test
 <p>admin</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_deleteadminenmassev1alpha1namespacedaddressspaceplan">DELETE /apis/admin.enmasse.io/v1alpha1/namespaces/{namespace}/addressspaceplans/{name}</h5>
+<h5 id="_deleteadminenmassev1alpha1namespacedaddressspaceplan">DELETE /apis/admin.enmasse.io/v1beta1/namespaces/{namespace}/addressspaceplans/{name}</h5>
 <div class="sect5">
 <h6 id="description_5">Description</h6>
 <div class="paragraph">
@@ -4168,14 +4458,14 @@ namespace Test
 <p>admin</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_createenmassev1alpha1namespacedaddress">POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses</h5>
+<h5 id="_createenmassev1alpha1namespacedaddress">POST /apis/enmasse.io/v1beta1/namespaces/{namespace}/addresses</h5>
 <div class="sect5">
 <h6 id="description_6">Description</h6>
 <div class="paragraph">
@@ -4225,7 +4515,7 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -4255,7 +4545,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4266,7 +4556,7 @@ namespace Test
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4311,14 +4601,14 @@ namespace Test
 <p>addresses</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_listenmassev1alpha1namespacedaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses</h5>
+<h5 id="_listenmassev1alpha1namespacedaddress">GET /apis/enmasse.io/v1beta1/namespaces/{namespace}/addresses</h5>
 <div class="sect5">
 <h6 id="description_7">Description</h6>
 <div class="paragraph">
@@ -4400,7 +4690,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addresslist">io.enmasse.v1alpha1.AddressList</a></p>
+<p><a href="#_io_enmasse_v1beta1_addresslist">io.enmasse.v1beta1.AddressList</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4435,14 +4725,14 @@ namespace Test
 <p>addresses</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_readenmassev1alpha1namespacedaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}</h5>
+<h5 id="_readenmassev1alpha1namespacedaddress">GET /apis/enmasse.io/v1beta1/namespaces/{namespace}/addresses/{name}</h5>
 <div class="sect5">
 <h6 id="description_8">Description</h6>
 <div class="paragraph">
@@ -4524,7 +4814,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4580,14 +4870,14 @@ namespace Test
 <p>addresses</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_replaceenmassev1alpha1namespacedaddress">PUT /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}</h5>
+<h5 id="_replaceenmassev1alpha1namespacedaddress">PUT /apis/enmasse.io/v1beta1/namespaces/{namespace}/addresses/{name}</h5>
 <div class="sect5">
 <h6 id="description_9">Description</h6>
 <div class="paragraph">
@@ -4652,7 +4942,7 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -4682,7 +4972,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4693,7 +4983,7 @@ namespace Test
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4728,14 +5018,14 @@ namespace Test
 <p>addresses</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_deleteenmassev1alpha1namespacedaddress">DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addresses/{name}</h5>
+<h5 id="_deleteenmassev1alpha1namespacedaddress">DELETE /apis/enmasse.io/v1beta1/namespaces/{namespace}/addresses/{name}</h5>
 <div class="sect5">
 <h6 id="description_10">Description</h6>
 <div class="paragraph">
@@ -4863,14 +5153,14 @@ namespace Test
 <p>addresses</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_createenmassev1alpha1namespacedaddressspace">POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces</h5>
+<h5 id="_createenmassev1alpha1namespacedaddressspace">POST /apis/enmasse.io/v1beta1/namespaces/{namespace}/addressspaces</h5>
 <div class="sect5">
 <h6 id="description_11">Description</h6>
 <div class="paragraph">
@@ -4920,7 +5210,7 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspace">io.enmasse.v1beta1.AddressSpace</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -4950,7 +5240,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspace">io.enmasse.v1beta1.AddressSpace</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -4961,7 +5251,7 @@ namespace Test
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspace">io.enmasse.v1beta1.AddressSpace</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -5006,14 +5296,14 @@ namespace Test
 <p>addressspaces</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_listenmassev1alpha1namespacedaddressspace">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces</h5>
+<h5 id="_listenmassev1alpha1namespacedaddressspace">GET /apis/enmasse.io/v1beta1/namespaces/{namespace}/addressspaces</h5>
 <div class="sect5">
 <h6 id="description_12">Description</h6>
 <div class="paragraph">
@@ -5095,7 +5385,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspacelist">io.enmasse.v1alpha1.AddressSpaceList</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspacelist">io.enmasse.v1beta1.AddressSpaceList</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -5130,14 +5420,14 @@ namespace Test
 <p>addressspaces</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_createenmassev1alpha1addressspaceaddresses">POST /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses</h5>
+<h5 id="_createenmassev1alpha1addressspaceaddresses">POST /apis/enmasse.io/v1beta1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses</h5>
 <div class="sect5">
 <h6 id="description_13">Description</h6>
 <div class="paragraph">
@@ -5204,7 +5494,7 @@ namespace Test
 <p>AddressList object</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addresslist">io.enmasse.v1alpha1.AddressList</a></p>
+<p><a href="#_io_enmasse_v1beta1_addresslist">io.enmasse.v1beta1.AddressList</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -5290,14 +5580,14 @@ namespace Test
 <p>addressspace_addresses</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_listenmassev1alpha1namespacedaddressspaceaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses</h5>
+<h5 id="_listenmassev1alpha1namespacedaddressspaceaddress">GET /apis/enmasse.io/v1beta1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses</h5>
 <div class="sect5">
 <h6 id="description_14">Description</h6>
 <div class="paragraph">
@@ -5379,7 +5669,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addresslist">io.enmasse.v1alpha1.AddressList</a></p>
+<p><a href="#_io_enmasse_v1beta1_addresslist">io.enmasse.v1beta1.AddressList</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -5425,14 +5715,14 @@ namespace Test
 <p>addressspace_addresses</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_readenmassev1alpha1namespacedaddressspaceaddress">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}</h5>
+<h5 id="_readenmassev1alpha1namespacedaddressspaceaddress">GET /apis/enmasse.io/v1beta1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}</h5>
 <div class="sect5">
 <h6 id="description_15">Description</h6>
 <div class="paragraph">
@@ -5529,7 +5819,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -5575,14 +5865,14 @@ namespace Test
 <p>addressspace_addresses</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_replaceenmassev1alpha1namespacedaddressspaceaddress">PUT /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}</h5>
+<h5 id="_replaceenmassev1alpha1namespacedaddressspaceaddress">PUT /apis/enmasse.io/v1beta1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}</h5>
 <div class="sect5">
 <h6 id="description_16">Description</h6>
 <div class="paragraph">
@@ -5664,7 +5954,7 @@ namespace Test
 <p>Address object</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -5694,7 +5984,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -5705,7 +5995,7 @@ namespace Test
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a></p>
+<p><a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -5761,14 +6051,14 @@ namespace Test
 <p>addressspace_addresses</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_deleteenmassev1alpha1namespacedaddressspaceaddress">DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}</h5>
+<h5 id="_deleteenmassev1alpha1namespacedaddressspaceaddress">DELETE /apis/enmasse.io/v1beta1/namespaces/{namespace}/addressspaces/{addressSpace}/addresses/{address}</h5>
 <div class="sect5">
 <h6 id="description_17">Description</h6>
 <div class="paragraph">
@@ -5911,14 +6201,14 @@ namespace Test
 <p>addressspace_addresses</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_readenmassev1alpha1namespacedaddressspace">GET /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}</h5>
+<h5 id="_readenmassev1alpha1namespacedaddressspace">GET /apis/enmasse.io/v1beta1/namespaces/{namespace}/addressspaces/{name}</h5>
 <div class="sect5">
 <h6 id="description_18">Description</h6>
 <div class="paragraph">
@@ -6000,7 +6290,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspace">io.enmasse.v1beta1.AddressSpace</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -6056,14 +6346,14 @@ namespace Test
 <p>addressspaces</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_replaceenmassev1alpha1namespacedaddressspace">PUT /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}</h5>
+<h5 id="_replaceenmassev1alpha1namespacedaddressspace">PUT /apis/enmasse.io/v1beta1/namespaces/{namespace}/addressspaces/{name}</h5>
 <div class="sect5">
 <h6 id="description_19">Description</h6>
 <div class="paragraph">
@@ -6128,7 +6418,7 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspace">io.enmasse.v1beta1.AddressSpace</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -6158,7 +6448,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspace">io.enmasse.v1beta1.AddressSpace</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -6169,7 +6459,7 @@ namespace Test
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspace">io.enmasse.v1beta1.AddressSpace</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -6204,14 +6494,14 @@ namespace Test
 <p>addressspaces</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_deleteenmassev1alpha1namespacedaddressspace">DELETE /apis/enmasse.io/v1alpha1/namespaces/{namespace}/addressspaces/{name}</h5>
+<h5 id="_deleteenmassev1alpha1namespacedaddressspace">DELETE /apis/enmasse.io/v1beta1/namespaces/{namespace}/addressspaces/{name}</h5>
 <div class="sect5">
 <h6 id="description_20">Description</h6>
 <div class="paragraph">
@@ -6339,14 +6629,14 @@ namespace Test
 <p>addressspaces</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_createauthenmassev1alpha1namespacedmessaginguser">POST /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers</h5>
+<h5 id="_createauthenmassev1alpha1namespacedmessaginguser">POST /apis/user.enmasse.io/v1beta1/namespaces/{namespace}/messagingusers</h5>
 <div class="sect5">
 <h6 id="description_21">Description</h6>
 <div class="paragraph">
@@ -6396,7 +6686,7 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+<p><a href="#_io_enmasse_user_v1beta1_messaginguser">io.enmasse.user.v1beta1.MessagingUser</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -6426,7 +6716,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+<p><a href="#_io_enmasse_user_v1beta1_messaginguser">io.enmasse.user.v1beta1.MessagingUser</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -6437,7 +6727,7 @@ namespace Test
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+<p><a href="#_io_enmasse_user_v1beta1_messaginguser">io.enmasse.user.v1beta1.MessagingUser</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -6482,7 +6772,7 @@ namespace Test
 <p>auth</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 <li>
 <p>user</p>
@@ -6492,7 +6782,7 @@ namespace Test
 </div>
 </div>
 <div class="sect4">
-<h5 id="_listauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers</h5>
+<h5 id="_listauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1beta1/namespaces/{namespace}/messagingusers</h5>
 <div class="sect5">
 <h6 id="description_22">Description</h6>
 <div class="paragraph">
@@ -6574,7 +6864,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguserlist">io.enmasse.user.v1alpha1.MessagingUserList</a></p>
+<p><a href="#_io_enmasse_user_v1beta1_messaginguserlist">io.enmasse.user.v1beta1.MessagingUserList</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -6609,7 +6899,7 @@ namespace Test
 <p>auth</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 <li>
 <p>user</p>
@@ -6619,7 +6909,7 @@ namespace Test
 </div>
 </div>
 <div class="sect4">
-<h5 id="_readauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
+<h5 id="_readauthenmassev1alpha1namespacedmessaginguser">GET /apis/user.enmasse.io/v1beta1/namespaces/{namespace}/messagingusers/{name}</h5>
 <div class="sect5">
 <h6 id="description_23">Description</h6>
 <div class="paragraph">
@@ -6701,7 +6991,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+<p><a href="#_io_enmasse_user_v1beta1_messaginguser">io.enmasse.user.v1beta1.MessagingUser</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -6757,7 +7047,7 @@ namespace Test
 <p>auth</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 <li>
 <p>user</p>
@@ -6767,7 +7057,7 @@ namespace Test
 </div>
 </div>
 <div class="sect4">
-<h5 id="_replaceauthenmassev1alpha1namespacedmessaginguser">PUT /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
+<h5 id="_replaceauthenmassev1alpha1namespacedmessaginguser">PUT /apis/user.enmasse.io/v1beta1/namespaces/{namespace}/messagingusers/{name}</h5>
 <div class="sect5">
 <h6 id="description_24">Description</h6>
 <div class="paragraph">
@@ -6832,7 +7122,7 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+<p><a href="#_io_enmasse_user_v1beta1_messaginguser">io.enmasse.user.v1beta1.MessagingUser</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -6862,7 +7152,7 @@ namespace Test
 <p>OK</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+<p><a href="#_io_enmasse_user_v1beta1_messaginguser">io.enmasse.user.v1beta1.MessagingUser</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -6873,7 +7163,7 @@ namespace Test
 <p>Created</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a></p>
+<p><a href="#_io_enmasse_user_v1beta1_messaginguser">io.enmasse.user.v1beta1.MessagingUser</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -6908,7 +7198,7 @@ namespace Test
 <p>auth</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 <li>
 <p>user</p>
@@ -6918,7 +7208,7 @@ namespace Test
 </div>
 </div>
 <div class="sect4">
-<h5 id="_deleteauthenmassev1alpha1namespacedmessaginguser">DELETE /apis/user.enmasse.io/v1alpha1/namespaces/{namespace}/messagingusers/{name}</h5>
+<h5 id="_deleteauthenmassev1alpha1namespacedmessaginguser">DELETE /apis/user.enmasse.io/v1beta1/namespaces/{namespace}/messagingusers/{name}</h5>
 <div class="sect5">
 <h6 id="description_25">Description</h6>
 <div class="paragraph">
@@ -7046,7 +7336,7 @@ namespace Test
 <p>auth</p>
 </li>
 <li>
-<p>enmasse_v1alpha1</p>
+<p>enmasse_v1beta1</p>
 </li>
 <li>
 <p>user</p>
@@ -7131,7 +7421,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_addressplan">io.enmasse.admin.v1alpha1.AddressPlan</h5>
+<h5 id="_io_enmasse_admin_v1beta1_addressplan">io.enmasse.admin.v1beta1.AddressPlan</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7159,7 +7449,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (admin.enmasse.io/v1alpha1)</p>
+<p>enum (admin.enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7213,7 +7503,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_addressplan_requiredresources">requiredResources</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_admin_v1beta1_addressplan_requiredresources">requiredResources</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7236,7 +7526,7 @@ namespace Test
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_admin_v1alpha1_addressplan_requiredresources" class="paragraph">
+<div id="_io_enmasse_admin_v1beta1_addressplan_requiredresources" class="paragraph">
 <p><strong>requiredResources</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -7273,7 +7563,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_addressplanlist">io.enmasse.admin.v1alpha1.AddressPlanList</h5>
+<h5 id="_io_enmasse_admin_v1beta1_addressplanlist">io.enmasse.admin.v1beta1.AddressPlanList</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7292,7 +7582,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (admin.enmasse.io/v1alpha1)</p>
+<p>enum (admin.enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7301,7 +7591,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_addressplan">io.enmasse.admin.v1alpha1.AddressPlan</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_admin_v1beta1_addressplan">io.enmasse.admin.v1beta1.AddressPlan</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7317,7 +7607,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</h5>
+<h5 id="_io_enmasse_admin_v1beta1_addressspaceplan">io.enmasse.admin.v1beta1.AddressSpacePlan</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7354,7 +7644,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (admin.enmasse.io/v1alpha1)</p>
+<p>enum (admin.enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7408,7 +7698,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_addressspaceplan_resources">resources</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_admin_v1beta1_addressspaceplan_resources">resources</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7431,7 +7721,7 @@ namespace Test
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_admin_v1alpha1_addressspaceplan_resources" class="paragraph">
+<div id="_io_enmasse_admin_v1beta1_addressspaceplan_resources" class="paragraph">
 <p><strong>resources</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -7468,7 +7758,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_addressspaceplanlist">io.enmasse.admin.v1alpha1.AddressSpacePlanList</h5>
+<h5 id="_io_enmasse_admin_v1beta1_addressspaceplanlist">io.enmasse.admin.v1beta1.AddressSpacePlanList</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7487,7 +7777,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (admin.enmasse.io/v1alpha1)</p>
+<p>enum (admin.enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7496,7 +7786,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_addressspaceplan">io.enmasse.admin.v1alpha1.AddressSpacePlan</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_admin_v1beta1_addressspaceplan">io.enmasse.admin.v1beta1.AddressSpacePlan</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7512,7 +7802,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_brokeredinfraconfig">io.enmasse.admin.v1alpha1.BrokeredInfraConfig</h5>
+<h5 id="_io_enmasse_admin_v1beta1_brokeredinfraconfig">io.enmasse.admin.v1beta1.BrokeredInfraConfig</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7531,7 +7821,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (admin.enmasse.io/v1alpha1)</p>
+<p>enum (admin.enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7558,14 +7848,14 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspec">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpec</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_brokeredinfraconfigspec">io.enmasse.admin.v1beta1.BrokeredInfraConfigSpec</a></p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_brokeredinfraconfiglist">io.enmasse.admin.v1alpha1.BrokeredInfraConfigList</h5>
+<h5 id="_io_enmasse_admin_v1beta1_brokeredinfraconfiglist">io.enmasse.admin.v1beta1.BrokeredInfraConfigList</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7584,7 +7874,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (admin.enmasse.io/v1alpha1)</p>
+<p>enum (admin.enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7593,7 +7883,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfig">io.enmasse.admin.v1alpha1.BrokeredInfraConfig</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_admin_v1beta1_brokeredinfraconfig">io.enmasse.admin.v1beta1.BrokeredInfraConfig</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7609,7 +7899,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspec">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpec</h5>
+<h5 id="_io_enmasse_admin_v1beta1_brokeredinfraconfigspec">io.enmasse.admin.v1beta1.BrokeredInfraConfigSpec</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7628,7 +7918,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecadmin">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpecAdmin</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_brokeredinfraconfigspecadmin">io.enmasse.admin.v1beta1.BrokeredInfraConfigSpecAdmin</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7637,7 +7927,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecbroker">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpecBroker</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_brokeredinfraconfigspecbroker">io.enmasse.admin.v1beta1.BrokeredInfraConfigSpecBroker</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7646,7 +7936,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspec_networkpolicy">networkPolicy</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_brokeredinfraconfigspec_networkpolicy">networkPolicy</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7660,7 +7950,7 @@ namespace Test
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspec_networkpolicy" class="paragraph">
+<div id="_io_enmasse_admin_v1beta1_brokeredinfraconfigspec_networkpolicy" class="paragraph">
 <p><strong>networkPolicy</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -7697,7 +7987,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecadmin">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpecAdmin</h5>
+<h5 id="_io_enmasse_admin_v1beta1_brokeredinfraconfigspecadmin">io.enmasse.admin.v1beta1.BrokeredInfraConfigSpecAdmin</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7716,12 +8006,12 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecadmin_resources">resources</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_brokeredinfraconfigspecadmin_resources">resources</a></p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecadmin_resources" class="paragraph">
+<div id="_io_enmasse_admin_v1beta1_brokeredinfraconfigspecadmin_resources" class="paragraph">
 <p><strong>resources</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -7749,7 +8039,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecbroker">io.enmasse.admin.v1alpha1.BrokeredInfraConfigSpecBroker</h5>
+<h5 id="_io_enmasse_admin_v1beta1_brokeredinfraconfigspecbroker">io.enmasse.admin.v1beta1.BrokeredInfraConfigSpecBroker</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7777,7 +8067,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecbroker_resources">resources</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_brokeredinfraconfigspecbroker_resources">resources</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7800,7 +8090,7 @@ namespace Test
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_admin_v1alpha1_brokeredinfraconfigspecbroker_resources" class="paragraph">
+<div id="_io_enmasse_admin_v1beta1_brokeredinfraconfigspecbroker_resources" class="paragraph">
 <p><strong>resources</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -7837,7 +8127,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfig">io.enmasse.admin.v1alpha1.StandardInfraConfig</h5>
+<h5 id="_io_enmasse_admin_v1beta1_standardinfraconfig">io.enmasse.admin.v1beta1.StandardInfraConfig</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7856,7 +8146,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (admin.enmasse.io/v1alpha1)</p>
+<p>enum (admin.enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7883,14 +8173,14 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspec">io.enmasse.admin.v1alpha1.StandardInfraConfigSpec</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_standardinfraconfigspec">io.enmasse.admin.v1beta1.StandardInfraConfigSpec</a></p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfiglist">io.enmasse.admin.v1alpha1.StandardInfraConfigList</h5>
+<h5 id="_io_enmasse_admin_v1beta1_standardinfraconfiglist">io.enmasse.admin.v1beta1.StandardInfraConfigList</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7909,7 +8199,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (admin.enmasse.io/v1alpha1)</p>
+<p>enum (admin.enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7918,7 +8208,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_admin_v1alpha1_standardinfraconfig">io.enmasse.admin.v1alpha1.StandardInfraConfig</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_admin_v1beta1_standardinfraconfig">io.enmasse.admin.v1beta1.StandardInfraConfig</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -7934,7 +8224,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfigspec">io.enmasse.admin.v1alpha1.StandardInfraConfigSpec</h5>
+<h5 id="_io_enmasse_admin_v1beta1_standardinfraconfigspec">io.enmasse.admin.v1beta1.StandardInfraConfigSpec</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -7953,7 +8243,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecadmin">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecAdmin</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_standardinfraconfigspecadmin">io.enmasse.admin.v1beta1.StandardInfraConfigSpecAdmin</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7962,7 +8252,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecbroker">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecBroker</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_standardinfraconfigspecbroker">io.enmasse.admin.v1beta1.StandardInfraConfigSpecBroker</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7971,7 +8261,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspec_networkpolicy">networkPolicy</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_standardinfraconfigspec_networkpolicy">networkPolicy</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7980,7 +8270,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecrouter">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecRouter</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_standardinfraconfigspecrouter">io.enmasse.admin.v1beta1.StandardInfraConfigSpecRouter</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7994,7 +8284,7 @@ namespace Test
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_admin_v1alpha1_standardinfraconfigspec_networkpolicy" class="paragraph">
+<div id="_io_enmasse_admin_v1beta1_standardinfraconfigspec_networkpolicy" class="paragraph">
 <p><strong>networkPolicy</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -8031,7 +8321,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecadmin">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecAdmin</h5>
+<h5 id="_io_enmasse_admin_v1beta1_standardinfraconfigspecadmin">io.enmasse.admin.v1beta1.StandardInfraConfigSpecAdmin</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -8050,12 +8340,12 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecadmin_resources">resources</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_standardinfraconfigspecadmin_resources">resources</a></p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecadmin_resources" class="paragraph">
+<div id="_io_enmasse_admin_v1beta1_standardinfraconfigspecadmin_resources" class="paragraph">
 <p><strong>resources</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -8083,7 +8373,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecbroker">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecBroker</h5>
+<h5 id="_io_enmasse_admin_v1beta1_standardinfraconfigspecbroker">io.enmasse.admin.v1beta1.StandardInfraConfigSpecBroker</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -8111,7 +8401,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecbroker_resources">resources</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_standardinfraconfigspecbroker_resources">resources</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -8134,7 +8424,7 @@ namespace Test
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecbroker_resources" class="paragraph">
+<div id="_io_enmasse_admin_v1beta1_standardinfraconfigspecbroker_resources" class="paragraph">
 <p><strong>resources</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -8171,7 +8461,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecrouter">io.enmasse.admin.v1alpha1.StandardInfraConfigSpecRouter</h5>
+<h5 id="_io_enmasse_admin_v1beta1_standardinfraconfigspecrouter">io.enmasse.admin.v1beta1.StandardInfraConfigSpecRouter</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -8208,12 +8498,12 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_admin_v1alpha1_standardinfraconfigspecrouter_resources">resources</a></p>
+<p><a href="#_io_enmasse_admin_v1beta1_standardinfraconfigspecrouter_resources">resources</a></p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_admin_v1alpha1_standardinfraconfigspecrouter_resources" class="paragraph">
+<div id="_io_enmasse_admin_v1beta1_standardinfraconfigspecrouter_resources" class="paragraph">
 <p><strong>resources</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -8241,7 +8531,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</h5>
+<h5 id="_io_enmasse_user_v1beta1_messaginguser">io.enmasse.user.v1beta1.MessagingUser</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -8260,7 +8550,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (user.enmasse.io/v1alpha1)</p>
+<p>enum (user.enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8287,14 +8577,14 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_userspec">io.enmasse.user.v1alpha1.UserSpec</a></p>
+<p><a href="#_io_enmasse_user_v1beta1_userspec">io.enmasse.user.v1beta1.UserSpec</a></p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_user_v1alpha1_messaginguserlist">io.enmasse.user.v1alpha1.MessagingUserList</h5>
+<h5 id="_io_enmasse_user_v1beta1_messaginguserlist">io.enmasse.user.v1beta1.MessagingUserList</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -8313,7 +8603,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (user.enmasse.io/v1alpha1)</p>
+<p>enum (user.enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8322,7 +8612,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_user_v1alpha1_messaginguser">io.enmasse.user.v1alpha1.MessagingUser</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_user_v1beta1_messaginguser">io.enmasse.user.v1beta1.MessagingUser</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8338,7 +8628,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_user_v1alpha1_userspec">io.enmasse.user.v1alpha1.UserSpec</h5>
+<h5 id="_io_enmasse_user_v1beta1_userspec">io.enmasse.user.v1beta1.UserSpec</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -8357,7 +8647,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_user_v1alpha1_userspec_authentication">authentication</a></p>
+<p><a href="#_io_enmasse_user_v1beta1_userspec_authentication">authentication</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -8366,7 +8656,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_user_v1alpha1_userspec_authorization">authorization</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_user_v1beta1_userspec_authorization">authorization</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8380,7 +8670,7 @@ namespace Test
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_user_v1alpha1_userspec_authentication" class="paragraph">
+<div id="_io_enmasse_user_v1beta1_userspec_authentication" class="paragraph">
 <p><strong>authentication</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -8457,7 +8747,7 @@ namespace Test
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_user_v1alpha1_userspec_authorization" class="paragraph">
+<div id="_io_enmasse_user_v1beta1_userspec_authorization" class="paragraph">
 <p><strong>authorization</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -8494,7 +8784,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</h5>
+<h5 id="_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -8513,7 +8803,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (enmasse.io/v1alpha1)</p>
+<p>enum (enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8540,7 +8830,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspec">io.enmasse.v1alpha1.AddressSpec</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspec">io.enmasse.v1beta1.AddressSpec</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -8549,14 +8839,14 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressstatus">io.enmasse.v1alpha1.AddressStatus</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressstatus">io.enmasse.v1beta1.AddressStatus</a></p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_v1alpha1_addresslist">io.enmasse.v1alpha1.AddressList</h5>
+<h5 id="_io_enmasse_v1beta1_addresslist">io.enmasse.v1beta1.AddressList</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -8577,10 +8867,10 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Default</strong> : <code>"enmasse.io/v1alpha1"</code></p>
+<p><strong>Default</strong> : <code>"enmasse.io/v1beta1"</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (enmasse.io/v1alpha1)</p>
+<p>enum (enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8590,7 +8880,7 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_v1alpha1_address">io.enmasse.v1alpha1.Address</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_v1beta1_address">io.enmasse.v1beta1.Address</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8607,7 +8897,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</h5>
+<h5 id="_io_enmasse_v1beta1_addressspace">io.enmasse.v1beta1.AddressSpace</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -8626,7 +8916,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (enmasse.io/v1alpha1)</p>
+<p>enum (enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8653,7 +8943,7 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspacespec">io.enmasse.v1alpha1.AddressSpaceSpec</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspacespec">io.enmasse.v1beta1.AddressSpaceSpec</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -8662,14 +8952,14 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspacestatus">io.enmasse.v1alpha1.AddressSpaceStatus</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspacestatus">io.enmasse.v1beta1.AddressSpaceStatus</a></p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_v1alpha1_addressspacelist">io.enmasse.v1alpha1.AddressSpaceList</h5>
+<h5 id="_io_enmasse_v1beta1_addressspacelist">io.enmasse.v1beta1.AddressSpaceList</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -8690,10 +8980,10 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>Default</strong> : <code>"enmasse.io/v1alpha1"</code></p>
+<p><strong>Default</strong> : <code>"enmasse.io/v1beta1"</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (enmasse.io/v1alpha1)</p>
+<p>enum (enmasse.io/v1beta1)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8703,7 +8993,7 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_v1alpha1_addressspace">io.enmasse.v1alpha1.AddressSpace</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_v1beta1_addressspace">io.enmasse.v1beta1.AddressSpace</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8720,7 +9010,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_v1alpha1_addressspacespec">io.enmasse.v1alpha1.AddressSpaceSpec</h5>
+<h5 id="_io_enmasse_v1beta1_addressspacespec">io.enmasse.v1beta1.AddressSpaceSpec</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -8739,7 +9029,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspacespec_authenticationservice">authenticationService</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspacespec_authenticationservice">authenticationService</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -8748,7 +9038,16 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_v1alpha1_addressspacespec_endpoints">endpoints</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_v1beta1_addressspacespec_endpoints">endpoints</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>networkPolicy</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_v1beta1_addressspacespec_networkpolicy">networkPolicy</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -8766,12 +9065,12 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspacetype">io.enmasse.v1alpha1.AddressSpaceType</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspacetype">io.enmasse.v1beta1.AddressSpaceType</a></p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_v1alpha1_addressspacespec_authenticationservice" class="paragraph">
+<div id="_io_enmasse_v1beta1_addressspacespec_authenticationservice" class="paragraph">
 <p><strong>authenticationService</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -8806,7 +9105,7 @@ namespace Test
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_v1alpha1_addressspacespec_endpoints" class="paragraph">
+<div id="_io_enmasse_v1beta1_addressspacespec_endpoints" class="paragraph">
 <p><strong>endpoints</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -8827,16 +9126,16 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addressspacespec_cert">cert</a></p>
+<p><a href="#_io_enmasse_v1beta1_addressspacespec_cert">cert</a></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>host</strong><br>
+<p><strong>expose</strong><br>
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
+<p><a href="#_io_enmasse_v1beta1_addressspacespec_expose">expose</a></p>
 </div></div></td>
 </tr>
 <tr>
@@ -8857,18 +9156,9 @@ namespace Test
 <p>string</p>
 </div></div></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>servicePort</strong><br>
-<em>optional</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
-</div></div></td>
-</tr>
 </tbody>
 </table>
-<div id="_io_enmasse_v1alpha1_addressspacespec_cert" class="paragraph">
+<div id="_io_enmasse_v1beta1_addressspacespec_cert" class="paragraph">
 <p><strong>cert</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -8901,11 +9191,144 @@ namespace Test
 <p>string</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>tlsCert</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>tlsKey</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_v1beta1_addressspacespec_expose" class="paragraph">
+<p><strong>expose</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>annotations</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>object</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>loadBalancerPorts</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; string &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>loadBalancerSourceRanges</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; string &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>routeHost</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>routeServicePort</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>routeTlsTermination</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>type</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>enum (route, loadbalancer)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_v1beta1_addressspacespec_networkpolicy" class="paragraph">
+<p><strong>networkPolicy</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>egress</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_k8s_api_networking_v1_networkpolicyegressrule">io.k8s.api.networking.v1.NetworkPolicyEgressRule</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>ingress</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_k8s_api_networking_v1_networkpolicyingressrule">io.k8s.api.networking.v1.NetworkPolicyIngressRule</a> &gt; array</p>
+</div></div></td>
+</tr>
 </tbody>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_v1alpha1_addressspacestatus">io.enmasse.v1alpha1.AddressSpaceStatus</h5>
+<h5 id="_io_enmasse_v1beta1_addressspacestatus">io.enmasse.v1beta1.AddressSpaceStatus</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -8924,7 +9347,7 @@ namespace Test
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_v1alpha1_addressspacestatus_endpointstatuses">endpointStatuses</a> &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_v1beta1_addressspacestatus_endpointstatuses">endpointStatuses</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8947,7 +9370,7 @@ namespace Test
 </tr>
 </tbody>
 </table>
-<div id="_io_enmasse_v1alpha1_addressspacestatus_endpointstatuses" class="paragraph">
+<div id="_io_enmasse_v1beta1_addressspacestatus_endpointstatuses" class="paragraph">
 <p><strong>endpointStatuses</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -8964,13 +9387,75 @@ namespace Test
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>host</strong><br>
+<p><strong>cert</strong><br>
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>string</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>externalHost</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>externalPorts</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_v1beta1_addressspacestatus_externalports">externalPorts</a> &gt; array</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>serviceHost</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>servicePorts</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>&lt; <a href="#_io_enmasse_v1beta1_addressspacestatus_serviceports">servicePorts</a> &gt; array</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_v1beta1_addressspacestatus_externalports" class="paragraph">
+<p><strong>externalPorts</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>name</strong><br>
@@ -8989,27 +9474,9 @@ namespace Test
 <p>integer</p>
 </div></div></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>serviceHost</strong><br>
-<em>optional</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>string</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>servicePorts</strong><br>
-<em>optional</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; <a href="#_io_enmasse_v1alpha1_addressspacestatus_serviceports">servicePorts</a> &gt; array</p>
-</div></div></td>
-</tr>
 </tbody>
 </table>
-<div id="_io_enmasse_v1alpha1_addressspacestatus_serviceports" class="paragraph">
+<div id="_io_enmasse_v1beta1_addressspacestatus_serviceports" class="paragraph">
 <p><strong>servicePorts</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -9046,7 +9513,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_v1alpha1_addressspacetype">io.enmasse.v1alpha1.AddressSpaceType</h5>
+<h5 id="_io_enmasse_v1beta1_addressspacetype">io.enmasse.v1beta1.AddressSpaceType</h5>
 <div class="paragraph">
 <p>AddressSpaceType is the type of address space (standard, brokered). Each type supports different types of addresses and semantics for those types.</p>
 </div>
@@ -9055,7 +9522,7 @@ namespace Test
 </div>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_v1alpha1_addressspec">io.enmasse.v1alpha1.AddressSpec</h5>
+<h5 id="_io_enmasse_v1beta1_addressspec">io.enmasse.v1beta1.AddressSpec</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -9092,14 +9559,14 @@ namespace Test
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1alpha1_addresstype">io.enmasse.v1alpha1.AddressType</a></p>
+<p><a href="#_io_enmasse_v1beta1_addresstype">io.enmasse.v1beta1.AddressType</a></p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_v1alpha1_addressstatus">io.enmasse.v1alpha1.AddressStatus</h5>
+<h5 id="_io_enmasse_v1beta1_addressstatus">io.enmasse.v1beta1.AddressStatus</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 42.8571%;">
@@ -9143,7 +9610,7 @@ namespace Test
 </table>
 </div>
 <div class="sect4">
-<h5 id="_io_enmasse_v1alpha1_addresstype">io.enmasse.v1alpha1.AddressType</h5>
+<h5 id="_io_enmasse_v1beta1_addresstype">io.enmasse.v1beta1.AddressType</h5>
 <div class="paragraph">
 <p>Type of address (queue, topic, …). Each address type support different kinds of messaging semantics.</p>
 </div>
@@ -9519,7 +9986,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-15 18:43:28 UTC
+Last updated 2019-04-15 18:43:18 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

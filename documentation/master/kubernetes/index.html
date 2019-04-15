@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.6">
+<meta name="generator" content="Asciidoctor 2.0.7">
 <title>Using EnMasse</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -520,8 +520,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#ref-address-space-example-exports-messaging">4.2.9. Address space example exports</a></li>
 <li><a href="#ref-example-address-space-output-messaging">4.2.10. Example address space status output</a></li>
 <li><a href="#create-address-space-cli-messaging">4.2.11. Creating address spaces using the command line</a></li>
-<li><a href="#retrieving-address-space-information-messaging">4.2.12. Example commands for retrieving address space information</a></li>
-<li><a href="#replace-address-space-cli-messaging">4.2.13. Replacing address spaces using the command line</a></li>
+<li><a href="#proc-create-address-space-console-messaging">4.2.12. Creating an address space using the EnMasse Console</a></li>
+<li><a href="#proc-delete-address-space-console-messaging">4.2.13. Deleting an address space using the EnMasse Console</a></li>
+<li><a href="#retrieving-address-space-information-messaging">4.2.14. Example commands for retrieving address space information</a></li>
+<li><a href="#replace-address-space-cli-messaging">4.2.15. Replacing address spaces using the command line</a></li>
 </ul>
 </li>
 <li><a href="#managing-addresses-messaging">4.3. Managing addresses</a>
@@ -530,15 +532,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#con-tenant-address-plans-messaging">4.3.2. Address plans</a></li>
 <li><a href="#proc-list-available-address-plans-messaging">4.3.3. Listing available address plans using the command line</a></li>
 <li><a href="#create-address-cli-messaging">4.3.4. Creating addresses using the command line</a></li>
-<li><a href="#replace-address-cli-messaging">4.3.5. Replacing addresses using the command line</a></li>
+<li><a href="#create-address-console-messaging">4.3.5. Creating addresses using the EnMasse Console</a></li>
+<li><a href="#replace-address-cli-messaging">4.3.6. Replacing addresses using the command line</a></li>
 </ul>
 </li>
 <li><a href="#assembly-using-console-messaging">4.4. Using the EnMasse Console</a>
 <ul class="sectlevel3">
 <li><a href="#logging-into-console-messaging">4.4.1. Accessing the EnMasse Console</a></li>
-<li><a href="#create-address-console-messaging">4.4.2. Creating addresses using the EnMasse Console</a></li>
-<li><a href="#ref-console-address-filtering-messaging">4.4.3. Using the EnMasse Console address filtering</a></li>
-<li><a href="#ref-view-message-connection-stats-table-messaging">4.4.4. Viewing message and connection statistics using the EnMasse Console</a></li>
+<li><a href="#ref-console-address-filtering-messaging">4.4.2. Using the EnMasse Console address filtering</a></li>
+<li><a href="#ref-view-message-connection-stats-table-messaging">4.4.3. Viewing message and connection statistics using the EnMasse Console</a></li>
 </ul>
 </li>
 <li><a href="#con-user-model-messaging">4.5. User model</a>
@@ -554,9 +556,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#proc-managing-user-permissions-cli-messaging">4.6.3. Managing user permissions using the command line</a></li>
 </ul>
 </li>
-<li><a href="#assembly-connecting-applications-messaging">4.7. Connecting applications to EnMasse</a>
+<li><a href="#ref-example-roles-messaging">4.7. EnMasse resources and EnMasse example roles</a></li>
+<li><a href="#assembly-connecting-applications-messaging">4.8. Connecting applications to EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#client-examples-messaging">4.7.1. Client examples</a></li>
+<li><a href="#client-examples-messaging">4.8.1. Client examples</a></li>
 </ul>
 </li>
 </ul>
@@ -2730,7 +2733,7 @@ spec:
 <p>The certificate configuration can be used to specify how the endpoint certificate is provided.  The provider can be <code>selfsigned</code> (default), <code>wildcard</code> (requires it to be enabled by the EnMasse administrator), <code>openshift</code> (signed by the OpenShift cluster CA), or <code>certBundle</code> (base64-encoded PEM key and certificate). When using the <code>certBundle</code> provider, the certificate can be rotated by updating the <code>tlsKey</code> and <code>tlsCert</code> values and replacing the address space.</p>
 </li>
 <li>
-<p>The endpoint information can be exported into a <code>ConfigMap</code>, <code>Secret</code>, or <code>Service</code> within the same namespace as the <code>AddressSpace</code>. This provides applications running on Kubernetes with a way to inject endpoint information or provide a proxy service in the same namespace as the application. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#ref-address-space-example-exports-messaging]">example exports format</a>.</p>
+<p>The endpoint information can be exported into a <code>ConfigMap</code>, <code>Secret</code>, or <code>Service</code> within the same namespace as the <code>AddressSpace</code>. This provides applications running on Kubernetes with a way to inject endpoint information or provide a proxy service in the same namespace as the application. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#ref-address-space-example-exports-messaging">example exports format</a>.</p>
 </li>
 </ol>
 </div>
@@ -2874,7 +2877,59 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="retrieving-address-space-information-messaging">4.2.12. Example commands for retrieving address space information</h4>
+<h4 id="proc-create-address-space-console-messaging">4.2.12. Creating an address space using the EnMasse Console</h4>
+<div class="paragraph">
+<p>You can create a new address space using the EnMasse Console.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the EnMasse Console.</p>
+<div class="paragraph">
+<p>For more information about how to access the EnMasse Console, see <a href="http://enmasse.io/documentation/master/kubernetes/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
+</div>
+</li>
+<li>
+<p>Click <strong>Create</strong>. The Create an instance wizard opens.</p>
+</li>
+<li>
+<p>Complete the required fields and when you are finished, click <strong>Finish</strong> to create the new address space.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When the address space has been successfully created, you can click the address space name to go to the EnMasse Console and view information about the newly created address space.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="proc-delete-address-space-console-messaging">4.2.13. Deleting an address space using the EnMasse Console</h4>
+<div class="paragraph">
+<p>You can delete an existing address space using the EnMasse Console.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the EnMasse Console.</p>
+<div class="paragraph">
+<p>For more information about how to access the EnMasse Console, see <a href="http://enmasse.io/documentation/master/kubernetes/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
+</div>
+</li>
+<li>
+<p>Locate the address space that you want to delete.</p>
+</li>
+<li>
+<p>In the far right column, click the vertical ellipsis icon and select <strong>Delete</strong>. The delete confirmation window opens.</p>
+</li>
+<li>
+<p>Confirm your selection by clicking <strong>Delete</strong>. The address space is deleted.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="retrieving-address-space-information-messaging">4.2.14. Example commands for retrieving address space information</h4>
 <div class="paragraph">
 <p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
 </div>
@@ -2896,7 +2951,7 @@ spec:
 <p>EnMasse Console host name</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>kubectl get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="console")].externalHost}'</code></p>
+<p><code>kubectl get routes console -o jsonpath={.spec.host}</code></p>
 </div></div></td>
 </tr>
 <tr>
@@ -2912,7 +2967,7 @@ spec:
 <p>base64-encoded PEM certificate for the messaging endpoint</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>kubectl get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="messaging")].cert}'</code></p>
+<p><code>kubectl get addressspace myspace -o 'jsonpath={.status.caCert}'</code></p>
 </div></div></td>
 </tr>
 <tr>
@@ -2927,7 +2982,7 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="replace-address-space-cli-messaging">4.2.13. Replacing address spaces using the command line</h4>
+<h4 id="replace-address-space-cli-messaging">4.2.15. Replacing address spaces using the command line</h4>
 <div class="paragraph">
 <p>Address spaces can be replaced in order to change the plan, endpoints, or network policies, or
 to replace certificates if using the <code>certBundle</code> certificate provider. When changing the plan,
@@ -3110,7 +3165,47 @@ Prefixing the name with the address space name is required to ensure addresses f
 </div>
 </div>
 <div class="sect3">
-<h4 id="replace-address-cli-messaging">4.3.5. Replacing addresses using the command line</h4>
+<h4 id="create-address-console-messaging">4.3.5. Creating addresses using the EnMasse Console</h4>
+<div class="paragraph">
+<p>You can create new addresses using the EnMasse Console. The type of addresses that you can create are determined by the type of address space.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You must have created an address space. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#create-address-space-cli-messaging">Creating an address space</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
+</li>
+<li>
+<p>Click the address space link for the address space where you want to create a new address.</p>
+</li>
+<li>
+<p>Click <strong>New</strong>. The Create new address window opens.</p>
+</li>
+<li>
+<p>Type a name and select the address type. If selecting <strong>subscription</strong>, from the <strong>Topic</strong> list select the topic name to which you want to create a subscription.</p>
+</li>
+<li>
+<p>Click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Select a plan and click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>. Your address is displayed in the EnMasse Console.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="replace-address-cli-messaging">4.3.6. Replacing addresses using the command line</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -3152,7 +3247,7 @@ spec:
 <div class="sect2">
 <h3 id="assembly-using-console-messaging">4.4. Using the EnMasse Console</h3>
 <div class="paragraph">
-<p>You can use the EnMasse Console to perform tasks such as creating an address and viewing message and connection statistics.</p>
+<p>You can use the EnMasse Console to perform tasks such as <a href="http://enmasse.io/documentation/master/kubernetes/#proc-create-address-space-console-messaging">creating</a> and <a href="http://enmasse.io/documentation/master/kubernetes/#proc-delete-address-space-console-messaging">deleting an address space</a>, <a href="http://enmasse.io/documentation/master/kubernetes/#create-address-console-messaging">creating an address</a>, and <a href="http://enmasse.io/documentation/master/kubernetes/#ref-view-message-conn-stats-table-messaging">viewing message and connection statistics</a>.</p>
 </div>
 <div class="sect3">
 <h4 id="logging-into-console-messaging">4.4.1. Accessing the EnMasse Console</h4>
@@ -3171,55 +3266,18 @@ spec:
 <p>In a web browser, navigate to <code>https://<em>console-host-name</em></code> where <code><em>console-host-name</em></code> is the EnMasse Console host name.</p>
 </li>
 <li>
-<p>Log in with your OpenShift user credentials. The EnMasse console opens.</p>
+<p>Log in with your OpenShift user credentials. The EnMasse Console opens.</p>
 </li>
 </ol>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/console-screenshot.png" alt="EnMasse console">
+<img src="../images/console-screenshot.png" alt="EnMasse Console">
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-console-messaging">4.4.2. Creating addresses using the EnMasse Console</h4>
-<div class="paragraph">
-<p>You can create new addresses using the EnMasse Console. The type of addresses that you can create are determined by the type of address space.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>You must have created an address space. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#create-address-space-cli-messaging">Creating an address space</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in to the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
-</li>
-<li>
-<p>Click <strong>New</strong>. The Create new address window opens.</p>
-</li>
-<li>
-<p>Type a name and select the address type. If selecting <strong>subscription</strong>, from the <strong>Topic</strong> list select the topic name to which you want to create a subscription.</p>
-</li>
-<li>
-<p>Click <strong>Next</strong>.</p>
-</li>
-<li>
-<p>Select a plan and click <strong>Next</strong>.</p>
-</li>
-<li>
-<p>Click <strong>Create</strong>. Your address is displayed in the EnMasse Console.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="ref-console-address-filtering-messaging">4.4.3. Using the EnMasse Console address filtering</h4>
+<h4 id="ref-console-address-filtering-messaging">4.4.2. Using the EnMasse Console address filtering</h4>
 <div class="paragraph">
 <p>The address name filtering feature in the EnMasse Console uses regular expressions. Also, filters are cumulative.</p>
 </div>
@@ -3286,7 +3344,7 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="ref-view-message-connection-stats-table-messaging">4.4.4. Viewing message and connection statistics using the EnMasse Console</h4>
+<h4 id="ref-view-message-connection-stats-table-messaging">4.4.3. Viewing message and connection statistics using the EnMasse Console</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -3446,10 +3504,10 @@ For the brokered address space only, on the Connections page, the number of send
 <div class="sect2">
 <h3 id="con-user-model-messaging">4.5. User model</h3>
 <div class="paragraph">
-<p>You can create users to access messaging clients and the EnMasse Console through user definition files, which specify the authentication type and authorization policies.</p>
+<p>You can create users to specify authentication and authorization policies for your messaging clients,</p>
 </div>
 <div class="paragraph">
-<p>Users are configured as <code>MessagingUser</code> resources. Users can only be created, deleted, read, updated, and listed.</p>
+<p>Users are configured as <code>MessagingUser</code> resources. Users can be created, deleted, read, updated, and listed.</p>
 </div>
 <div class="paragraph">
 <p>The following example shows the <code>user-example1.yaml</code> file:</p>
@@ -3498,20 +3556,10 @@ spec:
 <div class="sect3">
 <h4 id="authentication_2">4.5.1. Authentication</h4>
 <div class="paragraph">
-<p>The supported values for the authentication type are <code>password</code> and <code>federated</code>.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-In the default configuration, <code>password</code> authentication type users can only access messaging endpoints, whereas
-<code>federated</code> authentication type users can only access the EnMasse Console.
-</td>
-</tr>
-</table>
+<p>The supported values for the authentication type are <code>password</code> and <code>serviceaccount</code>. When using the
+<code>password</code> authentication type, you specify the username and password to be used by your messaging
+client when connecting. With the <code>serviceaccount</code> authentication type, you use the special string
+<code>@@serviceaccount@@</code> as the username, and a Kubernetes service account token as the password.</p>
 </div>
 <div class="sect4">
 <h5 id="password_authentication_type">Password authentication type</h5>
@@ -3530,12 +3578,11 @@ bXktcGFzc3dvcmQ=</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="federated_authentication_type">Federated authentication type</h5>
+<h5 id="serviceaccount_authentication_type">Serviceaccount authentication type</h5>
 <div class="paragraph">
-<p>For the <code>federated</code> type, the <code>provider</code> field must also be specified. The supported values
-depend on the identity providers configured for the address space. The <code>federatedUsername</code>
-and <code>federatedUserid</code> fields must be set, and must map to the <code>username</code> and <code>userid</code> in the federated
-identity provider.</p>
+<p>For the <code>serviceaccount</code> type, the <code>username</code> field must contain the Kubernetes serviceaccount
+name that will be used to authenticate. When connecting with the messaging client, use the string
+<code>@@serviceaccount@@</code> as the username, and the service account token as the password.</p>
 </div>
 </div>
 </div>
@@ -3729,7 +3776,122 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="assembly-connecting-applications-messaging">4.7. Connecting applications to EnMasse</h3>
+<h3 id="ref-example-roles-messaging">4.7. EnMasse resources and EnMasse example roles</h3>
+<div class="paragraph">
+<p>The following table describes the EnMasse resources.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. EnMasse resources table</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Resource</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>addresses</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>addressplans</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>addressspaceplans</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>addressspaces</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>addressspaceschemas</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>brokeredinfraconfigs</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the infrastructure configuration for brokered address spaces?</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>messagingusers</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>standardinfraconfigs</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the infrastructure configuration for standard address spaces?</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>EnMasse provides the following example roles, which you can use directly or use as models to create your own roles.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. EnMasse example roles table</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Role</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>enmasse.io:tenant-view</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies <code>get</code> and <code>list</code> permissions for <code>addresses</code>, <code>addressspaces</code>, <code>addressspaceschemas</code>, and <code>messagingusers</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>enmasse.io:tenant-edit</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies <code>create</code>, <code>get</code>, <code>update</code>, <code>delete</code>, <code>list</code>, <code>watch</code>, and <code>patch</code> permissions for <code>addresses</code>, <code>addressspaces</code>, and <code>messagingusers</code>; <code>get</code> and <code>list</code> permissions for <code>addressspaceschemas</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>service-admin</code> cluster role</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies <code>create</code>, <code>get</code>, <code>update</code>, <code>delete</code>, <code>list</code>, <code>watch</code>, and <code>patch</code> permissions for <code>addressplans</code>, <code>addressspaceplans</code>, <code>brokeredinfraconfigs</code>, and <code>standardinfraconfigs</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="assembly-connecting-applications-messaging">4.8. Connecting applications to EnMasse</h3>
 <div class="paragraph">
 <p>You can connect your application to EnMasse using one of the following client examples.</p>
 </div>
@@ -3759,7 +3921,7 @@ spec:
 <p>The messaging protocols supported depends on the type of address space used. For more information about address space types, see  <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">Address space</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="client-examples-messaging">4.7.1. Client examples</h4>
+<h4 id="client-examples-messaging">4.8.1. Client examples</h4>
 <div class="sect4">
 <h5 id="ref-python-example-messaging">Apache Qpid Proton Python example</h5>
 <div class="paragraph">
@@ -4117,7 +4279,7 @@ namespace Test
 <p>This table shows the fields available for the brokered infrastructure configuration and a brief description.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Brokered infrastructure configuration fields table</caption>
+<caption class="title">Table 7. Brokered infrastructure configuration fields table</caption>
 <colgroup>
 <col style="width: 40%;">
 <col style="width: 60%;">
@@ -4181,6 +4343,22 @@ namespace Test
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.addressFullPolicy</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies action taken when a queue is full: <code>BLOCK</code>, <code>FAIL</code>, <code>PAGE</code>, <code>DROP</code>. The default value is <code>PAGE</code>. For more information see the <a href="https://activemq.apache.org/artemis/docs/latest/address-model.html" target="_blank" rel="noopener">Apache ActiveMQ Artemis documentation</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.globalMaxSize</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the maximum amount of memory used for queues in the broker.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>broker.resources.memory</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -4229,14 +4407,6 @@ namespace Test
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.resources.addressFullPolicy</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies action taken when a queue is full: <code>BLOCK</code>, <code>FAIL</code>, <code>PAGE</code>, <code>DROP</code>. The default value is <code>PAGE</code>. For more information see the <a href="https://activemq.apache.org/artemis/docs/latest/address-model.html" target="_blank" rel="noopener">Apache ActiveMQ Artemis documentation</a>.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>broker.storageClassName</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -4251,78 +4421,6 @@ namespace Test
 <p>If the persistent volume supports resizing, setting this value to <code>true</code> allows the broker storage to be resized.</p>
 </div></div></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.resources.memory</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the amount of memory allocated to the router.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.resources.linkCapcity</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the default number of credits issued on AMQP links for the router.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.resources.minReplicas</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the minimum number of router pods to run; a minimum of two are required for high availability (HA) configuration.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.podTemplate.metadata.labels</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the labels added to the router pod.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.podTemplate.spec.priorityClassName</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the priority class to use for the router pod so you can prioritize router pods over other pods in the Kubernetes cluster.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.podTemplate.spec.affinity</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the affinity settings for the router pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.podTemplate.spec.tolerations</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the toleration settings for the router pod, which allows this pod to run on certain nodes that other pods cannot run on.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.idleTimeout</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the AMQP idle timeout to use for all router listeners.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.workerThreads</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the number of worker threads to use for the router.</p>
-</div></div></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -4334,7 +4432,7 @@ namespace Test
 <p>This table shows the fields available for the standard infrastructure configuration and a brief description.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Standard infrastructure configuration fields table</caption>
+<caption class="title">Table 8. Standard infrastructure configuration fields table</caption>
 <colgroup>
 <col style="width: 40%;">
 <col style="width: 60%;">
@@ -4394,6 +4492,22 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the toleration settings for the admin pod, which allow this pod to run on certain nodes on which other pods cannot run.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.addressFullPolicy</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies action taken when a queue is full: <code>BLOCK</code>, <code>FAIL</code>, <code>PAGE</code>, <code>DROP</code>. The default value is <code>PAGE</code>. For more information see the <a href="https://activemq.apache.org/artemis/docs/latest/address-model.html" target="_blank" rel="noopener">Apache ActiveMQ Artemis documentation</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>broker.globalMaxSize</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the maximum amount of memory used for queues in the broker.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -4462,14 +4576,6 @@ namespace Test
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.resources.addressFullPolicy</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies action taken when a queue is full: <code>BLOCK</code>, <code>FAIL</code>, <code>PAGE</code>, <code>DROP</code>. The default value is <code>PAGE</code>. For more information see the <a href="https://activemq.apache.org/artemis/docs/latest/address-model.html" target="_blank" rel="noopener">Apache ActiveMQ Artemis documentation</a>.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>broker.storageClassName</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -4494,7 +4600,7 @@ namespace Test
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.resources.linkCapcity</p>
+<p>router.linkCapcity</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the default number of credits issued on AMQP links for the router.</p>
@@ -4502,7 +4608,15 @@ namespace Test
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.resources.minReplicas</p>
+<p>router.handshakeTimeout</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the amount of time in seconds to wait for the secure handshake to be initiated.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.minReplicas</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the minimum number of router pods to run; a minimum of two are required for high availability (HA) configuration.</p>
@@ -4554,6 +4668,54 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the number of worker threads to use for the router.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.policy.maxConnections</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the maximum number of router connections allowed.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.policy.maxConnectionsPerUser</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the maximum number of router connections allowed per user.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.policy.maxConnectionsPerHost</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the maximum number of router connections allowed per host.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.policy.maxSessionsPerConnection</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the maximum number of sessions allowed per router connection.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.policy.maxSendersPerConnection</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the maximum number of senders allowed per router connection.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>router.policy.maxReceiversPerConnection</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the maximum number of receivers allowed per router connection.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -10523,7 +10685,7 @@ namespace Test
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>enum (password, federated)</p>
+<p>enum (password, serviceaccount)</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -11811,7 +11973,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-12 21:21:02 UTC
+Last updated 2019-04-15 18:43:04 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
