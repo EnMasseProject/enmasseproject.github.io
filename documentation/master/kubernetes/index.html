@@ -4,17 +4,16 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.7">
+<meta name="generator" content="Asciidoctor 2.0.8">
 <title>Using EnMasse</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
-/* Uncomment @import statement when using as custom stylesheet */
+/* Uncomment @import statement to use as custom stylesheet */
 /*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
-audio,canvas,video{display:inline-block}
+audio,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
-script{display:none!important}
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
 a{background:none}
 a:focus{outline:thin dotted}
@@ -219,8 +218,8 @@ table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font
 .literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
 .literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
-.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
 .listingblock>.content{position:relative}
 .listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
 .listingblock:hover code[data-lang]::before{display:block}
@@ -263,7 +262,8 @@ pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
 table.tableblock{max-width:100%;border-collapse:separate}
 p.tableblock:last-child{margin-bottom:0}
-td.tableblock>.content{margin-bottom:-1.25em}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+td.tableblock>.content>:last-child.sidebarblock{margin-bottom:0}
 table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
 table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
 table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
@@ -483,6 +483,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#proc-deploying-standard-auth-service-messaging">3.2.9. Deploying the <code>standard</code> authentication service</a></li>
 <li><a href="#proc-deploying-none-auth-service-messaging">3.2.10. Deploying the <code>none</code> authentication service</a></li>
 <li><a href="#con-external-authentication-service-api-messaging">3.2.11. External authentication service API</a></li>
+<li><a href="#ref-example-roles-messaging">3.2.12. EnMasse example roles</a></li>
 </ul>
 </li>
 <li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
@@ -538,9 +539,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#assembly-using-console-messaging">4.4. Using the EnMasse Console</a>
 <ul class="sectlevel3">
-<li><a href="#logging-into-console-messaging">4.4.1. Accessing the EnMasse Console</a></li>
-<li><a href="#ref-console-address-filtering-messaging">4.4.2. Using the EnMasse Console address filtering</a></li>
-<li><a href="#ref-view-message-connection-stats-table-messaging">4.4.3. Viewing message and connection statistics using the EnMasse Console</a></li>
+<li><a href="#con-console-messaging">4.4.1. EnMasse Console user permissions</a></li>
+<li><a href="#logging-into-console-messaging">4.4.2. Accessing the EnMasse Console</a></li>
+<li><a href="#ref-console-address-filtering-messaging">4.4.3. Using the EnMasse Console address filtering</a></li>
+<li><a href="#ref-view-message-connection-stats-table-messaging">4.4.4. Viewing message and connection statistics using the EnMasse Console</a></li>
 </ul>
 </li>
 <li><a href="#con-user-model-messaging">4.5. User model</a>
@@ -556,7 +558,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#proc-managing-user-permissions-cli-messaging">4.6.3. Managing user permissions using the command line</a></li>
 </ul>
 </li>
-<li><a href="#ref-example-roles-messaging">4.7. EnMasse resources and EnMasse example roles</a></li>
+<li><a href="#ref-example-roles-tenant">4.7. EnMasse example roles</a></li>
 <li><a href="#assembly-connecting-applications-messaging">4.8. Connecting applications to EnMasse</a>
 <ul class="sectlevel3">
 <li><a href="#client-examples-messaging">4.8.1. Client examples</a></li>
@@ -564,15 +566,37 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
-<li><a href="#ref-brokered-infra-config-fields-messaging">Appendix A: Brokered infrastructure configuration fields</a></li>
-<li><a href="#ref-standard-infra-config-fields-messaging">Appendix B: Standard infrastructure configuration fields</a></li>
-<li><a href="#rest_api_reference">Appendix C: REST API reference</a>
+<li><a href="#'iot-guide-messaging-iot">5. Internet of Things (IoT) guide</a>
 <ul class="sectlevel2">
-<li><a href="#enmasse_rest_api">C.1. EnMasse REST API</a>
+<li><a href="#installing-using-bundle-messaging-iot">5.1. Installing EnMasse using a YAML bundle</a></li>
+<li><a href="#installing-services-messaging-iot">5.2. Installing IoT services</a></li>
+<li><a href="#iot-creating-project-messaging-iot">5.3. Creating an IoT project</a></li>
+<li><a href="#iot-creating-device-messaging-iot">5.4. Creating an IoT device</a></li>
+<li><a href="#iot-telemetry-messaging-iot">5.5. Sending and receiving telemetry data</a>
 <ul class="sectlevel3">
-<li><a href="#_overview">C.1.1. Overview</a></li>
-<li><a href="#_paths">C.1.2. Paths</a></li>
-<li><a href="#_definitions">C.1.3. Definitions</a></li>
+<li><a href="#starting_telemetry_consumer">5.5.1. Starting telemetry consumer</a></li>
+<li><a href="#sending_telemetry_data">5.5.2. Sending telemetry data</a></li>
+</ul>
+</li>
+<li><a href="#iot-event-messaging-iot">5.6. Sending and receiving event data</a>
+<ul class="sectlevel3">
+<li><a href="#starting_event_consumer">5.6.1. Starting event consumer</a></li>
+<li><a href="#sending_event_data">5.6.2. Sending event data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#ref-resources-table-service-admin-messaging-iot">Appendix A: EnMasse resources for service administrators</a></li>
+<li><a href="#ref-resources-table-messaging-tenant-messaging-iot">Appendix B: EnMasse resources for messaging tenants</a></li>
+<li><a href="#ref-brokered-infra-config-fields-messaging-iot">Appendix C: Brokered infrastructure configuration fields</a></li>
+<li><a href="#ref-standard-infra-config-fields-messaging-iot">Appendix D: Standard infrastructure configuration fields</a></li>
+<li><a href="#rest_api_reference">Appendix E: REST API reference</a>
+<ul class="sectlevel2">
+<li><a href="#enmasse_rest_api">E.1. EnMasse REST API</a>
+<ul class="sectlevel3">
+<li><a href="#_overview">E.1.1. Overview</a></li>
+<li><a href="#_paths">E.1.2. Paths</a></li>
+<li><a href="#_definitions">E.1.3. Definitions</a></li>
 </ul>
 </li>
 </ul>
@@ -1015,8 +1039,7 @@ infrastructure configuration, and plans.</p>
 <div class="sect2">
 <h3 id="installing-messaging">3.1. Installing EnMasse</h3>
 <div class="paragraph">
-<p>EnMasse can be installed by applying the YAML files using the <code>kubectl</code> command-line tool or
-by using the Operator Marketplace.</p>
+<p>EnMasse can be installed by applying the YAML files using the <code>kubectl</code> command-line tool, or by using the Operator Marketplace.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisite</div>
@@ -1539,7 +1562,7 @@ kind: BrokeredInfraConfig
 metadata:
   name: brokered-infra-config-example
 spec:
-  version: 0.28-SNAPSHOT
+  version: "0.28-SNAPSHOT"
   admin:
     resources:
       memory: 256Mi
@@ -1594,7 +1617,7 @@ kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: 0.28-SNAPSHOT
+  version: "0.28-SNAPSHOT"
   admin:
     resources:
       memory: 256Mi
@@ -1963,6 +1986,55 @@ that address. The following connection property information contains the policie
 </ul>
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="ref-example-roles-messaging">3.2.12. EnMasse example roles</h4>
+<div class="paragraph">
+<p>EnMasse provides the following example roles that you can use directly or use as models to create your own roles.</p>
+</div>
+<div class="paragraph">
+<p>For more information about service administrator resources, see the <a href="http://enmasse.io/documentation/master/kubernetes/#ref-resources-table-service-admin-messaging">EnMasse service administrator resources table</a>.
+For more information about messaging tenant resources, see the <a href="http://enmasse.io/documentation/master/kubernetes/#ref-resources-table-messaging-tenant-messaging">EnMasse messaging tenant resources table</a>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. EnMasse example roles table</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Role</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>enmasse.io:tenant-view</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies <code>get</code> and <code>list</code> permissions for <code>addresses</code>, <code>addressspaces</code>, <code>addressspaceschemas</code>, and <code>messagingusers</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>enmasse.io:tenant-edit</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies <code>create</code>, <code>get</code>, <code>update</code>, <code>delete</code>, <code>list</code>, <code>watch</code>, and <code>patch</code> permissions for <code>addresses</code>, <code>addressspaces</code>, and <code>messagingusers</code>; <code>get</code> and <code>list</code> permissions for <code>addressspaceschemas</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>service-admin</code> cluster role</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies <code>create</code>, <code>get</code>, <code>update</code>, <code>delete</code>, <code>list</code>, <code>watch</code>, and <code>patch</code> permissions for <code>addressplans</code>, <code>addressspaceplans</code>, <code>brokeredinfraconfigs</code>, and <code>standardinfraconfigs</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -2934,7 +3006,7 @@ spec:
 <p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Retrieving address space information commands table</caption>
+<caption class="title">Table 2. Retrieving address space information commands table</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -3250,7 +3322,16 @@ spec:
 <p>You can use the EnMasse Console to perform tasks such as <a href="http://enmasse.io/documentation/master/kubernetes/#proc-create-address-space-console-messaging">creating</a> and <a href="http://enmasse.io/documentation/master/kubernetes/#proc-delete-address-space-console-messaging">deleting an address space</a>, <a href="http://enmasse.io/documentation/master/kubernetes/#create-address-console-messaging">creating an address</a>, and <a href="http://enmasse.io/documentation/master/kubernetes/#ref-view-message-conn-stats-table-messaging">viewing message and connection statistics</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="logging-into-console-messaging">4.4.1. Accessing the EnMasse Console</h4>
+<h4 id="con-console-messaging">4.4.1. EnMasse Console user permissions</h4>
+<div class="paragraph">
+<p>EnMasse Console uses the OpenShift RBAC permissions model. For more information about the OpenShift RBAC permissions model, see the <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/manage_rbac.html" target="_blank" rel="noopener">OpenShift documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>To use EnMasse Console, the OpenShift user requires a role that grants access to <code>addressspace</code> and <code>address</code> resources. For example, for edit access, <code>edit</code> permissions need be to given to the associated role object, and for view-only access, <code>list</code> permissions need to be granted. For more information about the EnMasse example roles, see <a href="http://enmasse.io/documentation/master/kubernetes/#ref-example-roles-messaging">EnMasse example roles</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="logging-into-console-messaging">4.4.2. Accessing the EnMasse Console</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -3277,12 +3358,12 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-console-address-filtering-messaging">4.4.2. Using the EnMasse Console address filtering</h4>
+<h4 id="ref-console-address-filtering-messaging">4.4.3. Using the EnMasse Console address filtering</h4>
 <div class="paragraph">
 <p>The address name filtering feature in the EnMasse Console uses regular expressions. Also, filters are cumulative.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. EnMasse Console address name filtering behavior</caption>
+<caption class="title">Table 3. EnMasse Console address name filtering behavior</caption>
 <colgroup>
 <col style="width: 34%;">
 <col style="width: 33%;">
@@ -3344,7 +3425,7 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="ref-view-message-connection-stats-table-messaging">4.4.3. Viewing message and connection statistics using the EnMasse Console</h4>
+<h4 id="ref-view-message-connection-stats-table-messaging">4.4.4. Viewing message and connection statistics using the EnMasse Console</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -3354,7 +3435,7 @@ spec:
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Message statistics reference table</caption>
+<caption class="title">Table 4. Message statistics reference table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3441,7 +3522,7 @@ spec:
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Connection statistics reference table</caption>
+<caption class="title">Table 5. Connection statistics reference table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3504,7 +3585,7 @@ For the brokered address space only, on the Connections page, the number of send
 <div class="sect2">
 <h3 id="con-user-model-messaging">4.5. User model</h3>
 <div class="paragraph">
-<p>You can create users to specify authentication and authorization policies for your messaging clients,</p>
+<p>A messaging client connects using a MessagingUser. A MessagingUser specifies an authorization policy that controls which addresses may be used and the operations that may be performed on those addresses.</p>
 </div>
 <div class="paragraph">
 <p>Users are configured as <code>MessagingUser</code> resources. Users can be created, deleted, read, updated, and listed.</p>
@@ -3556,10 +3637,7 @@ spec:
 <div class="sect3">
 <h4 id="authentication_2">4.5.1. Authentication</h4>
 <div class="paragraph">
-<p>The supported values for the authentication type are <code>password</code> and <code>serviceaccount</code>. When using the
-<code>password</code> authentication type, you specify the username and password to be used by your messaging
-client when connecting. With the <code>serviceaccount</code> authentication type, you use the special string
-<code>@@serviceaccount@@</code> as the username, and a Kubernetes service account token as the password.</p>
+<p>The supported values for the authentication type are <code>password</code> and <code>serviceaccount</code>. When using the <code>password</code> authentication type, you specify the username and password to be used by your messaging client when connecting. With the <code>serviceaccount</code> authentication type, you use the special string <code>@@serviceaccount@@</code> as the username, and a Kubernetes service account token as the password.</p>
 </div>
 <div class="sect4">
 <h5 id="password_authentication_type">Password authentication type</h5>
@@ -3580,9 +3658,7 @@ bXktcGFzc3dvcmQ=</code></pre>
 <div class="sect4">
 <h5 id="serviceaccount_authentication_type">Serviceaccount authentication type</h5>
 <div class="paragraph">
-<p>For the <code>serviceaccount</code> type, the <code>username</code> field must contain the Kubernetes serviceaccount
-name that will be used to authenticate. When connecting with the messaging client, use the string
-<code>@@serviceaccount@@</code> as the username, and the service account token as the password.</p>
+<p>For the <code>serviceaccount</code> type, the <code>username</code> field must contain the Kubernetes serviceaccount name that will be used to authenticate. When connecting with the messaging client, use the string <code>@@serviceaccount@@</code> as the username, and the service account token as the password.</p>
 </div>
 </div>
 </div>
@@ -3776,79 +3852,13 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="ref-example-roles-messaging">4.7. EnMasse resources and EnMasse example roles</h3>
+<h3 id="ref-example-roles-tenant">4.7. EnMasse example roles</h3>
 <div class="paragraph">
-<p>The following table describes the EnMasse resources.</p>
+<p>EnMasse provides the following example roles that you can use directly or use as models to create your own roles.</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. EnMasse resources table</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Resource</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>addresses</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>addressplans</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>addressspaceplans</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>addressspaces</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>addressspaceschemas</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>brokeredinfraconfigs</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the infrastructure configuration for brokered address spaces?</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>messagingusers</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>standardinfraconfigs</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the infrastructure configuration for standard address spaces?</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
 <div class="paragraph">
-<p>EnMasse provides the following example roles, which you can use directly or use as models to create your own roles.</p>
+<p>For more information about service administrator resources, see the <a href="http://enmasse.io/documentation/master/kubernetes/#ref-resources-table-service-admin-messaging">EnMasse service administrator resources table</a>.
+For more information about messaging tenant resources, see the <a href="http://enmasse.io/documentation/master/kubernetes/#ref-resources-table-messaging-tenant-messaging">EnMasse messaging tenant resources table</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 6. EnMasse example roles table</caption>
@@ -4273,13 +4283,458 @@ namespace Test
 </div>
 </div>
 <div class="sect1">
-<h2 id="ref-brokered-infra-config-fields-messaging">Appendix A: Brokered infrastructure configuration fields</h2>
+<h2 id="'iot-guide-messaging-iot">5. Internet of Things (IoT) guide</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The IoT guide provides resources on how to set up and manage EnMasse IoT features.</p>
+</div>
+<div class="sect2">
+<h3 id="installing-using-bundle-messaging-iot">5.1. Installing EnMasse using a YAML bundle</h3>
+<div class="paragraph">
+<p>The simplest way to install EnMasse is to use the predefined YAML bundles.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create the namespace where you want to deploy EnMasse:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create namespace <em>enmasse-infra</em>
+kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a certificate to use with the API server. For testing purposes, you can create a self-signed certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mkdir -p api-server-cert/
+openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-server.<em>enmasse-infra</em>.svc.cluster.local" -out api-server-cert/tls.crt -keyout api-server-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a secret containing the API server certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create secret tls api-server-cert --cert=api-server-cert/tls.crt --key=api-server-cert/tls.key</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy using the <code>enmasse</code> bundle:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/bundles/enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install example plans and infrastructure configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/components/example-plans</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install the <code>standard</code> authentication service:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/components/example-authservices/standard-authservice.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="installing-services-messaging-iot">5.2. Installing IoT services</h3>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Deploy the IoT bundles:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/preview-bundles/iot</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create certificates for IoT services. For testing purposes, you can create a self-signed certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">./install/components/iot/examples/k8s-tls/create
+./install/components/iot/examples/k8s-tls/deploy</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Install an example IoT infrastructure configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/components/iot/examples/iot-config-k8s.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="iot-creating-project-messaging-iot">5.3. Creating an IoT project</h3>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create a <em>managed</em> IoT Project:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create namespace myapp
+kubectl config set-context $(kubectl config current-context) --namespace=myapp
+kubectl create -f install/components/iot/examples/iot-project-managed.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Wait for the resources to be ready:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get addressspace -w
+kubectl get iotproject -w</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a messaging consumer user:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create -f install/components/iot/examples/iot-user.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="iot-creating-device-messaging-iot">5.4. Creating an IoT device</h3>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Register a device:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' --data-binary '{"device-id": "4711"}' https://$(kubectl -n enmasse-infra get service iot-device-registry-external -o jsonpath={.status.loadBalancer.ingress[0].hostname}):31443/registration/myapp.iot</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add credentials for a device:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' --data-binary '{"device-id": "4711","type": "hashed-password","auth-id": "sensor1","secrets": [{"hash-function" : "sha-512","pwd-plain":"'hono-secret'"}]}' https://$(kubectl -n enmasse-infra get service iot-device-registry-external -o jsonpath={.status.loadBalancer.ingress[0].hostname}):31443/credentials/myapp.iot</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="iot-telemetry-messaging-iot">5.5. Sending and receiving telemetry data</h3>
+<div class="sect3">
+<h4 id="starting_telemetry_consumer">5.5.1. Starting telemetry consumer</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In Hono project run:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cd cli</pre>
+</div>
+</div>
+</li>
+<li>
+<p>At least once run:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mvn package -am</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Get the messaging endpoint certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl -n myapp get addressspace iot -o jsonpath={.status.caCert} | base64 --decode > target/config/hono-demo-certs-jar/tls.crt</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Export messaging endpoint host and port:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export MESSAGING_HOST=$(kubectl -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].externalHost})
+export MESSAGING_PORT=443</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are running Kubernetes in a development environment without a proper load balancer, you need to use the IP address of your local cluster and the port of the appropriate service; for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export MESSAGING_HOST=localhost
+export MESSAGING_PORT=5671</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Run the consumer application:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mvn spring-boot:run -Drun.arguments=--hono.client.host=$MESSAGING_HOST,--hono.client.port=$MESSAGING_PORT,--hono.client.username=consumer,--hono.client.password=foobar,--tenant.id=myapp.iot,--hono.client.trustStorePath=target/config/hono-demo-certs-jar/tls.crt,--message.type=telemetry</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sending_telemetry_data">5.5.2. Sending telemetry data</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Send telemetry message using HTTP:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -u sensor1@myapp.iot:hono-secret -H 'Content-Type: application/json' --data-binary '{"temp": 5}' https://$(kubectl -n enmasse-infra get service iot-http-adapter-external -o jsonpath={.status.loadBalancer.ingress[0].hostname}):30443/telemetry</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="iot-event-messaging-iot">5.6. Sending and receiving event data</h3>
+<div class="sect3">
+<h4 id="starting_event_consumer">5.6.1. Starting event consumer</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In Hono project run:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cd cli</pre>
+</div>
+</div>
+</li>
+<li>
+<p>At least once run:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mvn package -am</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Get the messaging endpoint certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl -n myapp get addressspace iot -o jsonpath={.status.caCert} | base64 --decode > target/config/hono-demo-certs-jar/tls.crt</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Export messaging endpoint host and port:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export MESSAGING_HOST=$(kubectl -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].externalHost})
+export MESSAGING_PORT=443</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are running Kubernetes in a development environment without a proper load balancer, you need to use the IP address of your local cluster and the port of the appropriate service; for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export MESSAGING_HOST=localhost
+export MESSAGING_PORT=5671</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Run the consumer application:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">mvn spring-boot:run -Drun.arguments=--hono.client.host=$MESSAGING_HOST,--hono.client.port=$MESSAGING_PORT,--hono.client.username=consumer,--hono.client.password=foobar,--tenant.id=myapp.iot,--hono.client.trustStorePath=target/config/hono-demo-certs-jar/tls.crt,--message.type=event</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sending_event_data">5.6.2. Sending event data</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Send event message using HTTP:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -u sensor1@myapp.iot:hono-secret -H 'Content-Type: application/json' --data-binary '{"temp": 5}' https://$(kubectl -n enmasse-infra get service iot-http-adapter-external -o jsonpath={.status.loadBalancer.ingress[0].hostname}):30443/event</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ref-resources-table-service-admin-messaging-iot">Appendix A: EnMasse resources for service administrators</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following table describes the EnMasse resources that pertain to the service administrator role.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. EnMasse service administrator resources table</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Resource</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>addressplans</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the address plan.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>addressspaceplans</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the address space plan.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>addressspaceschemas</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Defines the service characteristics available to an <code>addresspace</code>. An <code>addressspace</code> refers to one <code>addressspaceschema</code>. <code>standard</code> and <code>brokered</code> are predefined <code>addressspaceschemas</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>brokeredinfraconfigs</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the infrastructure configuration for brokered address spaces. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#ref-brokered-infra-config-fields-messaging">Brokered infrastructure configuration fields table</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>standardinfraconfigs</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the infrastructure configuration for standard address spaces. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#ref-standard-infra-config-fields-messaging">Standard infrastructure configuration fields table</a>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ref-resources-table-messaging-tenant-messaging-iot">Appendix B: EnMasse resources for messaging tenants</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following table describes the EnMasse resources that pertain to the messaging tenant role.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. EnMasse messaging tenant resources table</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Resource</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>addresses</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the address.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>addressspaces</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the address space.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>messagingusers</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the authorization policy that controls which addresses may be used and the operations that may be performed on those addresses.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ref-brokered-infra-config-fields-messaging-iot">Appendix C: Brokered infrastructure configuration fields</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This table shows the fields available for the brokered infrastructure configuration and a brief description.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Brokered infrastructure configuration fields table</caption>
+<caption class="title">Table 9. Brokered infrastructure configuration fields table</caption>
 <colgroup>
 <col style="width: 40%;">
 <col style="width: 60%;">
@@ -4426,13 +4881,13 @@ namespace Test
 </div>
 </div>
 <div class="sect1">
-<h2 id="ref-standard-infra-config-fields-messaging">Appendix B: Standard infrastructure configuration fields</h2>
+<h2 id="ref-standard-infra-config-fields-messaging-iot">Appendix D: Standard infrastructure configuration fields</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This table shows the fields available for the standard infrastructure configuration and a brief description.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. Standard infrastructure configuration fields table</caption>
+<caption class="title">Table 10. Standard infrastructure configuration fields table</caption>
 <colgroup>
 <col style="width: 40%;">
 <col style="width: 60%;">
@@ -4723,12 +5178,12 @@ namespace Test
 </div>
 </div>
 <div class="sect1">
-<h2 id="rest_api_reference">Appendix C: REST API reference</h2>
+<h2 id="rest_api_reference">Appendix E: REST API reference</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="enmasse_rest_api">C.1. EnMasse REST API</h3>
+<h3 id="enmasse_rest_api">E.1. EnMasse REST API</h3>
 <div class="sect3">
-<h4 id="_overview">C.1.1. Overview</h4>
+<h4 id="_overview">E.1.1. Overview</h4>
 <div class="paragraph">
 <p>This is the EnMasse API specification.</p>
 </div>
@@ -4781,7 +5236,7 @@ namespace Test
 </div>
 </div>
 <div class="sect3">
-<h4 id="_paths">C.1.2. Paths</h4>
+<h4 id="_paths">E.1.2. Paths</h4>
 <div class="sect4">
 <h5 id="_createadminenmassev1beta2namespacedaddressspaceplan">POST /apis/admin.enmasse.io/v1beta2/namespaces/{namespace}/addressspaceplans</h5>
 <div class="sect5">
@@ -8819,7 +9274,7 @@ namespace Test
 </div>
 </div>
 <div class="sect3">
-<h4 id="_definitions">C.1.3. Definitions</h4>
+<h4 id="_definitions">E.1.3. Definitions</h4>
 <div class="sect4">
 <h5 id="_jsonpatchrequest">JsonPatchRequest</h5>
 <table class="tableblock frame-all grid-all stretch">
@@ -11030,16 +11485,69 @@ namespace Test
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>details</strong><br>
+<p><strong>name</strong><br>
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>object</p>
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>overrides</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><a href="#_io_enmasse_v1beta1_addressspacespec_overrides">overrides</a></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><strong>type</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_v1beta1_addressspacespec_overrides" class="paragraph">
+<p><strong>overrides</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>host</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>port</strong><br>
+<em>optional</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>integer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>realm</strong><br>
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
@@ -11973,7 +12481,7 @@ namespace Test
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-15 18:43:04 UTC
+Last updated 2019-04-24 07:09:50 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
