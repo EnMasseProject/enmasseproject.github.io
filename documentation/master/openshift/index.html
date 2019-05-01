@@ -471,30 +471,30 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#installing-using-ansible-messaging">3.1.4. Installing EnMasse using Ansible</a></li>
 </ul>
 </li>
-<li><a href="#upgrading-messaging">3.2. Upgrading EnMasse</a>
+<li><a href="#configuring-messaging">3.2. Configuring EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#upgrading-enmasse-using-bundle-messaging">3.2.1. Upgrading EnMasse using a YAML bundle</a></li>
-<li><a href="#upgrading-enmasse-using-template-messaging">3.2.2. Upgrading EnMasse using the release template</a></li>
-<li><a href="#upgrading-enmasse-using-ansible-messaging">3.2.3. Upgrading EnMasse using Ansible</a></li>
+<li><a href="#minimal-service-configuration-messaging">3.2.1. Minimal service configuration</a></li>
+<li><a href="#con-address-space-plans-messaging">3.2.2. Address space plans</a></li>
+<li><a href="#create-address-space-plans-cli-messaging">3.2.3. Creating address space plans</a></li>
+<li><a href="#con-address-plans-messaging">3.2.4. Address plans</a></li>
+<li><a href="#create-address-plans-cli-messaging">3.2.5. Creating address plans</a></li>
+<li><a href="#infrastructure-configuration-messaging">3.2.6. Infrastructure configuration</a></li>
+<li><a href="#applying-infra-config-changes-messaging">3.2.7. Applying infrastructure configuration</a></li>
+<li><a href="#con-authentication-services-messaging">3.2.8. Authentication services</a></li>
+<li><a href="#proc-deploying-standard-auth-service-messaging">3.2.9. Deploying the <code>standard</code> authentication service</a></li>
+<li><a href="#proc-deploying-none-auth-service-messaging">3.2.10. Deploying the <code>none</code> authentication service</a></li>
+<li><a href="#con-external-authentication-service-api-messaging">3.2.11. External authentication service API</a></li>
+<li><a href="#ref-example-roles-messaging">3.2.12. EnMasse example roles</a></li>
 </ul>
 </li>
-<li><a href="#uninstalling-messaging">3.3. Uninstalling EnMasse</a></li>
-<li><a href="#configuring-messaging">3.4. Configuring EnMasse</a>
+<li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#minimal-service-configuration-messaging">3.4.1. Minimal service configuration</a></li>
-<li><a href="#con-address-space-plans-messaging">3.4.2. Address space plans</a></li>
-<li><a href="#create-address-space-plans-cli-messaging">3.4.3. Creating address space plans</a></li>
-<li><a href="#con-address-plans-messaging">3.4.4. Address plans</a></li>
-<li><a href="#create-address-plans-cli-messaging">3.4.5. Creating address plans</a></li>
-<li><a href="#infrastructure-configuration-messaging">3.4.6. Infrastructure configuration</a></li>
-<li><a href="#applying-infra-config-changes-messaging">3.4.7. Applying infrastructure configuration</a></li>
-<li><a href="#con-authentication-services-messaging">3.4.8. Authentication services</a></li>
-<li><a href="#proc-deploying-standard-auth-service-messaging">3.4.9. Deploying the <code>standard</code> authentication service</a></li>
-<li><a href="#proc-deploying-none-auth-service-messaging">3.4.10. Deploying the <code>none</code> authentication service</a></li>
-<li><a href="#con-external-authentication-service-api-messaging">3.4.11. External authentication service API</a></li>
-<li><a href="#ref-example-roles-messaging">3.4.12. EnMasse example roles</a></li>
+<li><a href="#upgrading-enmasse-using-bundle-messaging">3.3.1. Upgrading EnMasse using a YAML bundle</a></li>
+<li><a href="#upgrading-enmasse-using-template-messaging">3.3.2. Upgrading EnMasse using the release template</a></li>
+<li><a href="#upgrading-enmasse-using-ansible-messaging">3.3.3. Upgrading EnMasse using Ansible</a></li>
 </ul>
 </li>
+<li><a href="#uninstalling-messaging">3.4. Uninstalling EnMasse</a></li>
 <li><a href="#monitoring-messaging">3.5. Monitoring EnMasse</a>
 <ul class="sectlevel3">
 <li><a href="#deploy-monitoring-operator-messaging">3.5.1. (Optional) Deploying the Application Monitoring Operator</a></li>
@@ -1492,207 +1492,7 @@ monitoring=False</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="upgrading-messaging">3.2. Upgrading EnMasse</h3>
-<div class="paragraph">
-<p>EnMasse supports upgrades between minor versions using cloud native tools and the same
-mechanism used to apply configuration changes.  When upgrading, the updated infrastructure
-configuration of the new version will trigger the upgrade to start.</p>
-</div>
-<div class="paragraph">
-<p>Upgrading EnMasse is done by applying the YAML files for the new version.</p>
-</div>
-<div class="sect3">
-<h4 id="upgrading-enmasse-using-bundle-messaging">3.2.1. Upgrading EnMasse using a YAML bundle</h4>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Downloading EnMasse</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in as a service operator:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Select the project where EnMasse is installed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Apply the new release bundle:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc apply -f install/bundles/enmasse</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Monitor pods while they are restarted:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc get pods -w</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The upgrade should cause all pods to be restarted within a couple of minutes.</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="upgrading-enmasse-using-template-messaging">3.2.2. Upgrading EnMasse using the release template</h4>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Downloading EnMasse</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in as a service operator:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Select the project where EnMasse is installed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Apply the new release template:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc process -f install/templates/{ProductTemplateName} NAMESPACE=<em>enmasse-infra</em> | oc apply -f -</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Monitor the pods while they are restarted:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc get pods -w</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The upgrade should cause all pods to be restarted within a couple of minutes.</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="upgrading-enmasse-using-ansible-messaging">3.2.3. Upgrading EnMasse using Ansible</h4>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Downloading EnMasse</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in as a service operator:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Run the Ansible playbook from the new release:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">ansible-playbook -i <em>inventory-file</em> ansible/playbooks/openshift/deploy_all.yml</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Monitor pods while they are restarted:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc get pods -w</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The pods restart and become active within several minutes.</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="uninstalling-messaging">3.3. Uninstalling EnMasse</h3>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in as a user with <code>cluster-admin</code> privileges:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Delete "cluster level" resources:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc delete clusterrolebindings -l app=enmasse
-oc delete crd -l app=enmasse
-oc delete clusterroles -l app=enmasse
-oc delete apiservices -l app=enmasse
-oc delete oauthclients -l app=enmasse</pre>
-</div>
-</div>
-</li>
-<li>
-<p>(Optional) Delete the service catalog integration:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc delete clusterservicebrokers -l app=enmasse</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Delete the project where EnMasse is deployed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc delete project <em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="configuring-messaging">3.4. Configuring EnMasse</h3>
+<h3 id="configuring-messaging">3.2. Configuring EnMasse</h3>
 <div class="paragraph">
 <p>The service operator configures EnMasse by defining resources constituting the "service configuration". This configuration contains instances of the following resource types:</p>
 </div>
@@ -1727,7 +1527,7 @@ oc delete oauthclients -l app=enmasse</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="minimal-service-configuration-messaging">3.4.1. Minimal service configuration</h4>
+<h4 id="minimal-service-configuration-messaging">3.2.1. Minimal service configuration</h4>
 <div class="paragraph">
 <p>Configuring EnMasse for production takes some time and consideration. The following procedure will get
 you started with a minimal service configuration. For a more complete example, navigate to the
@@ -1792,7 +1592,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-address-space-plans-messaging">3.4.2. Address space plans</h4>
+<h4 id="con-address-space-plans-messaging">3.2.2. Address space plans</h4>
 <div class="paragraph">
 <p>Address space plans are used to configure quotas and control the resources consumed by address spaces. Address space plans are configured by the EnMasse service operator and are selected by the messaging tenant when creating an address space.</p>
 </div>
@@ -1849,7 +1649,7 @@ For more information about infrastructure configurations, see <a href="http://en
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-space-plans-cli-messaging">3.4.3. Creating address space plans</h4>
+<h4 id="create-address-space-plans-cli-messaging">3.2.3. Creating address space plans</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1916,7 +1716,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-address-plans-messaging">3.4.4. Address plans</h4>
+<h4 id="con-address-plans-messaging">3.2.4. Address plans</h4>
 <div class="paragraph">
 <p>Address plans specify the expected resource usage of a given address. The sum of the resource usage for all resource types determines the amount of infrastructure provisioned for an address space. A single router and broker pod has a maximum usage of one. If a new address requires additional resources and the resource consumption is within the address space plan limits, a new pod will be created automatically to handle the increased load.</p>
 </div>
@@ -2009,7 +1809,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-plans-cli-messaging">3.4.5. Creating address plans</h4>
+<h4 id="create-address-plans-cli-messaging">3.2.5. Creating address plans</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2066,7 +1866,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="infrastructure-configuration-messaging">3.4.6. Infrastructure configuration</h4>
+<h4 id="infrastructure-configuration-messaging">3.2.6. Infrastructure configuration</h4>
 <div class="paragraph">
 <p>EnMasse creates infrastructure components such as routers, brokers, and consoles. These
 components can be configured while the system is running, and EnMasse automatically updates
@@ -2214,7 +2014,7 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 </div>
 </div>
 <div class="sect3">
-<h4 id="applying-infra-config-changes-messaging">3.4.7. Applying infrastructure configuration</h4>
+<h4 id="applying-infra-config-changes-messaging">3.2.7. Applying infrastructure configuration</h4>
 <div class="paragraph">
 <p>You can edit existing configurations or create new ones.</p>
 </div>
@@ -2294,7 +2094,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-authentication-services-messaging">3.4.8. Authentication services</h4>
+<h4 id="con-authentication-services-messaging">3.2.8. Authentication services</h4>
 <div class="paragraph">
 <p>Authentication services are used to configure the authentication and authorization endpoints
 available to messaging clients. The authentication services are configured by the EnMasse
@@ -2408,7 +2208,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-deploying-standard-auth-service-messaging">3.4.9. Deploying the <code>standard</code> authentication service</h4>
+<h4 id="proc-deploying-standard-auth-service-messaging">3.2.9. Deploying the <code>standard</code> authentication service</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2453,7 +2253,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-deploying-none-auth-service-messaging">3.4.10. Deploying the <code>none</code> authentication service</h4>
+<h4 id="proc-deploying-none-auth-service-messaging">3.2.10. Deploying the <code>none</code> authentication service</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2498,7 +2298,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-external-authentication-service-api-messaging">3.4.11. External authentication service API</h4>
+<h4 id="con-external-authentication-service-api-messaging">3.2.11. External authentication service API</h4>
 <div class="paragraph">
 <p>An <code>external</code> authentication service must implement an AMQP SASL handshake, read the connection
 properties of the client, and respond with the expected connection properties containing the
@@ -2572,7 +2372,7 @@ that address. The following connection property information contains the policie
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-example-roles-messaging">3.4.12. EnMasse example roles</h4>
+<h4 id="ref-example-roles-messaging">3.2.12. EnMasse example roles</h4>
 <div class="paragraph">
 <p>EnMasse provides the following example roles that you can use directly or use as models to create your own roles.</p>
 </div>
@@ -2619,6 +2419,206 @@ For more information about messaging tenant resources, see the <a href="http://e
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="upgrading-messaging">3.3. Upgrading EnMasse</h3>
+<div class="paragraph">
+<p>EnMasse supports upgrades between minor versions using cloud native tools and the same
+mechanism used to apply configuration changes.  When upgrading, the updated infrastructure
+configuration of the new version will trigger the upgrade to start.</p>
+</div>
+<div class="paragraph">
+<p>Upgrading EnMasse is done by applying the YAML files for the new version.</p>
+</div>
+<div class="sect3">
+<h4 id="upgrading-enmasse-using-bundle-messaging">3.3.1. Upgrading EnMasse using a YAML bundle</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Downloading EnMasse</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a service operator:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u system:admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Select the project where EnMasse is installed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Apply the new release bundle:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/bundles/enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Monitor pods while they are restarted:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -w</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The upgrade should cause all pods to be restarted within a couple of minutes.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="upgrading-enmasse-using-template-messaging">3.3.2. Upgrading EnMasse using the release template</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Downloading EnMasse</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a service operator:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u system:admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Select the project where EnMasse is installed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Apply the new release template:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc process -f install/templates/{ProductTemplateName} NAMESPACE=<em>enmasse-infra</em> | oc apply -f -</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Monitor the pods while they are restarted:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -w</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The upgrade should cause all pods to be restarted within a couple of minutes.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="upgrading-enmasse-using-ansible-messaging">3.3.3. Upgrading EnMasse using Ansible</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Downloading EnMasse</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a service operator:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u system:admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run the Ansible playbook from the new release:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">ansible-playbook -i <em>inventory-file</em> ansible/playbooks/openshift/deploy_all.yml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Monitor pods while they are restarted:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pods -w</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The pods restart and become active within several minutes.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="uninstalling-messaging">3.4. Uninstalling EnMasse</h3>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a user with <code>cluster-admin</code> privileges:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u system:admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete "cluster level" resources:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete clusterrolebindings -l app=enmasse
+oc delete crd -l app=enmasse
+oc delete clusterroles -l app=enmasse
+oc delete apiservices -l app=enmasse
+oc delete oauthclients -l app=enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Delete the service catalog integration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete clusterservicebrokers -l app=enmasse</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete the project where EnMasse is deployed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete project <em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
@@ -13059,7 +13059,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-05-01 16:37:03 UTC
+Last updated 2019-05-01 17:02:20 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
