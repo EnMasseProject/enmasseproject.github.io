@@ -473,18 +473,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#configuring-messaging">3.2. Configuring EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#minimal-service-configuration-messaging">3.2.1. Minimal service configuration</a></li>
-<li><a href="#con-address-space-plans-messaging">3.2.2. Address space plans</a></li>
-<li><a href="#create-address-space-plans-cli-messaging">3.2.3. Creating address space plans</a></li>
-<li><a href="#con-address-plans-messaging">3.2.4. Address plans</a></li>
-<li><a href="#create-address-plans-cli-messaging">3.2.5. Creating address plans</a></li>
-<li><a href="#infrastructure-configuration-messaging">3.2.6. Infrastructure configuration</a></li>
-<li><a href="#applying-infra-config-changes-messaging">3.2.7. Applying infrastructure configuration</a></li>
-<li><a href="#con-authentication-services-messaging">3.2.8. Authentication services</a></li>
-<li><a href="#proc-deploying-standard-auth-service-messaging">3.2.9. Deploying the <code>standard</code> authentication service</a></li>
-<li><a href="#proc-deploying-none-auth-service-messaging">3.2.10. Deploying the <code>none</code> authentication service</a></li>
-<li><a href="#con-external-authentication-service-api-messaging">3.2.11. External authentication service API</a></li>
-<li><a href="#ref-example-roles-messaging">3.2.12. EnMasse example roles</a></li>
+<li><a href="#con-configuring-messaging">3.2.1. Service configuration resources and definition</a></li>
+<li><a href="#minimal-service-configuration-messaging">3.2.2. Minimal service configuration</a></li>
+<li><a href="#con-address-space-plans-messaging">3.2.3. Address space plans</a></li>
+<li><a href="#create-address-space-plans-cli-messaging">3.2.4. Creating address space plans</a></li>
+<li><a href="#con-address-plans-messaging">3.2.5. Address plans</a></li>
+<li><a href="#create-address-plans-cli-messaging">3.2.6. Creating address plans</a></li>
+<li><a href="#infrastructure-configuration-messaging">3.2.7. Infrastructure configuration</a></li>
+<li><a href="#applying-infra-config-changes-messaging">3.2.8. Applying infrastructure configuration</a></li>
+<li><a href="#con-authentication-services-messaging">3.2.9. Authentication services</a></li>
+<li><a href="#proc-deploying-standard-auth-service-messaging">3.2.10. Deploying the <code>standard</code> authentication service</a></li>
+<li><a href="#proc-deploying-none-auth-service-messaging">3.2.11. Deploying the <code>none</code> authentication service</a></li>
+<li><a href="#con-external-authentication-service-api-messaging">3.2.12. External authentication service API</a></li>
+<li><a href="#ref-example-roles-messaging">3.2.13. EnMasse example roles</a></li>
 </ul>
 </li>
 <li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
@@ -523,16 +524,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#con-brokered-address-space-messaging">4.2.3. Brokered address space</a></li>
 <li><a href="#con-tenant-address-space-plans-messaging">4.2.4. Address space plans</a></li>
 <li><a href="#proc-list-available-address-space-plans-messaging">4.2.5. Listing available address space plans using the command line</a></li>
-<li><a href="#ref-address-space-example-messaging">4.2.6. Address space example</a></li>
-<li><a href="#ref-address-space-example-auth-service-messaging">4.2.7. Address space example using authentication service</a></li>
-<li><a href="#proc-list-available-auth-services-messaging">4.2.8. Listing available authentication services using the command line</a></li>
-<li><a href="#ref-address-space-example-exports-messaging">4.2.9. Address space example exports</a></li>
-<li><a href="#ref-example-address-space-output-messaging">4.2.10. Example address space status output</a></li>
-<li><a href="#create-address-space-cli-messaging">4.2.11. Creating address spaces using the command line</a></li>
-<li><a href="#proc-create-address-space-console-messaging">4.2.12. Creating an address space using the EnMasse Console</a></li>
-<li><a href="#proc-delete-address-space-console-messaging">4.2.13. Deleting an address space using the EnMasse Console</a></li>
-<li><a href="#retrieving-address-space-information-messaging">4.2.14. Example commands for retrieving address space information</a></li>
-<li><a href="#replace-address-space-cli-messaging">4.2.15. Replacing address spaces using the command line</a></li>
+<li><a href="#proc-list-available-auth-services-messaging">4.2.6. Listing available authentication services using the command line</a></li>
+<li><a href="#address-space-examples-messaging">4.2.7. Address space examples</a></li>
+<li><a href="#ref-example-address-space-output-messaging">4.2.8. Example address space status output</a></li>
+<li><a href="#create-address-space-cli-messaging">4.2.9. Creating address spaces using the command line</a></li>
+<li><a href="#proc-create-address-space-console-messaging">4.2.10. Creating an address space using the EnMasse Console</a></li>
+<li><a href="#proc-delete-address-space-console-messaging">4.2.11. Deleting an address space using the EnMasse Console</a></li>
+<li><a href="#retrieving-address-space-information-messaging">4.2.12. Example commands for retrieving address space information</a></li>
+<li><a href="#replace-address-space-cli-messaging">4.2.13. Replacing address spaces using the command line</a></li>
 </ul>
 </li>
 <li><a href="#managing-addresses-messaging">4.3. Managing addresses</a>
@@ -1493,6 +1492,8 @@ monitoring=False</code></pre>
 </div>
 <div class="sect2">
 <h3 id="configuring-messaging">3.2. Configuring EnMasse</h3>
+<div class="sect3">
+<h4 id="con-configuring-messaging">3.2.1. Service configuration resources and definition</h4>
 <div class="paragraph">
 <p>The service operator configures EnMasse by defining resources constituting the "service configuration". This configuration contains instances of the following resource types:</p>
 </div>
@@ -1523,11 +1524,12 @@ monitoring=False</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../openshift/images/enmasse-entities.svg" alt="EnMasse entities">
+<img src="../openshift/openshift/images/enmasse-entities.svg" alt="EnMasse entities">
+</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="minimal-service-configuration-messaging">3.2.1. Minimal service configuration</h4>
+<h4 id="minimal-service-configuration-messaging">3.2.2. Minimal service configuration</h4>
 <div class="paragraph">
 <p>Configuring EnMasse for production takes some time and consideration. The following procedure will get
 you started with a minimal service configuration. For a more complete example, navigate to the
@@ -1592,7 +1594,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-address-space-plans-messaging">3.2.2. Address space plans</h4>
+<h4 id="con-address-space-plans-messaging">3.2.3. Address space plans</h4>
 <div class="paragraph">
 <p>Address space plans are used to configure quotas and control the resources consumed by address spaces. Address space plans are configured by the EnMasse service operator and are selected by the messaging tenant when creating an address space.</p>
 </div>
@@ -1649,7 +1651,7 @@ For more information about infrastructure configurations, see <a href="http://en
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-space-plans-cli-messaging">3.2.3. Creating address space plans</h4>
+<h4 id="create-address-space-plans-cli-messaging">3.2.4. Creating address space plans</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1716,7 +1718,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-address-plans-messaging">3.2.4. Address plans</h4>
+<h4 id="con-address-plans-messaging">3.2.5. Address plans</h4>
 <div class="paragraph">
 <p>Address plans specify the expected resource usage of a given address. The sum of the resource usage for all resource types determines the amount of infrastructure provisioned for an address space. A single router and broker pod has a maximum usage of one. If a new address requires additional resources and the resource consumption is within the address space plan limits, a new pod will be created automatically to handle the increased load.</p>
 </div>
@@ -1809,7 +1811,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-plans-cli-messaging">3.2.5. Creating address plans</h4>
+<h4 id="create-address-plans-cli-messaging">3.2.6. Creating address plans</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1866,7 +1868,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="infrastructure-configuration-messaging">3.2.6. Infrastructure configuration</h4>
+<h4 id="infrastructure-configuration-messaging">3.2.7. Infrastructure configuration</h4>
 <div class="paragraph">
 <p>EnMasse creates infrastructure components such as routers, brokers, and consoles. These
 components can be configured while the system is running, and EnMasse automatically updates
@@ -2014,7 +2016,7 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 </div>
 </div>
 <div class="sect3">
-<h4 id="applying-infra-config-changes-messaging">3.2.7. Applying infrastructure configuration</h4>
+<h4 id="applying-infra-config-changes-messaging">3.2.8. Applying infrastructure configuration</h4>
 <div class="paragraph">
 <p>You can edit existing configurations or create new ones.</p>
 </div>
@@ -2094,7 +2096,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-authentication-services-messaging">3.2.8. Authentication services</h4>
+<h4 id="con-authentication-services-messaging">3.2.9. Authentication services</h4>
 <div class="paragraph">
 <p>Authentication services are used to configure the authentication and authorization endpoints
 available to messaging clients. The authentication services are configured by the EnMasse
@@ -2208,7 +2210,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-deploying-standard-auth-service-messaging">3.2.9. Deploying the <code>standard</code> authentication service</h4>
+<h4 id="proc-deploying-standard-auth-service-messaging">3.2.10. Deploying the <code>standard</code> authentication service</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2253,7 +2255,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-deploying-none-auth-service-messaging">3.2.10. Deploying the <code>none</code> authentication service</h4>
+<h4 id="proc-deploying-none-auth-service-messaging">3.2.11. Deploying the <code>none</code> authentication service</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2298,7 +2300,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-external-authentication-service-api-messaging">3.2.11. External authentication service API</h4>
+<h4 id="con-external-authentication-service-api-messaging">3.2.12. External authentication service API</h4>
 <div class="paragraph">
 <p>An <code>external</code> authentication service must implement an AMQP SASL handshake, read the connection
 properties of the client, and respond with the expected connection properties containing the
@@ -2372,7 +2374,7 @@ that address. The following connection property information contains the policie
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-example-roles-messaging">3.2.12. EnMasse example roles</h4>
+<h4 id="ref-example-roles-messaging">3.2.13. EnMasse example roles</h4>
 <div class="paragraph">
 <p>EnMasse provides the following example roles that you can use directly or use as models to create your own roles.</p>
 </div>
@@ -3230,112 +3232,7 @@ can vary between EnMasse installations.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-address-space-example-messaging">4.2.6. Address space example</h4>
-<div class="paragraph">
-<p>This address space example shows only the required options to create an <code>AddressSpace</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
-kind: AddressSpace
-metadata:
-  name: myspace
-spec:
-  type: standard <b class="conum">(1)</b>
-  plan: standard-unlimited <b class="conum">(2)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
-</li>
-<li>
-<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. To view your available address space plans, see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-address-space-plans-messaging">Listing available address space plans</a>.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="ref-address-space-example-auth-service-messaging">4.2.7. Address space example using authentication service</h4>
-<div class="paragraph">
-<p>This address space example shows how you can configure the authentication service and endpoints of an <code>AddressSpace</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
-kind: AddressSpace
-metadata:
-  name: myspace
-spec:
-  type: standard <b class="conum">(1)</b>
-  plan: standard-unlimited <b class="conum">(2)</b>
-  authenticationService:
-    name: standard-authservice <b class="conum">(3)</b>
-  endpoints: <b class="conum">(4)</b>
-    - name: messaging
-      service: messaging
-      expose: <b class="conum">(5)</b>
-        type: route
-        routeHost: messaging.example.com
-        routeTlsTermination: passthrough
-        routeServicePort: amqps
-      cert: <b class="conum">(6)</b>
-        provider: certBundle
-        tlsKey: ZXhhbXBsZSAtbgo=
-        tlsCert: ZXhhbXBsZSAtbgo=
-      export: <b class="conum">(7)</b>
-        - kind: ConfigMap
-          name: myconfig
-        - kind: Service
-          name: myservice
-    - name: mqtt
-      service: mqtt
-      expose:
-        type: loadbalancer
-        loadBalancerPorts:
-        - mqtt
-        - mqtts
-      cert:
-        provider: selfsigned
-    - name: console
-      service: console
-      expose:
-        type: route
-        routeTlsTermination: reencrypt
-        routeServicePort: https
-      cert:
-        provider: openshift</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
-</li>
-<li>
-<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. To view your available address space plans, see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-address-space-plans-messaging">Listing available address space plans</a>.</p>
-</li>
-<li>
-<p>The authentication service name depends on the available authentication services configured by the EnMasse administrator. To view the available authentication services for your address space type, see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-auth-services-messaging">Listing available authentication services</a>.</p>
-</li>
-<li>
-<p>The endpoints that must be configured for the <code>AddressSpace</code>.  Endpoints can specify either <code>messaging</code>, <code>console</code>, or <code>mqtt</code> services. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only. Endpoints can be changed by replacing the address space.</p>
-</li>
-<li>
-<p>Exposes the configuration of an endpoint. Endpoints can be kept internal to the cluster, or exposed using an OpenShift route or a load-balancer service. Exposed configuration can be changed by replacing the address space.</p>
-</li>
-<li>
-<p>The certificate configuration can be used to specify how the endpoint certificate is provided.  The provider can be <code>selfsigned</code> (default), <code>wildcard</code> (requires it to be enabled by the EnMasse administrator), <code>openshift</code> (signed by the OpenShift cluster CA), or <code>certBundle</code> (base64-encoded PEM key and certificate). When using the <code>certBundle</code> provider, the certificate can be rotated by updating the <code>tlsKey</code> and <code>tlsCert</code> values and replacing the address space.</p>
-</li>
-<li>
-<p>The endpoint information can be exported into a <code>ConfigMap</code>, <code>Secret</code>, or <code>Service</code> within the same namespace as the <code>AddressSpace</code>. This provides applications running on OpenShift with a way to inject endpoint information or provide a proxy service in the same namespace as the application. For more information see <a href="http://enmasse.io/documentation/master/openshift/#ref-address-space-example-exports-messaging">example exports format</a>.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="proc-list-available-auth-services-messaging">4.2.8. Listing available authentication services using the command line</h4>
+<h4 id="proc-list-available-auth-services-messaging">4.2.6. Listing available authentication services using the command line</h4>
 <div class="paragraph">
 <p>You can list the authentication services available for your address space type.</p>
 </div>
@@ -3362,7 +3259,280 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-address-space-example-exports-messaging">4.2.9. Address space example exports</h4>
+<h4 id="address-space-examples-messaging">4.2.7. Address space examples</h4>
+<div class="sect4">
+<h5 id="ref-address-space-example-messaging">Address space example</h5>
+<div class="paragraph">
+<p>This address space example shows only the required options to create an <code>AddressSpace</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard <b class="conum">(1)</b>
+  plan: standard-unlimited <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
+</li>
+<li>
+<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. To view your available address space plans, see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-address-space-plans-messaging">Listing available address space plans</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-address-space-example-auth-service-messaging">Address space example using an authentication service</h5>
+<div class="paragraph">
+<p>This address space example shows how you can configure the authentication service of an <code>AddressSpace</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-unlimited
+  authenticationService:
+    name: standard-authservice <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The authentication service name depends on the available authentication services configured by the EnMasse administrator. To view the available authentication services for your address space type, see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-auth-services-messaging">Listing available authentication services</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-address-space-example-exposing-endpoints-messaging">Address space example exposing endpoints externally</h5>
+<div class="paragraph">
+<p>This address space example shows how you can configure the external endpoints of an <code>AddressSpace</code>
+to access messaging endpoints outside the OpenShift cluster.</p>
+</div>
+<div class="sect5">
+<h6 id="openshift_route_example">OpenShift route example</h6>
+<div class="paragraph">
+<p>To expose <code>AddressSpace</code> endpoints through OpenShift <code>LoadBalancer</code> services, the <code>loadbalancer</code> type is used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-unlimited
+  authenticationService:
+    name: standard-authservice
+  endpoints:
+  - name: messaging <b class="conum">(1)</b>
+    service: messaging <b class="conum">(2)</b>
+    expose:
+     type: loadbalancer <b class="conum">(3)</b>
+     loadBalancerPorts: <b class="conum">(4)</b>
+     - amqp
+     - amqps
+    annotations: <b class="conum">(5)</b>
+      mykey: myvalue
+    loadBalancerSourceRanges: <b class="conum">(6)</b>
+    - 10.0.0.0/8</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Required) The name of the endpoint. The name specified affects the name of the OpenShift service to be created as well as the name of the endpoint in the status section of the <code>AddressSpace</code>.</p>
+</li>
+<li>
+<p>(Required) The service names that must be configured for the <code>AddressSpace</code>.  The service can either be <code>messaging</code>, <code>console</code>, or <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
+</li>
+<li>
+<p>(Required) The type of endpoint being exposed. The <code>loadbalancer</code> type will create an  <code>LoadBalancer</code> service. Valid values are <code>route</code> and <code>loadbalancer</code>.</p>
+</li>
+<li>
+<p>(Required) A list of the ports to be exposed on the <code>LoadBalancer</code> service. For <code>messaging</code>, <code>amqp</code> and <code>amqps</code> can be specified.</p>
+</li>
+<li>
+<p>(Optional) A set of key-value annotation pairs that are added to the <code>LoadBalancer</code> <code>Service</code> object.</p>
+</li>
+<li>
+<p>(Optional) The allowed source ranges that are accepted by the load balancer.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect5">
+<h6 id="openshift_loadbalancer_service_example">OpenShift <code>LoadBalancer</code> service example</h6>
+<div class="paragraph">
+<p>To expose <code>AddressSpace</code> endpoints as OpenShift routes, the <code>route</code> type is used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-unlimited
+  authenticationService:
+    name: standard-authservice
+  endpoints:
+  - name: messaging <b class="conum">(1)</b>
+    service: messaging <b class="conum">(2)</b>
+    expose:
+     type: route
+     routeServicePort: amqps <b class="conum">(3)</b>
+     routeTlsTermination: passthrough <b class="conum">(4)</b>
+     routeHost: messaging.example.com <b class="conum">(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Required) The name of the endpoint. The name specified affects the name of the OpenShift service to be created as well as the name of the endpoint in the status section of the <code>AddressSpace</code>.</p>
+</li>
+<li>
+<p>(Required) The service names that must be configured for the <code>AddressSpace</code>.  The service can either be <code>messaging</code>, <code>console</code>, or <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
+</li>
+<li>
+<p>(Required) The name of the port to be exposed. With the <code>route</code> type, only a single TLS-enabled port can be specified. For the <code>messaging</code> service, either <code>amqps</code> and <code>https</code> can be specified. For the <code>console</code> service, only <code>https</code> can be specified.</p>
+</li>
+<li>
+<p>(Required) The TLS termination policy to be used for the OpenShift route. For the <code>messaging</code> service, the <code>amqps</code> port requires <code>passthrough</code> to be used, whereas <code>https</code> (websockets) also allows <code>reencrypt</code>. For the <code>console</code> service, <code>reencrypt</code> can be used.</p>
+</li>
+<li>
+<p>(Optional) The hostname to use for the created route.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-address-space-example-cert-providers-messaging">Configuring an address space certificate provider</h5>
+<div class="paragraph">
+<p>This address space example shows how you can configure the endpoints of an <code>AddressSpace</code> to be configured using different certificate providers. The certificate provider determines how certificates are issued for the endpoints of an <code>AddressSpace</code>.</p>
+</div>
+<div class="sect5">
+<h6 id="openshift_provider"><code>openshift</code> provider</h6>
+<div class="paragraph">
+<p>The <code>openshift</code> certificate provider can be used to configure endpoints with certificates signed by
+the OpenShift Cluster CA.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-unlimited
+  authenticationService:
+    name: standard-authservice
+  endpoints:
+  - name: messaging
+    service: messaging
+    cert:
+     provider: openshift <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Required) The certificate provider type. The available types are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default).</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect5">
+<h6 id="selfsigned_provider"><code>selfsigned</code> provider</h6>
+<div class="paragraph">
+<p>The <code>selfsigned</code> certificate provider can be used to configure endpoints with self-signed
+certificates. The CA for these certificates can be found in the <code>status.caCert</code> field of the
+<code>AddressSpace</code> resource.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-unlimited
+  authenticationService:
+    name: standard-authservice
+  endpoints:
+  - name: messaging
+    service: messaging
+    cert:
+     provider: selfsigned <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Required) The certificate provider type. The available types are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default).</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect5">
+<h6 id="certbundle_provider"><code>certBundle</code> provider</h6>
+<div class="paragraph">
+<p>The <code>certBundle</code> certificate provider can be used to configure endpoints with user-supplied
+certificates signed by your own CA. Certificate rotation can be done by updating the <code>tlsKey</code> and
+<code>tlsCert</code> fields with updated certificates, and then updating the <code>AddressSpace</code> resource.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-unlimited
+  authenticationService:
+    name: standard-authservice
+  endpoints:
+  - name: messaging
+    service: messaging
+    cert:
+     provider: certBundle <b class="conum">(1)</b>
+     tlsKey: Y2VydGJ1bmRsZXByb3ZpZGVyY2VydA== <b class="conum">(2)</b>
+     tlsCert: Y2VydGJ1bmRsZXByb3ZpZGVyY2VydA== <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Required) The certificate provider type. The available types are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default).</p>
+</li>
+<li>
+<p>(Required) The base64-encoded value of the PEM private key (including the preamble)</p>
+</li>
+<li>
+<p>(Required) The base64-encoded value of the PEM certificate (including the preamble)</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-address-space-example-exports-messaging">Address space example exports</h5>
 <div class="paragraph">
 <p>This example shows the format used by the <code>ConfigMap</code> and <code>Secret</code> export types:</p>
 </div>
@@ -3376,8 +3546,9 @@ ca.crt: // PEM formatted CA</code></pre>
 </div>
 </div>
 </div>
+</div>
 <div class="sect3">
-<h4 id="ref-example-address-space-output-messaging">4.2.10. Example address space status output</h4>
+<h4 id="ref-example-address-space-output-messaging">4.2.8. Example address space status output</h4>
 <div class="paragraph">
 <p>The <code>AddressSpace</code> resource contains a <code>status</code> field that can be used to retrieve information about
 its state and endpoints. The following output is an example of the output you can get from running
@@ -3437,7 +3608,7 @@ status:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-space-cli-messaging">4.2.11. Creating address spaces using the command line</h4>
+<h4 id="create-address-space-cli-messaging">4.2.9. Creating address spaces using the command line</h4>
 <div class="paragraph">
 <p>In EnMasse, you create address spaces using standard command-line tools.</p>
 </div>
@@ -3497,7 +3668,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-create-address-space-console-messaging">4.2.12. Creating an address space using the EnMasse Console</h4>
+<h4 id="proc-create-address-space-console-messaging">4.2.10. Creating an address space using the EnMasse Console</h4>
 <div class="paragraph">
 <p>You can create a new address space using the EnMasse Console.</p>
 </div>
@@ -3523,7 +3694,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-delete-address-space-console-messaging">4.2.13. Deleting an address space using the EnMasse Console</h4>
+<h4 id="proc-delete-address-space-console-messaging">4.2.11. Deleting an address space using the EnMasse Console</h4>
 <div class="paragraph">
 <p>You can delete an existing address space using the EnMasse Console.</p>
 </div>
@@ -3549,7 +3720,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="retrieving-address-space-information-messaging">4.2.14. Example commands for retrieving address space information</h4>
+<h4 id="retrieving-address-space-information-messaging">4.2.12. Example commands for retrieving address space information</h4>
 <div class="paragraph">
 <p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
 </div>
@@ -3602,7 +3773,7 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="replace-address-space-cli-messaging">4.2.15. Replacing address spaces using the command line</h4>
+<h4 id="replace-address-space-cli-messaging">4.2.13. Replacing address spaces using the command line</h4>
 <div class="paragraph">
 <p>Address spaces can be replaced in order to change the plan, endpoints, or network policies, or
 to replace certificates if using the <code>certBundle</code> certificate provider. When changing the plan,
@@ -13059,7 +13230,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-05-03 08:26:42 UTC
+Last updated 2019-05-06 13:42:37 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
