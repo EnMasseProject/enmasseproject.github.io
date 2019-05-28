@@ -499,10 +499,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#monitoring-messaging">3.5. Monitoring EnMasse</a>
 <ul class="sectlevel3">
 <li><a href="#deploy-monitoring-operator-messaging">3.5.1. (Optional) Deploying the Application Monitoring Operator</a></li>
-<li><a href="#deploy-kube-state-metrics-messaging">3.5.2. (Optional) the kube-state-metrics agent</a></li>
-<li><a href="#deploy-monitoring-bundle-messaging">3.5.3. Deploying monitoring using a Yaml bundle</a></li>
+<li><a href="#deploy-kube-state-metrics-messaging">3.5.2. (Optional) Deploying the kube-state-metrics agent</a></li>
+<li><a href="#deploy-monitoring-bundle-messaging">3.5.3. Deploying monitoring using a YAML bundle</a></li>
 <li><a href="#deploy-monitoring-ansible-messaging">3.5.4. Deploying monitoring using Ansible</a></li>
-<li><a href="#config-alerts-messaging">3.5.5. Conguring alert notifications</a></li>
+<li><a href="#config-alerts-messaging">3.5.5. Configuring alert notifications</a></li>
 </ul>
 </li>
 <li><a href="#ops-procedures-messaging">3.6. Operation procedures for EnMasse</a>
@@ -527,11 +527,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#proc-list-available-auth-services-messaging">4.2.6. Listing available authentication services using the command line</a></li>
 <li><a href="#address-space-examples-messaging">4.2.7. Address space examples</a></li>
 <li><a href="#ref-example-address-space-output-messaging">4.2.8. Example address space status output</a></li>
-<li><a href="#create-address-space-cli-messaging">4.2.9. Creating address spaces using the command line</a></li>
-<li><a href="#proc-create-address-space-console-messaging">4.2.10. Creating an address space using the EnMasse Console</a></li>
-<li><a href="#proc-delete-address-space-console-messaging">4.2.11. Deleting an address space using the EnMasse Console</a></li>
-<li><a href="#retrieving-address-space-information-messaging">4.2.12. Example commands for retrieving address space information</a></li>
-<li><a href="#replace-address-space-cli-messaging">4.2.13. Replacing address spaces using the command line</a></li>
+<li><a href="#ref-address-space-example-exporting-endpoints-messaging">4.2.9. Example of exporting address space information into the application namespace</a></li>
+<li><a href="#create-address-space-cli-messaging">4.2.10. Creating address spaces using the command line</a></li>
+<li><a href="#proc-create-address-space-console-messaging">4.2.11. Creating an address space using the EnMasse Console</a></li>
+<li><a href="#proc-delete-address-space-console-messaging">4.2.12. Deleting an address space using the EnMasse Console</a></li>
+<li><a href="#retrieving-address-space-information-messaging">4.2.13. Example commands for retrieving address space information</a></li>
+<li><a href="#replace-address-space-cli-messaging">4.2.14. Replacing address spaces using the command line</a></li>
 </ul>
 </li>
 <li><a href="#managing-addresses-messaging">4.3. Managing addresses</a>
@@ -581,13 +582,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#iot-creating-device-messaging-iot">5.4. Creating an IoT device</a></li>
 <li><a href="#iot-telemetry-messaging-iot">5.5. Sending and receiving telemetry data</a>
 <ul class="sectlevel3">
-<li><a href="#starting_telemetry_consumer">5.5.1. Starting telemetry consumer</a></li>
+<li><a href="#starting_the_telemetry_consumer">5.5.1. Starting the telemetry consumer</a></li>
 <li><a href="#sending_telemetry_data">5.5.2. Sending telemetry data</a></li>
 </ul>
 </li>
 <li><a href="#iot-event-messaging-iot">5.6. Sending and receiving event data</a>
 <ul class="sectlevel3">
-<li><a href="#starting_event_consumer">5.6.1. Starting event consumer</a></li>
+<li><a href="#starting_the_event_consumer">5.6.1. Starting the event consumer</a></li>
 <li><a href="#sending_event_data">5.6.2. Sending event data</a></li>
 </ul>
 </li>
@@ -770,7 +771,7 @@ on your machine.</p>
 </div>
 </li>
 <li>
-<p>(Optional) Install example roles</p>
+<p>(Optional) Install example roles:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc apply -f install/components/example-roles</pre>
@@ -1156,7 +1157,7 @@ on your machine.</p>
 </div>
 </li>
 <li>
-<p>(Optional) Install example roles</p>
+<p>(Optional) Install example roles:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc apply -f install/components/example-roles</pre>
@@ -2674,9 +2675,9 @@ cluster.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deploy-kube-state-metrics-messaging">3.5.2. (Optional) the kube-state-metrics agent</h4>
+<h4 id="deploy-kube-state-metrics-messaging">3.5.2. (Optional) Deploying the kube-state-metrics agent</h4>
 <div class="paragraph">
-<p>The <code>kube-state-metrics</code> agent allows you to monitor EnMasse pods.</p>
+<p>You can monitor EnMasse pods using the <code>kube-state-metrics</code> agent.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -2709,7 +2710,7 @@ cluster.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deploy-monitoring-bundle-messaging">3.5.3. Deploying monitoring using a Yaml bundle</h4>
+<h4 id="deploy-monitoring-bundle-messaging">3.5.3. Deploying monitoring using a YAML bundle</h4>
 <div class="paragraph">
 <p>The simplest way to deploy monitoring is to use a predefined YAML bundle.</p>
 </div>
@@ -2717,7 +2718,7 @@ cluster.</p>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>The <a href="http://enmasse.io/documentation/master/openshift/#deploy-monitoring-operator-messaging" target="_blank" rel="noopener">Application Monitoring Operator</a> or an operator managing the same resources should be installed.</p>
+<p>The <a href="http://enmasse.io/documentation/master/openshift/#deploy-monitoring-operator-messaging" target="_blank" rel="noopener">Application Monitoring Operator</a> or an operator managing the same resources must be installed.</p>
 </li>
 </ul>
 </div>
@@ -2755,19 +2756,19 @@ cluster.</p>
 <h4 id="deploy-monitoring-ansible-messaging">3.5.4. Deploying monitoring using Ansible</h4>
 <div class="paragraph">
 <p>Monitoring can also be deployed during the EnMasse
-<a href="http://enmasse.io/documentation/master/openshift/#installing-using-ansible-messaging">installation using Ansible</a> and the required configuration settings.</p>
+<a href="http://enmasse.io/documentation/master/openshift/#installing-using-ansible-messaging">installation using Ansible</a> using the required configuration settings.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="config-alerts-messaging">3.5.5. Conguring alert notifications</h4>
+<h4 id="config-alerts-messaging">3.5.5. Configuring alert notifications</h4>
 <div class="paragraph">
-<p>In order to configure alert notifications, such as emails, you must change the default configuration of Alertmanager.</p>
+<p>To configure alert notifications, such as emails, you must change the default configuration of Alertmanager.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>Create an Alertmanager configuration file following the <a href="https://prometheus.io/docs/alerting/configuration/" target="_blank" rel="noopener">Alertmanager documentation</a>. An example configuration for emails notifications is shown below:</p>
+<p>Create an Alertmanager configuration file following the <a href="https://prometheus.io/docs/alerting/configuration/" target="_blank" rel="noopener">Alertmanager documentation</a>. An example configuration file for email notifications is shown:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">apiVersion: v1
@@ -2804,7 +2805,7 @@ data:
 </div>
 </li>
 <li>
-<p>Your Alertmanager configuration file must be called <code>alertmanager.yaml</code> in order for it to be read by the Prometheus Operator</p>
+<p>Your Alertmanager configuration file must be named <code>alertmanager.yaml</code> so it can be read by the Prometheus Operator.</p>
 </li>
 </ul>
 </div>
@@ -3534,7 +3535,25 @@ spec:
 <div class="sect4">
 <h5 id="ref-address-space-example-exports-messaging">Address space example exports</h5>
 <div class="paragraph">
-<p>This example shows the format used by the <code>ConfigMap</code> and <code>Secret</code> export types:</p>
+<p>You can export your address space information using the following three export types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ConfigMap</code></p>
+</li>
+<li>
+<p><code>Secret</code></p>
+</li>
+<li>
+<p><code>Service</code></p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="configmap_and_secret_type_export_examples"><code>ConfigMap</code> and <code>Secret</code> type export examples</h6>
+<div class="paragraph">
+<p>This example shows the format used by the <code>ConfigMap</code> export type. The format of the <code>Secret</code> export type uses the same keys as the <code>ConfigMap</code> export type, but the values are Base64-encoded.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3543,6 +3562,23 @@ service.port.amqp: 5672
 external.host: external.example.com
 external.port: 5671
 ca.crt: // PEM formatted CA</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="service_type_export_example"><code>Service</code> type export example</h6>
+<div class="paragraph">
+<p>This example shows the format used by the <code>Service</code> export type.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">  externalName:  messaging.svc
+    ports:
+    - name: amqp
+      port: 5672
+      protocol: TCP
+      targetPort: 5672</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -3608,7 +3644,82 @@ status:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-space-cli-messaging">4.2.9. Creating address spaces using the command line</h4>
+<h4 id="ref-address-space-example-exporting-endpoints-messaging">4.2.9. Example of exporting address space information into the application namespace</h4>
+<div class="paragraph">
+<p>This address space example shows how you can export the endpoint information of an <code>AddressSpace</code>
+resource to a <code>ConfigMap</code>, <code>Secret</code>, or <code>Service</code> in the same namespace as the messaging
+application.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-unlimited
+  authenticationService:
+    name: standard-authservice
+  endpoints:
+  - name: messaging
+    service: messaging
+    exports:
+    - kind: ConfigMap <b class="conum">(1)</b>
+      name: my-config <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Required) The type of export: <code>ConfigMap</code>, <code>Secret</code>, or <code>Service</code>. The resulting <code>ConfigMap</code> contains the values in the format
+shown in <a href="http://enmasse.io/documentation/master/openshift/#ref-address-space-example-exports-messaging">example exports format</a>. For <code>Secret</code>, the same keys are used, but the values are base64-encoded. For
+<code>Service</code>, a OpenShift service of the type <code>ExternalName</code> is created. This provides applications running on OpenShift with a way to
+inject endpoint information or provide a proxy service in the same namespace as the application. For more information see <a href="http://enmasse.io/documentation/master/openshift/#ref-address-space-example-exports-messaging">example exports format</a>.</p>
+</li>
+<li>
+<p>(Required) The name of the resource to create and update.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When exporting endpoint information, the EnMasse <code>address-space-controller</code> service account
+running in the EnMasse namespace must be granted privileges to create, update, and delete the
+configmap specified in the exports list. You can do this by creating an RBAC role and role-binding
+such as this one:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: rbac
+rules:
+  - apiGroups: [ "" ]
+    resources: [ "configmaps" ]
+    verbs: [ "create" ]
+  - apiGroups: [ "" ]
+    resources: [ "configmaps" ]
+    resourceNames: [ "my-config" ]
+    verbs: [ "get", "update", "patch" ]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: rbac-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: rbac
+subjects:
+- kind: ServiceAccount
+  name: address-space-controller
+  namespace: <em>enmasse-infra</em></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="create-address-space-cli-messaging">4.2.10. Creating address spaces using the command line</h4>
 <div class="paragraph">
 <p>In EnMasse, you create address spaces using standard command-line tools.</p>
 </div>
@@ -3668,7 +3779,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-create-address-space-console-messaging">4.2.10. Creating an address space using the EnMasse Console</h4>
+<h4 id="proc-create-address-space-console-messaging">4.2.11. Creating an address space using the EnMasse Console</h4>
 <div class="paragraph">
 <p>You can create a new address space using the EnMasse Console.</p>
 </div>
@@ -3694,7 +3805,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-delete-address-space-console-messaging">4.2.11. Deleting an address space using the EnMasse Console</h4>
+<h4 id="proc-delete-address-space-console-messaging">4.2.12. Deleting an address space using the EnMasse Console</h4>
 <div class="paragraph">
 <p>You can delete an existing address space using the EnMasse Console.</p>
 </div>
@@ -3720,7 +3831,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="retrieving-address-space-information-messaging">4.2.12. Example commands for retrieving address space information</h4>
+<h4 id="retrieving-address-space-information-messaging">4.2.13. Example commands for retrieving address space information</h4>
 <div class="paragraph">
 <p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
 </div>
@@ -3773,7 +3884,7 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="replace-address-space-cli-messaging">4.2.13. Replacing address spaces using the command line</h4>
+<h4 id="replace-address-space-cli-messaging">4.2.14. Replacing address spaces using the command line</h4>
 <div class="paragraph">
 <p>Address spaces can be replaced in order to change the plan, endpoints, or network policies, or
 to replace certificates if using the <code>certBundle</code> certificate provider. When changing the plan,
@@ -4682,14 +4793,14 @@ For more information about messaging tenant resources, see the <a href="http://e
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="python" class="language-python hljs">from <em>future</em> import print_function, unicode_literals
+<pre class="highlightjs highlight nowrap"><code data-lang="python" class="language-python hljs">from __future__ import print_function, unicode_literals
 from proton import Message
 from proton.handlers import MessagingHandler
 from proton.reactor import Container
 
 class HelloWorld(MessagingHandler):
-    def <em>init</em>(self, server, address):
-        super(HelloWorld, self).<em>init</em>()
+    def __init__(self, server, address):
+        super(HelloWorld, self).__init__()
         self.server = server
         self.address = address
 
@@ -4706,7 +4817,7 @@ class HelloWorld(MessagingHandler):
         print(event.message.body)
         event.connection.close()
 
-Container(HelloWorld("amqps://<em>messaging-route-hostname</em>:443", "myqueue")).run()</code></pre>
+Container(HelloWorld("amqps://_messaging-route-hostname_:443", "myqueue")).run()</code></pre>
 </div>
 </div>
 <div class="sect5">
@@ -5080,7 +5191,7 @@ namespace Test
 </div>
 </li>
 <li>
-<p>(Optional) Install example roles</p>
+<p>(Optional) Install example roles:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc apply -f install/components/example-roles</pre>
@@ -5100,6 +5211,9 @@ namespace Test
 </div>
 <div class="sect2">
 <h3 id="installing-services-messaging-iot">5.2. Installing IoT services</h3>
+<div class="paragraph">
+<p>To get started using the IoT feature on EnMasse, you must first install the IoT services.</p>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -5112,7 +5226,7 @@ namespace Test
 </div>
 </li>
 <li>
-<p>Create certificates for MQTT protocol adapter. For testing purposes, you can create a self-signed certificate:</p>
+<p>Create certificates for the MQTT protocol adapter. For testing purposes, you can create a self-signed certificate:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">./install/components/iot/examples/k8s-tls/create
@@ -5127,15 +5241,12 @@ oc create secret tls iot-mqtt-adapter-tls --key=install/components/iot/examples/
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If your cluster is not running on the <code>localhost</code>, you need to specify the cluster hostname when creating certificates. For example:</p>
+<p>If your cluster is not running on <code>localhost</code>, you need to specify the cluster host name when creating certificates to allow external clients (like MQTT) to properly connect to the appropriate services. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">CLUSTER=x.x.x.x.nip.io install/components/iot/examples/k8s-tls/create</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>This will allow external clients (like MQTT) to properly connect to the appropriate services.</p>
 </div>
 </td>
 </tr>
@@ -5155,14 +5266,30 @@ oc create secret tls iot-mqtt-adapter-tls --key=install/components/iot/examples/
 </div>
 <div class="sect2">
 <h3 id="iot-creating-project-messaging-iot">5.3. Creating an IoT project</h3>
+<div class="paragraph">
+<p>After installing the IoT services, you create an IoT project.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#installing-services-iot">The IoT services are installed</a>.</p>
+</li>
+</ul>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Change to a non-admin user:</p>
+<p>Log in as a messaging tenant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u developer</pre>
+</div>
+</div>
 </li>
 <li>
-<p>Create a <em>managed</em> IoT Project:</p>
+<p>Create a <em>managed</em> IoT project:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc new-project myapp
@@ -5192,6 +5319,20 @@ oc get iotproject -w</pre>
 </div>
 <div class="sect2">
 <h3 id="iot-creating-device-messaging-iot">5.4. Creating an IoT device</h3>
+<div class="paragraph">
+<p>After installing the IoT services and creating an IoT project, you can create an IoT device for the device you want to monitor.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#installing-services-iot">The IoT services are installed</a>.</p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-project-iot">An IoT project is created</a>.</p>
+</li>
+</ul>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -5217,12 +5358,26 @@ oc get iotproject -w</pre>
 <div class="sect2">
 <h3 id="iot-telemetry-messaging-iot">5.5. Sending and receiving telemetry data</h3>
 <div class="sect3">
-<h4 id="starting_telemetry_consumer">5.5.1. Starting telemetry consumer</h4>
+<h4 id="starting_the_telemetry_consumer">5.5.1. Starting the telemetry consumer</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#installing-services-iot">The IoT services are installed</a>.</p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-project-iot">An IoT project is created</a>.</p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-device-iot">An IoT device is created</a>.</p>
+</li>
+</ul>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>In Hono project run:</p>
+<p>In the Hono project, run:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">cd cli</pre>
@@ -5230,7 +5385,7 @@ oc get iotproject -w</pre>
 </div>
 </li>
 <li>
-<p>At least once run:</p>
+<p>Run the following command at least once:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">mvn package -am</pre>
@@ -5246,7 +5401,7 @@ oc get iotproject -w</pre>
 </div>
 </li>
 <li>
-<p>Export messaging endpoint host and port:</p>
+<p>Export the messaging endpoint host and port:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">export MESSAGING_HOST=$(oc -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].externalHost})
@@ -5268,6 +5423,7 @@ export MESSAGING_PORT=443</pre>
 <div class="sect3">
 <h4 id="sending_telemetry_data">5.5.2. Sending telemetry data</h4>
 <div class="olist arabic">
+<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p>Send a message using HTTP protocol:</p>
@@ -5292,12 +5448,26 @@ export MESSAGING_PORT=443</pre>
 <div class="sect2">
 <h3 id="iot-event-messaging-iot">5.6. Sending and receiving event data</h3>
 <div class="sect3">
-<h4 id="starting_event_consumer">5.6.1. Starting event consumer</h4>
+<h4 id="starting_the_event_consumer">5.6.1. Starting the event consumer</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#installing-services-iot">The IoT services are installed</a>.</p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-project-iot">An IoT project is created</a>.</p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-device-iot">An IoT device is created</a>.</p>
+</li>
+</ul>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>In Hono project run:</p>
+<p>In the Hono project, run:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">cd cli</pre>
@@ -5305,7 +5475,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 </li>
 <li>
-<p>At least once run:</p>
+<p>Run the following command at least once:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">mvn package -am</pre>
@@ -5321,7 +5491,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 </li>
 <li>
-<p>Export messaging endpoint host and port:</p>
+<p>Export the messaging endpoint host and port:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">export MESSAGING_HOST=$(oc -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].externalHost})
@@ -5343,6 +5513,7 @@ export MESSAGING_PORT=443</pre>
 <div class="sect3">
 <h4 id="sending_event_data">5.6.2. Sending event data</h4>
 <div class="olist arabic">
+<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p>Send a message using HTTP protocol:</p>
@@ -13230,7 +13401,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-05-06 14:15:22 UTC
+Last updated 2019-05-28 08:09:51 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
