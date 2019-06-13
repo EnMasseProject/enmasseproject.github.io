@@ -494,6 +494,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#upgrading-enmasse-using-bundle-messaging">3.3.1. Upgrading EnMasse using a YAML bundle</a></li>
 <li><a href="#upgrading-enmasse-using-template-messaging">3.3.2. Upgrading EnMasse using the release template</a></li>
 <li><a href="#upgrading-enmasse-using-ansible-messaging">3.3.3. Upgrading EnMasse using Ansible</a></li>
+<li><a href="#post-upgrade-step-router-pod-messaging">3.3.4. Restarting router pods running a previous version of the image</a></li>
 </ul>
 </li>
 <li><a href="#uninstalling-messaging">3.4. Uninstalling EnMasse</a></li>
@@ -2434,12 +2435,13 @@ For more information about messaging tenant resources, see the <a href="http://e
 <div class="sect2">
 <h3 id="upgrading-messaging">3.3. Upgrading EnMasse</h3>
 <div class="paragraph">
-<p>EnMasse supports upgrades between minor versions using cloud native tools and the same
-mechanism used to apply configuration changes.  When upgrading, the updated infrastructure
-configuration of the new version will trigger the upgrade to start.</p>
+<p>EnMasse supports upgrades between minor versions using cloud-native tools. When upgrading, applying the configuration change automatically triggers the upgrade process to begin.</p>
 </div>
 <div class="paragraph">
-<p>Upgrading EnMasse is done by applying the YAML files for the new version.</p>
+<p>It is recommended to use the same method to upgrade that was used to initially install EnMasse.</p>
+</div>
+<div class="paragraph">
+<p>Upgrading EnMasse is accomplished by applying the YAML files for the new version.</p>
 </div>
 <div class="sect3">
 <h4 id="upgrading-enmasse-using-bundle-messaging">3.3.1. Upgrading EnMasse using a YAML bundle</h4>
@@ -2486,7 +2488,7 @@ configuration of the new version will trigger the upgrade to start.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The upgrade should cause all pods to be restarted within a couple of minutes.</p>
+<p>The pods restart and become active within several minutes.</p>
 </div>
 </li>
 </ol>
@@ -2537,7 +2539,7 @@ configuration of the new version will trigger the upgrade to start.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The upgrade should cause all pods to be restarted within a couple of minutes.</p>
+<p>The pods restart and become active within several minutes.</p>
 </div>
 </li>
 </ol>
@@ -2584,6 +2586,54 @@ configuration of the new version will trigger the upgrade to start.</p>
 </div>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="post-upgrade-step-router-pod-messaging">3.3.4. Restarting router pods running a previous version of the image</h4>
+<div class="paragraph">
+<p>When upgrading, sometimes a router pod is not automatically restarted by OpenShift. If this issue occurs, it is important to manually restart the affected pod to ensure correct operation of the system.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>Completed the upgrading steps to a new release of EnMasse. For more information on how to upgrade, see:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Upgrading EnMasse using a YAML bundle</a></p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Upgrading EnMasse using Ansible</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Find the router pod running the previous version of the image:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get pod -o go-template='{{range .items}}{{.metadata.name}}{{"\n"}}{{range .spec.containers}}{{"\t"}}{{.image}}{{"\n"}}{{end}}{{"\n"}}{{end}}' --selector=capability=router</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete the router pod that is running the previous version of the image:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete pod <em>&lt;name&gt;</em></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The pod is automatically restarted.</p>
 </div>
 </div>
 </div>
@@ -13411,7 +13461,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-06-12 08:03:02 UTC
+Last updated 2019-06-13 08:03:02 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
