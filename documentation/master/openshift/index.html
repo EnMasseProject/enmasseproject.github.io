@@ -2601,10 +2601,10 @@ For more information about messaging tenant resources, see the <a href="http://e
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Upgrading EnMasse using a YAML bundle</a></p>
+<p><a href="http://enmasse.io/documentation/master/openshift/#upgrading-enmasse-using-bundle-messaging">Upgrading EnMasse using a YAML bundle</a></p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Upgrading EnMasse using Ansible</a></p>
+<p><a href="http://enmasse.io/documentation/master/openshift/#upgrading-enmasse-using-ansible-messaging">Upgrading EnMasse using Ansible</a></p>
 </li>
 </ul>
 </div>
@@ -2615,7 +2615,7 @@ For more information about messaging tenant resources, see the <a href="http://e
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Find the router pod running the previous version of the image:</p>
+<p>Find the router pod running a previous version of the image:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc get pod -o go-template='{{range .items}}{{.metadata.name}}{{"\n"}}{{range .spec.containers}}{{"\t"}}{{.image}}{{"\n"}}{{end}}{{"\n"}}{{end}}' --selector=capability=router</pre>
@@ -2623,7 +2623,7 @@ For more information about messaging tenant resources, see the <a href="http://e
 </div>
 </li>
 <li>
-<p>Delete the router pod that is running the previous version of the image:</p>
+<p>Delete the router pod that is running a previous version of the image:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc delete pod <em>&lt;name&gt;</em></pre>
@@ -13461,7 +13461,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-06-13 08:03:02 UTC
+Last updated 2019-06-14 08:03:53 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
