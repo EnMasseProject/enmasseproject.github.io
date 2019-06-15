@@ -492,9 +492,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
 <ul class="sectlevel3">
 <li><a href="#upgrading-enmasse-using-bundle-messaging">3.3.1. Upgrading EnMasse using a YAML bundle</a></li>
-<li><a href="#upgrading-enmasse-using-template-messaging">3.3.2. Upgrading EnMasse using the release template</a></li>
-<li><a href="#upgrading-enmasse-using-ansible-messaging">3.3.3. Upgrading EnMasse using Ansible</a></li>
-<li><a href="#post-upgrade-step-router-pod-messaging">3.3.4. Restarting router pods running a previous version of the image</a></li>
+<li><a href="#upgrading-enmasse-using-ansible-messaging">3.3.2. Upgrading EnMasse using Ansible</a></li>
+<li><a href="#post-upgrade-step-router-pod-messaging">3.3.3. Restarting router pods running a previous version of the image</a></li>
 </ul>
 </li>
 <li><a href="#uninstalling-messaging">3.4. Uninstalling EnMasse</a></li>
@@ -2495,58 +2494,7 @@ For more information about messaging tenant resources, see the <a href="http://e
 </div>
 </div>
 <div class="sect3">
-<h4 id="upgrading-enmasse-using-template-messaging">3.3.2. Upgrading EnMasse using the release template</h4>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>A new release of EnMasse. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#downloading-messaging">Downloading EnMasse</a>.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in as a service operator:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u system:admin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Select the project where EnMasse is installed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Apply the new release template:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc process -f install/templates/{ProductTemplateName} NAMESPACE=<em>enmasse-infra</em> | oc apply -f -</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Monitor the pods while they are restarted:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc get pods -w</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The pods restart and become active within several minutes.</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="upgrading-enmasse-using-ansible-messaging">3.3.3. Upgrading EnMasse using Ansible</h4>
+<h4 id="upgrading-enmasse-using-ansible-messaging">3.3.2. Upgrading EnMasse using Ansible</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -2589,7 +2537,7 @@ For more information about messaging tenant resources, see the <a href="http://e
 </div>
 </div>
 <div class="sect3">
-<h4 id="post-upgrade-step-router-pod-messaging">3.3.4. Restarting router pods running a previous version of the image</h4>
+<h4 id="post-upgrade-step-router-pod-messaging">3.3.3. Restarting router pods running a previous version of the image</h4>
 <div class="paragraph">
 <p>When upgrading, sometimes a router pod is not automatically restarted by OpenShift. If this issue occurs, it is important to manually restart the affected pod to ensure correct operation of the system.</p>
 </div>
@@ -13461,7 +13409,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-06-14 08:03:53 UTC
+Last updated 2019-06-15 08:05:47 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
