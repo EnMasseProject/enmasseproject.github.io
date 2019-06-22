@@ -3426,15 +3426,15 @@ spec:
 </div>
 </div>
 <div class="sect4">
-<h5 id="ref-address-space-example-cert-providers-messaging">Configuring an address space certificate provider</h5>
+<h5 id="ref-address-space-example-cert-providers-messaging">Address space certificate provider configuration examples</h5>
 <div class="paragraph">
-<p>This address space example shows how you can configure the endpoints of an <code>AddressSpace</code> to be configured using different certificate providers. The certificate provider determines how certificates are issued for the endpoints of an <code>AddressSpace</code>.</p>
+<p>The following address space examples show how you can configure the endpoints of an <code>AddressSpace</code> using different certificate providers. The certificate provider determines how certificates are issued for the endpoints of an <code>AddressSpace</code>.</p>
 </div>
 <div class="sect5">
 <h6 id="openshift_provider"><code>openshift</code> provider</h6>
 <div class="paragraph">
 <p>The <code>openshift</code> certificate provider can be used to configure endpoints with certificates signed by
-the OpenShift Cluster CA.</p>
+the OpenShift cluster certificate authority (CA).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3457,7 +3457,7 @@ spec:
 <div class="colist arabic">
 <ol>
 <li>
-<p>(Required) The certificate provider type. The available types are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default).</p>
+<p>(Required) The certificate provider type. Valid values are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default value).</p>
 </li>
 </ol>
 </div>
@@ -3490,7 +3490,7 @@ spec:
 <div class="colist arabic">
 <ol>
 <li>
-<p>(Required) The certificate provider type. The available types are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default).</p>
+<p>(Required) The certificate provider type. Valid values are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default value).</p>
 </li>
 </ol>
 </div>
@@ -3499,7 +3499,7 @@ spec:
 <h6 id="certbundle_provider"><code>certBundle</code> provider</h6>
 <div class="paragraph">
 <p>The <code>certBundle</code> certificate provider can be used to configure endpoints with user-supplied
-certificates signed by your own CA. Certificate rotation can be done by updating the <code>tlsKey</code> and
+certificates signed by your own CA. Certificate rotation can be performed by updating the <code>tlsKey</code> and
 <code>tlsCert</code> fields with updated certificates, and then updating the <code>AddressSpace</code> resource.</p>
 </div>
 <div class="listingblock">
@@ -3525,13 +3525,13 @@ spec:
 <div class="colist arabic">
 <ol>
 <li>
-<p>(Required) The certificate provider type. The available types are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default).</p>
+<p>(Required) The certificate provider type. Valid values are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default value).</p>
 </li>
 <li>
-<p>(Required) The base64-encoded value of the PEM private key (including the preamble)</p>
+<p>(Required) The base64-encoded value of the PEM private key (including the preamble).</p>
 </li>
 <li>
-<p>(Required) The base64-encoded value of the PEM certificate (including the preamble)</p>
+<p>(Required) The base64-encoded value of the PEM certificate (including the preamble).</p>
 </li>
 </ol>
 </div>
@@ -13409,7 +13409,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-06-21 08:06:45 UTC
+Last updated 2019-06-22 08:07:25 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
