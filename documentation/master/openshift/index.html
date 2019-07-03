@@ -595,10 +595,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
-<li><a href="#ref-resources-table-service-admin-messaging-iot">Appendix A: EnMasse resources for service administrators</a></li>
-<li><a href="#ref-resources-table-messaging-tenant-messaging-iot">Appendix B: EnMasse resources for messaging tenants</a></li>
-<li><a href="#ref-brokered-infra-config-fields-messaging-iot">Appendix C: Brokered infrastructure configuration fields</a></li>
-<li><a href="#ref-standard-infra-config-fields-messaging-iot">Appendix D: Standard infrastructure configuration fields</a></li>
+<li><a href="#ref-resources-table-service-admin-messaging">Appendix A: EnMasse resources for service administrators</a></li>
+<li><a href="#ref-resources-table-messaging-tenant-messaging">Appendix B: EnMasse resources for messaging tenants</a></li>
+<li><a href="#ref-brokered-infra-config-fields-messaging">Appendix C: Brokered infrastructure configuration fields</a></li>
+<li><a href="#ref-standard-infra-config-fields-messaging">Appendix D: Standard infrastructure configuration fields</a></li>
 <li><a href="#rest_api_reference">Appendix E: REST API reference</a>
 <ul class="sectlevel2">
 <li><a href="#enmasse_rest_api">E.1. EnMasse REST API</a>
@@ -2387,8 +2387,10 @@ that address. The following connection property information contains the policie
 <p>EnMasse provides the following example roles that you can use directly or use as models to create your own roles.</p>
 </div>
 <div class="paragraph">
-<p>For more information about service administrator resources, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-resources-table-service-admin-messaging">EnMasse service administrator resources table</a>.
-For more information about messaging tenant resources, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-resources-table-messaging-tenant-messaging">EnMasse messaging tenant resources table</a>.</p>
+<p>For more information about service administrator resources, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-resources-table-service-admin-messaging">EnMasse service administrator resources table</a>.</p>
+</div>
+<div class="paragraph">
+<p>For more information about messaging tenant resources, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-resources-table-messaging-tenant-messaging">EnMasse messaging tenant resources table</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 2. EnMasse example roles table</caption>
@@ -4186,7 +4188,10 @@ spec:
 <p>EnMasse Console uses the OpenShift RBAC permissions model. For more information about the OpenShift RBAC permissions model, see the <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/manage_rbac.html" target="_blank" rel="noopener">OpenShift documentation</a>.</p>
 </div>
 <div class="paragraph">
-<p>To use EnMasse Console, the OpenShift user requires a role that grants access to <code>addressspace</code> and <code>address</code> resources. For example, for edit access, <code>edit</code> permissions need be to given to the associated role object, and for view-only access, <code>list</code> permissions need to be granted. For more information about the EnMasse example roles, see <a href="http://enmasse.io/documentation/master/openshift/#ref-example-roles-messaging">EnMasse example roles</a>.</p>
+<p>To use EnMasse Console, the OpenShift user requires a role that grants access to <code>addressspace</code> and <code>address</code> resources. For example, for edit access, <code>edit</code> permissions need be to given to the associated role object, and for view-only access, <code>list</code> permissions need to be granted.</p>
+</div>
+<div class="paragraph">
+<p>For more information about the EnMasse example roles, see <a href="http://enmasse.io/documentation/master/openshift/#ref-example-roles-messaging">EnMasse example roles</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4716,8 +4721,10 @@ spec:
 <p>EnMasse provides the following example roles that you can use directly or use as models to create your own roles.</p>
 </div>
 <div class="paragraph">
-<p>For more information about service administrator resources, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-resources-table-service-admin-messaging">EnMasse service administrator resources table</a>.
-For more information about messaging tenant resources, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-resources-table-messaging-tenant-messaging">EnMasse messaging tenant resources table</a>.</p>
+<p>For more information about service administrator resources, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-resources-table-service-admin-messaging">EnMasse service administrator resources table</a>.</p>
+</div>
+<div class="paragraph">
+<p>For more information about messaging tenant resources, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-resources-table-messaging-tenant-messaging">EnMasse messaging tenant resources table</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 7. EnMasse example roles table</caption>
@@ -5546,7 +5553,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="ref-resources-table-service-admin-messaging-iot">Appendix A: EnMasse resources for service administrators</h2>
+<h2 id="ref-resources-table-service-admin-messaging">Appendix A: EnMasse resources for service administrators</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The following table describes the EnMasse resources that pertain to the service administrator role.</p>
@@ -5609,7 +5616,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="ref-resources-table-messaging-tenant-messaging-iot">Appendix B: EnMasse resources for messaging tenants</h2>
+<h2 id="ref-resources-table-messaging-tenant-messaging">Appendix B: EnMasse resources for messaging tenants</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The following table describes the EnMasse resources that pertain to the messaging tenant role.</p>
@@ -5656,7 +5663,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="ref-brokered-infra-config-fields-messaging-iot">Appendix C: Brokered infrastructure configuration fields</h2>
+<h2 id="ref-brokered-infra-config-fields-messaging">Appendix C: Brokered infrastructure configuration fields</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This table shows the fields available for the brokered infrastructure configuration and a brief description.</p>
@@ -5809,7 +5816,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="ref-standard-infra-config-fields-messaging-iot">Appendix D: Standard infrastructure configuration fields</h2>
+<h2 id="ref-standard-infra-config-fields-messaging">Appendix D: Standard infrastructure configuration fields</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This table shows the fields available for the standard infrastructure configuration and a brief description.</p>
@@ -13409,7 +13416,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-07-02 08:11:52 UTC
+Last updated 2019-07-03 08:14:53 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
