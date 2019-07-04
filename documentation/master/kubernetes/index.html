@@ -480,7 +480,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#con-address-plans-messaging">3.2.5. Address plans</a></li>
 <li><a href="#create-address-plans-cli-messaging">3.2.6. Creating address plans</a></li>
 <li><a href="#infrastructure-configuration-messaging">3.2.7. Infrastructure configuration</a></li>
-<li><a href="#applying-infra-config-changes-messaging">3.2.8. Applying infrastructure configuration</a></li>
+<li><a href="#create-edit-infra-config-messaging">3.2.8. Creating and editing infrastructure configurations</a></li>
 <li><a href="#con-authentication-services-messaging">3.2.9. Authentication services</a></li>
 <li><a href="#proc-deploying-standard-auth-service-messaging">3.2.10. Deploying the <code>standard</code> authentication service</a></li>
 <li><a href="#proc-deploying-none-auth-service-messaging">3.2.11. Deploying the <code>none</code> authentication service</a></li>
@@ -1728,23 +1728,15 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 </div>
 </div>
 <div class="sect3">
-<h4 id="applying-infra-config-changes-messaging">3.2.8. Applying infrastructure configuration</h4>
+<h4 id="create-edit-infra-config-messaging">3.2.8. Creating and editing infrastructure configurations</h4>
 <div class="paragraph">
-<p>You can edit existing configurations or create new ones.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>An infrastructure configuration change that you want to apply. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
-</li>
-</ul>
+<p>You can create a new infrastructure configuration or edit an existing one. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Create infrastructure configuration:</p>
+<p>Edit the existing infrastructure configuration, or create a new infrastructure configuration using the following example:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
@@ -1785,7 +1777,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>The configuration changes will be applied within a couple of minutes.</p>
+<p>The configuration changes are applied within several minutes.</p>
 </div>
 </li>
 </ol>
@@ -12832,7 +12824,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-07-03 08:14:53 UTC
+Last updated 2019-07-04 08:13:14 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
