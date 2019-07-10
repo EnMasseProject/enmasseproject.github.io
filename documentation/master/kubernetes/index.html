@@ -528,9 +528,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#ref-address-space-example-exporting-endpoints-messaging">4.2.9. Example of exporting address space information into the application namespace</a></li>
 <li><a href="#create-address-space-cli-messaging">4.2.10. Creating address spaces using the command line</a></li>
 <li><a href="#proc-create-address-space-console-messaging">4.2.11. Creating an address space using the EnMasse Console</a></li>
-<li><a href="#proc-delete-address-space-console-messaging">4.2.12. Deleting an address space using the EnMasse Console</a></li>
-<li><a href="#retrieving-address-space-information-messaging">4.2.13. Example commands for retrieving address space information</a></li>
-<li><a href="#replace-address-space-cli-messaging">4.2.14. Replacing address spaces using the command line</a></li>
+<li><a href="#proc-change-address-space-plan-console-messaging">4.2.12. Changing the address space plan associated with an address space using the EnMasse Console</a></li>
+<li><a href="#proc-delete-address-space-console-messaging">4.2.13. Deleting an address space using the EnMasse Console</a></li>
+<li><a href="#retrieving-address-space-information-messaging">4.2.14. Example commands for retrieving address space information</a></li>
+<li><a href="#replace-address-space-cli-messaging">4.2.15. Replacing address spaces using the command line</a></li>
 </ul>
 </li>
 <li><a href="#managing-addresses-messaging">4.3. Managing addresses</a>
@@ -3209,7 +3210,38 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-delete-address-space-console-messaging">4.2.12. Deleting an address space using the EnMasse Console</h4>
+<h4 id="proc-change-address-space-plan-console-messaging">4.2.12. Changing the address space plan associated with an address space using the EnMasse Console</h4>
+<div class="paragraph">
+<p>You can change the address space plan that is associated with an address space using the  EnMasse Console.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You must have already created an address space. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#proc-create-address-space-console-messaging">Creating an address space using the EnMasse Console</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/kubernetes/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
+</li>
+<li>
+<p>Locate the address space for which you want to change the address space plan.</p>
+</li>
+<li>
+<p>In the far right column, click the vertical ellipsis icon and select <strong>Edit</strong>. The Edit window opens.</p>
+</li>
+<li>
+<p>In the <strong>Address space plan</strong> field, select a different plan from the list and click <strong>Save</strong>. The address space plan is changed for that address space.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="proc-delete-address-space-console-messaging">4.2.13. Deleting an address space using the EnMasse Console</h4>
 <div class="paragraph">
 <p>You can delete an existing address space using the EnMasse Console.</p>
 </div>
@@ -3235,7 +3267,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="retrieving-address-space-information-messaging">4.2.13. Example commands for retrieving address space information</h4>
+<h4 id="retrieving-address-space-information-messaging">4.2.14. Example commands for retrieving address space information</h4>
 <div class="paragraph">
 <p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
 </div>
@@ -3288,7 +3320,7 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="replace-address-space-cli-messaging">4.2.14. Replacing address spaces using the command line</h4>
+<h4 id="replace-address-space-cli-messaging">4.2.15. Replacing address spaces using the command line</h4>
 <div class="paragraph">
 <p>Address spaces can be replaced in order to change the plan, endpoints, or network policies, or
 to replace certificates if using the <code>certBundle</code> certificate provider. When changing the plan,
@@ -3493,7 +3525,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Click the address space link for the address space where you want to create a new address.</p>
 </li>
 <li>
-<p>Click <strong>New</strong>. The Create new address window opens.</p>
+<p>Click <strong>Create</strong>. The Create new address window opens.</p>
 </li>
 <li>
 <p>Type a name and select the address type. If selecting <strong>subscription</strong>, from the <strong>Topic</strong> list select the topic name to which you want to create a subscription.</p>
@@ -12824,7 +12856,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-07-09 08:15:13 UTC
+Last updated 2019-07-10 08:16:00 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
