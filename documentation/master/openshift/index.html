@@ -496,7 +496,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#post-upgrade-step-router-pod-messaging">3.3.3. Restarting router pods running a previous version of the image</a></li>
 </ul>
 </li>
-<li><a href="#uninstalling-messaging">3.4. Uninstalling EnMasse</a></li>
+<li><a href="#assembly-uninstalling-messaging">3.4. Uninstalling EnMasse</a>
+<ul class="sectlevel3">
+<li><a href="#uninstalling-messaging">3.4.1. Uninstalling EnMasse</a></li>
+<li><a href="#proc-uninstalling-using-ansible-messaging">3.4.2. Uninstalling EnMasse using Ansible</a></li>
+</ul>
+</li>
 <li><a href="#monitoring-messaging">3.5. Monitoring EnMasse</a>
 <ul class="sectlevel3">
 <li><a href="#deploy-monitoring-operator-messaging">3.5.1. (Optional) Deploying the Application Monitoring Operator</a></li>
@@ -741,10 +746,10 @@ on your machine.</p>
 </div>
 </li>
 <li>
-<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
+<p>(Optional) If you want to deploy to a project other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/bundles/enmasse/*.yaml</pre>
+<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-project</em>/' install/bundles/enmasse/*.yaml</pre>
 </div>
 </div>
 </li>
@@ -1081,8 +1086,8 @@ infrastructure configuration, and plans.</p>
 <div class="sect2">
 <h3 id="installing-messaging">3.1. Installing EnMasse</h3>
 <div class="paragraph">
-<p>EnMasse can be installed by applying the YAML files using the <code>oc</code> command-line tool, by using
-the Operator Marketplace, or by running the <a href="https://www.ansible.com/" target="_blank" rel="noopener">Ansible</a> playbooks.</p>
+<p>EnMasse can be installed by applying the YAML files using the OpenShift Container Platform command-line interface, by using
+the Operator Marketplace, or by running the <a href="https://www.ansible.com/" target="_blank" rel="noopener">Ansible</a> playbook.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -1130,10 +1135,10 @@ on your machine.</p>
 </div>
 </li>
 <li>
-<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
+<p>(Optional) If you want to deploy to a project other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/bundles/enmasse/*.yaml</pre>
+<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-project</em>/' install/bundles/enmasse/*.yaml</pre>
 </div>
 </div>
 </li>
@@ -1271,7 +1276,7 @@ EOF</pre>
 configuring the system. Example inventory files can be found in the <code>ansible/inventory</code> folder.</p>
 </div>
 <div class="paragraph">
-<p>An example inventory file that enables a minimal installation of EnMasse:</p>
+<p>The following example inventory file enables a minimal installation of EnMasse:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1297,10 +1302,10 @@ monitoring=False</code></pre>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Ansible configuration settings</caption>
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
+<col style="width: 35%;">
+<col style="width: 40%;">
+<col style="width: 15%;">
+<col style="width: 10%;">
 </colgroup>
 <thead>
 <tr>
@@ -1316,7 +1321,7 @@ monitoring=False</code></pre>
 <p>namespace</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the namespace where EnMasse is installed.</p>
+<p>Specifies the project where EnMasse is installed.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Not applicable</p>
@@ -1442,7 +1447,7 @@ monitoring=False</code></pre>
 <p>monitoring_namespace</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the namespace where the EnMasse monitoring is installed.</p>
+<p>Specifies the project where EnMasse monitoring is installed.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Not applicable</p>
@@ -1485,7 +1490,7 @@ monitoring=False</code></pre>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>(Optional) Create an inventory file.</p>
+<p>Create an inventory file.</p>
 </li>
 <li>
 <p>Run the Ansible playbook:</p>
@@ -1909,7 +1914,7 @@ kind: BrokeredInfraConfig
 metadata:
   name: brokered-infra-config-example
 spec:
-  version: "0.29-SNAPSHOT"
+  version: "0.30-SNAPSHOT"
   admin:
     resources:
       memory: 256Mi
@@ -1964,7 +1969,7 @@ kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: "0.29-SNAPSHOT"
+  version: "0.30-SNAPSHOT"
   admin:
     resources:
       memory: 256Mi
@@ -2057,7 +2062,7 @@ kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: "0.29-SNAPSHOT"
+  version: "0.30-SNAPSHOT"
   admin:
     resources:
       memory: 256Mi
@@ -2581,7 +2586,15 @@ that address. The following connection property information contains the policie
 </div>
 </div>
 <div class="sect2">
-<h3 id="uninstalling-messaging">3.4. Uninstalling EnMasse</h3>
+<h3 id="assembly-uninstalling-messaging">3.4. Uninstalling EnMasse</h3>
+<div class="paragraph">
+<p>You must uninstall EnMasse using the same method that you used to install EnMasse.</p>
+</div>
+<div class="sect3">
+<h4 id="uninstalling-messaging">3.4.1. Uninstalling EnMasse</h4>
+<div class="paragraph">
+<p>This method uninstalls EnMasse that was installed using the YAML bundle.</p>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2594,7 +2607,7 @@ that address. The following connection property information contains the policie
 </div>
 </li>
 <li>
-<p>Delete "cluster level" resources:</p>
+<p>Delete the cluster-level resources:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc delete clusterrolebindings -l app=enmasse
@@ -2622,6 +2635,38 @@ oc delete oauthclients -l app=enmasse</pre>
 </div>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="proc-uninstalling-using-ansible-messaging">3.4.2. Uninstalling EnMasse using Ansible</h4>
+<div class="paragraph">
+<p>Uninstalling EnMasse using Ansible requires using the same inventory file that was used for installing EnMasse.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The playbook deletes the <code>enmasse-infra</code> project.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Run the Ansible playbook, where <code><em>inventory-file</em></code> specifies the inventory file used at installation:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">ansible-playbook -i <em>inventory-file</em> ansible/playbooks/openshift/uninstall.yml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -5195,10 +5240,10 @@ namespace Test
 </div>
 </li>
 <li>
-<p>(Optional) If you want to deploy to a namespace other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
+<p>(Optional) If you want to deploy to a project other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-namespace</em>/' install/bundles/enmasse/*.yaml</pre>
+<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-project</em>/' install/bundles/enmasse/*.yaml</pre>
 </div>
 </div>
 </li>
@@ -13440,7 +13485,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-07-16 08:18:47 UTC
+Last updated 2019-07-17 08:18:54 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
