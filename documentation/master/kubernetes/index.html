@@ -1684,7 +1684,7 @@ spec:
   router:
     resources:
       memory: 256Mi
-    linkCapcity: 1000
+    linkCapacity: 1000
     minReplicas: 1
     policy:
       maxConnections: 1000
@@ -1761,7 +1761,7 @@ spec:
   router:
     resources:
       memory: 256Mi
-    linkCapcity: 1000
+    linkCapacity: 1000
     minReplicas: 1</code></pre>
 </div>
 </div>
@@ -2834,15 +2834,15 @@ spec:
 </div>
 </div>
 <div class="sect4">
-<h5 id="ref-address-space-example-exposing-endpoints-messaging">Address space example exposing endpoints externally</h5>
+<h5 id="ref-address-space-example-exposing-endpoints-messaging">Address space examples exposing endpoints externally</h5>
 <div class="paragraph">
-<p>This address space example shows how you can configure the external endpoints of an <code>AddressSpace</code>
+<p>These address space examples show how you can configure the external endpoints of an <code>AddressSpace</code>
 to access messaging endpoints outside the Kubernetes cluster.</p>
 </div>
 <div class="sect5">
 <h6 id="kubernetes_loadbalancer_service_example">Kubernetes <code>LoadBalancer</code> service example</h6>
 <div class="paragraph">
-<p>To expose <code>AddressSpace</code> endpoints as OpenShift routes, the <code>route</code> type is used:</p>
+<p>To expose <code>AddressSpace</code> endpoints through Kubernetes <code>LoadBalancer</code> services, the <code>loadbalancer</code> type is used:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2859,10 +2859,14 @@ spec:
   - name: messaging <b class="conum">(1)</b>
     service: messaging <b class="conum">(2)</b>
     expose:
-     type: route
-     routeServicePort: amqps <b class="conum">(3)</b>
-     routeTlsTermination: passthrough <b class="conum">(4)</b>
-     routeHost: messaging.example.com <b class="conum">(5)</b></code></pre>
+     type: loadbalancer <b class="conum">(3)</b>
+     loadBalancerPorts: <b class="conum">(4)</b>
+     - amqp
+     - amqps
+    annotations: <b class="conum">(5)</b>
+      mykey: myvalue
+    loadBalancerSourceRanges: <b class="conum">(6)</b>
+    - 10.0.0.0/8</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2871,16 +2875,19 @@ spec:
 <p>(Required) The name of the endpoint. The name specified affects the name of the Kubernetes service to be created as well as the name of the endpoint in the status section of the <code>AddressSpace</code>.</p>
 </li>
 <li>
-<p>(Required) The service names that must be configured for the <code>AddressSpace</code>.  The service can either be <code>messaging</code>, <code>console</code>, or <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
+<p>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code>, <code>console</code>, and <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
 </li>
 <li>
-<p>(Required) The name of the port to be exposed. With the <code>route</code> type, only a single TLS-enabled port can be specified. For the <code>messaging</code> service, either <code>amqps</code> and <code>https</code> can be specified. For the <code>console</code> service, only <code>https</code> can be specified.</p>
+<p>(Required) The type of endpoint being exposed. The <code>loadbalancer</code> type creates an Kubernetes <code>LoadBalancer</code> service. Valid values are <code>route</code> and <code>loadbalancer</code>.</p>
 </li>
 <li>
-<p>(Required) The TLS termination policy to be used for the OpenShift route. For the <code>messaging</code> service, the <code>amqps</code> port requires <code>passthrough</code> to be used, whereas <code>https</code> (websockets) also allows <code>reencrypt</code>. For the <code>console</code> service, <code>reencrypt</code> can be used.</p>
+<p>(Required) A list of the ports to be exposed on the <code>LoadBalancer</code> service. For the <code>messaging</code> service, the valid values are <code>amqp</code> and <code>amqps</code>.</p>
 </li>
 <li>
-<p>(Optional) The hostname to use for the created route.</p>
+<p>(Optional) A set of key-value annotation pairs that are added to the <code>LoadBalancer</code> <code>Service</code> object.</p>
+</li>
+<li>
+<p>(Optional) The allowed source ranges that are accepted by the load balancer.</p>
 </li>
 </ol>
 </div>
@@ -5443,7 +5450,7 @@ export MESSAGING_PORT=5671</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.linkCapcity</p>
+<p>router.linkCapacity</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the default number of credits issued on AMQP links for the router.</p>
@@ -12869,7 +12876,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-08-01 08:25:45 UTC
+Last updated 2019-08-02 08:26:34 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
