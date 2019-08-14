@@ -482,11 +482,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#create-address-plans-cli-messaging">3.2.6. Creating address plans</a></li>
 <li><a href="#infrastructure-configuration-messaging">3.2.7. Infrastructure configuration</a></li>
 <li><a href="#create-edit-infra-config-messaging">3.2.8. Creating and editing infrastructure configurations</a></li>
-<li><a href="#con-authentication-services-messaging">3.2.9. Authentication services</a></li>
-<li><a href="#proc-deploying-standard-auth-service-messaging">3.2.10. Deploying the <code>standard</code> authentication service</a></li>
-<li><a href="#proc-deploying-none-auth-service-messaging">3.2.11. Deploying the <code>none</code> authentication service</a></li>
-<li><a href="#con-external-authentication-service-api-messaging">3.2.12. External authentication service API</a></li>
-<li><a href="#ref-example-roles-messaging">3.2.13. EnMasse example roles</a></li>
+<li><a href="#assembly-auth-services-messaging">3.2.9. Authentication services</a></li>
+<li><a href="#ref-example-roles-messaging">3.2.10. EnMasse example roles</a></li>
 </ul>
 </li>
 <li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
@@ -2102,29 +2099,24 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-authentication-services-messaging">3.2.9. Authentication services</h4>
+<h4 id="assembly-auth-services-messaging">3.2.9. Authentication services</h4>
 <div class="paragraph">
 <p>Authentication services are used to configure the authentication and authorization endpoints
 available to messaging clients. The authentication services are configured by the EnMasse
 service operator, and are specified when creating an address space.</p>
 </div>
 <div class="paragraph">
-<p>An authentication service has a type, which can either be <code>none</code>, <code>standard</code>, or <code>external</code>. The
-<code>none</code> authentication service type allows all clients to send and receive messages to any address.</p>
+<p>Authentication services are configured as Custom Resources. An authentication service has a type, which can be <code>standard</code>, <code>external</code>, or <code>none</code>.</p>
 </div>
+<div class="sect4">
+<h5 id="con-standard-auth-service-messaging">Standard authentication service</h5>
 <div class="paragraph">
-<p>The <code>standard</code> authentication service type uses a Keycloak instance to store user
-credentials and access policies. This authentication service also allows managing users using the
-<code>MessagingUser</code> custom resource.</p>
+<p>The <code>standard</code> authentication service type allows the tenant administrator to manage users and their related permissions through the <code>MessagingUser</code> Custom Resource. This is achieved by using a Keycloak instance to store user credentials and access policies. For typical use cases only one <code>standard</code> authentication service needs to be defined.</p>
 </div>
+<div class="sect5">
+<h6 id="ref-standard-auth-service-example-messaging">Standard authentication service example</h6>
 <div class="paragraph">
-<p>The <code>external</code> authentication service allows configuring an external provider of authentication and
-authorization policies through an AMQP SASL handshake. This can be used to implement a bridge for
-your existing identity management system.</p>
-</div>
-<div class="paragraph">
-<p>Authentication services are configured as custom resources. The following example shows an
-authentication service of type <code>standard</code>:</p>
+<p>The following example shows an authentication service of type <code>standard</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2157,7 +2149,7 @@ spec:
 <div class="colist arabic">
 <ol>
 <li>
-<p>The type can be specified as <code>none</code>, <code>standard</code>, or <code>external</code>.</p>
+<p>Valid values for <code>type</code> are <code>none</code>, <code>standard</code>, or <code>external</code>.</p>
 </li>
 <li>
 <p>(Optional) The secret must contain the <code>admin.username</code> field for the user and the <code>admin.password</code> field for the password of the Keycloak admin user. If not specified, a random password will be generated and stored in a secret.</p>
@@ -2176,52 +2168,17 @@ spec:
 </li>
 </ol>
 </div>
+</div>
+<div class="sect5">
+<h6 id="proc-deploying-standard-auth-service-messaging">Deploying the <code>standard</code> authentication service</h6>
 <div class="paragraph">
-<p>An <code>external</code> authentication service can be configured using the following example:</p>
+<p>To implement the <code>standard</code> authentication service, you deploy it.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
-kind: AuthenticationService
-metadata:
-  name: my-im-system
-spec:
-  type: external
-  realm: myrealm <b class="conum">(1)</b>
-  external:
-    host: example.com <b class="conum">(2)</b>
-    port: 5671 <b class="conum">(3)</b>
-    caCertSecret: <b class="conum">(4)</b>
-      name: my-ca-cert</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>(Optional) The <code>realm</code> is passed in the authentication request. If not specified, an identifier in the form of <em>namespace-addressspace</em> is used as the realm.</p>
-</li>
-<li>
-<p>The host name of the external authentication service.</p>
-</li>
-<li>
-<p>The port of the external authentication service.</p>
-</li>
-<li>
-<p>(Optional) The CA certificate to trust when connecting to the authentication service.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>The external authentication service must implement the API described in <a href="http://enmasse.io/documentation/master/openshift/#con-external-authentication-service-api-messaging">External authentication service API</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="proc-deploying-standard-auth-service-messaging">3.2.10. Deploying the <code>standard</code> authentication service</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Log in as a service admin</p>
+<p>Log in as a service admin:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc login -u admin</pre>
@@ -2229,7 +2186,7 @@ spec:
 </div>
 </li>
 <li>
-<p>Select namespace where EnMasse is installed:</p>
+<p>Change to the project where EnMasse is installed:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc project <em>enmasse-infra</em></pre>
@@ -2260,69 +2217,131 @@ spec:
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="proc-deploying-none-auth-service-messaging">3.2.11. Deploying the <code>none</code> authentication service</h4>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Log in as a service admin</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc login -u admin</pre>
 </div>
+<div class="sect4">
+<h5 id="con-external-auth-service-messaging">External authentication service</h5>
+<div class="paragraph">
+<p>With the <code>external</code> authentication service you can configure an external provider of authentication and
+authorization policies through an AMQP SASL handshake. This configuration can be used to implement a bridge for
+your existing identity management system.</p>
 </div>
-</li>
-<li>
-<p>Select namespace where EnMasse is installed:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
+<div class="paragraph">
+<p>Depending on your use case, you might define several <code>external</code> authentication services.</p>
 </div>
+<div class="sect5">
+<h6 id="ref-external-auth-service-example-messaging">External authentication service example</h6>
+<div class="paragraph">
+<p>The following example shows an authentication service of type <code>external</code>:</p>
 </div>
-</li>
-<li>
-<p>Create an <code>AuthenticationService</code> definition:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
 kind: AuthenticationService
 metadata:
-  name: none-authservice
+  name: my-external-1
 spec:
-  type: none</code></pre>
+  type: external
+  realm: myrealm <b class="conum">(1)</b>
+  external:
+    host: example.com <b class="conum">(2)</b>
+    port: 5671 <b class="conum">(3)</b>
+    caCertSecret: <b class="conum">(4)</b>
+      name: my-ca-cert
+    clientCertSecret: <b class="conum">(5)</b>
+      name: my-client-cert</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Optional) The <code>realm</code> is passed in the authentication request. If not specified, an identifier in the form of <em>namespace-addressspace</em> is used as the realm.</p>
 </li>
 <li>
-<p>Deploy the authentication service:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc create -f none-authservice.yaml</pre>
-</div>
-</div>
+<p>The host name of the external authentication server.</p>
+</li>
+<li>
+<p>The port number of the external authentication server.</p>
+</li>
+<li>
+<p>(Optional) The CA certificate to trust when connecting to the authentication server.</p>
+</li>
+<li>
+<p>(Optional) The certificate that the client presents when connecting to the authentication server.</p>
 </li>
 </ol>
 </div>
-</div>
-<div class="sect3">
-<h4 id="con-external-authentication-service-api-messaging">3.2.12. External authentication service API</h4>
 <div class="paragraph">
-<p>An <code>external</code> authentication service must implement an AMQP SASL handshake, read the connection
+<p>The external authentication server must implement the API described in the <a href="http://enmasse.io/documentation/master/openshift/#con-external-authentication-server-api-messaging">External authentication server API</a>.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="ref-external-auth-service-example-allow-overrides-messaging">External authentication service example allowing overrides</h6>
+<div class="paragraph">
+<p>The following example shows an authentication service of type <code>external</code> that allows overrides to the host name, port number, and realm by the messaging tenant:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+kind: AuthenticationService
+metadata:
+  name: my-external-2
+spec:
+  type: external
+  realm: myrealm <b class="conum">(1)</b>
+  external:
+    host: example.org <b class="conum">(2)</b>
+    port: 5671 <b class="conum">(3)</b>
+    caCertSecret: <b class="conum">(4)</b>
+      name: my-ca-cert
+    clientCertSecret: <b class="conum">(5)</b>
+      name: my-client-cert
+    allowOverride: true <b class="conum">(6)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Optional) The <code>realm</code> is passed in the authentication request. If not specified, an identifier in the form of <em>namespace-addressspace</em> is used as the realm.</p>
+</li>
+<li>
+<p>The host name of the external authentication server.</p>
+</li>
+<li>
+<p>The port number of the external authentication server.</p>
+</li>
+<li>
+<p>(Optional) The CA certificate to trust when connecting to the authentication server.</p>
+</li>
+<li>
+<p>(Optional) The certificate that the client presents when connecting to the authentication server.</p>
+</li>
+<li>
+<p>(Optional) Specifies whether address space overrides are allowed to the host name, port number, and realm. Valid values are <code>true</code> or <code>false</code>. If not specified, the default value is <code>false</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The external authentication server must implement the API described in the <a href="http://enmasse.io/documentation/master/openshift/#con-external-authentication-server-api-messaging">External authentication server API</a>.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="con-external-authentication-server-api-messaging">External authentication server API</h6>
+<div class="paragraph">
+<p>An external authentication server must implement an AMQP SASL handshake, read the connection
 properties of the client, and respond with the expected connection properties containing the
-authentication and authorization information. The authentication service is queried by the address
-space components such as the router and broker, whenever a new connection is established to the
+authentication and authorization information. The authentication server is queried by the address
+space components, such as the router and broker, whenever a new connection is established to the
 messaging endpoints.</p>
 </div>
-<div class="sect4">
-<h5 id="authentication">Authentication</h5>
+<div class="sect6">
+<h7 id="authentication">Authentication</h7>
 <div class="paragraph">
 <p>The requested identity of the client can be read from the SASL handshake <code>username</code>. The
 implementation can then authenticate the user.</p>
 </div>
 <div class="paragraph">
-<p>The authenticated identity will be returned in the <code>authenticated-identity</code> map with the following
-key/values. While this example uses JSON, it should be set as an AMQP map on the connection
+<p>The authenticated identity is returned in the <code>authenticated-identity</code> map with the following
+key/values. While this example uses JSON, it must be set as an AMQP map on the connection
 property.</p>
 </div>
 <div class="listingblock">
@@ -2336,8 +2355,8 @@ property.</p>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="authorization">Authorization</h5>
+<div class="sect6">
+<h7 id="authorization">Authorization</h7>
 <div class="paragraph">
 <p>Authorization is a capability that can be requested by the client using the <code>ADDRESS-AUTHZ</code>
 connection capability. If this is set on the connection, the server responds with this
@@ -2379,8 +2398,76 @@ that address. The following connection property information contains the policie
 </div>
 </div>
 </div>
+</div>
+<div class="sect4">
+<h5 id="con-none-auth-service-messaging">None authentication service</h5>
+<div class="paragraph">
+<p>The <code>none</code> authentication service type allows any client using any user name and password to send and receive messages to any address.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+It is not recommended to use the <code>none</code> authentication service in production environments. It is intended only to be used in non-production environments, such as internal test or development environments.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect5">
+<h6 id="proc-deploying-none-auth-service-messaging">Deploying the <code>none</code> authentication service</h6>
+<div class="paragraph">
+<p>To implement the <code>none</code> authentication service, you deploy it.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in as a service admin:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc login -u admin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Change to the project where EnMasse is installed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc project <em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create an <code>AuthenticationService</code> definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+kind: AuthenticationService
+metadata:
+  name: none-authservice
+spec:
+  type: none</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the authentication service:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc create -f none-authservice.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
 <div class="sect3">
-<h4 id="ref-example-roles-messaging">3.2.13. EnMasse example roles</h4>
+<h4 id="ref-example-roles-messaging">3.2.10. EnMasse example roles</h4>
 <div class="paragraph">
 <p>EnMasse provides the following example roles that you can use directly or use as models to create your own roles.</p>
 </div>
@@ -3355,6 +3442,43 @@ spec:
 <ol>
 <li>
 <p>The authentication service name depends on the available authentication services configured by the EnMasse administrator. To view the available authentication services for your address space type, see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-auth-services-messaging">Listing available authentication services</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-address-space-example-external-auth-service-override-messaging">Address space example using an external authentication service allowing overrides</h5>
+<div class="paragraph">
+<p>This address space example shows how you can override the host name, port number, and realm for an external authentication service. Note that the ability to specify overrides depends on how the external authentication service is configured by the EnMasse administrator.</p>
+</div>
+<div class="paragraph">
+<p>For more information about how to configure an external authentication service to allow a messaging tenant to override host name, port number, and realm, see <a href="http://enmasse.io/documentation/master/openshift/#ref-external-auth-service-example-allow-overrides-messaging">External authentication service example allowing overrides</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-unlimited
+  authenticationService:
+    name: external-authservice <b class="conum">(1)</b>
+    type: external
+    overrides: <b class="conum">(2)</b>
+      realm: {ProductNamespace}-space-standard-auth
+      host: standard-authservice-{ProductNamespace}.apps.wfd-28d9.openshiftworkshop.com
+      port: 5671</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The authentication service name depends on the available authentication services configured by the EnMasse administrator. To view the available authentication services for your address space type, see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-auth-services-messaging">Listing available authentication services</a>.</p>
+</li>
+<li>
+<p>Specifies the override values.</p>
 </li>
 </ol>
 </div>
@@ -13485,7 +13609,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-08-13 08:31:14 UTC
+Last updated 2019-08-14 08:31:54 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
