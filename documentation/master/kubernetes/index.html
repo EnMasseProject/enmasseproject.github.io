@@ -2941,8 +2941,8 @@ spec:
     name: external-authservice <b class="conum">(1)</b>
     type: external
     overrides: <b class="conum">(2)</b>
-      realm: {ProductNamespace}-space-standard-auth
-      host: standard-authservice-{ProductNamespace}.apps.wfd-28d9.openshiftworkshop.com
+      realm: enmasse-infra-space-standard-auth
+      host: standard-authservice-enmasse-infra.apps.wfd-28d9.openshiftworkshop.com
       port: 5671</code></pre>
 </div>
 </div>
@@ -4896,10 +4896,18 @@ kubectl get iotproject -w</pre>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Register a device:</p>
+<p>Export the device registry host:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' --data-binary '{"device-id": "4711"}' https://$(kubectl -n enmasse-infra get service iot-device-registry-external -o jsonpath={.status.loadBalancer.ingress[0].hostname}):31443/registration/myapp.iot</pre>
+<pre class="nowrap">export REGISTRY_HOST=$(kubectl -n enmasse-infra get service iot-device-registry-external -o jsonpath={.status.loadBalancer.ingress[0].hostname}):31443</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Register a device with a defined ID (in this example we&#8217;re using <code>4711</code>):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' https://$REGISTRY_HOST/v1/devices/myapp.iot/4711</pre>
 </div>
 </div>
 </li>
@@ -4907,7 +4915,13 @@ kubectl get iotproject -w</pre>
 <p>Add credentials for a device:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' --data-binary '{"device-id": "4711","type": "hashed-password","auth-id": "sensor1","secrets": [{"hash-function" : "sha-512","pwd-plain":"'hono-secret'"}]}' https://$(kubectl -n enmasse-infra get service iot-device-registry-external -o jsonpath={.status.loadBalancer.ingress[0].hostname}):31443/credentials/myapp.iot</pre>
+<pre class="nowrap">curl --insecure -X PUT -i -H 'Content-Type: application/json' --data-binary '[{
+	"type": "hashed-password",
+	"auth-id": "sensor1",
+	"secrets": [{
+		"pwd-plain":"'hono-secret'"
+	}]
+}]' https://$REGISTRY_HOST/v1/credentials/myapp.iot/4711</pre>
 </div>
 </div>
 </li>
@@ -4936,26 +4950,13 @@ kubectl get iotproject -w</pre>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>In the Hono project, run:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">cd cli</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Run the following command at least once:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mvn package -am</pre>
-</div>
-</div>
+<p>Download the <a href="https://www.eclipse.org/hono/downloads/">Eclipse Hono command-line client</a>.</p>
 </li>
 <li>
 <p>Get the messaging endpoint certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl -n myapp get addressspace iot -o jsonpath={.status.caCert} | base64 --decode > target/config/hono-demo-certs-jar/tls.crt</pre>
+<pre class="nowrap">kubectl -n myapp get addressspace iot -o jsonpath={.status.caCert} | base64 --decode > tls.crt</pre>
 </div>
 </div>
 </li>
@@ -4992,7 +4993,7 @@ export MESSAGING_PORT=5671</pre>
 <p>Run the consumer application:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">mvn spring-boot:run -Drun.arguments=--hono.client.host=$MESSAGING_HOST,--hono.client.port=$MESSAGING_PORT,--hono.client.username=consumer,--hono.client.password=foobar,--tenant.id=myapp.iot,--hono.client.trustStorePath=target/config/hono-demo-certs-jar/tls.crt,--message.type=telemetry</pre>
+<pre class="nowrap">java -jar hono-cli-*-exec.jar --hono.client.host=$MESSAGING_HOST --hono.client.port=$MESSAGING_PORT --hono.client.username=consumer --hono.client.password=foobar --tenant.id=myapp.iot --hono.client.trustStorePath=tls.crt --message.type=telemetry</pre>
 </div>
 </div>
 </li>
@@ -5046,26 +5047,13 @@ export MESSAGING_PORT=5671</pre>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>In the Hono project, run:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">cd cli</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Run the following command at least once:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mvn package -am</pre>
-</div>
-</div>
+<p>Download the <a href="https://www.eclipse.org/hono/downloads/">Eclipse Hono command-line client</a>.</p>
 </li>
 <li>
 <p>Get the messaging endpoint certificate:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl -n myapp get addressspace iot -o jsonpath={.status.caCert} | base64 --decode > target/config/hono-demo-certs-jar/tls.crt</pre>
+<pre class="nowrap">kubectl -n myapp get addressspace iot -o jsonpath={.status.caCert} | base64 --decode > tls.crt</pre>
 </div>
 </div>
 </li>
@@ -5102,7 +5090,7 @@ export MESSAGING_PORT=5671</pre>
 <p>Run the consumer application:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">mvn spring-boot:run -Drun.arguments=--hono.client.host=$MESSAGING_HOST,--hono.client.port=$MESSAGING_PORT,--hono.client.username=consumer,--hono.client.password=foobar,--tenant.id=myapp.iot,--hono.client.trustStorePath=target/config/hono-demo-certs-jar/tls.crt,--message.type=event</pre>
+<pre class="nowrap">java -jar hono-cli-*-exec.jar --hono.client.host=$MESSAGING_HOST --hono.client.port=$MESSAGING_PORT --hono.client.username=consumer --hono.client.password=foobar --tenant.id=myapp.iot --hono.client.trustStorePath=tls.crt --message.type=event</pre>
 </div>
 </div>
 </li>
@@ -13000,7 +12988,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-08-15 08:31:48 UTC
+Last updated 2019-08-16 08:32:44 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
