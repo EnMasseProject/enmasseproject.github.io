@@ -2247,9 +2247,7 @@ spec:
     host: example.com <b class="conum">(2)</b>
     port: 5671 <b class="conum">(3)</b>
     caCertSecret: <b class="conum">(4)</b>
-      name: my-ca-cert
-    clientCertSecret: <b class="conum">(5)</b>
-      name: my-client-cert</code></pre>
+      name: my-ca-cert</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2265,9 +2263,6 @@ spec:
 </li>
 <li>
 <p>(Optional) The CA certificate to trust when connecting to the authentication server.</p>
-</li>
-<li>
-<p>(Optional) The certificate that the client presents when connecting to the authentication server.</p>
 </li>
 </ol>
 </div>
@@ -2294,9 +2289,7 @@ spec:
     port: 5671 <b class="conum">(3)</b>
     caCertSecret: <b class="conum">(4)</b>
       name: my-ca-cert
-    clientCertSecret: <b class="conum">(5)</b>
-      name: my-client-cert
-    allowOverride: true <b class="conum">(6)</b></code></pre>
+    allowOverride: true <b class="conum">(5)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2314,10 +2307,7 @@ spec:
 <p>(Optional) The CA certificate to trust when connecting to the authentication server.</p>
 </li>
 <li>
-<p>(Optional) The certificate that the client presents when connecting to the authentication server.</p>
-</li>
-<li>
-<p>(Optional) Specifies whether address space overrides are allowed to the host name, port number, and realm. Valid values are <code>true</code> or <code>false</code>. If not specified, the default value is <code>false</code>.</p>
+<p>(Optional) Specifies whether address space overrides are allowed to the host name, port number, realm, and CA certificate. Valid values are <code>true</code> or <code>false</code>. If not specified, the default value is <code>false</code>.</p>
 </li>
 </ol>
 </div>
@@ -3470,7 +3460,9 @@ spec:
     overrides: <b class="conum">(2)</b>
       realm: enmasse-infra-space-standard-auth
       host: standard-authservice-enmasse-infra.apps.wfd-28d9.openshiftworkshop.com
-      port: 5671</code></pre>
+      port: 5671
+      caCertSecret:
+        name: my-ca-cert</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -14399,7 +14391,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-05 08:41:13 UTC
+Last updated 2019-09-06 08:41:48 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
