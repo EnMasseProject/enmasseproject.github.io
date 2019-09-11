@@ -12998,10 +12998,10 @@ export MESSAGING_PORT=443</pre>
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>List of addresses to make be accessible via this address space. The addresses will be prefixed by the connector name and a forward slash ('myconnector/') and may be expressed as a pattern. A pattern consists of one or more tokens separated by a forward slash /. A token can be one of the following: a * character, a # character, or a sequence of characters that do not include /, *, or #. The * token matches any single token. The # token matches zero or more tokens. * has higher precedence than #, and exact match has the highest precedence.</p>
+<p>Addresses to make be accessible via this address space.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; string &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_v1beta1_addressspacespecconnector_addresses">addresses</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -13050,6 +13050,49 @@ export MESSAGING_PORT=443</pre>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p><a href="#_io_enmasse_v1beta1_addressspacespecconnector_tls">tls</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="_io_enmasse_v1beta1_addressspacespecconnector_addresses" class="paragraph">
+<p><strong>addresses</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>name</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Identifier of address pattern. Used to uniquely identify a pattern</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p><strong>pattern</strong><br>
+<em>required</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>Pattern used to match addresses. The pattern will be prefixed by the connector name and a forward slash ('myconnector/'). A pattern consists of one or more tokens separated by a forward slash /. A token can be one of the following: a * character, a # character, or a sequence of characters that do not include /, *, or #. The * token matches any single token. The # token matches zero or more tokens. * has higher precedence than #, and exact match has the highest precedence.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
+<p>string</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -14391,7 +14434,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-10 08:44:05 UTC
+Last updated 2019-09-11 08:44:49 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
