@@ -583,17 +583,31 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#installing-using-bundle-messaging-iot">5.1. Installing EnMasse using a YAML bundle</a></li>
 <li><a href="#installing-services-messaging-iot">5.2. Installing IoT services</a></li>
 <li><a href="#iot-creating-project-messaging-iot">5.3. Creating an IoT project</a></li>
-<li><a href="#iot-creating-device-messaging-iot">5.4. Creating an IoT device</a></li>
-<li><a href="#iot-telemetry-messaging-iot">5.5. Sending and receiving telemetry data</a>
+<li><a href="#iot-creating-device-messaging-iot">5.4. Creating an IoT device</a>
 <ul class="sectlevel3">
-<li><a href="#starting_the_telemetry_consumer">5.5.1. Starting the telemetry consumer</a></li>
-<li><a href="#sending_telemetry_data">5.5.2. Sending telemetry data</a></li>
+<li><a href="#iot-proc-creating-device-register-new-device-messaging-iot">5.4.1. Registering a new device</a></li>
+<li><a href="#iot-creating-device-set-password-messaging-iot">5.4.2. Setting username and password credentials for a device</a></li>
 </ul>
 </li>
-<li><a href="#iot-event-messaging-iot">5.6. Sending and receiving event data</a>
+<li><a href="#iot-proc-configuring-sigfox-messaging-iot">5.5. Configuring the Sigfox integration</a>
 <ul class="sectlevel3">
-<li><a href="#starting_the_event_consumer">5.6.1. Starting the event consumer</a></li>
-<li><a href="#sending_event_data">5.6.2. Sending event data</a></li>
+<li><a href="#iot-proc-configuring-sigfox-registering-backend-gateway-device-messaging-iot">5.5.1. Registering the Sigfox backend as a gateway device</a></li>
+<li><a href="#iot-proc-configuring-sigfox-register-sigfox-device-messaging-iot">5.5.2. Registering the Sigfox device</a></li>
+<li><a href="#iot-proc-configuring-sigfox-connection-information-messaging-iot">5.5.3. Preparing Sigfox connection information</a></li>
+<li><a href="#iot-proc-creating-new-sigfox-callback-messaging-iot">5.5.4. Creating a new callback in the Sigfox backend</a></li>
+<li><a href="#iot-proc-configuring-sigfox-enable-command-and-control-messaging-iot">5.5.5. Enabling command and control</a></li>
+</ul>
+</li>
+<li><a href="#iot-telemetry-messaging-iot">5.6. Sending and receiving telemetry data</a>
+<ul class="sectlevel3">
+<li><a href="#starting_the_telemetry_consumer">5.6.1. Starting the telemetry consumer</a></li>
+<li><a href="#sending_telemetry_data">5.6.2. Sending telemetry data</a></li>
+</ul>
+</li>
+<li><a href="#iot-event-messaging-iot">5.7. Sending and receiving event data</a>
+<ul class="sectlevel3">
+<li><a href="#starting_the_event_consumer">5.7.1. Starting the event consumer</a></li>
+<li><a href="#sending_event_data">5.7.2. Sending event data</a></li>
 </ul>
 </li>
 </ul>
@@ -5419,6 +5433,14 @@ namespace Test
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
+<p>(Optional) If you want to deploy to a project other than <code>enmasse-infra</code> you must run the following command and substitute <code>enmasse-infra</code> in subsequent steps:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">sed -i 's/enmasse-infra/<em>my-project</em>/' install/preview-bundles/iot/*.yaml</pre>
+</div>
+</div>
+</li>
+<li>
 <p>Deploy the IoT bundles:</p>
 <div class="listingblock">
 <div class="content">
@@ -5532,11 +5554,6 @@ oc get iotproject -w</pre>
 <li>
 <p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-project-messaging-iot">An IoT project is created</a>.</p>
 </li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
 <li>
 <p>Export the device registry host:</p>
 <div class="listingblock">
@@ -5545,6 +5562,13 @@ oc get iotproject -w</pre>
 </div>
 </div>
 </li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="iot-proc-creating-device-register-new-device-messaging-iot">5.4.1. Registering a new device</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
 <li>
 <p>Register a device with a defined ID (in this example we&#8217;re using <code>4711</code>):</p>
 <div class="listingblock">
@@ -5553,6 +5577,25 @@ oc get iotproject -w</pre>
 </div>
 </div>
 </li>
+<li>
+<p>If you need to provide additional registration information, you can provide
+it as follows:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' --data-binary '{
+	"via": ["gateway1"]
+}' https://$REGISTRY_HOST/v1/devices/myapp.iot/4711</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iot-creating-device-set-password-messaging-iot">5.4.2. Setting username and password credentials for a device</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
 <li>
 <p>Add credentials for a device:</p>
 <div class="listingblock">
@@ -5570,10 +5613,266 @@ oc get iotproject -w</pre>
 </ol>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="iot-telemetry-messaging-iot">5.5. Sending and receiving telemetry data</h3>
+<h3 id="iot-proc-configuring-sigfox-messaging-iot">5.5. Configuring the Sigfox integration</h3>
+<div class="paragraph">
+<p>After installing the IoT services and creating an IoT project, you can configure
+the Sigfox backend integration.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#installing-services-messaging-iot">The IoT services are installed</a>.</p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-project-messaging-iot">An IoT project is created</a>.</p>
+</li>
+<li>
+<p>Properly deployed TLS in your cluster. The Sigfox protocol adapter endpoint
+must be properly validated with TLS.</p>
+</li>
+<li>
+<p>Set up an account at <a href="https://backend.sigfox.com" class="bare">https://backend.sigfox.com</a> and register your Sigfox devices.</p>
+</li>
+<li>
+<p>Be familiar with the Sigfox backend. You can find the documentation at <a href="https://backend.sigfox.com/cms/" class="bare">https://backend.sigfox.com/cms/</a> after you
+are logged in.</p>
+</li>
+</ul>
+</div>
 <div class="sect3">
-<h4 id="starting_the_telemetry_consumer">5.5.1. Starting the telemetry consumer</h4>
+<h4 id="iot-proc-configuring-sigfox-registering-backend-gateway-device-messaging-iot">5.5.1. Registering the Sigfox backend as a gateway device</h4>
+<div class="paragraph">
+<p>The Sigfox backend will be set up in EnMasse as a gateway device.
+The credentials assigned to this device will be required for the configuration
+of the "callback" in the Sigfox backend. The actual devices will be configured
+to use this gateway device as their transport.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-device-register-new-device-messaging-iot">Register a new device</a>. Choose a name,
+for example, <code>sigfox-backend</code>.</p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-device-set-password-messaging-iot">Set up password credentials</a> for this device (for example <code>sigfox-user</code> / <code>sigfox-password</code>).</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iot-proc-configuring-sigfox-register-sigfox-device-messaging-iot">5.5.2. Registering the Sigfox device</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-configuring-sigfox-registering-backend-gateway-device-messaging-iot">Registered the Sigfox backend as a gateway device</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Obtain the <em>device ID</em> for the Sigfox device you want to register. You will get this ID as part of the registration
+process in the Sigfox backend.</p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-device-register-new-device-messaging-iot">Register a new device</a>.</p>
+<div class="paragraph">
+<p>Specify the device ID as the name (for example, <code>1AB2C3</code>) and specify name of the gateway device in the <code>via</code> field,
+as part of the registration information (for example, <code>{"via": ["sigfox-backend"]}</code>).</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Do not set a password for this device.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iot-proc-configuring-sigfox-connection-information-messaging-iot">5.5.3. Preparing Sigfox connection information</h4>
+<div class="paragraph">
+<p>Prepare the following connection information, which will be used in the
+following steps.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">IoT tenant name</dt>
+<dd>
+<p>The name of the IoT tenant consists of the OpenShift namespace and the name
+of the IoT project resource. For example, <code>namespace.iotproject</code>.</p>
+</dd>
+<dt class="hdlist1">HTTP authorization header</dt>
+<dd>
+<p>For the Sigfox backend to authenticate
+convert the username and password combination of the gateway device into
+an HTTP "Basic Authorization" header. Be sure to use the full username
+using the following syntax:  <code><em>authentication id</em> @<em>IoT tenant
+name</em></code>.</p>
+<div class="paragraph">
+<p>Example: <code>sigfox-user@namespace.iotproject</code></p>
+</div>
+<div class="paragraph">
+<p>The basic authentication header value can be generated on the command line using
+the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">echo "Basic $(echo -n "sigfox-user@namespace.iotproject:password" | base64)"</pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">URL pattern</dt>
+<dd>
+<p>The URL pattern consists of the URL to the Sigfox protocol adapter and
+Sigfox-specific query parameters:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">https://&lt;ADAPTER URL&gt;/data/telemetry/&lt;TENANT&gt;?device={device}&amp;data={data}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the following command to obtain the URL of the protocol adapter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">echo "https://$(oc -n enmasse-infra get routes iot-sigfox-adapter --template='{{ .spec.host }}')"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The path segment <code>/data/telemetry</code> indicates to the protocol adapter
+to handle messages as <em>telemetry</em> data. You can use <code>/data/event</code>
+instead to process messages as <em>events</em>.</p>
+</div>
+<div class="paragraph">
+<p>Append the query parameters <code>?device={device}&amp;data={data}</code> as is.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>{device}</code> and <code>{data}</code> are literal values, and must not be replaced.
+</td>
+</tr>
+</table>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iot-proc-creating-new-sigfox-callback-messaging-iot">5.5.4. Creating a new callback in the Sigfox backend</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-configuring-sigfox-connection-information-messaging-iot">Prepared the Sigfox connection information</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to <a href="https://backend.sigfox.com" class="bare">https://backend.sigfox.com</a>.</p>
+</li>
+<li>
+<p>In the <code>Device Type</code> open a type for editing and switch to the <code>Callbacks</code>
+section.</p>
+</li>
+<li>
+<p>Create a new "Custom" callback, with the following settings:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p><code>DATA</code> – <code>UPLINK</code></p>
+</dd>
+<dt class="hdlist1">Channel</dt>
+<dd>
+<p><code>URL</code></p>
+</dd>
+<dt class="hdlist1">Url pattern</dt>
+<dd>
+<p>The <em>URL pattern</em>. For example, <code>https://iot-sigfox-adapter.my.cluster/data/telemetry/&lt;TENANT&gt;?device={device}&amp;data={data}</code></p>
+</dd>
+<dt class="hdlist1">Use HTTP Method</dt>
+<dd>
+<p><code>GET</code></p>
+</dd>
+<dt class="hdlist1">Headers</dt>
+<dd>
+<p><code>Authorization</code> – <code>Basic…</code></p>
+</dd>
+<dt class="hdlist1">Send SNI</dt>
+<dd>
+<p>☑ (Enabled)</p>
+</dd>
+</dl>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iot-proc-configuring-sigfox-enable-command-and-control-messaging-iot">5.5.5. Enabling command and control</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-new-sigfox-callback-messaging-iot">Created a callback in the Sigfox backend</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to <a href="https://backend.sigfox.com" class="bare">https://backend.sigfox.com</a>.</p>
+</li>
+<li>
+<p>In the <code>Device Type</code> open the type for editing and switch to the <code>Callbacks</code>
+section.</p>
+</li>
+<li>
+<p>Edit the callback configuration for which you want to enable command and control.</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Switch to <code>DATA</code> –  <code>BIDIR</code></p>
+</dd>
+<dt class="hdlist1">Url Pattern</dt>
+<dd>
+<p>Add the <code>ack</code> parameter. For example, <code>https://iot-sigfox-adapter.my.cluster/data/telemetry/&lt;TENANT&gt;?device={device}&amp;data={data}<strong>&amp;ack={ack}</strong></code></p>
+</dd>
+</dl>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="iot-telemetry-messaging-iot">5.6. Sending and receiving telemetry data</h3>
+<div class="sect3">
+<h4 id="starting_the_telemetry_consumer">5.6.1. Starting the telemetry consumer</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -5623,7 +5922,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sending_telemetry_data">5.5.2. Sending telemetry data</h4>
+<h4 id="sending_telemetry_data">5.6.2. Sending telemetry data</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -5648,9 +5947,9 @@ export MESSAGING_PORT=443</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="iot-event-messaging-iot">5.6. Sending and receiving event data</h3>
+<h3 id="iot-event-messaging-iot">5.7. Sending and receiving event data</h3>
 <div class="sect3">
-<h4 id="starting_the_event_consumer">5.6.1. Starting the event consumer</h4>
+<h4 id="starting_the_event_consumer">5.7.1. Starting the event consumer</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -5700,7 +5999,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sending_event_data">5.6.2. Sending event data</h4>
+<h4 id="sending_event_data">5.7.2. Sending event data</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -14434,7 +14733,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-15 08:47:17 UTC
+Last updated 2019-09-16 09:09:29 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
