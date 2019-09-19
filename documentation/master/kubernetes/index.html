@@ -527,12 +527,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#address-space-examples-messaging">4.2.7. Address space examples</a></li>
 <li><a href="#ref-example-address-space-output-messaging">4.2.8. Example address space status output</a></li>
 <li><a href="#ref-address-space-example-exporting-endpoints-messaging">4.2.9. Example of exporting address space information into the application namespace</a></li>
-<li><a href="#create-address-space-cli-messaging">4.2.10. Creating address spaces using the command line</a></li>
-<li><a href="#proc-create-address-space-console-messaging">4.2.11. Creating an address space using the EnMasse Console</a></li>
-<li><a href="#proc-change-address-space-plan-console-messaging">4.2.12. Changing the address space plan associated with an address space using the EnMasse Console</a></li>
-<li><a href="#proc-delete-address-space-console-messaging">4.2.13. Deleting an address space using the EnMasse Console</a></li>
-<li><a href="#retrieving-address-space-information-messaging">4.2.14. Example commands for retrieving address space information</a></li>
-<li><a href="#replace-address-space-cli-messaging">4.2.15. Replacing address spaces using the command line</a></li>
+<li><a href="#ref-address-space-example-connectors-messaging">4.2.10. Address space connector examples</a></li>
+<li><a href="#create-address-space-cli-messaging">4.2.11. Creating address spaces using the command line</a></li>
+<li><a href="#proc-create-address-space-console-messaging">4.2.12. Creating an address space using the EnMasse Console</a></li>
+<li><a href="#proc-change-address-space-plan-console-messaging">4.2.13. Changing the address space plan associated with an address space using the EnMasse Console</a></li>
+<li><a href="#proc-delete-address-space-console-messaging">4.2.14. Deleting an address space using the EnMasse Console</a></li>
+<li><a href="#retrieving-address-space-information-messaging">4.2.15. Example commands for retrieving address space information</a></li>
+<li><a href="#replace-address-space-cli-messaging">4.2.16. Replacing address spaces using the command line</a></li>
 </ul>
 </li>
 <li><a href="#managing-addresses-messaging">4.3. Managing addresses</a>
@@ -3310,7 +3311,128 @@ subjects:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-space-cli-messaging">4.2.10. Creating address spaces using the command line</h4>
+<h4 id="ref-address-space-example-connectors-messaging">4.2.10. Address space connector examples</h4>
+<div class="paragraph">
+<p>Address space connectors are most commonly used in two ways. One use case is to map addresses on a remote AMQP endpoint into an address space. For example, a broker is running on the host <code>messaging.example.com</code> that you want to access by connecting using the EnMasse endpoints. Another use case is to enable address forwarding. For more information about address forwarding, see <a href="http://enmasse.io/documentation/master/kubernetes/#ref-address-example-forwarders-messaging">Address forwarding examples</a>.</p>
+</div>
+<div class="paragraph">
+<p>The following address space examples show how you can configure connectors.</p>
+</div>
+<div class="sect4">
+<h5 id="connector_using_sasl_plain">Connector using SASL PLAIN</h5>
+<div class="paragraph">
+<p>SASL PLAIN can be used when you do not want to use mutual TLS for authentication. Not enabling TLS is not recommended, since any usernames and passwords are then sent as clear text.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-unlimited
+  connectors:
+  - name: remote1 <b class="conum">(1)</b>
+    endpointHosts: <b class="conum">(2)</b>
+    - host: messaging.example.com
+      port: 5672
+    - host: messaging2.example.com
+    tls: {} <b class="conum">(3)</b>
+    credentials: <b class="conum">(4)</b>
+      username:
+        value: test
+      password:
+        valueFromSecret:
+          name: password-secret
+          key: password.txt
+    addresses: <b class="conum">(5)</b>
+    - name: p1
+      pattern: "prices/*"
+    - name: p2
+      pattern: "clients/*/1"</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Required) Specifies the name of the connector. All remote addresses are prefixed with the connector name and a forward slash, <code>/</code>.</p>
+</li>
+<li>
+<p>(Required) Specifies a list of endpoints for this connector. This list must contain at least one entry, and any additional entries are used for failover. If not otherwise specified, the <code>port</code> field value is set to the registered IANA port for AMQP (or AMQPS if TLS is enabled).</p>
+</li>
+<li>
+<p>(Optional) Enable TLS. The connector trusts global root CAs by default. To use a custom CA, specify a value for the <code>caCert</code> field.</p>
+</li>
+<li>
+<p>(Optional) Specifies the username and password credentials to use for this connector. The values can be specified inline or by referencing a secret along with an optional key specifying the location within the secret. The secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+</li>
+<li>
+<p>(Required) Specifies a list of patterns matching addresses to be exposed on the remote endpoint. The pattern consists of one or more tokens separated by a forward slash, <code>/</code>. A token can be one of the following: a * character, a # character, or a sequence of characters that do not include /, *, or #. The * token matches any single token. The # token matches zero or more tokens. * has higher precedence than #, and exact match has the highest precedence.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="connector_using_mutual_tls">Connector using mutual TLS</h5>
+<div class="paragraph">
+<p>Configuring a client TLS certificate enables SASL EXTERNAL to be used for authentication. The certificates can be specified inline or using a secret reference.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myspace
+spec:
+  type: standard
+  plan: standard-unlimited
+  connectors:
+  - name: remote1 <b class="conum">(1)</b>
+    endpointHosts: <b class="conum">(2)</b>
+    - host: messaging.example.com
+      port: 5671
+    tls:
+      caCert: <b class="conum">(3)</b>
+        valueFromSecret:
+          name: remote-certs
+          key: ca.crt
+      clientCert: <b class="conum">(4)</b>
+        valueFromSecret:
+          name: remote-certs
+          key: tls.crt
+      clientKey: <b class="conum">(5)</b>
+        valueFromSecret:
+          name: remote-certs
+          key: tls.key
+    addresses:
+    - name: p1
+      pattern: "*"</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Required) Specifies the name of the connector. All remote addresses are prefixed with the connector name and a forward slash, <code>/</code>.</p>
+</li>
+<li>
+<p>(Required) Specifies a list of endpoints for this connector. This list must contain at least one entry, and any additional entries are used for failover. If not otherwise specified, the <code>port</code> field value is set to the registered IANA port for AMQP (or AMQPS if TLS is enabled).</p>
+</li>
+<li>
+<p>(Optional) Specifies the CA certificate to trust for the remote connection. The referenced secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+</li>
+<li>
+<p>(Optional) Specifies the client certificate to use for mutual TLS authentication. The referenced secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+</li>
+<li>
+<p>(Optional) Specifies the client private key to use for mutual TLS authentication. The referenced secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="create-address-space-cli-messaging">4.2.11. Creating address spaces using the command line</h4>
 <div class="paragraph">
 <p>In EnMasse, you create address spaces using standard command-line tools.</p>
 </div>
@@ -3354,7 +3476,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-create-address-space-console-messaging">4.2.11. Creating an address space using the EnMasse Console</h4>
+<h4 id="proc-create-address-space-console-messaging">4.2.12. Creating an address space using the EnMasse Console</h4>
 <div class="paragraph">
 <p>You can create a new address space using the EnMasse Console.</p>
 </div>
@@ -3380,7 +3502,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-change-address-space-plan-console-messaging">4.2.12. Changing the address space plan associated with an address space using the EnMasse Console</h4>
+<h4 id="proc-change-address-space-plan-console-messaging">4.2.13. Changing the address space plan associated with an address space using the EnMasse Console</h4>
 <div class="paragraph">
 <p>You can change the address space plan that is associated with an address space using the  EnMasse Console.</p>
 </div>
@@ -3411,7 +3533,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-delete-address-space-console-messaging">4.2.13. Deleting an address space using the EnMasse Console</h4>
+<h4 id="proc-delete-address-space-console-messaging">4.2.14. Deleting an address space using the EnMasse Console</h4>
 <div class="paragraph">
 <p>You can delete an existing address space using the EnMasse Console.</p>
 </div>
@@ -3437,7 +3559,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="retrieving-address-space-information-messaging">4.2.14. Example commands for retrieving address space information</h4>
+<h4 id="retrieving-address-space-information-messaging">4.2.15. Example commands for retrieving address space information</h4>
 <div class="paragraph">
 <p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
 </div>
@@ -3490,7 +3612,7 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="replace-address-space-cli-messaging">4.2.15. Replacing address spaces using the command line</h4>
+<h4 id="replace-address-space-cli-messaging">4.2.16. Replacing address spaces using the command line</h4>
 <div class="paragraph">
 <p>Address spaces can be replaced in order to change the plan, endpoints, or network policies, or
 to replace certificates if using the <code>certBundle</code> certificate provider. When changing the plan,
@@ -3596,6 +3718,94 @@ spec:
 <p>The address plan describes the resource usage for the address. For more information about how to view the available plans see <a href="http://enmasse.io/documentation/master/kubernetes/#proc-list-available-address-plans-messaging">Listing available address plans</a>.</p>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-address-example-forwarders-messaging">Address forwarding examples</h5>
+<div class="paragraph">
+<p>You can use forwarders to:
+* automatically forward messages from a "local" address to a remote AMQP address outside of EnMasse, or
+* forward messages from a remote AMQP address to a "local" address.
+To create a forwarder you must first configure a connector to the remote AMQP endpoint for the address space. For more information about connectors, see <a href="http://enmasse.io/documentation/master/kubernetes/#ref-address-space-example-connectors-messaging">Address space connector examples</a>.</p>
+</div>
+<div class="paragraph">
+<p>Forwarding is only supported in the <code>standard</code> address space type, and only for the <code>queue</code> and <code>subscription</code> address types. The <code>subscription</code> address type only supports forwarding in the <code>out</code> direction.</p>
+</div>
+<div class="paragraph">
+<p>These examples expect that a connector <code>remote1</code> has been configured for the address space.</p>
+</div>
+<div class="sect5">
+<h6 id="forwarding_messages_from_a_local_queue_to_a_remote_endpoint">Forwarding messages from a local queue to a remote endpoint</h6>
+<div class="paragraph">
+<p>In this example, messages in <code>myqueue</code> are forwarded to the remote endpoint with an  address of <code>clients/me/1</code>.</p>
+</div>
+<div class="paragraph">
+<p>that we can forward messages in  to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+  name: myspace.myqueue
+spec:
+  address: myqueue
+  type: queue
+  plan: standard-small-queue
+  forwarders:
+  - name: f1 <b class="conum">(1)</b>
+    remoteAddress: remote1/clients/me/1 <b class="conum">(2)</b>
+    direction: out <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Required) Specifies the name of the forwarder, which is used to ensure a unique identity.</p>
+</li>
+<li>
+<p>(Required) Specifies the remote address to forward messages to. The address must be prefixed with the connector name and must be identical to the address matching patterns defined on the connector.</p>
+</li>
+<li>
+<p>(Required) Specifies the direction of message flow, which is either <code>out</code> or <code>in</code>. A value of <code>out</code> forwards messages to the remote endpoint. A value of <code>in</code> forwards messages from the remote endpoint.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect5">
+<h6 id="forwarding_messages_from_a_remote_endpoint_to_a_local_queue">Forwarding messages from a remote endpoint to a local queue</h6>
+<div class="paragraph">
+<p>In this example, the remote endpoint has an address <code>prices/milk</code> that we can receive messages from and move to <code>myqueue</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+  name: myspace.myqueue
+spec:
+  address: myqueue
+  type: queue
+  plan: standard-small-queue
+  forwarders:
+  - name: f1 <b class="conum">(1)</b>
+    remoteAddress: remote1/prices/milk <b class="conum">(2)</b>
+    direction: in <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>(Required) Specifies the name of the forwarder, which is used to ensure a unique identity.</p>
+</li>
+<li>
+<p>(Required) Specifies the remote address to forward messages to. The address must be prefixed with the connector name and must be identical to the address matching patterns defined on the connector.</p>
+</li>
+<li>
+<p>(Required) Specifies the direction of message flow, which is either <code>out</code> or <code>in</code>. A value of <code>out</code> forwards messages to the remote endpoint. A value of <code>in</code> forwards messages from the remote endpoint.</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>
@@ -14143,7 +14353,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-18 10:02:42 UTC
+Last updated 2019-09-19 08:47:58 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
