@@ -506,7 +506,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#ops-procedures-messaging">3.6. Operation procedures for EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#restart-component-messaging">3.6.1. Restarting a component</a></li>
+<li><a href="#restart-component-messaging">3.6.1. Restarting components to acquire security fixes</a></li>
 <li><a href="#get-logs-broker-messaging">3.6.2. Viewing router logs</a></li>
 <li><a href="#get-logs-router-messaging">3.6.3. Viewing broker logs</a></li>
 </ul>
@@ -578,12 +578,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#'iot-guide-messaging-iot">5. Internet of Things (IoT) guide</a>
 <ul class="sectlevel2">
 <li><a href="#installing-using-bundle-messaging-iot">5.1. Installing EnMasse using a YAML bundle</a></li>
-<li><a href="#installing-services-messaging-iot">5.2. Installing IoT services</a></li>
+<li><a href="#iot-installing-services-messaging-iot">5.2. Installing IoT services</a></li>
 <li><a href="#iot-creating-project-messaging-iot">5.3. Creating an IoT project</a></li>
 <li><a href="#iot-creating-device-messaging-iot">5.4. Creating an IoT device</a>
 <ul class="sectlevel3">
 <li><a href="#iot-proc-creating-device-register-new-device-messaging-iot">5.4.1. Registering a new device</a></li>
-<li><a href="#iot-creating-device-set-password-messaging-iot">5.4.2. Setting username and password credentials for a device</a></li>
+<li><a href="#iot-creating-device-set-password-messaging-iot">5.4.2. Setting user name and password credentials for a device</a></li>
 </ul>
 </li>
 <li><a href="#iot-proc-configuring-sigfox-messaging-iot">5.5. Configuring the Sigfox integration</a>
@@ -2463,22 +2463,85 @@ data:
 <div class="sect2">
 <h3 id="ops-procedures-messaging">3.6. Operation procedures for EnMasse</h3>
 <div class="sect3">
-<h4 id="restart-component-messaging">3.6.1. Restarting a component</h4>
+<h4 id="restart-component-messaging">3.6.1. Restarting components to acquire security fixes</h4>
+<div class="paragraph">
+<p>Restarting EnMasse components is required to get image updates for CVEs. The scripts are provided in the EnMasse installation files within the <code>script</code> folder. To restart all components, run all scripts.</p>
+</div>
+<div class="sect4">
+<h5 id="restarting_operators">Restarting Operators</h5>
+<div class="paragraph">
+<p>Operators can be restarted without affecting the messaging system. If a single <code>api-server</code> is used, a transient downtime will occur for any new address space, address, and messaging user resource requests.</p>
+</div>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
 <li>
-<p>Delete the component&#8217;s pod:</p>
+<p>Run the <code>restart-operators.sh</code> script:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl delete pod -l name=<em>component</em></pre>
+<pre class="nowrap">./scripts/restart-operators.sh enmasse-infra</pre>
 </div>
 </div>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect4">
+<h5 id="restarting_authentication_services">Restarting authentication services</h5>
 <div class="paragraph">
-<p>The component will be automatically restarted in a new pod.</p>
+<p>Authentication service restarts will temporarily affect new messaging connections. Existing connections will continue to work even if the authentication service is restarted.</p>
+</div>
+<div class="ulist">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>Run the <code>restart-authservices.sh</code> script:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">./scripts/restart-authservices.sh enmasse-infra</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="restarting_routers">Restarting routers</h5>
+<div class="paragraph">
+<p>Messaging routers are only deployed in the <code>standard</code> address space type. The script assumes that at least two replicas of the router are running and performs a rolling restart. Messaging clients connected to the restarting router are disconnected and must reconnect to be served by a different router.</p>
+</div>
+<div class="ulist">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>Run the <code>restart-routers.sh</code> script, which requires at least one router to be available:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">./scripts/restart-routers.sh enmasse-infra 1</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="restarting_brokers">Restarting brokers</h5>
+<div class="paragraph">
+<p>For the <code>brokered</code> address space type, restarting the broker causes temporary downtime to messaging clients while the broker is restarted. For the <code>standard</code> address space type, messaging clients are not disconnected from the messaging routers, but are not able to consume messages stored on the restarting broker.</p>
+</div>
+<div class="ulist">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>Run the <code>restart-brokers.sh</code> script:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">./scripts/restart-brokers.sh enmasse-infra</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -5012,7 +5075,7 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 </div>
 </div>
 <div class="sect2">
-<h3 id="installing-services-messaging-iot">5.2. Installing IoT services</h3>
+<h3 id="iot-installing-services-messaging-iot">5.2. Installing IoT services</h3>
 <div class="paragraph">
 <p>To get started using the IoT feature on EnMasse, you must first install the IoT services.</p>
 </div>
@@ -5134,14 +5197,6 @@ kubectl get iotproject -w</pre>
 <li>
 <p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-creating-project-messaging-iot">An IoT project is created</a>.</p>
 </li>
-<li>
-<p>Export the device registry host:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">export REGISTRY_HOST=$(kubectl -n enmasse-infra get service iot-device-registry-external -o jsonpath={.status.loadBalancer.ingress[0].hostname}):31443</pre>
-</div>
-</div>
-</li>
 </ul>
 </div>
 <div class="sect3">
@@ -5150,7 +5205,15 @@ kubectl get iotproject -w</pre>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Register a device with a defined ID (in this example we&#8217;re using <code>4711</code>):</p>
+<p>Export the device registry host:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export REGISTRY_HOST=$(kubectl -n enmasse-infra get service iot-device-registry-external -o jsonpath={.status.loadBalancer.ingress[0].hostname}):31443</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Register a device with a defined ID (this example uses <code>4711</code>):</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' https://$REGISTRY_HOST/v1/devices/myapp.iot/4711</pre>
@@ -5158,8 +5221,7 @@ kubectl get iotproject -w</pre>
 </div>
 </li>
 <li>
-<p>If you need to provide additional registration information, you can provide
-it as follows:</p>
+<p>(Optional) If you need to provide additional registration information, do so as follows:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' --data-binary '{
@@ -5172,12 +5234,12 @@ it as follows:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="iot-creating-device-set-password-messaging-iot">5.4.2. Setting username and password credentials for a device</h4>
+<h4 id="iot-creating-device-set-password-messaging-iot">5.4.2. Setting user name and password credentials for a device</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Add credentials for a device:</p>
+<p>Add the credentials for a device:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">curl --insecure -X PUT -i -H 'Content-Type: application/json' --data-binary '[{
@@ -14353,7 +14415,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-25 08:49:47 UTC
+Last updated 2019-09-26 08:43:08 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

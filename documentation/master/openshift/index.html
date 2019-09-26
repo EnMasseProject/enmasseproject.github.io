@@ -510,7 +510,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#ops-procedures-messaging">3.6. Operation procedures for EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#restart-component-messaging">3.6.1. Restarting a component</a></li>
+<li><a href="#restart-component-messaging">3.6.1. Restarting components to acquire security fixes</a></li>
 <li><a href="#get-logs-broker-messaging">3.6.2. Viewing router logs</a></li>
 <li><a href="#get-logs-router-messaging">3.6.3. Viewing broker logs</a></li>
 </ul>
@@ -582,12 +582,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#'iot-guide-messaging-iot">5. Internet of Things (IoT) guide</a>
 <ul class="sectlevel2">
 <li><a href="#installing-using-bundle-messaging-iot">5.1. Installing EnMasse using a YAML bundle</a></li>
-<li><a href="#installing-services-messaging-iot">5.2. Installing IoT services</a></li>
+<li><a href="#iot-installing-services-messaging-iot">5.2. Installing IoT services</a></li>
 <li><a href="#iot-creating-project-messaging-iot">5.3. Creating an IoT project</a></li>
 <li><a href="#iot-creating-device-messaging-iot">5.4. Creating an IoT device</a>
 <ul class="sectlevel3">
 <li><a href="#iot-proc-creating-device-register-new-device-messaging-iot">5.4.1. Registering a new device</a></li>
-<li><a href="#iot-creating-device-set-password-messaging-iot">5.4.2. Setting username and password credentials for a device</a></li>
+<li><a href="#iot-creating-device-set-password-messaging-iot">5.4.2. Setting user name and password credentials for a device</a></li>
 </ul>
 </li>
 <li><a href="#iot-proc-configuring-sigfox-messaging-iot">5.5. Configuring the Sigfox integration</a>
@@ -2632,7 +2632,7 @@ spec:
 <div class="sect3">
 <h4 id="post-upgrade-step-router-pod-messaging">3.3.3. Restarting router pods running a previous version of the image</h4>
 <div class="paragraph">
-<p>When upgrading, sometimes a router pod is not automatically restarted by OpenShift. If this issue occurs, it is important to manually restart the affected pod to ensure correct operation of the system.</p>
+<p>When upgrading, sometimes a router Pod is not automatically restarted by OpenShift. If this issue occurs, it is important to manually restart the affected Pod to ensure correct operation of the system. A script for restarting the router is provided in the EnMasse installation files within the <code>script</code> folder. To restart all components, run all scripts.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -2652,29 +2652,18 @@ spec:
 </li>
 </ul>
 </div>
-<div class="olist arabic">
+<div class="ulist">
 <div class="title">Procedure</div>
-<ol class="arabic">
+<ul>
 <li>
-<p>Find the router pod running a previous version of the image:</p>
+<p>Run the <code>restart-routers.sh</code> script:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get pod -o go-template='{{range .items}}{{.metadata.name}}{{"\n"}}{{range .spec.containers}}{{"\t"}}{{.image}}{{"\n"}}{{end}}{{"\n"}}{{end}}' --selector=capability=router</pre>
+<pre class="nowrap">./scripts/restart-routers.sh enmasse-infra</pre>
 </div>
 </div>
 </li>
-<li>
-<p>Delete the router pod that is running a previous version of the image:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc delete pod <em>&lt;name&gt;</em></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>The pod is automatically restarted.</p>
+</ul>
 </div>
 </div>
 </div>
@@ -2973,22 +2962,85 @@ data:
 <div class="sect2">
 <h3 id="ops-procedures-messaging">3.6. Operation procedures for EnMasse</h3>
 <div class="sect3">
-<h4 id="restart-component-messaging">3.6.1. Restarting a component</h4>
+<h4 id="restart-component-messaging">3.6.1. Restarting components to acquire security fixes</h4>
+<div class="paragraph">
+<p>Restarting EnMasse components is required to get image updates for CVEs. The scripts are provided in the EnMasse installation files within the <code>script</code> folder. To restart all components, run all scripts.</p>
+</div>
+<div class="sect4">
+<h5 id="restarting_operators">Restarting Operators</h5>
+<div class="paragraph">
+<p>Operators can be restarted without affecting the messaging system. If a single <code>api-server</code> is used, a transient downtime will occur for any new address space, address, and messaging user resource requests.</p>
+</div>
 <div class="ulist">
 <div class="title">Procedure</div>
 <ul>
 <li>
-<p>Delete the component&#8217;s pod:</p>
+<p>Run the <code>restart-operators.sh</code> script:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc delete pod -l name=<em>component</em></pre>
+<pre class="nowrap">./scripts/restart-operators.sh enmasse-infra</pre>
 </div>
 </div>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect4">
+<h5 id="restarting_authentication_services">Restarting authentication services</h5>
 <div class="paragraph">
-<p>The component will be automatically restarted in a new pod.</p>
+<p>Authentication service restarts will temporarily affect new messaging connections. Existing connections will continue to work even if the authentication service is restarted.</p>
+</div>
+<div class="ulist">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>Run the <code>restart-authservices.sh</code> script:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">./scripts/restart-authservices.sh enmasse-infra</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="restarting_routers">Restarting routers</h5>
+<div class="paragraph">
+<p>Messaging routers are only deployed in the <code>standard</code> address space type. The script assumes that at least two replicas of the router are running and performs a rolling restart. Messaging clients connected to the restarting router are disconnected and must reconnect to be served by a different router.</p>
+</div>
+<div class="ulist">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>Run the <code>restart-routers.sh</code> script, which requires at least one router to be available:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">./scripts/restart-routers.sh enmasse-infra 1</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="restarting_brokers">Restarting brokers</h5>
+<div class="paragraph">
+<p>For the <code>brokered</code> address space type, restarting the broker causes temporary downtime to messaging clients while the broker is restarted. For the <code>standard</code> address space type, messaging clients are not disconnected from the messaging routers, but are not able to consume messages stored on the restarting broker.</p>
+</div>
+<div class="ulist">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>Run the <code>restart-brokers.sh</code> script:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">./scripts/restart-brokers.sh enmasse-infra</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -5654,7 +5706,7 @@ namespace Test
 </div>
 </div>
 <div class="sect2">
-<h3 id="installing-services-messaging-iot">5.2. Installing IoT services</h3>
+<h3 id="iot-installing-services-messaging-iot">5.2. Installing IoT services</h3>
 <div class="paragraph">
 <p>To get started using the IoT feature on EnMasse, you must first install the IoT services.</p>
 </div>
@@ -5706,7 +5758,7 @@ oc create secret tls iot-mqtt-adapter-tls --key=install/components/iot/examples/
 </div>
 </li>
 <li>
-<p>Install Infinispan server</p>
+<p>Install the Infinispan server:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc apply -f install/components/iot/examples/infinispan/common
@@ -5792,6 +5844,13 @@ oc get iotproject -w</pre>
 <li>
 <p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-project-messaging-iot">An IoT project is created</a>.</p>
 </li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="iot-proc-creating-device-register-new-device-messaging-iot">5.4.1. Registering a new device</h4>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
 <li>
 <p>Export the device registry host:</p>
 <div class="listingblock">
@@ -5801,25 +5860,18 @@ oc get iotproject -w</pre>
 </div>
 </li>
 <li>
-<p>Export current user session token</p>
+<p>Export the current user session token:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">export TOKEN=$(oc whoami --show-token)</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This token is used to authenticate against device registry management API.</p>
+<p>This token is used to authenticate against the device registry management API.</p>
 </div>
 </li>
-</ul>
-</div>
-<div class="sect3">
-<h4 id="iot-proc-creating-device-register-new-device-messaging-iot">5.4.1. Registering a new device</h4>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
 <li>
-<p>Register a device with a defined ID (in this example we&#8217;re using <code>4711</code>):</p>
+<p>Register a device with a defined ID (this example uses <code>4711</code>):</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' -H "Authorization: Bearer ${TOKEN}" https://$REGISTRY_HOST/v1/devices/myapp.iot/4711</pre>
@@ -5827,8 +5879,7 @@ oc get iotproject -w</pre>
 </div>
 </li>
 <li>
-<p>If you need to provide additional registration information, you can provide
-it as follows:</p>
+<p>(Optional) If you need to provide additional registration information, do so as follows:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' -H "Authorization: Bearer ${TOKEN}" --data-binary '{
@@ -5841,12 +5892,12 @@ it as follows:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="iot-creating-device-set-password-messaging-iot">5.4.2. Setting username and password credentials for a device</h4>
+<h4 id="iot-creating-device-set-password-messaging-iot">5.4.2. Setting user name and password credentials for a device</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Add credentials for a device:</p>
+<p>Add the credentials for a device:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">curl --insecure -X PUT -i -H 'Content-Type: application/json' -H "Authorization: Bearer ${TOKEN}" --data-binary '[{
@@ -14982,7 +15033,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-25 08:49:47 UTC
+Last updated 2019-09-26 08:43:08 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
