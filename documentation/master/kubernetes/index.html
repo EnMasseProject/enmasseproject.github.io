@@ -1224,7 +1224,7 @@ spec:
   csPublisher: EnMasse
   packages: enmasse
   source: enmasse-operators
-  targetNamespace: operators
+  targetNamespace: marketplace
 EOF</pre>
 </div>
 </div>
@@ -1238,12 +1238,12 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: enmasse
-  namespace: operators
+  namespace: <em>enmasse-infra</em>
 spec:
   channel: alpha
   name: enmasse
   source: installed-enmasse-operators
-  sourceNamespace: operators
+  sourceNamespace: marketplace
 EOF</pre>
 </div>
 </div>
@@ -12532,7 +12532,7 @@ export MESSAGING_PORT=5671</pre>
 <p>List of connectors to create.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1beta1_addressspacespec_connectors">connectors</a></p>
+<p>&lt; <a href="#_io_enmasse_v1beta1_addressspacespecconnector">io.enmasse.v1beta1.AddressSpaceSpecConnector</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -12661,32 +12661,6 @@ export MESSAGING_PORT=5671</pre>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>string</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<div id="_io_enmasse_v1beta1_addressspacespec_connectors" class="paragraph">
-<p><strong>connectors</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 42.8571%;">
-<col style="width: 57.1429%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>items</strong><br>
-<em>optional</em></p>
-</div></div></td>
-<td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><a href="#_io_enmasse_v1beta1_addressspacespecconnector">io.enmasse.v1beta1.AddressSpaceSpecConnector</a></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -13558,14 +13532,14 @@ export MESSAGING_PORT=5671</pre>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>connectorStatuses</strong><br>
+<p><strong>connectors</strong><br>
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>List of connectors with status.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; object &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_v1beta1_addressspacestatusconnector">io.enmasse.v1beta1.AddressSpaceStatusConnector</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -13841,7 +13815,7 @@ export MESSAGING_PORT=5671</pre>
 <p>List of forwarders to enable for this address.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; object &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_v1beta1_addressspecforwarder">io.enmasse.v1beta1.AddressSpecForwarder</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -13940,14 +13914,14 @@ export MESSAGING_PORT=5671</pre>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p><strong>forwarderStatuses</strong><br>
+<p><strong>forwarders</strong><br>
 <em>optional</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
 <p>List of forwarders with status.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; object &gt; array</p>
+<p>&lt; <a href="#_io_enmasse_v1beta1_addressstatusforwarder">io.enmasse.v1beta1.AddressStatusForwarder</a> &gt; array</p>
 </div></div></td>
 </tr>
 <tr>
@@ -14415,7 +14389,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-27 08:50:19 UTC
+Last updated 2019-09-28 08:50:17 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
