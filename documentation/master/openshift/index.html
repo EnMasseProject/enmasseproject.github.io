@@ -2791,10 +2791,18 @@ cluster.</p>
 </div>
 </li>
 <li>
-<p>Deploy the <code>monitoring-operator</code> component:</p>
+<p>Deploy the <code>monitoring-operator</code> resources:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc apply -f install/components/monitoring-operator</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the <code>monitoring-operator</code> component:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/monitoring-deployment</pre>
 </div>
 </div>
 </li>
@@ -3931,10 +3939,8 @@ inject endpoint information or provide a proxy service in the same namespace as 
 </ol>
 </div>
 <div class="paragraph">
-<p>When exporting endpoint information, the EnMasse <code>address-space-controller</code> service account
-running in the EnMasse namespace must be granted privileges to create, update, and delete the
-configmap specified in the exports list. You can do this by creating an RBAC role and role-binding
-such as this one:</p>
+<p>When exporting endpoint information, the <code>system:serviceaccounts:_enmasse-infra_</code> group must be granted privileges to create, update, and delete the
+configmap specified in the exports list. You can do this by creating an RBAC role and role-binding such as this one:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3960,9 +3966,8 @@ roleRef:
   kind: Role
   name: rbac
 subjects:
-- kind: ServiceAccount
-  name: address-space-controller
-  namespace: <em>enmasse-infra</em></code></pre>
+- kind: Group
+  name: system:serviceaccounts:_enmasse-infra_</code></pre>
 </div>
 </div>
 </div>
@@ -4021,7 +4026,7 @@ spec:
 <p>(Optional) Enable TLS. The connector trusts global root CAs by default. To use a custom CA, specify a value for the <code>caCert</code> field.</p>
 </li>
 <li>
-<p>(Optional) Specifies the username and password credentials to use for this connector. The values can be specified inline or by referencing a secret along with an optional key specifying the location within the secret. The secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+<p>(Optional) Specifies the username and password credentials to use for this connector. The values can be specified inline or by referencing a secret along with an optional key specifying the location within the secret. The secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
 </li>
 <li>
 <p>(Required) Specifies a list of patterns matching addresses to be exposed on the remote endpoint. The pattern consists of one or more tokens separated by a forward slash, <code>/</code>. A token can be one of the following: a * character, a # character, or a sequence of characters that do not include /, *, or #. The * token matches any single token. The # token matches zero or more tokens. * has higher precedence than #, and exact match has the highest precedence.</p>
@@ -4075,13 +4080,13 @@ spec:
 <p>(Required) Specifies a list of endpoints for this connector. This list must contain at least one entry, and any additional entries are used for failover. If not otherwise specified, the <code>port</code> field value is set to the registered IANA port for AMQP (or AMQPS if TLS is enabled).</p>
 </li>
 <li>
-<p>(Optional) Specifies the CA certificate to trust for the remote connection. The referenced secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+<p>(Optional) Specifies the CA certificate to trust for the remote connection. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
 </li>
 <li>
-<p>(Optional) Specifies the client certificate to use for mutual TLS authentication. The referenced secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+<p>(Optional) Specifies the client certificate to use for mutual TLS authentication. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
 </li>
 <li>
-<p>(Optional) Specifies the client private key to use for mutual TLS authentication. The referenced secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+<p>(Optional) Specifies the client private key to use for mutual TLS authentication. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
 </li>
 </ol>
 </div>
@@ -5814,9 +5819,21 @@ oc create -f install/components/iot/examples/iot-project-managed.yaml</pre>
 <p>Wait for the resources to be ready:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace -w
-oc get iotproject -w</pre>
+<pre class="nowrap">oc get addressspace iot
+oc get iotproject iot</pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Make sure that the <code>Phase</code> field shows <code>Ready</code> status for both resources.
+</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -5860,7 +5877,7 @@ oc get iotproject -w</pre>
 </div>
 </li>
 <li>
-<p>Export the current user session token:</p>
+<p>Export the device registry access token:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">export TOKEN=$(oc whoami --show-token)</pre>
@@ -15007,7 +15024,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-01 08:51:23 UTC
+Last updated 2019-10-02 08:52:03 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

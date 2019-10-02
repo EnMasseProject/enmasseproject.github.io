@@ -2300,10 +2300,18 @@ kubectl config set-context $(kubectl config current-context) --namespace=<em>enm
 </div>
 </li>
 <li>
-<p>Deploy the <code>monitoring-operator</code> component:</p>
+<p>Deploy the <code>monitoring-operator</code> resources:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">kubectl apply -f install/components/monitoring-operator</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the <code>monitoring-operator</code> component:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/components/monitoring-deployment</pre>
 </div>
 </div>
 </li>
@@ -3338,10 +3346,8 @@ inject endpoint information or provide a proxy service in the same namespace as 
 </ol>
 </div>
 <div class="paragraph">
-<p>When exporting endpoint information, the EnMasse <code>address-space-controller</code> service account
-running in the EnMasse namespace must be granted privileges to create, update, and delete the
-configmap specified in the exports list. You can do this by creating an RBAC role and role-binding
-such as this one:</p>
+<p>When exporting endpoint information, the <code>system:serviceaccounts:_enmasse-infra_</code> group must be granted privileges to create, update, and delete the
+configmap specified in the exports list. You can do this by creating an RBAC role and role-binding such as this one:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3367,9 +3373,8 @@ roleRef:
   kind: Role
   name: rbac
 subjects:
-- kind: ServiceAccount
-  name: address-space-controller
-  namespace: <em>enmasse-infra</em></code></pre>
+- kind: Group
+  name: system:serviceaccounts:_enmasse-infra_</code></pre>
 </div>
 </div>
 </div>
@@ -3428,7 +3433,7 @@ spec:
 <p>(Optional) Enable TLS. The connector trusts global root CAs by default. To use a custom CA, specify a value for the <code>caCert</code> field.</p>
 </li>
 <li>
-<p>(Optional) Specifies the username and password credentials to use for this connector. The values can be specified inline or by referencing a secret along with an optional key specifying the location within the secret. The secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+<p>(Optional) Specifies the username and password credentials to use for this connector. The values can be specified inline or by referencing a secret along with an optional key specifying the location within the secret. The secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
 </li>
 <li>
 <p>(Required) Specifies a list of patterns matching addresses to be exposed on the remote endpoint. The pattern consists of one or more tokens separated by a forward slash, <code>/</code>. A token can be one of the following: a * character, a # character, or a sequence of characters that do not include /, *, or #. The * token matches any single token. The # token matches zero or more tokens. * has higher precedence than #, and exact match has the highest precedence.</p>
@@ -3482,13 +3487,13 @@ spec:
 <p>(Required) Specifies a list of endpoints for this connector. This list must contain at least one entry, and any additional entries are used for failover. If not otherwise specified, the <code>port</code> field value is set to the registered IANA port for AMQP (or AMQPS if TLS is enabled).</p>
 </li>
 <li>
-<p>(Optional) Specifies the CA certificate to trust for the remote connection. The referenced secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+<p>(Optional) Specifies the CA certificate to trust for the remote connection. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
 </li>
 <li>
-<p>(Optional) Specifies the client certificate to use for mutual TLS authentication. The referenced secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+<p>(Optional) Specifies the client certificate to use for mutual TLS authentication. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
 </li>
 <li>
-<p>(Optional) Specifies the client private key to use for mutual TLS authentication. The referenced secret must be readable by the EnMasse <code>address-space-controller</code> service account.</p>
+<p>(Optional) Specifies the client private key to use for mutual TLS authentication. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
 </li>
 </ol>
 </div>
@@ -5127,6 +5132,15 @@ openssl req -new -x509 -batch -nodes -days 11000 -subj "/O=io.enmasse/CN=api-ser
 </div>
 </li>
 <li>
+<p>Install the Infinispan server:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/components/iot/examples/infinispan/common
+kubectl apply -f install/components/iot/examples/infinispan/manual</pre>
+</div>
+</div>
+</li>
+<li>
 <p>Install an example IoT infrastructure configuration:</p>
 <div class="listingblock">
 <div class="content">
@@ -5167,9 +5181,21 @@ kubectl create -f install/components/iot/examples/iot-project-managed.yaml</pre>
 <p>Wait for the resources to be ready:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl get addressspace -w
-kubectl get iotproject -w</pre>
+<pre class="nowrap">kubectl get addressspace iot
+kubectl get iotproject iot</pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Make sure that the <code>Phase</code> field shows <code>Ready</code> status for both resources.
+</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -5213,10 +5239,21 @@ kubectl get iotproject -w</pre>
 </div>
 </li>
 <li>
+<p>Export the device registry access token:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export TOKEN=$(kubectl -n enmasse-infra describe secret $(kubectl -n enmasse-infra get secret | grep default-token | awk '{print $1}') | grep token: | awk '{print $2}')</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This token is used to authenticate against the device registry management API.</p>
+</div>
+</li>
+<li>
 <p>Register a device with a defined ID (this example uses <code>4711</code>):</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' https://$REGISTRY_HOST/v1/devices/myapp.iot/4711</pre>
+<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' -H "Authorization: Bearer ${TOKEN}" https://$REGISTRY_HOST/v1/devices/myapp.iot/4711</pre>
 </div>
 </div>
 </li>
@@ -5224,7 +5261,7 @@ kubectl get iotproject -w</pre>
 <p>(Optional) If you need to provide additional registration information, do so as follows:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' --data-binary '{
+<pre class="nowrap">curl --insecure -X POST -i -H 'Content-Type: application/json' -H "Authorization: Bearer ${TOKEN}" --data-binary '{
 	"via": ["gateway1"]
 }' https://$REGISTRY_HOST/v1/devices/myapp.iot/4711</pre>
 </div>
@@ -5242,7 +5279,7 @@ kubectl get iotproject -w</pre>
 <p>Add the credentials for a device:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">curl --insecure -X PUT -i -H 'Content-Type: application/json' --data-binary '[{
+<pre class="nowrap">curl --insecure -X PUT -i -H 'Content-Type: application/json' -H "Authorization: Bearer ${TOKEN}" --data-binary '[{
 	"type": "hashed-password",
 	"auth-id": "sensor1",
 	"secrets": [{
@@ -14389,7 +14426,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-01 08:51:23 UTC
+Last updated 2019-10-02 08:52:03 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
