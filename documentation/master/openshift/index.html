@@ -1914,11 +1914,16 @@ using <code>BrokeredInfraConfig</code> and <code>StandardInfraConfig</code> reso
 <h5 id="con-brokered-infra-config-messaging">Brokered infrastructure configuration</h5>
 <div class="paragraph">
 <p><code>BrokeredInfraConfig</code> resources are used to configure infrastructure deployed by <code>brokered</code> address
-spaces. The brokered infrastructure configuration is referenced by address space plans in their
-<code>spec.infraConfigRef</code> field. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-plans-messaging">Address space plans</a>.</p>
+spaces. Address space plans reference the brokered infrastructure configuration using the
+<code>spec.infraConfigRef</code> field. For more information about address space plans, see <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="paragraph">
 <p>For detailed information about the available brokered infrastructure configuration fields, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-brokered-infra-config-fields-messaging">Brokered infrastructure configuration fields table</a>.</p>
+</div>
+<div class="sect5">
+<h6 id="ref-brokered-infra-config-example-messaging">Brokered infrastructure configuration example</h6>
+<div class="paragraph">
+<p>The following example of a brokered infrastructure configuration file shows the various settings that can be specified.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1927,53 +1932,177 @@ kind: BrokeredInfraConfig
 metadata:
   name: brokered-infra-config-example
 spec:
-  version: "0.30-SNAPSHOT"
-  admin:
+  version: "0.30-SNAPSHOT" <b class="conum">(1)</b>
+  admin: <b class="conum">(2)</b>
     resources:
       memory: 256Mi
     podTemplate:
       metadata:
         labels:
           key: value
-  broker:
+  broker: <b class="conum">(3)</b>
     resources:
       memory: 2Gi
       storage: 100Gi
     addressFullPolicy: PAGE
-    podTemplate:
+    podTemplate: <b class="conum">(4)</b>
       spec:
         priorityClassName: messaging</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The <code>version</code> field specifies the EnMasse version used. When upgrading, EnMasse uses
+<div class="colist arabic">
+<ol>
+<li>
+<p>Specifies the EnMasse version used. When upgrading, EnMasse uses
 this field to determine whether to upgrade the infrastructure to the requested version. If omitted,
-the version will be assumed to be the same as the controllers reading the config.</p>
-</div>
-<div class="paragraph">
-<p>The <code>admin</code> object specifies the settings you can configure for the <code>admin</code> components.</p>
-</div>
-<div class="paragraph">
-<p>The <code>broker</code> object specifies the settings you can configure for the <code>broker</code> components. Changing
+the version is assumed to be the same version as the controllers reading the configuration.</p>
+</li>
+<li>
+<p>Specifies the settings you can configure for the <code>admin</code> components.</p>
+</li>
+<li>
+<p>Specifies the settings you can configure for the <code>broker</code> components. Note that changing
 the <code>.broker.resources.storage</code> setting does not configure the existing broker storage size.</p>
+</li>
+<li>
+<p>For both <code>admin</code> and <code>broker</code> components you can configure the following <code>podTemplate</code> elements:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>metadata.labels</code></p>
+</li>
+<li>
+<p><code>spec.priorityClassName</code></p>
+</li>
+<li>
+<p><code>spec.tolerations</code></p>
+</li>
+<li>
+<p><code>spec.affinity</code></p>
+</li>
+<li>
+<p><code>spec.containers.readinessProbe</code></p>
+</li>
+<li>
+<p><code>spec.containers.livenessProbe</code></p>
+</li>
+<li>
+<p><code>spec.containers.resources</code></p>
+</li>
+<li>
+<p><code>spec.containers.env</code></p>
+<div class="paragraph">
+<p>All other <code>podTemplate</code> elements are ignored. For more information about these elements, see the OpenShift documentation in the following <em>Related links</em> section.</p>
 </div>
 <div class="paragraph">
-<p>For both <code>admin</code> and <code>broker</code> you can configure <code>podTemplate</code> settings like <code>metadata.labels</code>,
-<code>spec.priorityClassName</code>, <code>spec.tolerations</code> and <code>spec.affinity</code>.</p>
+<p>For more information about how to set a readiness probe timeout, see <a href="http://enmasse.io/documentation/master/openshift/#ref-brokered-infra-config-override-probe-timeout-messaging">Overriding the readiness probe timing for brokered infrastructure configuration</a>.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>For more information see <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/priority_preemption.html">Pod priority</a>, <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/taints_tolerations.html">Taints and tolerations</a>, and <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/pod_affinity.html">Affinity and anti-affinity</a>.</p>
+<p>For detailed information about all of the available brokered infrastructure configuration fields, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-brokered-infra-config-fields-messaging">Brokered infrastructure configuration fields table</a>.</p>
+</div>
+<div class="ulist">
+<div class="title">Related links</div>
+<ul>
+<li>
+<p>For more information about the <code>podTemplate</code> settings, see the following OpenShift documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/cluster_administration/index#admin-guide-priority-preemption">Pod priority</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/cluster_administration/index#taints-and-tolerations">Taints and tolerations</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/cluster_administration/index#admin-guide-sched-pod-affinity">Affinity and anti-affinity</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/developer_guide/dev-guide-application-health">Application health</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/developer_guide/dev-guide-compute-resources#dev-compute-resources">Compute resources</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/developer_guide/index#list-environment-variables">Environment variables</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="ref-brokered-infra-config-override-probe-timeout-messaging">Overriding the probe timing for brokered infrastructure configuration</h6>
+<div class="paragraph">
+<p>You can override the default values for the probe timing on broker resources. You might want to change the default values if, for example, it takes longer than expected for the broker storage to become available, or a server is slow.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to override certain default values of the readiness probe for broker resources.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+kind: BrokeredInfraConfig
+metadata:
+  name: brokered-infra-config
+spec:
+  broker:
+    ...
+    podTemplate:
+      spec:
+        containers:
+          - name: broker <b class="conum">(1)</b>
+            readinessProbe:
+              failureThreshold: 6 <b class="conum">(2)</b>
+              initialDelaySeconds: 20 <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The <code>name</code> value must match the target container name. For a broker, the <code>podTemplate</code> name is <code>broker</code>.</p>
+</li>
+<li>
+<p>Specifies the number of times that OpenShift tries when a Pod starts and the probe fails before either the Pod is marked <code>Unready</code> for a readiness probe, or restarting the container for a liveness probe. The default value is <code>3</code>, and the minimum value is <code>1</code>.</p>
+</li>
+<li>
+<p>Specifies the number of seconds before performing the first probe after the container starts.</p>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Related links</div>
+<ul>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html/developer_guide/dev-guide-application-health">OpenShift 3.11 documentation on overriding probe timeouts</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html-single/nodes/index#nodes-nodes-health">OpenShift 4.1 documentation on overriding probe timeouts</a></p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect4">
 <h5 id="con-standard-infra-config-messaging">Standard infrastructure configuration</h5>
 <div class="paragraph">
 <p><code>StandardInfraConfig</code> resources are used to configure infrastructure deployed by <code>standard</code> address
-spaces. The standard infrastructure configuration is referenced by address space plans in their
-<code>spec.infraConfigRef</code> field. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-plans-messaging">Address space plans</a>.</p>
+spaces. Address space plans reference the standard infrastructure configuration using the
+<code>spec.infraConfigRef</code> field. For more information about address space plans, see <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-plans-messaging">Address space plans</a>.</p>
 </div>
 <div class="paragraph">
 <p>For detailed information about the available standard infrastructure configuration fields, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-standard-infra-config-fields-messaging">Standard infrastructure configuration fields table</a>.</p>
+</div>
+<div class="sect5">
+<h6 id="ref-standard-infra-config-example-messaging">Standard infrastructure configuration example</h6>
+<div class="paragraph">
+<p>The following example of a standard infrastructure configuration file shows the various settings that can be specified.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1982,16 +2111,16 @@ kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: "0.30-SNAPSHOT"
-  admin:
+  version: "0.30-SNAPSHOT" <b class="conum">(1)</b>
+  admin: <b class="conum">(2)</b>
     resources:
       memory: 256Mi
-  broker:
+  broker: <b class="conum">(3)</b>
     resources:
       memory: 2Gi
       storage: 100Gi
     addressFullPolicy: PAGE
-  router:
+  router: <b class="conum">(4)</b>
     resources:
       memory: 256Mi
     linkCapacity: 1000
@@ -2003,7 +2132,7 @@ spec:
       maxSessionsPerConnection: 10
       maxSendersPerConnection: 5
       maxReceiversPerConnection: 5
-    podTemplate:
+    podTemplate: <b class="conum">(5)</b>
       spec:
         affinity:
           nodeAffinity:
@@ -2018,27 +2147,156 @@ spec:
                 - e2e-az-West</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The <code>version</code> field specifies the EnMasse version used. When upgrading, EnMasse uses
+<div class="colist arabic">
+<ol>
+<li>
+<p>Specifies the EnMasse version used. When upgrading, EnMasse uses
 this field to determine whether to upgrade the infrastructure to the requested version. If omitted,
-the version will be assumed to be the same as the controllers reading the config.</p>
-</div>
-<div class="paragraph">
-<p>The <code>admin</code> object specifies the settings you can configure for the <code>admin</code> components.</p>
-</div>
-<div class="paragraph">
-<p>The <code>broker</code> object specifies the settings you can configure for the <code>broker</code> components. Changing
+the version is assumed to be the same version as the controllers reading the configuration.</p>
+</li>
+<li>
+<p>Specifies the settings you can configure for the <code>admin</code> components.</p>
+</li>
+<li>
+<p>Specifies the settings you can configure for the <code>broker</code> components. Changing
 the <code>.broker.resources.storage</code> setting does not configure the existing broker storage size.</p>
+</li>
+<li>
+<p>Specifies the settings you can configure for the <code>router</code> components.</p>
+</li>
+<li>
+<p>For <code>admin</code>, <code>broker</code>, and <code>router</code> components you can configure the following <code>podTemplate</code> elements:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>metadata.labels</code></p>
+</li>
+<li>
+<p><code>spec.priorityClassName</code></p>
+</li>
+<li>
+<p><code>spec.tolerations</code></p>
+</li>
+<li>
+<p><code>spec.affinity</code></p>
+</li>
+<li>
+<p><code>spec.containers.resources</code></p>
+</li>
+<li>
+<p><code>spec.containers.readinessProbe</code></p>
+</li>
+<li>
+<p><code>spec.containers.livenessProbe</code></p>
+</li>
+<li>
+<p><code>spec.containers.env</code></p>
+<div class="paragraph">
+<p>All other <code>podTemplate</code> elements are ignored. For more information about these elements, see the OpenShift documentation in the following <em>Related links</em> section.</p>
 </div>
 <div class="paragraph">
-<p>The <code>router</code> object specifies the settings you can configure for the <code>router</code> components.</p>
+<p>For more information about how to set a readiness probe timeout, see <a href="http://enmasse.io/documentation/master/openshift/#ref-standard-infra-config-override-probe-timeout-messaging">Overriding the readiness probe timing for standard infrastructure configuration</a>.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>For <code>admin</code>, <code>broker</code> and <code>router</code> you can configure <code>podTemplate</code> settings like <code>metadata.labels</code>,
-<code>spec.priorityClassName</code>, <code>spec.tolerations</code> and <code>spec.affinity</code>.</p>
+<p>For detailed information about all of the available standard infrastructure configuration fields, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-standard-infra-config-fields-messaging">Standard infrastructure configuration fields table</a>.</p>
+</div>
+<div class="ulist">
+<div class="title">Related links</div>
+<ul>
+<li>
+<p>For more information about the <code>podTemplate</code> settings, see the following OpenShift documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/cluster_administration/index#admin-guide-priority-preemption">Pod priority</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/cluster_administration/index#taints-and-tolerations">Taints and tolerations</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/cluster_administration/index#admin-guide-sched-pod-affinity">Affinity and anti-affinity</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/developer_guide/dev-guide-application-health">Application health</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/developer_guide/dev-guide-compute-resources#dev-compute-resources">Compute resources</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/developer_guide/index#list-environment-variables">Environment variables</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="ref-standard-infra-config-override-probe-timeout-messaging">Overriding the probe timing for standard infrastructure configuration</h6>
+<div class="paragraph">
+<p>You can override the default values for probe timing on broker and router resources. You might want to change the default values if, for example, it takes longer than expected for the broker storage to become available, or a server is slow.</p>
 </div>
 <div class="paragraph">
-<p>See <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/priority_preemption.html">Pod priority</a>, <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/taints_tolerations.html">Taints and tolerations</a>, and <a href="https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/pod_affinity.html">Affinity and anti-affinity</a> for more information.</p>
+<p>The following example shows how to override certain default values of the readiness probe timeout for a broker resource and a liveness probe for a router resource.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+kind: StandardInfraConfig
+metadata:
+  name: standard-infra-config
+spec:
+  broker:
+    ...
+    podTemplate:
+      spec:
+        containers:
+          - name: broker <b class="conum">(1)</b>
+            readinessProbe:
+              failureThreshold: 6 <b class="conum">(2)</b>
+              initialDelaySeconds: 20 <b class="conum">(3)</b>
+
+  router:
+    ...
+    podTemplate:
+      spec:
+        containers:
+          - name: router <b class="conum">(1)</b>
+            livenessProbe:
+              failureThreshold: 6 <b class="conum">(2)</b>
+              initialDelaySeconds: 20 <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The <code>name</code> value must match the target container name. For example, for a broker <code>podTemplate</code>, <code>name</code> is <code>broker</code>, and for a router <code>podTemplate</code>, it is <code>router</code>.</p>
+</li>
+<li>
+<p>Specifies the number of times that OpenShift tries when a Pod starts and the probe fails before either the Pod is marked <code>Unready</code> for a readiness probe, or restarting the container for a liveness probe. The default value is <code>3</code>, and the minimum value is <code>1</code>.</p>
+</li>
+<li>
+<p>Specifies the number of seconds before performing the first probe after the container starts.</p>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Related links</div>
+<ul>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html/developer_guide/dev-guide-application-health">OpenShift 3.11 documentation about liveness and readiness probes (application health)</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html-single/nodes/index#nodes-nodes-health">OpenShift 4.1 documentation about liveness and readiness probes (application health)</a></p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -6461,8 +6719,8 @@ export MESSAGING_PORT=443</pre>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 10. Brokered infrastructure configuration fields table</caption>
 <colgroup>
-<col style="width: 40%;">
-<col style="width: 60%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <tbody>
 <tr>
@@ -6475,7 +6733,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>version</p>
+<p><code>version</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the EnMasse version used. When upgrading, EnMasse uses this field to determine whether to upgrade the infrastructure to the requested version.</p>
@@ -6483,55 +6741,55 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>admin.resources.memory</p>
+<p><code>admin.resources.memory</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the amount of memory allocated to the admin pod.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>admin.podTemplate.metadata.labels</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the labels added to the admin pod.</p>
+<p>Specifies the amount of memory allocated to the admin Pod.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>admin.podTemplate.spec.priorityClassName</p>
+<p><code>admin.podTemplate.metadata.labels</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the priority class to use for the admin pod so you can prioritize admin pods over other pods in the OpenShift cluster.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>admin.podTemplate.spec.affinity</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the affinity settings for the admin pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
+<p>Specifies the labels added to the admin Pod.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>admin.podTemplate.spec.tolerations</p>
+<p><code>admin.podTemplate.spec.affinity</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the toleration settings for the admin pod, which allows this pod to run on certain nodes that other pods cannot run on.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.addressFullPolicy</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies action taken when a queue is full: <code>BLOCK</code>, <code>FAIL</code>, <code>PAGE</code>, <code>DROP</code>. The default value is <code>PAGE</code>. For more information see the <a href="https://activemq.apache.org/artemis/docs/latest/address-model.html" target="_blank" rel="noopener">Apache ActiveMQ Artemis documentation</a>.</p>
+<p>Specifies the affinity settings for the admin Pod so you can specify where on particular nodes a Pod runs, or if it cannot run together with other instances.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.globalMaxSize</p>
+<p><code>admin.podTemplate.spec.priorityClassName</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the priority class to use for the admin Pod so you can prioritize admin Pods over other Pods in the OpenShift cluster.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>admin.podTemplate.spec.tolerations</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the toleration settings for the admin Pod, which allows this Pod to run on certain nodes that other Pods cannot run on.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.addressFullPolicy</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the action taken when a queue is full: <code>BLOCK</code>, <code>FAIL</code>, <code>PAGE</code>, <code>DROP</code>. The default value is <code>PAGE</code>. For more information see the <a href="https://activemq.apache.org/artemis/docs/latest/address-model.html" target="_blank" rel="noopener">Apache ActiveMQ Artemis documentation</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.globalMaxSize</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the maximum amount of memory used for queues in the broker.</p>
@@ -6539,7 +6797,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.resources.memory</p>
+<p><code>broker.resources.memory</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the amount of memory allocated to the broker.</p>
@@ -6547,7 +6805,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.resources.storage</p>
+<p><code>broker.resources.storage</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the amount of storage requested for the broker.</p>
@@ -6555,39 +6813,103 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.podTemplate.metadata.labels</p>
+<p><code>broker.podTemplate.metadata.labels</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the labels added to the broker pod.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.podTemplate.spec.priorityClassName</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the priority class to use for the broker pod so you can prioritize broker pods over other pods in the OpenShift cluster.</p>
+<p>Specifies the labels added to the broker Pod.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.podTemplate.spec.affinity</p>
+<p><code>broker.podTemplate.spec.affinity</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the affinity settings for the broker pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.podTemplate.spec.tolerations</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the toleration settings for the broker pod, which allows this pod to run on certain nodes that other pods cannot run on.</p>
+<p>Specifies the affinity settings for the broker Pod so you can specify where on particular nodes a Pod runs, or if it cannot run together with other instances.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.storageClassName</p>
+<p><code>broker.podTemplate.spec.priorityClassName</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the priority class to use for the broker Pod so you can prioritize broker Pods over other Pods in the OpenShift cluster.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.tolerations</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the toleration settings for the broker Pod, which allows this Pod to run on certain nodes that other Pods cannot run on.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.env</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies environment variables for the broker Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.livenessProbe.failureThreshold</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the number of times that OpenShift tries when a broker Pod starts and the probe fails before restarting the container.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.livenessProbe.initialDelaySeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe delay value in seconds for the broker Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.livenessProbe.timeoutSeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe timeout value in seconds for the broker Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.readinessProbe.failureThreshold</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the number of times that OpenShift tries when a broker Pod starts and the probe fails before the Pod is marked <code>Unready</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.readinessProbe.initialDelaySeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe delay value in seconds for the broker Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.readinessProbe.timeoutSeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe timeout value in seconds for the broker Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.resources</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies broker Pod resource requests and limits for CPU and memory.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.storageClassName</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies what storage class to use for the persistent volume for the broker.</p>
@@ -6595,7 +6917,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.updatePersistentVolumeClaim</p>
+<p><code>broker.updatePersistentVolumeClaim</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If the persistent volume supports resizing, setting this value to <code>true</code> allows the broker storage to be resized.</p>
@@ -6614,8 +6936,8 @@ export MESSAGING_PORT=443</pre>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 11. Standard infrastructure configuration fields table</caption>
 <colgroup>
-<col style="width: 40%;">
-<col style="width: 60%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <tbody>
 <tr>
@@ -6628,7 +6950,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>version</p>
+<p><code>version</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the EnMasse version used. When upgrading, EnMasse uses this field to determine whether to upgrade the infrastructure to the requested version.</p>
@@ -6636,55 +6958,55 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>admin.resources.memory</p>
+<p><code>admin.resources.memory</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the amount of memory allocated to the admin pod.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>admin.podTemplate.metadata.labels</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the labels added to the admin pod.</p>
+<p>Specifies the amount of memory allocated to the admin Pod.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>admin.podTemplate.spec.priorityClassName</p>
+<p><code>admin.podTemplate.metadata.labels</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the priority class to use for the admin pod so you can prioritize admin pods over other pods in the OpenShift cluster.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>admin.podTemplate.spec.affinity</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the affinity settings for the admin pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
+<p>Specifies the labels added to the admin Pod.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>admin.podTemplate.spec.tolerations</p>
+<p><code>admin.podTemplate.spec.affinity</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the toleration settings for the admin pod, which allow this pod to run on certain nodes on which other pods cannot run.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.addressFullPolicy</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies action taken when a queue is full: <code>BLOCK</code>, <code>FAIL</code>, <code>PAGE</code>, <code>DROP</code>. The default value is <code>PAGE</code>. For more information see the <a href="https://activemq.apache.org/artemis/docs/latest/address-model.html" target="_blank" rel="noopener">Apache ActiveMQ Artemis documentation</a>.</p>
+<p>Specifies the affinity settings for the admin Pod so you can specify where on particular nodes a Pod runs, or if it cannot run together with other instances.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.globalMaxSize</p>
+<p><code>admin.podTemplate.spec.priorityClassName</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the priority class to use for the admin Pod so you can prioritize admin pods over other Pods in the OpenShift cluster.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>admin.podTemplate.spec.tolerations</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the toleration settings for the admin Pod, which allow this Pod to run on certain nodes on which other Pods cannot run.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.addressFullPolicy</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the action taken when a queue is full: <code>BLOCK</code>, <code>FAIL</code>, <code>PAGE</code>, <code>DROP</code>. The default value is <code>PAGE</code>. For more information see the <a href="https://activemq.apache.org/artemis/docs/latest/address-model.html" target="_blank" rel="noopener">Apache ActiveMQ Artemis documentation</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.globalMaxSize</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the maximum amount of memory used for queues in the broker.</p>
@@ -6692,7 +7014,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.resources.memory</p>
+<p><code>broker.resources.memory</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the amount of memory allocated to the broker.</p>
@@ -6700,7 +7022,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.resources.storage</p>
+<p><code>broker.resources.storage</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the amount of storage requested for the broker.</p>
@@ -6708,39 +7030,103 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.podTemplate.metadata.labels</p>
+<p><code>broker.podTemplate.metadata.labels</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the labels added to the broker pod.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.podTemplate.spec.priorityClassName</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the priority class to use for the broker pod so you can prioritize broker pods over other pods in the OpenShift cluster.</p>
+<p>Specifies the labels added to the broker Pod.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.podTemplate.spec.affinity</p>
+<p><code>broker.podTemplate.spec.affinity</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the affinity settings for the broker pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.podTemplate.spec.tolerations</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the toleration settings for the broker pod, which allow this pod to run on certain nodes on which other pods cannot run.</p>
+<p>Specifies the affinity settings for the broker Pod so you can specify where on particular nodes a Pod runs, or if it cannot run together with other instances.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.connectorIdleTimeout</p>
+<p><code>broker.podTemplate.spec.priorityClassName</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the priority class to use for the broker Pod so you can prioritize broker Pods over other Pods in the OpenShift cluster.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.tolerations</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the toleration settings for the broker Pod, which allow this Pod to run on certain nodes on which other Pods cannot run.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.env</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies environment variables for the broker Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.livenessProbe.failureThreshold</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the number of times that OpenShift tries when a broker Pod starts and the probe fails before restarting the container.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.livenessProbe.initialDelaySeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe delay value in seconds for the broker Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.livenessProbe.timeoutSeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe timeout value in seconds for the broker Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.readinessProbe.failureThreshold</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the number of times that OpenShift tries when a broker Pod starts and the probe fails before the Pod is marked <code>Unready</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.readinessProbe.initialDelaySeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe delay value in seconds for the broker Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.readinessProbe.timeoutSeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe timeout value in seconds for the broker Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.podTemplate.spec.containers.resources</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies broker Pod resource requests and limits for CPU and memory.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.connectorIdleTimeout</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the AMQP idle timeout to use for connection to router.</p>
@@ -6748,7 +7134,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.connectorWorkerThreads</p>
+<p><code>broker.connectorWorkerThreads</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the number of worker threads of the connection to the router.</p>
@@ -6756,7 +7142,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.storageClassName</p>
+<p><code>broker.storageClassName</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies what storage class to use for the persistent volume for the broker.</p>
@@ -6764,7 +7150,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>broker.updatePersistentVolumeClaim</p>
+<p><code>broker.updatePersistentVolumeClaim</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If the persistent volume supports resizing, setting this value to <code>true</code> allows the broker storage to be resized.</p>
@@ -6772,7 +7158,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.resources.memory</p>
+<p><code>router.resources.memory</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the amount of memory allocated to the router.</p>
@@ -6780,7 +7166,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.linkCapacity</p>
+<p><code>router.linkCapacity</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the default number of credits issued on AMQP links for the router.</p>
@@ -6788,7 +7174,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.handshakeTimeout</p>
+<p><code>router.handshakeTimeout</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the amount of time in seconds to wait for the secure handshake to be initiated.</p>
@@ -6796,47 +7182,111 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.minReplicas</p>
+<p><code>router.minReplicas</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the minimum number of router pods to run; a minimum of two are required for high availability (HA) configuration.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.podTemplate.metadata.labels</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the labels added to the router pod.</p>
+<p>Specifies the minimum number of router Pods to run; a minimum of two are required for high availability (HA) configuration.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.podTemplate.spec.priorityClassName</p>
+<p><code>router.podTemplate.metadata.labels</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the priority class to use for the router pod so you can prioritize router pods over other pods in the OpenShift cluster.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.podTemplate.spec.affinity</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the affinity settings for the router pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
+<p>Specifies the labels added to the router Pod.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.podTemplate.spec.tolerations</p>
+<p><code>router.podTemplate.spec.affinity</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the toleration settings for the router pod, which allow this pod to run on certain nodes on which other pods cannot run.</p>
+<p>Specifies the affinity settings for the router Pod so you can specify where on particular nodes a pod runs, or if it cannot run together with other instances.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.idleTimeout</p>
+<p><code>router.podTemplate.spec.priorityClassName</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the priority class to use for the router Pod so you can prioritize router pods over other pods in the OpenShift cluster.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>router.podTemplate.spec.tolerations</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the toleration settings for the router Pod, which allow this Pod to run on certain nodes on which other Pods cannot run.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>router.podTemplate.spec.containers.env</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the environment variables for the router Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>router.podTemplate.spec.containers.livenessProbe.failureThreshold</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the number of times that OpenShift tries when a router Pod starts and the probe fails before restarting the container.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>router.podTemplate.spec.containers.livenessProbe.initialDelaySeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe delay value in seconds for the router Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>router.podTemplate.spec.containers.livenessProbe.timeoutSeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe timeout value in seconds for the router Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>router.podTemplate.spec.containers.readinessProbe.failureThreshold</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the number of times that OpenShift tries when a router Pod starts and the probe fails before the Pod is marked <code>Unready</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>router.podTemplate.spec.containers.readinessProbe.initialDelaySeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe delay value in seconds for the router Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>router.podTemplate.spec.containers.readinessProbe.timeoutSeconds</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the probe timeout value in seconds for the router Pod.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>router.podTemplate.spec.containers.resources</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies router Pod resource requests and limits for CPU and memory.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>router.idleTimeout</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the AMQP idle timeout to use for all router listeners.</p>
@@ -6844,7 +7294,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.workerThreads</p>
+<p><code>router.workerThreads</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the number of worker threads to use for the router.</p>
@@ -6852,7 +7302,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.policy.maxConnections</p>
+<p><code>router.policy.maxConnections</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the maximum number of router connections allowed.</p>
@@ -6860,7 +7310,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.policy.maxConnectionsPerUser</p>
+<p><code>router.policy.maxConnectionsPerUser</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the maximum number of router connections allowed per user.</p>
@@ -6868,7 +7318,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.policy.maxConnectionsPerHost</p>
+<p><code>router.policy.maxConnectionsPerHost</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the maximum number of router connections allowed per host.</p>
@@ -6876,7 +7326,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.policy.maxSessionsPerConnection</p>
+<p><code>router.policy.maxSessionsPerConnection</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the maximum number of sessions allowed per router connection.</p>
@@ -6884,7 +7334,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.policy.maxSendersPerConnection</p>
+<p><code>router.policy.maxSendersPerConnection</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the maximum number of senders allowed per router connection.</p>
@@ -6892,7 +7342,7 @@ export MESSAGING_PORT=443</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>router.policy.maxReceiversPerConnection</p>
+<p><code>router.policy.maxReceiversPerConnection</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the maximum number of receivers allowed per router connection.</p>
@@ -6915,7 +7365,7 @@ export MESSAGING_PORT=443</pre>
 <div class="sect4">
 <h5 id="version_information">Version information</h5>
 <div class="paragraph">
-<p><em>Version</em> : 1.0.0</p>
+<p><em>Version</em> : 0.30-SNAPSHOT</p>
 </div>
 </div>
 <div class="sect4">
@@ -6956,7 +7406,7 @@ export MESSAGING_PORT=443</pre>
 <h5 id="external_docs">External Docs</h5>
 <div class="paragraph">
 <p><em>Description</em> : Find out more about EnMasse<br>
-<em>URL</em> : <a href="http://enmasse.io" class="bare">http://enmasse.io</a></p>
+<em>URL</em> : <a href="https://enmasse.io/documentation/" class="bare">https://enmasse.io/documentation/</a></p>
 </div>
 </div>
 </div>
@@ -15024,7 +15474,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-03 08:52:37 UTC
+Last updated 2019-10-07 11:14:18 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
