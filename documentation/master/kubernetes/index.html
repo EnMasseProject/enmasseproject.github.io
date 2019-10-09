@@ -2983,7 +2983,10 @@ tools. Address spaces are managed like any other Kubernetes resource using <code
 <div class="sect5">
 <h6 id="con-standard-queue-messaging">Queue</h6>
 <div class="paragraph">
-<p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases where you want to decouple the producer and consumer. A queue can be sharded across multiple storage units. Message ordering might be lost for queues in the standard address space.</p>
+<p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases when you want to decouple the producer and consumer. A queue can be sharded across multiple storage units. Message ordering might be lost for queues in the standard address space.</p>
+</div>
+<div class="paragraph">
+<p>Regarding dead-letter queue (DLQ) storing, you can determine if any stored DLQs exist by logging in to the console and <a href="http://enmasse.io/documentation/master/kubernetes/#ref-view-message-conn-stats-table-messaging">viewing the Addresses page</a>. To resolve this situation, you must connect with a client and consume from a DLQ address.</p>
 </div>
 </div>
 <div class="sect5">
@@ -4486,6 +4489,14 @@ spec:
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>For the desired address, expand the twisty on the left to show the <strong>Senders</strong> table; see the <strong>Delivery Rate</strong> column.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Standard address space and queue address type only: Number of dead letter queues (DLQs)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Stored DLQ</strong></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -14870,7 +14881,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-08 09:05:45 UTC
+Last updated 2019-10-09 08:55:18 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
