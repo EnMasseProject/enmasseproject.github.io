@@ -483,6 +483,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#create-edit-infra-config-messaging">3.2.8. Creating and editing infrastructure configurations</a></li>
 <li><a href="#assembly-auth-services-messaging">3.2.9. Authentication services</a></li>
 <li><a href="#ref-example-roles-messaging">3.2.10. EnMasse example roles</a></li>
+<li><a href="#config-openid-connect-for-kubernetes">3.2.11. Configuring EnMasse Console to use OpenID Connect</a></li>
 </ul>
 </li>
 <li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
@@ -2430,6 +2431,111 @@ spec:
 </tbody>
 </table>
 </div>
+<div class="sect3">
+<h4 id="config-openid-connect-for-kubernetes">3.2.11. Configuring EnMasse Console to use OpenID Connect</h4>
+<div class="paragraph">
+<p>To use the EnMasse Console on Kubernetes, you must configure Kubernetes to use
+<a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens">OpenID Connect (OIDC)</a>
+as an Authentication Strategy.  Then you must create a <code>consoleservice</code> resource refering to your OIDC Provider.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequestises</div>
+<ul>
+<li>
+<p>Before you begin you need to know the following details from your OpenID Connect provider:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>OIDC Discovery URL</p>
+</li>
+<li>
+<p>OIDC scopes</p>
+</li>
+<li>
+<p>Client ID</p>
+</li>
+<li>
+<p>Client secret</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If using a public OIDC provider (such as Google, Azure, GitHub, etc) the
+<a href="https://pusher.github.io/oauth2_proxy/auth-configuration">OAuthProxy configuration guide</a> offers specific guidance.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The Kubernetes api-server must be configured to use the
+<a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/#configuring-the-api-server">OpenID Connect plugin</a>.</p>
+<div class="paragraph">
+<p>If you are using minikube, see  <a href="https://minikube.sigs.k8s.io/docs/tutorials/openid_connect_auth/">these instructions</a>.
+will guide you.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Select the namespace where EnMasse is installed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a secret definition with the client-id/client-secret pair of your OIDC provider:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create secret generic my-google-oidc-secret --from-literal=client-id=myclientid --from-literal=client-secret=mysecret</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a console services definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cat &lt;&lt;EOF | kubectl apply -f -
+apiVersion: admin.enmasse.io/v1beta1
+kind: ConsoleService
+metadata:
+    name: console
+spec:
+    discoveryMetadataURL: https://accounts.google.com/.well-known/openid-configuration
+    oauthClientSecret:
+        name: my-google-oidc-secret
+    scope: openid email
+EOF</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Replace the discovery URL and scopes with the appropriate values from your OIDC provider.  Ensure that
+oauthClientSecret references the secret created in the previous step.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="upgrading-messaging">3.3. Upgrading EnMasse</h3>
@@ -4287,6 +4393,14 @@ spec:
 </div>
 <div class="sect2">
 <h3 id="assembly-using-console-messaging">4.4. Using the EnMasse Console</h3>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You must have configured Kubernetes and the {Product Name} Console to use OpenID Connect. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#config-openid-connect-for-kubernetes">Configuring the EnMasse Console to use OpenID Connect</a>.</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
 <p>You can use the EnMasse Console to perform tasks such as <a href="http://enmasse.io/documentation/master/kubernetes/#proc-create-address-space-console-messaging">creating</a> and <a href="http://enmasse.io/documentation/master/kubernetes/#proc-delete-address-space-console-messaging">deleting an address space</a>, <a href="http://enmasse.io/documentation/master/kubernetes/#create-address-console-messaging">creating an address</a>, and <a href="http://enmasse.io/documentation/master/kubernetes/#ref-view-message-connection-stats-table-messaging">viewing message and connection statistics</a>.</p>
 </div>
@@ -14881,7 +14995,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-09 08:55:18 UTC
+Last updated 2019-10-10 08:55:46 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
