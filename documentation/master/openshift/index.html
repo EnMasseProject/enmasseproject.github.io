@@ -808,6 +808,15 @@ on your machine.</p>
 </div>
 </div>
 </li>
+<li>
+<p>(Optional) Install the Service Catalog integration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/service-broker
+oc apply -f install/components/cluster-service-broker</pre>
+</div>
+</div>
+</li>
 </ol>
 </div>
 </div>
@@ -1194,6 +1203,15 @@ on your machine.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc apply -f install/components/example-authservices/standard-authservice.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install the Service Catalog integration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/service-broker
+oc apply -f install/components/cluster-service-broker</pre>
 </div>
 </div>
 </li>
@@ -3491,7 +3509,7 @@ tools. Address spaces are managed like any other OpenShift resource using <code>
 <p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases when you want to decouple the producer and consumer. A queue can be sharded across multiple storage units. Message ordering might be lost for queues in the standard address space.</p>
 </div>
 <div class="paragraph">
-<p>Regarding dead-letter queue (DLQ) storing, you can determine if any stored DLQs exist by logging in to the console and <a href="http://enmasse.io/documentation/master/openshift/#ref-view-message-conn-stats-table-messaging">viewing the Addresses page</a>. To resolve this situation, you must connect with a client and consume from a DLQ address.</p>
+<p>Regarding dead-letter queues (DLQs), you can determine if any messages are stored in a DLQ by logging in to the EnMasse Console and <a href="http://enmasse.io/documentation/master/openshift/#ref-view-message-conn-stats-table-messaging">viewing the Addresses page</a>. To resolve this situation, you must connect to a client and consume from a DLQ address.</p>
 </div>
 </div>
 <div class="sect5">
@@ -5132,7 +5150,7 @@ spec:
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Standard address space and queue address type only: Number of dead letter queues (DLQs)</p>
+<p>Standard address space and queue address type only: Number of messages stored in dead-letter queues (DLQs)</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><strong>Stored DLQ</strong></p>
@@ -5973,6 +5991,15 @@ namespace Test
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc apply -f install/components/example-authservices/standard-authservice.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Install the Service Catalog integration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc apply -f install/components/service-broker
+oc apply -f install/components/cluster-service-broker</pre>
 </div>
 </div>
 </li>
@@ -15485,7 +15512,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-10 08:55:46 UTC
+Last updated 2019-10-11 08:55:22 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
