@@ -490,7 +490,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#upgrading-enmasse-using-bundle-messaging">3.3.1. Upgrading EnMasse using a YAML bundle</a></li>
 <li><a href="#upgrading-enmasse-using-ansible-messaging">3.3.2. Upgrading EnMasse using Ansible</a></li>
-<li><a href="#post-upgrade-step-router-pod-messaging">3.3.3. Restarting router pods running a previous version of the image</a></li>
 </ul>
 </li>
 <li><a href="#assembly-uninstalling-messaging">3.4. Uninstalling EnMasse</a>
@@ -2903,43 +2902,6 @@ spec:
 </div>
 </li>
 </ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="post-upgrade-step-router-pod-messaging">3.3.3. Restarting router pods running a previous version of the image</h4>
-<div class="paragraph">
-<p>When upgrading, sometimes a router Pod is not automatically restarted by OpenShift. If this issue occurs, it is important to manually restart the affected Pod to ensure correct operation of the system. A script for restarting the router is provided in the EnMasse installation files within the <code>script</code> folder. To restart all components, run all scripts.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p>Completed the upgrading steps to a new release of EnMasse. For more information on how to upgrade, see:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#upgrading-enmasse-using-bundle-messaging">Upgrading EnMasse using a YAML bundle</a></p>
-</li>
-<li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#upgrading-enmasse-using-ansible-messaging">Upgrading EnMasse using Ansible</a></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist">
-<div class="title">Procedure</div>
-<ul>
-<li>
-<p>Run the <code>restart-routers.sh</code> script:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">./scripts/restart-routers.sh enmasse-infra</pre>
-</div>
-</div>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -15512,7 +15474,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-11 08:55:22 UTC
+Last updated 2019-10-12 08:56:10 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
