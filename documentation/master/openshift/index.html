@@ -468,8 +468,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#downloading-messaging">3.1.1. Downloading EnMasse</a></li>
 <li><a href="#installing-using-bundle-messaging">3.1.2. Installing EnMasse using a YAML bundle</a></li>
-<li><a href="#installing-using-olm-messaging">3.1.3. Installing EnMasse using Operator Marketplace</a></li>
-<li><a href="#installing-using-ansible-messaging">3.1.4. Installing EnMasse using Ansible</a></li>
+<li><a href="#installing-using-ansible-messaging">3.1.3. Installing EnMasse using Ansible</a></li>
+<li><a href="#installing-using-custom-operator-source-messaging">3.1.4. Installing EnMasse using Operator Marketplace</a></li>
+<li><a href="#assembly-installing-configuring-olm-messaging">3.1.5. Installing and configuring EnMasse using the Operator Lifecycle Manager</a></li>
 </ul>
 </li>
 <li><a href="#configuring-messaging">3.2. Configuring EnMasse</a>
@@ -1106,7 +1107,7 @@ infrastructure configuration, and plans.</p>
 <div class="sect2">
 <h3 id="installing-messaging">3.1. Installing EnMasse</h3>
 <div class="paragraph">
-<p>EnMasse can be installed by applying the YAML files using the OpenShift Container Platform command-line interface, by using
+<p>EnMasse can be installed by applying the YAML files using the {PlatformName} command-line interface, by using
 the Operator Marketplace, or by running the <a href="https://www.ansible.com/" target="_blank" rel="noopener">Ansible</a> playbook.</p>
 </div>
 <div class="ulist">
@@ -1218,89 +1219,7 @@ oc apply -f install/components/cluster-service-broker</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="installing-using-olm-messaging">3.1.3. Installing EnMasse using Operator Marketplace</h4>
-<div class="paragraph">
-<p>If the version of EnMasse you want to install is not available in the <a href="https://www.operatorhub.io" target="_blank" rel="noopener">Operator
-Hub</a>, you can install a custom <code>OperatorSource</code> for EnMasse following these steps.</p>
-</div>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p><a href="https://github.com/operator-framework/operator-lifecycle-manager">Operator Lifecycle Manager</a> must be installed.</p>
-</li>
-<li>
-<p><a href="https://github.com/operator-framework/operator-marketplace">Operator Marketplace</a> must be installed.</p>
-</li>
-</ul>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Create an <code>OperatorSource</code>:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">cat &lt;&lt;EOF | oc apply -f -
-apiVersion: operators.coreos.com/v1
-kind: OperatorSource
-metadata:
-  name: enmasse-operators
-  namespace: openshift-marketplace
-spec:
-  type: appregistry
-  endpoint: https://quay.io/cnr
-  registryNamespace: enmasse
-  displayName: "EnMasse Operators"
-  publisher: "EnMasse"
-EOF</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a <code>CatalogSourceConfig</code> to enable the operator on your OpenShift cluster:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">cat &lt;&lt;EOF | oc apply -f -
-apiVersion: operators.coreos.com/v1
-kind: CatalogSourceConfig
-metadata:
-  name: installed-enmasse-operators
-  namespace: openshift-marketplace
-spec:
-  csDisplayName: EnMasse Operators
-  csPublisher: EnMasse
-  packages: enmasse
-  source: enmasse-operators
-  targetNamespace: openshift-marketplace
-EOF</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Create a <code>Subscription</code> to install the operator and receive updates:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">cat &lt;&lt;EOF | oc apply -f -
-apiVersion: operators.coreos.com/v1alpha1
-kind: Subscription
-metadata:
-  name: enmasse
-  namespace: <em>enmasse-infra</em>
-spec:
-  channel: alpha
-  name: enmasse
-  source: installed-enmasse-operators
-  sourceNamespace: openshift-marketplace
-EOF</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="installing-using-ansible-messaging">3.1.4. Installing EnMasse using Ansible</h4>
+<h4 id="installing-using-ansible-messaging">3.1.3. Installing EnMasse using Ansible</h4>
 <div class="paragraph">
 <p>Installing EnMasse using Ansible requires creating an inventory file with the variables for
 configuring the system. Example inventory files can be found in the <code>ansible/inventory</code> folder.</p>
@@ -1531,6 +1450,446 @@ monitoring=False</code></pre>
 </div>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="installing-using-custom-operator-source-messaging">3.1.4. Installing EnMasse using Operator Marketplace</h4>
+<div class="paragraph">
+<p>If the version of EnMasse you want to install is not available in the <a href="https://www.operatorhub.io" target="_blank" rel="noopener">Operator
+Hub</a>, you can install a custom <code>OperatorSource</code> for EnMasse following these steps.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="https://github.com/operator-framework/operator-lifecycle-manager">Operator Lifecycle Manager</a> must be installed.</p>
+</li>
+<li>
+<p><a href="https://github.com/operator-framework/operator-marketplace">Operator Marketplace</a> must be installed.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create an <code>OperatorSource</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cat &lt;&lt;EOF | oc apply -f -
+apiVersion: operators.coreos.com/v1
+kind: OperatorSource
+metadata:
+  name: enmasse-operators
+  namespace: openshift-marketplace
+spec:
+  type: appregistry
+  endpoint: https://quay.io/cnr
+  registryNamespace: enmasse
+  displayName: "EnMasse Operators"
+  publisher: "EnMasse"
+EOF</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a <code>CatalogSourceConfig</code> to enable the operator on your OpenShift cluster:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cat &lt;&lt;EOF | oc apply -f -
+apiVersion: operators.coreos.com/v1
+kind: CatalogSourceConfig
+metadata:
+  name: installed-enmasse-operators
+  namespace: openshift-marketplace
+spec:
+  csDisplayName: EnMasse Operators
+  csPublisher: EnMasse
+  packages: enmasse
+  source: enmasse-operators
+  targetNamespace: openshift-marketplace
+EOF</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a <code>Subscription</code> to install the operator and receive updates:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cat &lt;&lt;EOF | oc apply -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: enmasse
+  namespace: <em>enmasse-infra</em>
+spec:
+  channel: alpha
+  name: enmasse
+  source: installed-enmasse-operators
+  sourceNamespace: openshift-marketplace
+EOF</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="assembly-installing-configuring-olm-messaging">3.1.5. Installing and configuring EnMasse using the Operator Lifecycle Manager</h4>
+<div class="paragraph">
+<p>You can use the Operator Lifecycle Manager to install and configure an instance of EnMasse.</p>
+</div>
+<div class="paragraph">
+<p>In OpenShift 4.x, the Operator Lifecycle Manager (OLM) helps users install, update, and  manage the life cycle of all Operators and their associated services running across their clusters. It is part of the Operator Framework, an open source toolkit designed to manage Kubernetes native applications (Operators) in an effective, automated, and scalable way.</p>
+</div>
+<div class="paragraph">
+<p>The OLM runs by default in OpenShift 4.x, which aids cluster administrators in installing, upgrading, and granting access to Operators running on their cluster. The OpenShift console provides management screens for cluster administrators to install Operators and grant specific projects access to use the catalog of Operators available on the cluster.</p>
+</div>
+<div class="paragraph">
+<p>OperatorHub is the graphical interface that OpenShift cluster administrators use to discover, install, and upgrade Operators. With one click, these Operators can be pulled from OperatorHub, installed on the cluster, and managed by the OLM, ready for engineering teams to self-service manage the software in development, test, and production environments.</p>
+</div>
+<div class="sect4">
+<h5 id="proc-olm-installing-from-operatorhub-using-console-messaging">Installing EnMasse from the OperatorHub using the OpenShift console</h5>
+<div class="paragraph">
+<p>You can install the EnMasse Operator on an OpenShift 4.x cluster by using OperatorHub in the OpenShift console.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You must install and deploy the EnMasse Operator in the <code>openshift-operator</code> project.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>Access to an OpenShift 4.x cluster using an account with <code>cluster-admin</code> permissions.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the OpenShift console, log in using an account with <code>cluster-admin</code> privileges.</p>
+</li>
+<li>
+<p>Click <strong>Catalog &gt; OperatorHub</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Filter by keyword</strong> box, type <code>EnMasse</code> to find the EnMasse Operator.</p>
+</li>
+<li>
+<p>Click the EnMasse Operator.  Information about the Operator is displayed.</p>
+</li>
+<li>
+<p>Read the information about the Operator and click <strong>Install</strong>. The Create Operator Subscription page opens.</p>
+</li>
+<li>
+<p>On the <strong>Create Operator Subscription</strong> page, accept all of the default selections and click <strong>Subscribe</strong>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>All namespaces on the cluster (default)</strong> installs the Operator in the default
+<strong>openshift-operators</strong> project and makes the Operator available to all projects
+in the cluster.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <strong>enmasse</strong> page is displayed, where you can monitor the installation progress of the EnMasse Operator subscription.</p>
+</div>
+</li>
+<li>
+<p>After the subscription upgrade status is shown as <strong>Up to date</strong>, click <strong>Catalog &gt; Installed Operators</strong> to verify that the <strong>EnMasse</strong> ClusterServiceVersion (CSV) is displayed and its <strong>Status</strong> ultimately resolves to <strong>InstallSucceeded</strong> in the <strong>openshift-operators</strong> project.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For the <strong>All namespaces&#8230;&#8203;</strong> installation mode, the status resolves to
+<strong>InstallSucceeded</strong> in the <strong>openshift-operators</strong> project, but the status is
+<strong>Copied</strong> if you view other projects.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For troubleshooting information, see the <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/applications/operators#olm-installing-operators-from-operatorhub_olm-adding-operators-to-a-cluster">OpenShift documentation</a>.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Next steps</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#assembly-configuring-olm-messaging">Configure EnMasse using the OpenShift console</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="assembly-configuring-olm-messaging">Configuring EnMasse using the OpenShift console</h5>
+<div class="paragraph">
+<p>After installing EnMasse from the OperatorHub using the OpenShift console, create a new instance of a custom resource for the following items within the <code>openshift-operators</code> project:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>an authentication service</p>
+</li>
+<li>
+<p>infrastructure configuration for an address space type (the example uses the standard address space type)</p>
+</li>
+<li>
+<p>an address space plan</p>
+</li>
+<li>
+<p>an address plan</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After creating the new instances of the custom resources, next:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#create-address-space-cli-messaging">create an address space</a></p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#create-address-cli-messaging">create an address</a></p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#proc-creating-users-cli-messaging">create a messaging user</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following procedures use the example data that is provided when using the OpenShift console.</p>
+</div>
+<div class="sect5">
+<h6 id="proc-create-auth-service-custom-resource-olm-ui-messaging">Creating an authentication service custom resource using the OpenShift console</h6>
+<div class="paragraph">
+<p>You must create a custom resource for an authentication service to use EnMasse. This example uses the standard authentication service.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>From the dropdown menu, select the <code>openshift-operators</code> project.</p>
+</li>
+<li>
+<p>Click <strong>Catalog &gt; Installed Operators</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Add &gt; Import YAML</strong>. The Import YAML window opens.</p>
+</li>
+<li>
+<p>Copy the following code:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+kind: AuthenticationService
+metadata:
+  name: standard-authservice
+spec:
+  type: standard</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The AddressPlan Overview page is displayed.</p>
+</li>
+<li>
+<p>Click <strong>Workloads &gt; Pods</strong>. In the <strong>Readiness</strong> column, the Pod status is <code>Ready</code> when the custom resource has been deployed.</p>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Next steps</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#proc-create-auth-service-custom-resource-olm-ui-messaging">Create an infrastructure configuration custom resource using the OpenShift console</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="proc-create-infraconfig-custom-resource-olm-ui-messaging">Creating an infrastructure configuration custom resource using the OpenShift console</h6>
+<div class="paragraph">
+<p>You must create an infrastructure configuration custom resource to use EnMasse. This example uses <code>StandardInfraConfig</code> for a standard address space.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>From the dropdown menu, select the <code>openshift-operators</code> project.</p>
+</li>
+<li>
+<p>Click <strong>Catalog &gt; Installed Operators</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Add &gt; Import YAML</strong>. The Import YAML window opens.</p>
+</li>
+<li>
+<p>Copy the following code for <code>StandardInfraConfig</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+kind: StandardInfraConfig
+metadata:
+  name: default</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The StandardInfraConfig Overview page is displayed.</p>
+</li>
+<li>
+<p>Click <strong>Workloads &gt; Pods</strong>. In the <strong>Readiness</strong> column, the Pod status is <code>Ready</code> when the custom resource has been deployed.</p>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Next steps</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#proc-create-address-space-plan-custom-resource-olm-ui-messaging">Create an address space plan custom resource using the OpenShift console</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="proc-create-address-space-plan-custom-resource-olm-ui-messaging">Creating an address space plan custom resource using the OpenShift console</h6>
+<div class="paragraph">
+<p>You must create an address space plan custom resource to use EnMasse. This procedure uses the example data that is provided when using the OpenShift console.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>From the dropdown menu, select the <code>openshift-operators</code> project.</p>
+</li>
+<li>
+<p>Click <strong>Catalog &gt; Installed Operators</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Add &gt; Import YAML</strong>. The Import YAML window opens.</p>
+</li>
+<li>
+<p>Copy the following code:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta2
+kind: AddressSpacePlan
+metadata:
+  name: standard-small
+spec:
+  addressSpaceType: standard
+  infraConfigRef: default
+  addressPlans:
+    - standard-small-queue
+  resourceLimits:
+    router: 2.0
+    broker: 3.0
+    aggregate: 4.0</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The AddressPlan Overview page is displayed.</p>
+</li>
+<li>
+<p>Click <strong>Workloads &gt; Pods</strong>. In the <strong>Readiness</strong> column, the Pod status is <code>Ready</code> when the custom resource has been deployed.</p>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Next steps</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#proc-create-address-plan-custom-resource-olm-ui-messaging">Create an address plan custom resource using the OpenShift console</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="proc-create-address-plan-custom-resource-olm-ui-messaging">Creating an address plan custom resource using the OpenShift console</h6>
+<div class="paragraph">
+<p>You must create an address plan custom resource to use EnMasse. This procedure uses the example data that is provided when using the OpenShift console.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>From the dropdown menu, select the <code>openshift-operators</code> project.</p>
+</li>
+<li>
+<p>Click <strong>Catalog &gt; Installed Operators</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Add &gt; Import YAML</strong>. The Import YAML window opens.</p>
+</li>
+<li>
+<p>Copy the following code:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta2
+kind: AddressPlan
+metadata:
+  name: standard-small-queue
+spec:
+  addressType: queue
+  resources:
+    router: 0.01
+    broker: 0.1</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The AddressPlan Overview page is displayed.</p>
+</li>
+<li>
+<p>Click <strong>Workloads &gt; Pods</strong>. In the <strong>Readiness</strong> column, the Pod status is <code>Ready</code> when the custom resource has been deployed.</p>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Next steps</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#create-address-space-cli-messaging">Create an address space</a></p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#create-address-cli-messaging">Create an address</a></p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#proc-creating-users-cli-messaging">Create a messaging user</a></p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -15480,7 +15839,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-18 08:59:05 UTC
+Last updated 2019-10-19 08:59:06 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
