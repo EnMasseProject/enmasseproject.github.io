@@ -556,6 +556,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#logging-into-console-messaging">4.4.2. Accessing the EnMasse Console</a></li>
 <li><a href="#ref-console-address-filtering-messaging">4.4.3. Using the EnMasse Console address filtering</a></li>
 <li><a href="#ref-view-message-connection-stats-table-messaging">4.4.4. Viewing message and connection statistics using the EnMasse Console</a></li>
+<li><a href="#proc-purging-queues-messaging">4.4.5. Purging queues and subscriptions</a></li>
 </ul>
 </li>
 <li><a href="#con-user-model-messaging">4.5. User model</a>
@@ -5477,10 +5478,10 @@ spec:
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Standard address space and queue address type only: Number of messages stored in dead-letter queues (DLQs)</p>
+<p>Standard address space and queue address type only: Number of rejected messages stored in the global dead-letter queue (DLQ)</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Stored DLQ</strong></p>
+<p><strong>Global DLQ</strong></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -5543,6 +5544,37 @@ For the brokered address space only, on the Connections page, the number of send
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="proc-purging-queues-messaging">4.4.5. Purging queues and subscriptions</h4>
+<div class="paragraph">
+<p>You can purge&#8212;&#8203;that is, clear all messages from&#8212;&#8203;a <code>queue</code> or <code>subscription</code> address type of its stored messages by using the EnMasse Console.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You must have a queue or subscription that contains stored messages.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
+</li>
+<li>
+<p>Navigate to the <strong>Addresses</strong> page.</p>
+</li>
+<li>
+<p>Select the check box next to the queue or subscription that you want to purge.</p>
+</li>
+<li>
+<p>At the top of the page, right-click the vertical ellipsis icon and select <strong>Purge</strong>. The queue or subscription is purged, and the <code>Stored</code> message count drops to zero for the selected queue or subscription.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -15839,7 +15871,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-21 09:00:55 UTC
+Last updated 2019-10-22 09:01:32 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
