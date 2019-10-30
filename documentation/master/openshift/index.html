@@ -3679,7 +3679,7 @@ data:
 <div class="sect2">
 <h3 id="sizing-guide-messaging">3.7. EnMasse configuration sizing guidelines</h3>
 <div class="paragraph">
-<p>The sizing guide provides guidelines on how to size EnMasse installations. More specifically, these guidelines offer specific configuration recommendations for components and plans based on use cases, and the trade-offs involved when adjusting the configuration settings. Sizing EnMasse involves configuration of:</p>
+<p>The following information provides guidelines on how to size EnMasse installations. More specifically, these guidelines offer specific configuration recommendations for components and plans based on use cases, and the trade-offs involved when adjusting the configuration settings. Sizing EnMasse involves configuration of:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3698,7 +3698,8 @@ data:
 </ul>
 </div>
 <div class="paragraph">
-<p>Each address space type has some distinct features that should be taken into account when creating the address plans. For more information about address space types and their semantics, see <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-messaging">address spaces</a>.</p>
+<p>For example, each address space type has certain distinct features that need to be considered when creating the address plans.
+For more information about address space types and their semantics, see <a href="http://enmasse.io/documentation/master/openshift/#con-address-space-messaging">address spaces</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3707,10 +3708,8 @@ data:
 <div class="title">Note</div>
 </td>
 <td class="content">
-Properly sizing EnMasse components also requires taking into consideration the following points regarding your OpenShift cluster:
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Properly sizing EnMasse components also requires taking into consideration the following points regarding your OpenShift cluster:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3724,6 +3723,10 @@ Properly sizing EnMasse components also requires taking into consideration the f
 <p>The use of affinity and tolerations might also restrict the nodes available for the messaging infrastructure to use.</p>
 </li>
 </ul>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
 <h4 id="broker-component-sizing-messaging">3.7.1. Broker component sizing</h4>
@@ -3848,7 +3851,7 @@ spec:
 <div class="sect4">
 <h5 id="broker_scaling_standard_address_space_only">Broker scaling (standard address space only)</h5>
 <div class="paragraph">
-<p>Brokers are deployed on demand, that is, when addresses of type <code>queue</code> or <code>topic</code> are created. The number of brokers deployed is restricted by the resource limits specified in the <code>AddressSpacePlan</code> configuration. The following <code>AddressSpacePlan</code> configuration example specifies a limit of 4 brokers in total per address space:</p>
+<p>Brokers are deployed on demand, that is, when addresses of type <code>queue</code> or <code>topic</code> are created. The number of brokers deployed is restricted by the resource limits specified in the <code>AddressSpacePlan</code> configuration. The following <code>AddressSpacePlan</code> configuration example specifies a limit of four brokers in total per address space:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3866,7 +3869,7 @@ spec:
 <p>In terms of capacity, multiply the memory requirements for the broker by the limit.</p>
 </div>
 <div class="paragraph">
-<p>The number of broker instances are scaled dynamically between 1 and maximum limit specified based on the <code>AddressPlan</code> used for the different addresses. An <code>AddressPlan</code> specifies the fraction of a broker that is required by an address. The fraction specified in the plan is multiplied by the number of addresses referencing this plan, and then rounded up to produce the number of desired broker replicas.</p>
+<p>The number of broker instances are scaled dynamically between one and the maximum limit specified based on the <code>AddressPlan</code> used for the different addresses. An <code>AddressPlan</code> specifies the fraction of a broker that is required by an address. The fraction specified in the plan is multiplied by the number of addresses referencing this plan, and then rounded up to produce the number of desired broker replicas.</p>
 </div>
 <div class="listingblock">
 <div class="title"><code>AddressPlan</code> configuration example</div>
@@ -3920,7 +3923,7 @@ spec:
 <p>The router link capacity affects how many messages the router can handle per link. Setting the link capacity to a higher value might improve performance, but at the cost of potentially more memory being used to hold in-flight messages if senders are filling the links. If you have many connections and links, consider specifying a lower value to balance the memory usage.</p>
 </div>
 <div class="paragraph">
-<p>In addition, the router has to parse the message headers, manage dispositions and settlements of messages, and other per-link activities. The per-link cost can be derived using a constant factor of the link capacity and message size. This factor varies depending on the message size. The following table provide an approximation of this factor for different message size ranges:</p>
+<p>In addition, the router has to parse the message headers, manage dispositions and settlements of messages, and other per-link activities. The per-link cost can be derived using a constant factor of the link capacity and message size. This factor varies depending on the message size. The following table provides an approximation of this factor for different message size ranges:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 3. Link multiplication factor</caption>
@@ -3928,21 +3931,19 @@ spec:
 <col style="width: 50%;">
 <col style="width: 50%;">
 </colgroup>
-<tbody>
+<thead>
 <tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Message size (bytes)</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Factor</p>
-</div></div></td>
+<th class="tableblock halign-left valign-top">Message size (bytes)</th>
+<th class="tableblock halign-left valign-top">Factor</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>20-1000</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>18000</p>
+<p>18,000</p>
 </div></div></td>
 </tr>
 <tr>
@@ -3950,27 +3951,23 @@ spec:
 <p>1000-4000</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>22000</p>
+<p>22,000</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>4000-10000</p>
+<p>4000-10,000</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>30000</p>
+<p>30,000</p>
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="quoteblock">
-<blockquote>
-<div class="paragraph">
-<p>10000</p>
-</div>
-</blockquote>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>&gt;10,000</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>50000</p>
+<p>50,000</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -3978,26 +3975,38 @@ spec:
 <div class="sect4">
 <h5 id="example_use_case_for_router_component_sizing">Example use case for router component sizing</h5>
 <div class="paragraph">
-<p>Consider the following example use case:
-* 500 anycast and 1000 queued addresses
-* 10,000 connected clients (one link per client)
-* Link capacity of 10
-* An average message size of 512 bytes</p>
+<p>Consider the following example use case:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>500 anycast and 1000 queued addresses</p>
+</li>
+<li>
+<p>10,000 connected clients (one link per client)</p>
+</li>
+<li>
+<p>Link capacity of 10</p>
+</li>
+<li>
+<p>An average message size of 512 bytes</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Based on measurements, an estimated 7 kB overhead per anycast address is realistic, so:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">500 anycast addresses * 7kB overhead per address = 3.5 MB</pre>
+<pre class="nowrap">500 anycast addresses * 7 kB overhead per address = 3.5 MB</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Memory usage of queues and topics is slightly higher than that of anycast addresses, with an estimated 32 kB overhead per address. In addition, each router-broker link can have up to <code>linkCapacity</code> message deliveries to keep track of.  Also, we need to multiply the link capacity with the multiplication factor to account for the worst-case scenario:</p>
+<p>Memory usage of queues and topics is slightly higher than that of anycast addresses, with an estimated 32 kB overhead per address. In addition, each router-broker link can have up to <code>linkCapacity</code> message deliveries to keep track of. Also, we need to multiply the link capacity with the multiplication factor to account for the worst-case scenario:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">(1000 queued addresses * 32768) + (2000 * 18000 link multiplication factor * 100 links) = 374 MB</pre>
+<pre class="nowrap">(1000 queued addresses * 32,768) + (2000 * 18,000 link multiplication factor * 100 links) = 374 MB</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4005,7 +4014,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">10000 clients * 10 link capacity * 18000 link multiplication factor = 1717 MB</pre>
+<pre class="nowrap">10,000 clients * 10 link capacity * 18,000 link multiplication factor = 1717 MB</pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -4015,14 +4024,15 @@ spec:
 <div class="title">Note</div>
 </td>
 <td class="content">
-The memory usage of client connections/links can be divided by the number of router instances.
+<div class="paragraph">
+<p>The memory usage of client connections/links can be divided by the number of router instances.</p>
+</div>
+<div class="paragraph">
+<p>If you have N routers, the total amount of router memory required for this configuration, including a constant base memory of 50 MB, is <code>50 + 3.5 + (374 + 1717)/N MB</code>.</p>
+</div>
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>+
-If you have N routers, the total amount of router memory required for this configuration, including a constant base memory of 50 MB, is <code>50 + 3.5 + (374 + 1717)/N MB</code>.</p>
 </div>
 <div class="paragraph">
 <p>To ensure the maximum number of connections and links is not exceeded, a router policy can be applied as well. The following configuration example shows two routers with a router policy specified:</p>
@@ -4042,7 +4052,7 @@ spec:
       maxConnections: 5000
       maxSessionsPerConnection: 1
       maxSendersPerConnection: 1
-      maxReciversPerConnection: 1
+      maxReceiversPerConnection: 1
   ...</code></pre>
 </div>
 </div>
@@ -4056,7 +4066,7 @@ spec:
 <div class="sect4">
 <h5 id="router_scaling">Router scaling</h5>
 <div class="paragraph">
-<p>Routers are scaled dynamically on demand within the limits specified for  <code>minReplicas</code> in the <code>StandardInfraConfig</code> resource and the <code>resourceLimits.router</code> specified in the <code>AddressSpacePlan</code>. To restrict the number of routers to a maximum number of four, but require a minimum amount of two routers for HA purposes, the following configuration is needed:</p>
+<p>Routers are scaled dynamically on demand within the limits specified for <code>minReplicas</code> in the <code>StandardInfraConfig</code> resource and the <code>resourceLimits.router</code> specified in the <code>AddressSpacePlan</code>. To restrict the number of routers to a maximum number of four, but require a minimum amount of two routers for HA purposes, the following configuration is needed:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4156,25 +4166,21 @@ spec:
 <p>Plans enable dynamic scaling in the <code>standard</code> address space, as shown in the broker and router sizing sections. At the cluster level, the combination of plans and infrastructure configuration settings determines the maximum number of Pods that can be deployed on the cluster. Since EnMasse does not support limiting the number of address spaces that can be created, it is a best practice to apply a policy to limit who is allowed to create address spaces. Such policy configuration can be handled through the standard OpenShift policies.</p>
 </div>
 <div class="paragraph">
-<p>From a capacity-planning perspective, it is useful to understand what the maximum number of Pods and the maximum amount of memory that can be consumed for a given address space. To make this calculation using a script, see <a href="http://enmasse.io/documentation/master/openshift/#proc-run-calculation-script-messaging">Running the check-memory calculation script</a>.</p>
+<p>From a capacity-planning perspective, it is useful to calculate the maximum number of Pods and the maximum amount of memory that can be consumed for a given address space. To make this calculation using a script, see <a href="http://enmasse.io/documentation/master/openshift/#proc-run-calculation-script-messaging">Running the check-memory calculation script</a>.</p>
+</div>
+<div class="sect4">
+<h5 id="proc-run-calculation-script-messaging">Running the check-memory calculation script</h5>
+<div class="paragraph">
+<p>You can use this script to calculate the maximum number of Pods and the maximum amount of memory that can be consumed for a given address space.</p>
+</div>
+<div class="paragraph">
+<p>In this script, memory is assumed to be specified using the <code>Mi</code> unit, while storage is assumed to be specified using the <code>Gi</code> unit. Also, all three components,  <code>admin</code>, <code>router</code>, and <code>broker</code>, must have limits specified for the script to work as intended.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p>Save the following script as <code>check-memory.sh</code>:</p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-Memory is assumed to be specified using the <code>Mi</code> unit, while storage is assumed to be specified using the <code>Gi</code> unit. Also, all three components,  <code>admin</code>, <code>router</code>, and <code>broker</code>, must have limits specified for the script to work as intended.
-</td>
-</tr>
-</table>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="shell" class="language-shell hljs">#!/usr/bin/env bash
@@ -4205,7 +4211,7 @@ echo "Pods: ${total_pods}. Memory: ${total_memory_mb} MB. Storage: ${total_stora
 <p>Run the script using the following command:</p>
 <div class="listingblock">
 <div class="content">
-<pre>bash calculate-memory.sh _standard-small_</pre>
+<pre class="nowrap">bash calculate-memory.sh <em>standard-small</em></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4218,6 +4224,7 @@ echo "Pods: ${total_pods}. Memory: ${total_memory_mb} MB. Storage: ${total_stora
 </div>
 </li>
 </ol>
+</div>
 </div>
 </div>
 </div>
@@ -16431,7 +16438,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-29 15:25:31 UTC
+Last updated 2019-10-30 09:06:26 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
