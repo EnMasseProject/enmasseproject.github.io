@@ -591,34 +591,25 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#'iot-guide-messaging-iot">5. Internet of Things (IoT) guide</a>
 <ul class="sectlevel2">
 <li><a href="#con-iot-connectivity-messaging-iot">5.1. IoT connectivity concepts</a></li>
-<li><a href="#installing-using-bundle-messaging-iot">5.2. Installing EnMasse using a YAML bundle</a></li>
-<li><a href="#iot-installing-services-messaging-iot">5.3. Installing IoT services</a></li>
-<li><a href="#iot-creating-project-messaging-iot">5.4. Creating an IoT project</a></li>
-<li><a href="#iot-creating-device-messaging-iot">5.5. Creating an IoT device</a>
+<li><a href="#'iot-getting-started-messaging-iot-iot">5.2. Getting started using IoT</a>
 <ul class="sectlevel3">
-<li><a href="#iot-proc-creating-device-register-new-device-messaging-iot">5.5.1. Registering a new device</a></li>
-<li><a href="#iot-creating-device-set-password-messaging-iot">5.5.2. Setting user name and password credentials for a device</a></li>
+<li><a href="#installing-using-bundle-messaging-iot-iot">5.2.1. Installing EnMasse using a YAML bundle</a></li>
+<li><a href="#iot-installing-services-messaging-iot-iot">5.2.2. Installing IoT services</a></li>
+<li><a href="#iot-creating-project-messaging-iot-iot">5.2.3. Creating an IoT project</a></li>
+<li><a href="#iot-creating-device-messaging-iot-iot">5.2.4. Creating an IoT device</a></li>
+<li><a href="#iot-installing-cli-messaging-iot-iot">5.2.5. Installing the Eclipse Hono command-line client</a></li>
 </ul>
 </li>
-<li><a href="#iot-proc-configuring-sigfox-messaging-iot">5.6. Configuring the Sigfox integration</a>
+<li><a href="#'iot-service-admin-messaging-iot-iot-iot">5.3. IoT for service administrators</a>
 <ul class="sectlevel3">
-<li><a href="#iot-proc-configuring-sigfox-registering-backend-gateway-device-messaging-iot">5.6.1. Registering the Sigfox backend as a gateway device</a></li>
-<li><a href="#iot-proc-configuring-sigfox-register-sigfox-device-messaging-iot">5.6.2. Registering the Sigfox device</a></li>
-<li><a href="#iot-proc-configuring-sigfox-connection-information-messaging-iot">5.6.3. Preparing Sigfox connection information</a></li>
-<li><a href="#iot-proc-creating-new-sigfox-callback-messaging-iot">5.6.4. Creating a new callback in the Sigfox backend</a></li>
-<li><a href="#iot-proc-configuring-sigfox-enable-command-and-control-messaging-iot">5.6.5. Enabling command and control</a></li>
+<li><a href="#iot-proc-configuring-sigfox-messaging-iot-iot-iot">5.3.1. Configuring the Sigfox integration</a></li>
 </ul>
 </li>
-<li><a href="#iot-telemetry-messaging-iot">5.7. Sending and receiving telemetry data</a>
+<li><a href="#'iot-tenant-messaging-iot-iot-iot-iot">5.4. IoT for messaging tenants</a>
 <ul class="sectlevel3">
-<li><a href="#starting_the_telemetry_consumer">5.7.1. Starting the telemetry consumer</a></li>
-<li><a href="#sending_telemetry_data">5.7.2. Sending telemetry data</a></li>
-</ul>
-</li>
-<li><a href="#iot-event-messaging-iot">5.8. Sending and receiving event data</a>
-<ul class="sectlevel3">
-<li><a href="#starting_the_event_consumer">5.8.1. Starting the event consumer</a></li>
-<li><a href="#sending_event_data">5.8.2. Sending event data</a></li>
+<li><a href="#customer_applications">5.4.1. Customer applications</a></li>
+<li><a href="#iot-installing-cli-messaging-iot-iot-iot-iot">5.4.2. Installing the Eclipse Hono command-line client</a></li>
+<li><a href="#device_applications">5.4.3. Device applications</a></li>
 </ul>
 </li>
 </ul>
@@ -6854,7 +6845,12 @@ using one of the supported protocols: HTTP, MQTT, LoRaWAN, and SigFox. Once conn
 </div>
 </div>
 <div class="sect2">
-<h3 id="installing-using-bundle-messaging-iot">5.2. Installing EnMasse using a YAML bundle</h3>
+<h3 id="'iot-getting-started-messaging-iot-iot">5.2. Getting started using IoT</h3>
+<div class="paragraph">
+<p>The following information describes how to set up and manage EnMasse IoT features.</p>
+</div>
+<div class="sect3">
+<h4 id="installing-using-bundle-messaging-iot-iot">5.2.1. Installing EnMasse using a YAML bundle</h4>
 <div class="paragraph">
 <p>The simplest way to install EnMasse is to use the predefined YAML bundles.</p>
 </div>
@@ -6932,8 +6928,8 @@ oc apply -f install/components/cluster-service-broker</pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="iot-installing-services-messaging-iot">5.3. Installing IoT services</h3>
+<div class="sect3">
+<h4 id="iot-installing-services-messaging-iot-iot">5.2.2. Installing IoT services</h4>
 <div class="paragraph">
 <p>To get started using the IoT feature on EnMasse, you must first install the IoT services.</p>
 </div>
@@ -7004,8 +7000,8 @@ oc apply -f install/components/iot/examples/infinispan/manual</pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="iot-creating-project-messaging-iot">5.4. Creating an IoT project</h3>
+<div class="sect3">
+<h4 id="iot-creating-project-messaging-iot-iot">5.2.3. Creating an IoT project</h4>
 <div class="paragraph">
 <p>After installing the IoT services, you create an IoT project.</p>
 </div>
@@ -7069,8 +7065,8 @@ Make sure that the <code>Phase</code> field shows <code>Ready</code> status for 
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="iot-creating-device-messaging-iot">5.5. Creating an IoT device</h3>
+<div class="sect3">
+<h4 id="iot-creating-device-messaging-iot-iot">5.2.4. Creating an IoT device</h4>
 <div class="paragraph">
 <p>After installing the IoT services and creating an IoT project, you can create an IoT device for the device you want to monitor.</p>
 </div>
@@ -7078,15 +7074,15 @@ Make sure that the <code>Phase</code> field shows <code>Ready</code> status for 
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#installing-services-messaging-iot">The IoT services are installed</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/openshift/#installing-services-messaging-iot-iot">The IoT services are installed</a>.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-project-messaging-iot">An IoT project is created</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-project-messaging-iot-iot">An IoT project is created</a>.</p>
 </li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="iot-proc-creating-device-register-new-device-messaging-iot">5.5.1. Registering a new device</h4>
+<div class="sect4">
+<h5 id="iot-proc-creating-device-register-new-device-messaging-iot-iot">Registering a new device</h5>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -7130,8 +7126,8 @@ Make sure that the <code>Phase</code> field shows <code>Ready</code> status for 
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="iot-creating-device-set-password-messaging-iot">5.5.2. Setting user name and password credentials for a device</h4>
+<div class="sect4">
+<h5 id="iot-creating-device-set-password-messaging-iot-iot">Setting user name and password credentials for a device</h5>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -7152,13 +7148,13 @@ Make sure that the <code>Phase</code> field shows <code>Ready</code> status for 
 </ol>
 </div>
 </div>
+<div class="sect4">
+<h5 id="installing_command_line_client">Installing command-line client</h5>
+
 </div>
-<div class="sect2">
-<h3 id="iot-proc-configuring-sigfox-messaging-iot">5.6. Configuring the Sigfox integration</h3>
-<div class="paragraph">
-<p>After installing the IoT services and creating an IoT project, you can configure
-the Sigfox backend integration.</p>
 </div>
+<div class="sect3">
+<h4 id="iot-installing-cli-messaging-iot-iot">5.2.5. Installing the Eclipse Hono command-line client</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -7167,6 +7163,85 @@ the Sigfox backend integration.</p>
 </li>
 <li>
 <p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-project-messaging-iot">An IoT project is created</a>.</p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-device-messaging-iot">An IoT device is created</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Download the <a href="https://www.eclipse.org/hono/downloads/">Eclipse Hono command-line client</a>.</p>
+</li>
+<li>
+<p>Obtain the messaging endpoint certificate:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc -n myapp get addressspace iot -o jsonpath={.status.caCert} | base64 --decode > tls.crt</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Export the messaging endpoint host and port:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export MESSAGING_HOST=$(oc -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].externalHost})
+export MESSAGING_PORT=443</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect4">
+<h5 id="starting_telemetry_consumer">Starting telemetry consumer</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Run the consumer application to receive telemetry:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">java -jar hono-cli-*-exec.jar --hono.client.host=$MESSAGING_HOST --hono.client.port=$MESSAGING_PORT --hono.client.username=consumer --hono.client.password=foobar --tenant.id=myapp.iot --hono.client.trustStorePath=tls.crt --message.type=telemetry</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="sending_http_telemetry_message">Sending HTTP telemetry message</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Send telemetry using the HTTP protocol:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -u sensor1@myapp.iot:hono-secret -H 'Content-Type: application/json' --data-binary '{"temp": 5}' https://$(oc -n enmasse-infra get routes iot-http-adapter --template='{{ .spec.host }}')/telemetry</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="'iot-service-admin-messaging-iot-iot-iot">5.3. IoT for service administrators</h3>
+<div class="sect3">
+<h4 id="iot-proc-configuring-sigfox-messaging-iot-iot-iot">5.3.1. Configuring the Sigfox integration</h4>
+<div class="paragraph">
+<p>After installing the IoT services and creating an IoT project, you can configure
+the Sigfox backend integration.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#installing-services-messaging-iot-iot-iot">The IoT services are installed</a>.</p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-project-messaging-iot-iot-iot">An IoT project is created</a>.</p>
 </li>
 <li>
 <p>Properly deployed TLS in your cluster. The Sigfox protocol adapter endpoint
@@ -7181,8 +7256,8 @@ are logged in.</p>
 </li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="iot-proc-configuring-sigfox-registering-backend-gateway-device-messaging-iot">5.6.1. Registering the Sigfox backend as a gateway device</h4>
+<div class="sect4">
+<h5 id="iot-proc-configuring-sigfox-registering-backend-gateway-device-messaging-iot-iot-iot">Registering the Sigfox backend as a gateway device</h5>
 <div class="paragraph">
 <p>The Sigfox backend will be set up in EnMasse as a gateway device.
 The credentials assigned to this device will be required for the configuration
@@ -7193,22 +7268,22 @@ to use this gateway device as their transport.</p>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-device-register-new-device-messaging-iot">Register a new device</a>. Choose a name,
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-device-register-new-device-messaging-iot-iot-iot">Register a new device</a>. Choose a name,
 for example, <code>sigfox-backend</code>.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-device-set-password-messaging-iot">Set up password credentials</a> for this device (for example <code>sigfox-user</code> / <code>sigfox-password</code>).</p>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-device-set-password-messaging-iot-iot-iot">Set up password credentials</a> for this device (for example <code>sigfox-user</code> / <code>sigfox-password</code>).</p>
 </li>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="iot-proc-configuring-sigfox-register-sigfox-device-messaging-iot">5.6.2. Registering the Sigfox device</h4>
+<div class="sect4">
+<h5 id="iot-proc-configuring-sigfox-register-sigfox-device-messaging-iot-iot-iot">Registering the Sigfox device</h5>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-configuring-sigfox-registering-backend-gateway-device-messaging-iot">Registered the Sigfox backend as a gateway device</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-configuring-sigfox-registering-backend-gateway-device-messaging-iot-iot-iot">Registered the Sigfox backend as a gateway device</a>.</p>
 </li>
 </ul>
 </div>
@@ -7220,7 +7295,7 @@ for example, <code>sigfox-backend</code>.</p>
 process in the Sigfox backend.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-device-register-new-device-messaging-iot">Register a new device</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-device-register-new-device-messaging-iot-iot-iot">Register a new device</a>.</p>
 <div class="paragraph">
 <p>Specify the device ID as the name (for example, <code>1AB2C3</code>) and specify name of the gateway device in the <code>via</code> field,
 as part of the registration information (for example, <code>{"via": ["sigfox-backend"]}</code>).</p>
@@ -7241,8 +7316,8 @@ Do not set a password for this device.
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="iot-proc-configuring-sigfox-connection-information-messaging-iot">5.6.3. Preparing Sigfox connection information</h4>
+<div class="sect4">
+<h5 id="iot-proc-configuring-sigfox-connection-information-messaging-iot-iot-iot">Preparing Sigfox connection information</h5>
 <div class="paragraph">
 <p>Prepare the following connection information, which will be used in the
 following steps.</p>
@@ -7315,13 +7390,13 @@ instead to process messages as <em>events</em>.</p>
 </dl>
 </div>
 </div>
-<div class="sect3">
-<h4 id="iot-proc-creating-new-sigfox-callback-messaging-iot">5.6.4. Creating a new callback in the Sigfox backend</h4>
+<div class="sect4">
+<h5 id="iot-proc-creating-new-sigfox-callback-messaging-iot-iot-iot">Creating a new callback in the Sigfox backend</h5>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-configuring-sigfox-connection-information-messaging-iot">Prepared the Sigfox connection information</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-configuring-sigfox-connection-information-messaging-iot-iot-iot">Prepared the Sigfox connection information</a>.</p>
 </li>
 </ul>
 </div>
@@ -7369,13 +7444,13 @@ section.</p>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="iot-proc-configuring-sigfox-enable-command-and-control-messaging-iot">5.6.5. Enabling command and control</h4>
+<div class="sect4">
+<h5 id="iot-proc-configuring-sigfox-enable-command-and-control-messaging-iot-iot-iot">Enabling command and control</h5>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-new-sigfox-callback-messaging-iot">Created a callback in the Sigfox backend</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/openshift/#iot-proc-creating-new-sigfox-callback-messaging-iot-iot-iot">Created a callback in the Sigfox backend</a>.</p>
 </li>
 </ul>
 </div>
@@ -7408,10 +7483,15 @@ section.</p>
 </div>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="iot-telemetry-messaging-iot">5.7. Sending and receiving telemetry data</h3>
+<h3 id="'iot-tenant-messaging-iot-iot-iot-iot">5.4. IoT for messaging tenants</h3>
 <div class="sect3">
-<h4 id="starting_the_telemetry_consumer">5.7.1. Starting the telemetry consumer</h4>
+<h4 id="customer_applications">5.4.1. Customer applications</h4>
+
+</div>
+<div class="sect3">
+<h4 id="iot-installing-cli-messaging-iot-iot-iot-iot">5.4.2. Installing the Eclipse Hono command-line client</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -7433,7 +7513,7 @@ section.</p>
 <p>Download the <a href="https://www.eclipse.org/hono/downloads/">Eclipse Hono command-line client</a>.</p>
 </li>
 <li>
-<p>Get the messaging endpoint certificate:</p>
+<p>Obtain the messaging endpoint certificate:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc -n myapp get addressspace iot -o jsonpath={.status.caCert} | base64 --decode > tls.crt</pre>
@@ -7449,8 +7529,14 @@ export MESSAGING_PORT=443</pre>
 </div>
 </div>
 </li>
+</ol>
+</div>
+<div class="sect4">
+<h5 id="telemetry">Telemetry</h5>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Run the consumer application:</p>
+<p>Run the consumer application to receive telemetry:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">java -jar hono-cli-*-exec.jar --hono.client.host=$MESSAGING_HOST --hono.client.port=$MESSAGING_PORT --hono.client.username=consumer --hono.client.password=foobar --tenant.id=myapp.iot --hono.client.trustStorePath=tls.crt --message.type=telemetry</pre>
@@ -7460,21 +7546,60 @@ export MESSAGING_PORT=443</pre>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="sending_telemetry_data">5.7.2. Sending telemetry data</h4>
+<div class="sect4">
+<h5 id="events">Events</h5>
 <div class="olist arabic">
-<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Send a message using HTTP protocol:</p>
+<p>Run the consumer application to receive events:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">java -jar hono-cli-*-exec.jar --hono.client.host=$MESSAGING_HOST --hono.client.port=$MESSAGING_PORT --hono.client.username=consumer --hono.client.password=foobar --tenant.id=myapp.iot --hono.client.trustStorePath=tls.crt --message.type=events</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="device_applications">5.4.3. Device applications</h4>
+<div class="sect4">
+<h5 id="http">HTTP</h5>
+<div class="olist arabic">
+<div class="title">Telemetry</div>
+<ol class="arabic">
+<li>
+<p>Send telemetry using the HTTP protocol:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">curl --insecure -X POST -i -u sensor1@myapp.iot:hono-secret -H 'Content-Type: application/json' --data-binary '{"temp": 5}' https://$(oc -n enmasse-infra get routes iot-http-adapter --template='{{ .spec.host }}')/telemetry</pre>
 </div>
 </div>
 </li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Events</div>
+<ol class="arabic">
 <li>
-<p>Send a message using MQTT protocol:</p>
+<p>Send events using the HTTP protocol:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl --insecure -X POST -i -u sensor1@myapp.iot:hono-secret -H 'Content-Type: application/json' --data-binary '{"temp": 5}' https://$(oc -n enmasse-infra get routes iot-http-adapter --template='{{ .spec.host }}')/events</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="mqtt">MQTT</h5>
+<div class="olist arabic">
+<div class="title">Telemetry</div>
+<ol class="arabic">
+<li>
+<p>Send telemetry using the MQTT protocol:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">mosquitto_pub -d -h $(oc -n enmasse-infra get routes iot-mqtt-adapter --template='{{ .spec.host }}') -p 443 -u 'sensor1@myapp.iot' -P hono-secret -t telemetry -m '{"temp": 5}' -i 4711 --cafile install/components/iot/examples/k8s-tls/build/iot-mqtt-adapter-fullchain.pem</pre>
@@ -7483,82 +7608,19 @@ export MESSAGING_PORT=443</pre>
 </li>
 </ol>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="iot-event-messaging-iot">5.8. Sending and receiving event data</h3>
-<div class="sect3">
-<h4 id="starting_the_event_consumer">5.8.1. Starting the event consumer</h4>
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#installing-services-messaging-iot">The IoT services are installed</a>.</p>
-</li>
-<li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-project-messaging-iot">An IoT project is created</a>.</p>
-</li>
-<li>
-<p><a href="http://enmasse.io/documentation/master/openshift/#iot-creating-device-messaging-iot">An IoT device is created</a>.</p>
-</li>
-</ul>
-</div>
 <div class="olist arabic">
-<div class="title">Procedure</div>
+<div class="title">Events</div>
 <ol class="arabic">
 <li>
-<p>Download the <a href="https://www.eclipse.org/hono/downloads/">Eclipse Hono command-line client</a>.</p>
-</li>
-<li>
-<p>Get the messaging endpoint certificate:</p>
+<p>Send events using the MQTT protocol:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc -n myapp get addressspace iot -o jsonpath={.status.caCert} | base64 --decode > tls.crt</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Export the messaging endpoint host and port:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">export MESSAGING_HOST=$(oc -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].externalHost})
-export MESSAGING_PORT=443</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Run the consumer application:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">java -jar hono-cli-*-exec.jar --hono.client.host=$MESSAGING_HOST --hono.client.port=$MESSAGING_PORT --hono.client.username=consumer --hono.client.password=foobar --tenant.id=myapp.iot --hono.client.trustStorePath=tls.crt --message.type=event</pre>
+<pre class="nowrap">mosquitto_pub -d -h $(oc -n enmasse-infra get routes iot-mqtt-adapter --template='{{ .spec.host }}') -p 443 -u 'sensor1@myapp.iot' -P hono-secret -t events -m '{"temp": 5}' -i 4711 --cafile install/components/iot/examples/k8s-tls/build/iot-mqtt-adapter-fullchain.pem</pre>
 </div>
 </div>
 </li>
 </ol>
 </div>
-</div>
-<div class="sect3">
-<h4 id="sending_event_data">5.8.2. Sending event data</h4>
-<div class="olist arabic">
-<div class="title">Procedure</div>
-<ol class="arabic">
-<li>
-<p>Send a message using HTTP protocol:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">curl --insecure -X POST -i -u sensor1@myapp.iot:hono-secret -H 'Content-Type: application/json' --data-binary '{"temp": 5}' https://$(oc -n enmasse-infra get routes iot-http-adapter --template='{{ .spec.host }}')/event</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Send a message using MQTT protocol:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">mosquitto_pub -d -h $(oc -n enmasse-infra get routes iot-mqtt-adapter --template='{{ .spec.host }}') -p 443 -u 'sensor1@myapp.iot' -P hono-secret -t event -m '{"temp": 5}' -i 4711 --cafile install/components/iot/examples/k8s-tls/build/iot-mqtt-adapter-fullchain.pem</pre>
-</div>
-</div>
-</li>
-</ol>
 </div>
 </div>
 </div>
@@ -16438,7 +16500,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-11-14 09:14:21 UTC
+Last updated 2019-11-15 09:14:43 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
