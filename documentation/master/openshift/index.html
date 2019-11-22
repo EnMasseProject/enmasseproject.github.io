@@ -475,16 +475,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#configuring-messaging">3.2. Configuring EnMasse</a>
 <ul class="sectlevel3">
-<li><a href="#con-configuring-messaging">3.2.1. Service configuration resources and definition</a></li>
-<li><a href="#minimal-service-configuration-messaging">3.2.2. Minimal service configuration</a></li>
-<li><a href="#con-address-space-plans-messaging">3.2.3. Address space plans</a></li>
-<li><a href="#create-address-space-plans-cli-messaging">3.2.4. Creating address space plans</a></li>
-<li><a href="#con-address-plans-messaging">3.2.5. Address plans</a></li>
-<li><a href="#create-address-plans-cli-messaging">3.2.6. Creating address plans</a></li>
-<li><a href="#infrastructure-configuration-messaging">3.2.7. Infrastructure configuration</a></li>
-<li><a href="#create-edit-infra-config-messaging">3.2.8. Creating and editing infrastructure configurations</a></li>
-<li><a href="#assembly-auth-services-messaging">3.2.9. Authentication services</a></li>
-<li><a href="#ref-example-roles-messaging">3.2.10. EnMasse example roles</a></li>
+<li><a href="#minimal-service-configuration-messaging">3.2.1. Minimal service configuration</a></li>
+<li><a href="#con-address-space-plans-messaging">3.2.2. Address space plans</a></li>
+<li><a href="#create-address-space-plans-cli-messaging">3.2.3. Creating address space plans</a></li>
+<li><a href="#con-address-plans-messaging">3.2.4. Address plans</a></li>
+<li><a href="#create-address-plans-cli-messaging">3.2.5. Creating address plans</a></li>
+<li><a href="#infrastructure-configuration-messaging">3.2.6. Infrastructure configuration</a></li>
+<li><a href="#create-edit-infra-config-messaging">3.2.7. Creating and editing infrastructure configurations</a></li>
+<li><a href="#assembly-auth-services-messaging">3.2.8. Authentication services</a></li>
+<li><a href="#ref-example-roles-messaging">3.2.9. EnMasse example roles</a></li>
 </ul>
 </li>
 <li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
@@ -521,6 +520,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#router-component-sizing-messaging">3.7.2. Router component sizing</a></li>
 <li><a href="#operator-component-sizing-messaging">3.7.3. Operator component sizing</a></li>
 <li><a href="#plan-sizing-messaging">3.7.4. Plan sizing</a></li>
+</ul>
+</li>
+<li><a href="#assembly-planning-messaging-planning">3.8. Understanding EnMasse resource configuration</a>
+<ul class="sectlevel3">
+<li><a href="#assembly-address-space-address-concepts-messaging-planning-planning">3.8.1. Address space and address concepts in EnMasse</a></li>
+<li><a href="#con-configuring-messaging">3.8.2. Service configuration resources and definition</a></li>
+<li><a href="#ref-example-use-case-messaging">3.8.3. Example use case for configuring EnMasse</a></li>
 </ul>
 </li>
 </ul>
@@ -1860,43 +1866,7 @@ spec:
 <div class="sect2">
 <h3 id="configuring-messaging">3.2. Configuring EnMasse</h3>
 <div class="sect3">
-<h4 id="con-configuring-messaging">3.2.1. Service configuration resources and definition</h4>
-<div class="paragraph">
-<p>The service operator configures EnMasse by defining resources constituting the "service configuration". This configuration contains instances of the following resource types:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>AuthenticationService</code>  - Describes an authentication service instance used to authenticate messaging clients.</p>
-</li>
-<li>
-<p><code>AddressSpacePlan</code> - Describes the messaging resources available for address spaces using this plan, such as the available address plans and the amount of router and broker resources that can be used.</p>
-</li>
-<li>
-<p><code>AddressPlan</code> - Describes the messaging resources consumed by a particular address using this plan, such as what fraction of routers and brokers an address will use and other properties that should be set for multiple addresses.</p>
-</li>
-<li>
-<p><code>StandardInfraConfig</code> - Describes the router and broker configuration for the <code>standard</code> address space type such as memory limits, storage capacity, affinity, and more.</p>
-</li>
-<li>
-<p><code>BrokeredInfraConfig</code> - Describes the broker configuration for the <code>brokered</code> address space type such as memory limits, storage capacity, affinity, and more.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>When created, these resources define the configuration that is available to the messaging tenants.</p>
-</div>
-<div class="paragraph">
-<p>The following diagram illustrates the relationship between the different service configuration resources (green) and how they are referenced by the messaging tenant resources (blue).</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../openshift/images/enmasse-entities.svg" alt="EnMasse entities">
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="minimal-service-configuration-messaging">3.2.2. Minimal service configuration</h4>
+<h4 id="minimal-service-configuration-messaging">3.2.1. Minimal service configuration</h4>
 <div class="paragraph">
 <p>Configuring EnMasse for production takes some time and consideration. The following procedure will get
 you started with a minimal service configuration. For a more complete example, navigate to the
@@ -1961,7 +1931,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-address-space-plans-messaging">3.2.3. Address space plans</h4>
+<h4 id="con-address-space-plans-messaging">3.2.2. Address space plans</h4>
 <div class="paragraph">
 <p>Address space plans are used to configure quotas and control the resources consumed by address spaces. Address space plans are configured by the EnMasse service operator and are selected by the messaging tenant when creating an address space.</p>
 </div>
@@ -2018,7 +1988,7 @@ For more information about infrastructure configurations, see <a href="http://en
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-space-plans-cli-messaging">3.2.4. Creating address space plans</h4>
+<h4 id="create-address-space-plans-cli-messaging">3.2.3. Creating address space plans</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2085,7 +2055,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-address-plans-messaging">3.2.5. Address plans</h4>
+<h4 id="con-address-plans-messaging">3.2.4. Address plans</h4>
 <div class="paragraph">
 <p>Address plans specify the expected resource usage of a given address. The sum of the resource usage for all resource types determines the amount of infrastructure provisioned for an address space. A single router and broker pod has a maximum usage of one. If a new address requires additional resources and the resource consumption is within the address space plan limits, a new pod will be created automatically to handle the increased load.</p>
 </div>
@@ -2178,7 +2148,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-address-plans-cli-messaging">3.2.6. Creating address plans</h4>
+<h4 id="create-address-plans-cli-messaging">3.2.5. Creating address plans</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -2235,7 +2205,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="infrastructure-configuration-messaging">3.2.7. Infrastructure configuration</h4>
+<h4 id="infrastructure-configuration-messaging">3.2.6. Infrastructure configuration</h4>
 <div class="paragraph">
 <p>EnMasse creates infrastructure components such as routers, brokers, and consoles. These
 components can be configured while the system is running, and EnMasse automatically updates
@@ -2641,7 +2611,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-edit-infra-config-messaging">3.2.8. Creating and editing infrastructure configurations</h4>
+<h4 id="create-edit-infra-config-messaging">3.2.7. Creating and editing infrastructure configurations</h4>
 <div class="paragraph">
 <p>You can create a new infrastructure configuration or edit an existing one. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#infrastructure-configuration-messaging">Infrastructure configuration</a>.</p>
 </div>
@@ -2713,7 +2683,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="assembly-auth-services-messaging">3.2.9. Authentication services</h4>
+<h4 id="assembly-auth-services-messaging">3.2.8. Authentication services</h4>
 <div class="paragraph">
 <p>Authentication services are used to configure the authentication and authorization endpoints
 available to messaging clients. The authentication services are configured by the EnMasse
@@ -3071,7 +3041,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-example-roles-messaging">3.2.10. EnMasse example roles</h4>
+<h4 id="ref-example-roles-messaging">3.2.9. EnMasse example roles</h4>
 <div class="paragraph">
 <p>EnMasse provides the following example roles that you can use directly or use as models to create your own roles.</p>
 </div>
@@ -3253,8 +3223,8 @@ spec:
 <p>Delete the cluster-level resources:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc delete clusterrolebindings -l app=enmasse
-oc delete crd -l app=enmasse
+<pre class="nowrap">oc delete crd -l app=enmasse
+oc delete clusterrolebindings -l app=enmasse
 oc delete clusterroles -l app=enmasse
 oc delete apiservices -l app=enmasse
 oc delete oauthclients -l app=enmasse</pre>
@@ -4215,6 +4185,291 @@ echo "Pods: ${total_pods}. Memory: ${total_memory_mb} MB. Storage: ${total_stora
 </div>
 </li>
 </ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="assembly-planning-messaging-planning">3.8. Understanding EnMasse resource configuration</h3>
+<div class="sect3">
+<h4 id="assembly-address-space-address-concepts-messaging-planning-planning">3.8.1. Address space and address concepts in EnMasse</h4>
+<div class="paragraph">
+<p>Before you begin configuring resources for EnMasse, you must first understand the concepts of an address space and an address in EnMasse.</p>
+</div>
+<div class="sect4">
+<h5 id="con-address-space-messaging-planning-planning">Address space</h5>
+<div class="paragraph">
+<p>An address space is a group of addresses that can be accessed through a single connection (per protocol). This means that clients connected to the endpoints of an address space can send messages to or receive messages from any authorized address within that address space. An address space can support multiple protocols, as defined by the address space type.</p>
+</div>
+<div class="paragraph">
+<p>EnMasse has two types of address spaces:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#con-standard-address-space-messaging">Standard</a></p>
+</li>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift/#con-brokered-address-space-messaging">Brokered</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="con-address-messaging-planning-planning">Address</h5>
+<div class="paragraph">
+<p>An address is part of an address space and represents a destination for sending and receiving messages. An address has a type, which defines the semantics of sending messages to and receiving messages from that address.</p>
+</div>
+<div class="paragraph">
+<p>The types of addresses available in EnMasse depend on the address space type.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="con-configuring-messaging">3.8.2. Service configuration resources and definition</h4>
+<div class="paragraph">
+<p>The service administrator configures EnMasse by creating Custom Resources that comprise the "service configuration." This service configuration contains instances of the following Custom Resource types:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Custom Resource type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AuthenticationService</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies an authentication service instance used to authenticate messaging clients.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AddressSpacePlan</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the messaging resources available for address spaces using this plan, such as the available address plans and the amount of router and broker resources that can be used.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AddressPlan</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the messaging resources consumed by a particular address using this plan, such as the fraction of routers and brokers an address can use and other properties that can be specified for multiple addresses.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>StandardInfraConfig</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For the <code>standard</code> address space type, specifies the router and broker configuration such as memory limits, storage capacity, affinity, and more.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BrokeredInfraConfig</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For the <code>brokered</code> address space type, specifies the broker configuration  such as memory limits, storage capacity, affinity, and more.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When created, these Custom Resources define the configuration that is available to the messaging tenants.</p>
+</div>
+<div class="paragraph">
+<p>The following diagram illustrates the relationship between the different service configuration resources (green) and how they are referenced by the messaging tenant resources (blue).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../openshift/images/enmasse-entities.svg" alt="EnMasse entities">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ref-example-use-case-messaging">3.8.3. Example use case for configuring EnMasse</h4>
+<div class="paragraph">
+<p>To help illustrate how the service configuration resources can be defined to satisfy a particular use case, the requirements of Company X for using EnMasse are outlined. This use case is referenced throughout the following documentation describing the service configuration resource types in further detail.</p>
+</div>
+<div class="paragraph">
+<p>Company X has the following requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ability to accommodate multiple separate teams&#8212;&#8203;for example, engineering and quality assurance (QA) work teams&#8212;&#8203;that use messaging independently. To meet this requirement, multiple address spaces are needed.</p>
+</li>
+<li>
+<p>Since the applications for Company X are written to use JMS APIs and make extensive use of local transactions and they use a mixture of AMQP and OpenWire clients, using the brokered address space type is required.</p>
+</li>
+<li>
+<p>For engineering work, restricting the messaging infrastructure to support storage of no more than 1000 messages of approximately 1 KB per message, with up to 10 queues and topics is required.</p>
+<div class="paragraph">
+<p>For QA work, restricting the messaging infrastructure to support storage of no more than 10,000 messages of approximately 100 KB, with up to 50 queues and topics is required.</p>
+</div>
+</li>
+<li>
+<p>For engineering work, the ability to restrict who can connect into the address space is required.</p>
+</li>
+<li>
+<p>For engineering work, the engineering team does not need to create distinct users that need to be individually authenticated.</p>
+<div class="paragraph">
+<p>For QA work, the QA team must be able to create users for each instance.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each of these requirements and how they can be met by configuring the appropriate resources is discussed in the following sections.</p>
+</div>
+<div class="sect4">
+<h5 id="ref-restrict-messaging-infrastructure-messaging">Restricting messaging infrastructure</h5>
+<div class="paragraph">
+<p>Company X has the following requirements for using EnMasse:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For engineering work, restricting the messaging infrastructure to support storage of no more than 1000 messages of approximately 1 KB per message, with up to 10 queues and topics is required.</p>
+<div class="paragraph">
+<p>For QA work, restricting the messaging infrastructure to support storage of no more than 10,000 messages of approximately 100 KB, with up to 50 queues and topics is required.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Meeting this requirement involves configuring the <code>BrokeredInfraConfig</code> resource. The following points need to be taken into consideration:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Calculate the memory size for the broker: Given the requirements, specifying a relatively small memory size for engineering work is likely sufficient, while more memory is required for the QA work. For more information about broker sizing guidelines, see <a href="http://enmasse.io/documentation/master/openshift/#broker-component-sizing-messaging">Broker component sizing</a>.</p>
+</li>
+<li>
+<p>Calculate the minimum amount of storage for the broker. For more information about broker sizing guidelines, see <a href="http://enmasse.io/documentation/master/openshift/#broker-component-sizing-messaging">Broker component sizing</a>.</p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="examples_of_brokered_infrastructure_configurations">Examples of brokered infrastructure configurations</h6>
+<div class="paragraph">
+<p>The following brokered infrastructure configuration examples show broker component resource values that meet the requirements of Company X.</p>
+</div>
+<div class="listingblock">
+<div class="title">Brokered infrastructure configuration example for engineering</div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+kind: BrokeredInfraConfig
+metadata:
+  name: engineering
+spec:
+  broker:
+    resources:
+      memory: 512Mi
+      storage: 20Mi</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Brokered infrastructure configuration example for QA</div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+kind: BrokeredInfraConfig
+metadata:
+  name: qa
+spec:
+  broker:
+    resources:
+      memory: 4Gi
+      storage: 50Gi</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-ability-restrict-address-space-connections-messaging">Ability to restrict address space connections</h5>
+<div class="paragraph">
+<p>Company X has the following requirement for using EnMasse: For engineering work, the ability to restrict who can connect into the address space is required.</p>
+</div>
+<div class="paragraph">
+<p>To meet this requirement you must set a network policy in the brokered infrastructure configuration. For more information about network policies, see</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>OpenShift Container Platform 3.11 documentation about <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/cluster_administration/index#admin-guide-networking-networkpolicy">Enabling Network Policy</a>.</p>
+</li>
+<li>
+<p>OpenShift Container Platform 4.2 documentation about <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.2/html-single/networking/index#configuring-networkpolicy">Configuring network policy with OpenShift SDN</a>.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Brokered infrastructure configuration example showing network policy setting</div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+kind: BrokeredInfraConfig
+metadata:
+  name: engineering
+spec:
+  networkPolicy:
+    ingress:
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              org: engineering
+  broker:
+    resources:
+      memory: 512Mi
+      storage: 20Mi</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition, the address space plan references the previous <code>BrokeredInfraConfig</code> Custom Resource.</p>
+</div>
+<div class="listingblock">
+<div class="title">Address space plan example</div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta2
+kind: AddressSpacePlan
+metadata:
+  name: engineering
+spec:
+  infraConfigRef: engineering
+  addressSpaceType: brokered
+  addressPlans:
+  - brokered-queue
+  - brokered-topic</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-auth-service-resource-examples-messaging">Authentication service resource examples</h5>
+<div class="paragraph">
+<p>Company X has the following requirement for using EnMasse: For engineering work, the engineering team does not need to create distinct users that need to be individually authenticated. To meet this requirement, you specify the <code>none</code> authentication service:</p>
+</div>
+<div class="listingblock">
+<div class="title">None authentication service example</div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+kind: AuthenticationService
+metadata:
+  name: engineering
+spec:
+  type: none</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For QA work, the QA team must be able to create users for each instance. Also,  QA has a database they want to use for persisting the users. To meet this requirement, you must use the <code>standard</code> authentication service and specify a data source:</p>
+</div>
+<div class="listingblock">
+<div class="title">Standard authentication service example</div>
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+kind: AuthenticationService
+metadata:
+  name: qa
+spec:
+  type: standard
+  standard:
+    storage:
+      type: persistent-claim
+      size: 5Gi
+    datasource:
+      type: postgresql
+      host: db.example.com
+      port: 5432
+      database: authdb</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -16500,7 +16755,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-11-21 09:37:23 UTC
+Last updated 2019-11-22 09:16:46 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
