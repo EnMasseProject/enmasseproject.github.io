@@ -2242,7 +2242,7 @@ kind: BrokeredInfraConfig
 metadata:
   name: brokered-infra-config-example
 spec:
-  version: "0.30-SNAPSHOT" <b class="conum">(1)</b>
+  version: "0.31-SNAPSHOT" <b class="conum">(1)</b>
   admin: <b class="conum">(2)</b>
     resources:
       memory: 256Mi
@@ -2421,7 +2421,7 @@ kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: "0.30-SNAPSHOT" <b class="conum">(1)</b>
+  version: "0.31-SNAPSHOT" <b class="conum">(1)</b>
   admin: <b class="conum">(2)</b>
     resources:
       memory: 256Mi
@@ -2643,7 +2643,7 @@ kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: "0.30-SNAPSHOT"
+  version: "0.31-SNAPSHOT"
   admin:
     resources:
       memory: 256Mi
@@ -5096,6 +5096,18 @@ spec:
 <p>The <code>selfsigned</code> certificate provider can be used to configure endpoints with self-signed
 certificates. The CA for these certificates can be found in the <code>status.caCert</code> field of the
 <code>AddressSpace</code> resource.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Using a self-signed certificate in production environments is not recommended.
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8646,7 +8658,7 @@ export MESSAGING_PORT=443</pre>
 <div class="sect4">
 <h5 id="version_information">Version information</h5>
 <div class="paragraph">
-<p><em>Version</em> : 0.30-SNAPSHOT</p>
+<p><em>Version</em> : 0.31-SNAPSHOT</p>
 </div>
 </div>
 <div class="sect4">
@@ -16755,7 +16767,7 @@ export MESSAGING_PORT=443</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-11-25 09:18:56 UTC
+Last updated 2019-11-27 09:20:18 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
