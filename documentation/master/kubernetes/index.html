@@ -612,24 +612,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#iot_services_configuration_examples">5.2.2. IoT services configuration examples</a></li>
 </ul>
 </li>
-<li><a href="#'iot-device-managers-messaging-iot-iot-iot-iot">5.3. IoT for device managers</a>
+<li><a href="#'iot-project-owner-messaging-iot-iot-iot-iot">5.3. IoT for projects owners</a>
 <ul class="sectlevel3">
-<li><a href="#assembly-iot-creating-device-messaging-iot-iot-iot-iot">5.3.1. Creating an IoT device</a></li>
+<li><a href="#iot_project_configuration_examples">5.3.1. IoT project configuration examples</a></li>
 </ul>
 </li>
-<li><a href="#'iot-solution-developers-messaging-iot-iot-iot-iot-iot">5.4. IoT for solution developers</a>
+<li><a href="#'iot-device-managers-messaging-iot-iot-iot-iot-iot">5.4. IoT for device managers</a>
 <ul class="sectlevel3">
-<li><a href="#proc-iot-installing-cli-messaging-iot-iot-iot-iot-iot">5.4.1. Installing the Eclipse Hono command-line client</a></li>
-<li><a href="#proc-iot-starting-telemetry-consumer-messaging-iot-iot-iot-iot-iot">5.4.2. Starting the telemetry consumer</a></li>
-<li><a href="#proc-iot-starting-events-consumer-messaging-iot-iot-iot-iot-iot">5.4.3. Starting the events consumer</a></li>
-<li><a href="#proc-iot-starting-commands-sender-messaging-iot-iot-iot-iot-iot">5.4.4. Starting the command sender</a></li>
+<li><a href="#assembly-iot-creating-device-messaging-iot-iot-iot-iot-iot">5.4.1. Creating an IoT device</a></li>
 </ul>
 </li>
-<li><a href="#'iot-device-developers-messaging-iot-iot-iot-iot-iot-iot">5.5. IoT for device developers</a>
+<li><a href="#'iot-solution-developers-messaging-iot-iot-iot-iot-iot-iot">5.5. IoT for solution developers</a>
 <ul class="sectlevel3">
-<li><a href="#http_devices">5.5.1. HTTP devices</a></li>
-<li><a href="#mqtt_devices">5.5.2. MQTT devices</a></li>
-<li><a href="#assembly-iot-configuring-sigfox-messaging-iot-iot-iot-iot-iot-iot">5.5.3. Configuring Sigfox devices</a></li>
+<li><a href="#proc-iot-installing-cli-messaging-iot-iot-iot-iot-iot-iot">5.5.1. Installing the Eclipse Hono command-line client</a></li>
+<li><a href="#proc-iot-starting-telemetry-consumer-messaging-iot-iot-iot-iot-iot-iot">5.5.2. Starting the telemetry consumer</a></li>
+<li><a href="#proc-iot-starting-events-consumer-messaging-iot-iot-iot-iot-iot-iot">5.5.3. Starting the events consumer</a></li>
+<li><a href="#proc-iot-starting-commands-sender-messaging-iot-iot-iot-iot-iot-iot">5.5.4. Starting the command sender</a></li>
+</ul>
+</li>
+<li><a href="#'iot-device-developers-messaging-iot-iot-iot-iot-iot-iot-iot">5.6. IoT for device developers</a>
+<ul class="sectlevel3">
+<li><a href="#http_devices">5.6.1. HTTP devices</a></li>
+<li><a href="#mqtt_devices">5.6.2. MQTT devices</a></li>
+<li><a href="#assembly-iot-configuring-sigfox-messaging-iot-iot-iot-iot-iot-iot-iot">5.6.3. Configuring Sigfox devices</a></li>
 </ul>
 </li>
 </ul>
@@ -6889,12 +6894,92 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="'iot-device-managers-messaging-iot-iot-iot-iot">5.3. IoT for device managers</h3>
+<h3 id="'iot-project-owner-messaging-iot-iot-iot-iot">5.3. IoT for projects owners</h3>
+<div class="sect3">
+<h4 id="iot_project_configuration_examples">5.3.1. IoT project configuration examples</h4>
+<div class="paragraph">
+<p>IoT projects define the messaging resources an IoT tenant can consume.</p>
+</div>
+<div class="sect4">
+<h5 id="iot-project-managed-example">Using a managed messaging infrastructure</h5>
+<div class="paragraph">
+<p>This IoT project configuration example relies on EnMasse to manage the messaging infrastructure used by IoT traffic.
+The EnMasse <code>standard</code> address space and address plans are used.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kind: IoTProject
+apiVersion: iot.enmasse.io/v1alpha1
+metadata:
+  name: user-1
+spec:
+  downstreamStrategy:
+    managedStrategy: <b class="conum">(1)</b>
+      addressSpace:
+        name: iot-user-1
+        plan: standard-unlimited <b class="conum">(2)</b>
+        type: standard <b class="conum">(4)</b>
+      addresses:
+        telemetry:
+          plan: standard-small-anycast <b class="conum">(3)</b>
+          type: standard <b class="conum">(5)</b>
+        event:
+          plan: standard-small-queue <b class="conum">(3)</b>
+        command:
+          plan: standard-small-anycast <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The <code>managedStrategy</code> value refers to a messaging infrastructure managed by EnMasse.</p>
+</li>
+<li>
+<p>Specifies the address space plan, defining the resource usage of the address space. Each IoT tenant must have its own address space.</p>
+</li>
+<li>
+<p>Each address must be associated with a valid address plan.</p>
+</li>
+<li>
+<p>Specifies the type of the address space. The default value is <code>standard</code>. For more information see the <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">address space documentation</a>.</p>
+</li>
+<li>
+<p>Specifies the type of the address. For more information see <a href="http://enmasse.io/documentation/master/kubernetes/#con-address-space-messaging">address space documentation</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="iot-project-external-example">Using an external messaging infrastructure</h5>
+<div class="paragraph">
+<p>This IoT configuration example shows how an external messaging infrastructure can be configured.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kind: IoTProject
+apiVersion: iot.enmasse.io/v1alpha1
+metadata:
+  name: user-1
+spec:
+  downstreamStrategy:
+    externalStrategy:
+      host: messaging-hono-default.enmasse-infra.svc
+      port: 5672
+      username: http
+      tls: true
+      password: http-secret</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="'iot-device-managers-messaging-iot-iot-iot-iot-iot">5.4. IoT for device managers</h3>
 <div class="paragraph">
 <p>Device managers are typically responsible for creating and managing device identities and credentials in the system.</p>
 </div>
 <div class="sect3">
-<h4 id="assembly-iot-creating-device-messaging-iot-iot-iot-iot">5.3.1. Creating an IoT device</h4>
+<h4 id="assembly-iot-creating-device-messaging-iot-iot-iot-iot-iot">5.4.1. Creating an IoT device</h4>
 <div class="paragraph">
 <p>After installing the IoT services and creating an IoT project, you can create an IoT device for the device you want to monitor.</p>
 </div>
@@ -6902,15 +6987,15 @@ spec:
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-installing-services-messaging-iot-iot-iot-iot">The IoT services are installed</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-installing-services-messaging-iot-iot-iot-iot-iot">The IoT services are installed</a>.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-creating-project-messaging-iot-iot-iot-iot">An IoT project is created</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-creating-project-messaging-iot-iot-iot-iot-iot">An IoT project is created</a>.</p>
 </li>
 </ul>
 </div>
 <div class="sect4">
-<h5 id="proc-iot-register-new-device-messaging-iot-iot-iot-iot">Registering a new device</h5>
+<h5 id="proc-iot-register-new-device-messaging-iot-iot-iot-iot-iot">Registering a new device</h5>
 <div class="paragraph">
 <p>To create a new device, you must first register the device.</p>
 </div>
@@ -6958,7 +7043,7 @@ spec:
 </div>
 </div>
 <div class="sect4">
-<h5 id="proc-iot-set-username-password-device-messaging-iot-iot-iot-iot">Setting user name and password credentials for a device</h5>
+<h5 id="proc-iot-set-username-password-device-messaging-iot-iot-iot-iot-iot">Setting user name and password credentials for a device</h5>
 <div class="paragraph">
 <p>After registering a new device, you must set the user name and password credentials for the device.</p>
 </div>
@@ -6985,23 +7070,23 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="'iot-solution-developers-messaging-iot-iot-iot-iot-iot">5.4. IoT for solution developers</h3>
+<h3 id="'iot-solution-developers-messaging-iot-iot-iot-iot-iot-iot">5.5. IoT for solution developers</h3>
 <div class="paragraph">
 <p>IoT solution developers are typically responsible for writing IoT cloud applications.</p>
 </div>
 <div class="sect3">
-<h4 id="proc-iot-installing-cli-messaging-iot-iot-iot-iot-iot">5.4.1. Installing the Eclipse Hono command-line client</h4>
+<h4 id="proc-iot-installing-cli-messaging-iot-iot-iot-iot-iot-iot">5.5.1. Installing the Eclipse Hono command-line client</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-installing-services-messaging-iot-iot-iot-iot-iot">The IoT services are installed</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-installing-services-messaging-iot-iot-iot-iot-iot-iot">The IoT services are installed</a>.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-creating-project-messaging-iot-iot-iot-iot-iot">An IoT project is created</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-creating-project-messaging-iot-iot-iot-iot-iot-iot">An IoT project is created</a>.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#assembly-iot-creating-device-messaging-iot-iot-iot-iot-iot">An IoT device is created</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#assembly-iot-creating-device-messaging-iot-iot-iot-iot-iot-iot">An IoT device is created</a>.</p>
 </li>
 </ul>
 </div>
@@ -7052,7 +7137,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-iot-starting-telemetry-consumer-messaging-iot-iot-iot-iot-iot">5.4.2. Starting the telemetry consumer</h4>
+<h4 id="proc-iot-starting-telemetry-consumer-messaging-iot-iot-iot-iot-iot-iot">5.5.2. Starting the telemetry consumer</h4>
 <div class="paragraph">
 <p>You can send telemetry data such as sensor readings, for example, from a device to the cloud. To do this, you must first start the telemetry consumer by running the customer application.</p>
 </div>
@@ -7071,7 +7156,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-iot-starting-events-consumer-messaging-iot-iot-iot-iot-iot">5.4.3. Starting the events consumer</h4>
+<h4 id="proc-iot-starting-events-consumer-messaging-iot-iot-iot-iot-iot-iot">5.5.3. Starting the events consumer</h4>
 <div class="paragraph">
 <p>You can send events, such as alerts and other important data, from a device to a consumer application. To do this, you must first start the events consumer by running the customer application.</p>
 </div>
@@ -7090,7 +7175,7 @@ export MESSAGING_PORT=5671</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-iot-starting-commands-sender-messaging-iot-iot-iot-iot-iot">5.4.4. Starting the command sender</h4>
+<h4 id="proc-iot-starting-commands-sender-messaging-iot-iot-iot-iot-iot-iot">5.5.4. Starting the command sender</h4>
 <div class="paragraph">
 <p>You can send commands from a cloud to the device.  To do this, you must start the command sender by running the customer application.</p>
 </div>
@@ -7125,15 +7210,15 @@ INFO  org.eclipse.hono.cli.app.Commander - Command sent to device</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="'iot-device-developers-messaging-iot-iot-iot-iot-iot-iot">5.5. IoT for device developers</h3>
+<h3 id="'iot-device-developers-messaging-iot-iot-iot-iot-iot-iot-iot">5.6. IoT for device developers</h3>
 <div class="paragraph">
 <p>Device developers are typically responsible for either connecting existing devices to the cloud platform or writing software for devices.
 This information describes how to connect devices using one of the supported protocols.</p>
 </div>
 <div class="sect3">
-<h4 id="http_devices">5.5.1. HTTP devices</h4>
+<h4 id="http_devices">5.6.1. HTTP devices</h4>
 <div class="sect4">
-<h5 id="proc-iot-sending-telemetry-http-messaging-iot-iot-iot-iot-iot-iot">Sending telemetry using HTTP</h5>
+<h5 id="proc-iot-sending-telemetry-http-messaging-iot-iot-iot-iot-iot-iot-iot">Sending telemetry using HTTP</h5>
 <div class="paragraph">
 <p>You can send telemetry from a device to the cloud using the HTTP protocol.</p>
 </div>
@@ -7152,7 +7237,7 @@ This information describes how to connect devices using one of the supported pro
 </div>
 </div>
 <div class="sect4">
-<h5 id="proc-iot-sending-events-http-messaging-iot-iot-iot-iot-iot-iot">Sending events using HTTP</h5>
+<h5 id="proc-iot-sending-events-http-messaging-iot-iot-iot-iot-iot-iot-iot">Sending events using HTTP</h5>
 <div class="paragraph">
 <p>You can send an event message from the customer application to the device using the HTTP protocol.</p>
 </div>
@@ -7171,7 +7256,7 @@ This information describes how to connect devices using one of the supported pro
 </div>
 </div>
 <div class="sect4">
-<h5 id="proc-iot-receiving-commands-http-messaging-iot-iot-iot-iot-iot-iot">Receiving commands using the HTTP protocol</h5>
+<h5 id="proc-iot-receiving-commands-http-messaging-iot-iot-iot-iot-iot-iot-iot">Receiving commands using the HTTP protocol</h5>
 <div class="paragraph">
 <p>You can send commands from the cloud to a device using the HTTP protocol.</p>
 </div>
@@ -7227,9 +7312,9 @@ content-length: 13
 </div>
 </div>
 <div class="sect3">
-<h4 id="mqtt_devices">5.5.2. MQTT devices</h4>
+<h4 id="mqtt_devices">5.6.2. MQTT devices</h4>
 <div class="sect4">
-<h5 id="proc-iot-sending-telemetry-mqtt-messaging-iot-iot-iot-iot-iot-iot">Sending telemetry using MQTT</h5>
+<h5 id="proc-iot-sending-telemetry-mqtt-messaging-iot-iot-iot-iot-iot-iot-iot">Sending telemetry using MQTT</h5>
 <div class="paragraph">
 <p>You can send telemetry from a device to the cloud using the MQTT protocol.</p>
 </div>
@@ -7248,7 +7333,7 @@ content-length: 13
 </div>
 </div>
 <div class="sect4">
-<h5 id="proc-iot-sending-events-mqtt-messaging-iot-iot-iot-iot-iot-iot">Sending events using MQTT</h5>
+<h5 id="proc-iot-sending-events-mqtt-messaging-iot-iot-iot-iot-iot-iot-iot">Sending events using MQTT</h5>
 <div class="paragraph">
 <p>You can send an event message from the customer application to the device using the MQTT protocol.</p>
 </div>
@@ -7267,7 +7352,7 @@ content-length: 13
 </div>
 </div>
 <div class="sect4">
-<h5 id="proc-iot-receiving-commands-mqtt-messaging-iot-iot-iot-iot-iot-iot">Receiving commands using the MQTT protocol</h5>
+<h5 id="proc-iot-receiving-commands-mqtt-messaging-iot-iot-iot-iot-iot-iot-iot">Receiving commands using the MQTT protocol</h5>
 <div class="paragraph">
 <p>You can send commands from the cloud to a device using the MQTT protocol.</p>
 </div>
@@ -7319,7 +7404,7 @@ command///req//setVolume {"level": 50}</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="assembly-iot-configuring-sigfox-messaging-iot-iot-iot-iot-iot-iot">5.5.3. Configuring Sigfox devices</h4>
+<h4 id="assembly-iot-configuring-sigfox-messaging-iot-iot-iot-iot-iot-iot-iot">5.6.3. Configuring Sigfox devices</h4>
 <div class="paragraph">
 <p>After installing the IoT services and creating an IoT project, you can configure
 the Sigfox backend integration.</p>
@@ -7328,10 +7413,10 @@ the Sigfox backend integration.</p>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-installing-services-messaging-iot-iot-iot-iot-iot-iot">The IoT services are installed</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-installing-services-messaging-iot-iot-iot-iot-iot-iot-iot">The IoT services are installed</a>.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-creating-project-messaging-iot-iot-iot-iot-iot-iot">An IoT project is created</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#iot-creating-project-messaging-iot-iot-iot-iot-iot-iot-iot">An IoT project is created</a>.</p>
 </li>
 <li>
 <p>TLS is properly deployed in your cluster. The Sigfox protocol adapter endpoint
@@ -7346,7 +7431,7 @@ must be properly validated with TLS.</p>
 </ul>
 </div>
 <div class="sect4">
-<h5 id="iot-register-sigfox-backend-gateway-device-messaging-iot-iot-iot-iot-iot-iot">Registering the Sigfox backend as a gateway device</h5>
+<h5 id="iot-register-sigfox-backend-gateway-device-messaging-iot-iot-iot-iot-iot-iot-iot">Registering the Sigfox backend as a gateway device</h5>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -7378,12 +7463,12 @@ of the "callback" in the Sigfox backend.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="proc-iot-register-sigfox-device-messaging-iot-iot-iot-iot-iot-iot">Registering the Sigfox device</h5>
+<h5 id="proc-iot-register-sigfox-device-messaging-iot-iot-iot-iot-iot-iot-iot">Registering the Sigfox device</h5>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#proc-iot-registering-sigfox-backend-gateway-device-messaging-iot-iot-iot-iot-iot-iot">Registered the Sigfox backend as a gateway device</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#proc-iot-registering-sigfox-backend-gateway-device-messaging-iot-iot-iot-iot-iot-iot-iot">Registered the Sigfox backend as a gateway device</a>.</p>
 </li>
 </ul>
 </div>
@@ -7395,7 +7480,7 @@ of the "callback" in the Sigfox backend.</p>
 process in the Sigfox backend.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#proc-iot-register-new-device-messaging-iot-iot-iot-iot-iot-iot">Register a new device</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#proc-iot-register-new-device-messaging-iot-iot-iot-iot-iot-iot-iot">Register a new device</a>.</p>
 <div class="paragraph">
 <p>Specify the device ID as the name (for example, <code>1AB2C3</code>) and specify the name of the gateway device in the <code>via</code> field,
 as part of the registration information (for example, <code>{"via": ["sigfox-backend"]}</code>).</p>
@@ -7417,10 +7502,10 @@ Do not set a password for this device.
 </div>
 </div>
 <div class="sect4">
-<h5 id="ref-iot-prepare-sigfox-connection-information-messaging-iot-iot-iot-iot-iot-iot">Preparing the Sigfox connection information</h5>
+<h5 id="ref-iot-prepare-sigfox-connection-information-messaging-iot-iot-iot-iot-iot-iot-iot">Preparing the Sigfox connection information</h5>
 <div class="paragraph">
 <p>Prepare the following connection information, which is used in the
-<a href="http://enmasse.io/documentation/master/kubernetes/#proc-iot-creating-new-sigfox-callback-messaging-iot-iot-iot-iot-iot-iot">Creating a new callback in the Sigfox backend</a> procedure.</p>
+<a href="http://enmasse.io/documentation/master/kubernetes/#proc-iot-creating-new-sigfox-callback-messaging-iot-iot-iot-iot-iot-iot-iot">Creating a new callback in the Sigfox backend</a> procedure.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -7484,12 +7569,12 @@ to handle messages as <em>telemetry</em> data. You can use <code>/data/event</co
 </div>
 </div>
 <div class="sect4">
-<h5 id="proc-iot-creating-new-sigfox-callback-messaging-iot-iot-iot-iot-iot-iot">Creating a new callback in the Sigfox backend</h5>
+<h5 id="proc-iot-creating-new-sigfox-callback-messaging-iot-iot-iot-iot-iot-iot-iot">Creating a new callback in the Sigfox backend</h5>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-iot-configure-sigfox-connection-information-messaging-iot-iot-iot-iot-iot-iot">Prepared the Sigfox connection information</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#ref-iot-configure-sigfox-connection-information-messaging-iot-iot-iot-iot-iot-iot-iot">Prepared the Sigfox connection information</a>.</p>
 </li>
 </ul>
 </div>
@@ -7538,12 +7623,12 @@ section.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="proc-iot-sigfox-enabling-command-and-control-messaging-iot-iot-iot-iot-iot-iot">Enabling command and control in Sigfox</h5>
+<h5 id="proc-iot-sigfox-enabling-command-and-control-messaging-iot-iot-iot-iot-iot-iot-iot">Enabling command and control in Sigfox</h5>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes/#proc-iot-creating-new-sigfox-callback-messaging-iot-iot-iot-iot-iot-iot">Created a callback in the Sigfox backend</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes/#proc-iot-creating-new-sigfox-callback-messaging-iot-iot-iot-iot-iot-iot-iot">Created a callback in the Sigfox backend</a>.</p>
 </li>
 </ul>
 </div>
@@ -16462,7 +16547,7 @@ section.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-01-16 09:44:24 UTC
+Last updated 2020-01-17 09:44:37 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
