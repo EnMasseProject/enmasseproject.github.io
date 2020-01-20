@@ -613,8 +613,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#'iot-service-admin-messaging-iot-iot-iot">5.2. IoT for service administrators</a>
 <ul class="sectlevel3">
-<li><a href="#iot-installing-services-messaging-iot-iot-iot">5.2.1. Installing IoT services</a></li>
-<li><a href="#iot_services_configuration_examples">5.2.2. IoT services configuration examples</a></li>
+<li><a href="#con-iot-monitoring-messaging-iot-iot-iot">5.2.1. IoT monitoring</a></li>
+<li><a href="#iot-installing-services-messaging-iot-iot-iot">5.2.2. Installing IoT services</a></li>
+<li><a href="#iot_services_configuration_examples">5.2.3. IoT services configuration examples</a></li>
+<li><a href="#ref-iot-metrics-messaging-iot-iot-iot">5.2.4. IoT-specific metrics</a></li>
 </ul>
 </li>
 <li><a href="#'iot-project-owner-messaging-iot-iot-iot-iot">5.3. IoT for projects owners</a>
@@ -7730,7 +7732,19 @@ export MESSAGING_PORT=443</pre>
 <p>Service administrators typically install and configure the Internet of Things (IoT) services for EnMasse.</p>
 </div>
 <div class="sect3">
-<h4 id="iot-installing-services-messaging-iot-iot-iot">5.2.1. Installing IoT services</h4>
+<h4 id="con-iot-monitoring-messaging-iot-iot-iot">5.2.1. IoT monitoring</h4>
+<div class="paragraph">
+<p>Deploying EnMasse monitoring also allows you to monitor the IoT-related components of EnMasse. No additional configuration is required.</p>
+</div>
+<div class="paragraph">
+<p>For more information about EnMasse monitoring, see <a href="http://enmasse.io/documentation/master/openshift/#monitoring-messaging">Monitoring EnMasse</a>.</p>
+</div>
+<div class="paragraph">
+<p>For detailed information about the available metrics specific to IoT, see <a href="http://enmasse.io/documentation/master/openshift/#ref-iot-metrics-messaging-iot-iot-iot">IoT-specific metrics</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iot-installing-services-messaging-iot-iot-iot">5.2.2. Installing IoT services</h4>
 <div class="paragraph">
 <p>To get started using the IoT feature on EnMasse, you must first install the IoT services.</p>
 </div>
@@ -7802,7 +7816,7 @@ oc apply -f install/components/iot/examples/infinispan/manual</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="iot_services_configuration_examples">5.2.2. IoT services configuration examples</h4>
+<h4 id="iot_services_configuration_examples">5.2.3. IoT services configuration examples</h4>
 <div class="sect4">
 <h5 id="iotconfig-example-messaging-iot-iot-iot">Minimal IoT configuration example</h5>
 <div class="paragraph">
@@ -7905,6 +7919,224 @@ spec:
 </li>
 </ol>
 </div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ref-iot-metrics-messaging-iot-iot-iot">5.2.4. IoT-specific metrics</h4>
+<div class="paragraph">
+<p>The IoT-specific components of EnMasse provide the metrics described in this section.</p>
+</div>
+<div class="sect4">
+<h5 id="common_tags_and_metrics">Common tags and metrics</h5>
+<div class="paragraph">
+<p>The following tags are available on all IoT-related components:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tag</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>host</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>string</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the name of the host that the component reporting the metric is running on.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>component-type</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adapter</code>, <code>service</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the type of component reporting the metric.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>component-name</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>string</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the component reporting the metric. For a list of components, see the following table.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. Component names</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Component</th>
+<th class="tableblock halign-left valign-top"><em>component-name</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP protocol adapter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hono-http</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MQTT protocol adapter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hono-mqtt</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LoRaWAN protocol adapter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hono-lora</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sigfox protocol adapter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hono-sigfox</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="protocol_adapters">Protocol adapters</h5>
+<div class="paragraph">
+<p>Protocol adapters, components of type <code>adapter</code>, have some additional tags.
+.Protocol adapter tags</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>direction</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>one-way</code>, <code>request</code>, <code>response</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the direction in
+which a Command &amp; Control message is being sent: <code>one-way</code> indicates a
+command sent to a device for which the sending application does not
+expect to receive a response; <code>request</code> indicates a command request
+message sent to a device; and <code>response</code> indicates a command response
+received from a device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>qos</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0</code>, <code>1</code>, <code>unknown</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates the quality of service used for a
+telemetry or event message: <code>0</code> indicates <em>at most once</em>,<code>1</code>
+indicates <em>at least once</em>, and <code>none</code> indicates unknown delivery
+semantics.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>status</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>forwarded</code>, <code>unprocessable</code>, <code>undeliverable</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates the
+processing status of a message. <code>forwarded</code> indicates that the message
+has been forwarded to a downstream consumer; <code>unprocessable</code> indicates
+that the message has not been processed or forwarded, for example, because the
+message was malformed; and <code>undeliverable</code> indicates that the message could
+not be forwarded, for example, because there is no downstream consumer or due to
+an infrastructure problem.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>tenant</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>string</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the identifier of the tenant that the metric is
+being reported on.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>ttd</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>command</code>, <code>expired</code>, <code>none</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates the status of the
+outcome of processing a TTD value contained in a message received from a
+device. <code>command</code> indicates that a command for the device has been
+included in the response to the device’s request for uploading the
+message; <code>expired</code> indicates that a response without a command has been
+sent to the device; and <code>none</code> indicates that either no TTD value has been
+specified by the device or that the protocol adapter does not support
+it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>type</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>telemetry</code>, <code>event</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates the type of (downstream) message for
+the metric.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. Protocol adapter metrics</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Metric</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Tags</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>hono.commands.received</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Timer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>host</em>, <em>component-type</em>,
+<em>component-name</em>, <em>tenant</em>, <em>type</em>, <em>status</em>, <em>direction</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates the amount of time it took to process a message conveying a command or
+a response to a command.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>hono.commands.payload</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DistributionSummary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>host</em>, <em>component-type</em>,
+<em>component-name</em>, <em>tenant</em>, <em>type</em>, <em>status</em>, <em>direction</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates the number of bytes conveyed in the payload of a command message.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>hono.connections.authenticated</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gauge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>host</em>, <em>component-type</em>,
+<em>component-name</em>, <em>tenant</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Current number of connected, authenticated devices.</p>
+<p class="tableblock">NOTE: This metric is only supported by protocol adapters that
+maintain a <em>connection state</em> with authenticated devices. In particular,
+the HTTP adapter does not support this metric.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>hono.connections.unauthenticated</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gauge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>host</em>, <em>component-type</em>,
+<em>component-name</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Current number of connected, unauthenticated devices.</p>
+<p class="tableblock">NOTE: This metric is only supported by protocol adapters that maintain a
+<em>connection state</em> with authenticated devices. In particular, the HTTP
+adapter does not support this metric.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>hono.messages.received</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Timer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>host</em>, <em>component-type</em>,
+<em>component-name</em>, <em>tenant</em>, <em>type</em>, <em>status</em>, <em>qos</em>, <em>ttd</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates the amount of time it took to process a message conveying a telemetry or event message.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>hono.messages.payload</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DistributionSummary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>host</em>, <em>component-type</em>,
+<em>component-name</em>, <em>tenant</em>, <em>type</em>, <em>status</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates the number of bytes conveyed in the payload of a telemetry or event message.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -8820,7 +9052,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>The following table describes the EnMasse resources that pertain to the service administrator role.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. EnMasse service administrator resources table</caption>
+<caption class="title">Table 11. EnMasse service administrator resources table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -8883,7 +9115,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>The following table describes the EnMasse resources that pertain to the messaging tenant role.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. EnMasse messaging tenant resources table</caption>
+<caption class="title">Table 12. EnMasse messaging tenant resources table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -8930,7 +9162,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>This table shows the fields available for the brokered infrastructure configuration and a brief description.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Brokered infrastructure configuration fields table</caption>
+<caption class="title">Table 13. Brokered infrastructure configuration fields table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -9147,7 +9379,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>This table shows the fields available for the standard infrastructure configuration and a brief description.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Standard infrastructure configuration fields table</caption>
+<caption class="title">Table 14. Standard infrastructure configuration fields table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -16924,7 +17156,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-01-19 09:45:34 UTC
+Last updated 2020-01-20 09:45:46 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
