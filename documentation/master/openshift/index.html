@@ -504,9 +504,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#deploy-monitoring-operator-messaging">3.5.1. (Optional) Deploying the Application Monitoring Operator</a></li>
 <li><a href="#deploy-kube-state-metrics-messaging">3.5.2. (Optional) Deploying the kube-state-metrics agent</a></li>
-<li><a href="#deploy-monitoring-bundle-messaging">3.5.3. Deploying monitoring using a YAML bundle</a></li>
-<li><a href="#deploy-monitoring-ansible-messaging">3.5.4. Deploying monitoring using Ansible</a></li>
-<li><a href="#config-alerts-messaging">3.5.5. Configuring alert notifications</a></li>
+<li><a href="#deploy-monitoring-bundle-messaging">3.5.3. Enabling monitoring</a></li>
+<li><a href="#config-alerts-messaging">3.5.4. Configuring alert notifications</a></li>
+<li><a href="#'assembly-metrics-rules-messaging">3.5.5. Metrics and rules</a></li>
 <li><a href="#enable-tenant-metrics-messaging">3.5.6. Enabling Tenant Metrics</a></li>
 </ul>
 </li>
@@ -617,6 +617,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#iot-installing-services-messaging-iot-iot-iot">5.2.2. Installing IoT services</a></li>
 <li><a href="#iot_services_configuration_examples">5.2.3. IoT services configuration examples</a></li>
 <li><a href="#ref-iot-metrics-messaging-iot-iot-iot">5.2.4. IoT-specific metrics</a></li>
+<li><a href="#troubleshooting_guide">5.2.5. Troubleshooting guide</a></li>
 </ul>
 </li>
 <li><a href="#'iot-project-owner-messaging-iot-iot-iot-iot">5.3. IoT for projects owners</a>
@@ -3284,7 +3285,6 @@ oc delete role enmasse.io:api-server -n {ProductBundleNamespace}</pre>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc delete crd -l app=enmasse,enmasse-component=iot
-oc delete crd -l app=enmasse,enmasse-component=tenant-api
 oc delete crd -l app=enmasse
 oc delete clusterrolebindings -l app=enmasse
 oc delete clusterroles -l app=enmasse
@@ -3461,7 +3461,7 @@ oc delete secret -l app=enmasse <em>enmasse-infra</em></pre>
 <div class="sect2">
 <h3 id="monitoring-messaging">3.5. Monitoring EnMasse</h3>
 <div class="paragraph">
-<p>You can monitor EnMasse by deploying built-in monitoring tools or using your pre-existing monitoring infrastructure by deploying the required service monitors and Prometheus rules.</p>
+<p>You can monitor EnMasse by deploying built-in monitoring tools or using your pre-existing monitoring infrastructure.</p>
 </div>
 <div class="sect3">
 <h4 id="deploy-monitoring-operator-messaging">3.5.1. (Optional) Deploying the Application Monitoring Operator</h4>
@@ -3552,9 +3552,10 @@ cluster.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deploy-monitoring-bundle-messaging">3.5.3. Deploying monitoring using a YAML bundle</h4>
+<h4 id="deploy-monitoring-bundle-messaging">3.5.3. Enabling monitoring</h4>
 <div class="paragraph">
-<p>The simplest way to deploy monitoring is to use a predefined YAML bundle.</p>
+<p>If you are not using a default installation configuration, the simplest way to deploy monitoring is to enable the monitoring environment variable on the
+<code>enmasse-operator</code> deployment.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -3576,18 +3577,10 @@ cluster.</p>
 </div>
 </li>
 <li>
-<p>Select the <code>enmasse-infra</code> project:</p>
+<p>Enable monitoring on the operator:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc project enmasse-infra</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Deploy the <code>monitoring</code> bundle:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="nowrap">oc apply -f install/bundles/monitoring</pre>
+<pre class="nowrap">oc set env deployment -n <em>enmasse-infra</em> enmasse-operator ENABLE_MONITORING=true</pre>
 </div>
 </div>
 </li>
@@ -3595,14 +3588,7 @@ cluster.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deploy-monitoring-ansible-messaging">3.5.4. Deploying monitoring using Ansible</h4>
-<div class="paragraph">
-<p>Monitoring can also be deployed during the EnMasse
-<a href="http://enmasse.io/documentation/master/openshift/#installing-using-ansible-messaging">installation using Ansible</a> using the required configuration settings.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="config-alerts-messaging">3.5.5. Configuring alert notifications</h4>
+<h4 id="config-alerts-messaging">3.5.4. Configuring alert notifications</h4>
 <div class="paragraph">
 <p>To configure alert notifications, such as emails, you must change the default configuration of Alertmanager.</p>
 </div>
@@ -3671,6 +3657,657 @@ data:
 </div>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="'assembly-metrics-rules-messaging">3.5.5. Metrics and rules</h4>
+<div class="sect4">
+<h5 id="ref-metrics-common-messaging">Common metrics</h5>
+<div class="paragraph">
+<p>The following components export these common metrics:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>address-space-controller</code></p>
+</li>
+<li>
+<p><code>api-server</code></p>
+</li>
+<li>
+<p><code>standard-controller</code></p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_version</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>version</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the current version of each component in EnMasse using the version label. The metric always returns a value of <code>1</code>.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>enmasse_version{job="address-space-controller",version="1.0.1"} 1
+enmasse_version{job="api-server",version="1.0.1"} 1
+enmasse_version{job="standard-controller",version="1.0.1"} 1</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-metrics-address-space-controller-messaging">Address space controller metrics</h5>
+<div class="paragraph">
+<p>The following metrics for <code>address-space-controller</code> are available for EnMasse.</p>
+</div>
+<div class="sect5">
+<h6 id="summary">Summary</h6>
+<div class="paragraph">
+<p>For every metric exported of the type <code>enmasse_address_space_status_ready</code> there is a corresponding metric of type <code>enmasse_address_space_status_not_ready</code>. The values of each can never be the same.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_space_status_ready{name="my-address-space"} 1
+enmasse_address_space_status_not_ready{name="my-address-space"} 0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The total number of address spaces equals the sum of all address spaces in the ready state plus the sum of all address spaces in the not ready state:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_spaces_total == (sum(enmasse_address_space_status_ready) + sum(enmasse_address_space_status_not_ready))</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_address_space_status_ready</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Boolean</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Indicates each address space that is in a <code>ready</code> state.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_space_status_ready{name="prod-space"} 1
+enmasse_address_space_status_ready{name="dev-space"} 0</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_address_space_status_not_ready</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Boolean</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Indicates each address space that is in a <code>not ready</code> state.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_space_status_not_ready{name="prod-space"} 0
+enmasse_address_space_status_not_ready{name="dev-space"} 1</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_address_spaces_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Returns the total number of address spaces, regardless of whether they are in a <code>ready</code> or <code>not ready</code> state.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+<dd>
+<p><code>enmasse_address_spaces_total 1</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><code>enmasse_address_space_connectors_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Returns the total number of address space connectors in each address space.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_space_connectors_total{name="space-one"} 0
+enmasse_address_space_connectors_total{name="space-two"} 2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-metrics-standard-controller-agent-messaging">Standard controller and agent metrics</h5>
+<div class="paragraph">
+<p>The following <code>standard-controller</code> and <code>agent</code> metrics are available for Brokered address spaces only in EnMasse.</p>
+</div>
+<div class="sect5">
+<h6 id="summary_2">Summary</h6>
+<div class="paragraph">
+<p>The total number of addresses equals the sum of the total number of addresses in the ready state and the total number of addresses in the not ready state:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_addresses_total == enmasse_addresses_ready_total + enmasse_addresses_not_ready_total</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The total number of addresses equals the total number of addresses in all phases:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_addresses_total == enmasse_addresses_active_total + enmasse_addresses_configuring_total + enmasse_addresses_failed_total + enmasse_addresses_pending_total + enmasse_addresses_terminating_total</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_addresses_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the total number of addresses, per address space, regardless of state.</p>
+</dd>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>enmasse_addresses_total{addressspace="space-one"} 5
+enmasse_addresses_total{addressspace="space-two"} 3</pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_addresses_ready_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the total number of addresses currently in the ready state.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>enmasse_addresses_ready_total{addressspace="space-one"} 3
+enmasse_addresses_ready_total{addressspace="space-two"} 2</pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_addresses_not_ready_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the total number of addresses currently in the not ready state.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_addresses_not_ready_total{addressspace="space-one"} 2
+enmasse_addresses_not_ready_total{addressspace="space-two"} 1</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_addresses_active_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the total number of addresses currently in the active phase.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+<dd>
+<p><code>enmasse_addresses_active_total{addressspace="space-one"} 2</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><code>enmasse_addresses_configuring_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the total number of addresses currently in the configuring phase.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+<dd>
+<p><code>enmasse_addresses_configuring_total{addressspace="space-one"} 2</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><code>enmasse_addresses_failed_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the total number of addresses currently in the failed phase.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+<dd>
+<p><code>enmasse_addresses_failed_total{addressspace="space-one"} 2</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><code>enmasse_addresses_pending_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the total number of addresses currently in the pending phase.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+<dd>
+<p><code>enmasse_addresses_pending_total{addressspace="space-one"} 2</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><code>enmasse_addresses_terminating_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the total number of addresses currently in the terminating phase.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+<dd>
+<p><code>enmasse_addresses_terminating_total{addressspace="space-one"} 2</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><code>enmasse_standard_controller_loop_duration_seconds</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the execution time, in seconds, for the most recent standard controller reconcile loop.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+<dd>
+<p><code>enmasse_standard_controller_loop_duration_seconds 0.33</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><code>enmasse_standard_controller_router_check_failures_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Counter</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provies the total number of router check failures during reconciliation loop.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_standard_controller_router_check_failures_total{addressspace="firstspace"}	0
+enmasse_standard_controller_router_check_failures_total{addressspace="myspace"} 0</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_addresses_forwarders_ready_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the total number of address forwarders in the ready state.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+<dd>
+<p><code>enmasse_addresses_forwarders_ready_total{addressspace="myspace"} 2</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><code>enmasse_addresses_forwarders_not_ready_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the total number of address forwarders in the not ready state.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+<dd>
+<p><code>enmasse_addresses_forwarders_not_ready_total{addressspace="myspace"} 0</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><code>enmasse_addresses_forwarders_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Gauge</p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides the total number of address forwarders, regardless of whether they are in a ready or not ready state.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+<dd>
+<p><code>enmasse_addresses_forwarders_total{addressspace="myspace"} 2</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="'assembly-rules-messaging">Rules</h5>
+<div class="paragraph">
+<p>This section details Prometheus rules installed using the PrometheusRule CRD with EnMasse. Two types of Prometheus rules are available in EnMasse:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Record: Pre-computed expressions saved as a new set of time series.</p>
+</li>
+<li>
+<p>Alert: Expressions that trigger an alert when evaluated as <code>true</code>.</p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="ref-rules-records-messaging">Records</h6>
+<div class="paragraph">
+<p>Records are a type of Prometheus rule that are pre-computed expressions saved as a new set of time series. The following records are available for EnMasse.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_address_spaces_ready_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Aggregates the <code>enmasse_address_space_status_ready</code> in a single gauge-type metric that provides the total number of addresses in a <code>ready</code> state.</p>
+</dd>
+<dt class="hdlist1">Expression</dt>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">sum by(service, exported_namespace) (enmasse_address_space_status_ready)</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_spaces_ready_total{exported_namespace="prod_namespace",service="address-space-controller"} 1</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_address_spaces_not_ready_total</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Aggregates the <code>enmasse_address_space_not_status_ready</code> in a single gauge-type metric that provides the total number of addresses in a <code>not ready</code> state.</p>
+</dd>
+<dt class="hdlist1">Expression</dt>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">sum by(service, exported_namespace) (enmasse_address_space_status_not_ready)</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_spaces_not_ready_total{exported_namespace="prod_namespace",service="address-space-controller"} 1</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>enmasse_component_health</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Provides a Boolean-style metric for each <code>address-space-controller</code> and <code>api-server</code> indicating if they are up and running.</p>
+</dd>
+<dt class="hdlist1">Expression</dt>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">up{job="address-space-controller"} or on(namespace) (1 - absent(up{job="address-space-controller"}))
+up{job="api-server"} or on(namespace) (1 - absent(up{job="api-server"}))</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_component_health{job="address-space-controller"}	1
+enmasse_component_health{job="api-server"}	1</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="ref-rules-alerts-messaging">Alerts</h6>
+<div class="paragraph">
+<p>Alerts are a type of Prometheus rule that are expressions that trigger an alert when evaluated as true. The following alerts are available for EnMasse.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>ComponentHealth</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Triggers when a component is not in a healthy state.</p>
+</dd>
+<dt class="hdlist1">Expression</dt>
+<dd>
+<p><code>component_health == 0</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><code>AddressSpaceHealth</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Triggers when one or more address spaces are not in a <code>ready</code> state.</p>
+</dd>
+<dt class="hdlist1">Expression</dt>
+<dd>
+<p><code>enmasse_address_spaces_not_ready_total &gt; 0</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1"><code>AddressHealth</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Triggers when one or more addresses are not in a <code>ready</code> state.</p>
+</dd>
+<dt class="hdlist1">Expressions</dt>
+<dd>
+<p><code>enmasse_addresses_not_ready_total &gt; 0</code></p>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -8137,6 +8774,107 @@ adapter does not support this metric.</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="troubleshooting_guide">5.2.5. Troubleshooting guide</h4>
+<div class="sect4">
+<h5 id="proc-iot-troubleshoot-stuck-iotproject-messaging-iot-iot-iot">Fix <code>IoTProject</code> stuck in termination</h5>
+<div class="paragraph">
+<p>When an <code>IoTProject</code> instance is deleted, the resource will not be deleted immediately.
+It is only marked for deletion and necessary cleanup operations will be performed in the background.
+The resource will automatically be deleted once the cleanup has been performed successfully.</p>
+</div>
+<div class="paragraph">
+<p>In some situations it might be that, due do to infrastructure issues, the clean-up operation
+cannot be performed at this point in time. The <code>IoTProject</code> will still be kept, and the
+operator will re-try periodically to clean up the resources. The cleanup will succeed once
+the infrastructure is back in operational state.</p>
+</div>
+<div class="paragraph">
+<p>In the case that the infrastructure is not expected to function ever again, it might be desirable
+to force the destruction of the <code>IoTProject</code> resources.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+Manually removing the resource cleanup finalizer will skip the cleanup process,
+ and prevent the system from properly cleaning up.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Evaluate if the project is stuck in the termination state using the <code>oc</code> tool:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get iotproject iot -n myapp
+NAME   IOT TENANT  DOWNSTREAM HOST                       DOWNSTREAM PORT   TLS    PHASE
+iot    myapp.iot   messaging-be482a6.enmasse-infra.svc   5671              true   Terminating</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should show the project in the state "Terminating".
+In addition, verify that the cleanup finalizer is still present:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get iotproject iot -n myapp -ojsonpath='{range .metadata.finalizers[*]}{..}{"\n"}{end}'
+iot.enmasse.io/deviceRegistryCleanup</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the list contains an entry of <code>iot.enmasse.io/deviceRegistryCleanup</code>, then resource cleanup process
+is still pending.</p>
+</div>
+</li>
+<li>
+<p>Manually remove the finalizer <code>iot.enmasse.io/deviceRegistryCleanup</code> from the list of finalizers:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc edit iotproject iot -n myapp</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will open up a text editor with the content of the resource:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: iot.enmasse.io/v1alpha1
+kind: IoTProject
+metadata:
+  creationTimestamp: "2019-12-09T15:00:00Z"
+  deletionTimestamp: "2019-12-09T16:00:00Z"
+  finalizers:
+  - iot.enmasse.io/deviceRegistryCleanup <b class="conum">(1)</b>
+  name: iot
+  namespace: myapp</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The line with the finalizer to delete</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Delete the line of the finalizer. Save and exit the editor. This will automatically trigger an update
+on the server, and the system will continue deleting the <code>IoTProject</code> resource.</p>
+</div>
+</li>
+<li>
+<p>After the finalizer has been removed, the resource should be deleted and disappear from the system.</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>
@@ -17156,7 +17894,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-01-20 09:45:46 UTC
+Last updated 2020-01-30 09:50:09 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
