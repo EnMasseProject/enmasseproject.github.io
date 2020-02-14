@@ -3122,7 +3122,7 @@ spec:
 <p><code>service-admin</code> cluster role</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies <code>create</code>, <code>get</code>, <code>update</code>, <code>delete</code>, <code>list</code>, <code>watch</code>, and <code>patch</code> permissions for <code>addressplans</code>, <code>addressspaceplans</code>, <code>brokeredinfraconfigs</code>, and <code>standardinfraconfigs</code></p>
+<p>Specifies <code>create</code>, <code>get</code>, <code>update</code>, <code>delete</code>, <code>list</code>, <code>watch</code>, and <code>patch</code> permissions for <code>addressplans</code>, <code>addressspaceplans</code>, <code>brokeredinfraconfigs</code>, <code>standardinfraconfigs</code> and <code>authenticationservices</code></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -5544,7 +5544,24 @@ If you create a subscription on a topic, any senders to that topic must specify 
 <div class="sect5">
 <h6 id="con-standard-subscription-messaging">Subscription</h6>
 <div class="paragraph">
-<p>The subscription address type allows a subscription to be created for a topic that holds messages published to the topic even if the subscriber is not attached. The subscription is accessed by the consumer using &lt;topic-address&gt;::&lt;subscription-address&gt;. For example, for a subscription <code>mysub</code> on a topic <code>mytopic</code> the consumer consumes from the address <code>mytopic::mysub</code>.</p>
+<p>The subscription address type allows a subscription to be created for a topic that holds messages
+published to the topic even if the subscriber is not attached. The subscription is accessed by the
+consumer using &lt;topic-address&gt;::&lt;subscription-address&gt;. For example, for a subscription <code>mysub</code> on a
+topic <code>mytopic</code> the consumer consumes from the address <code>mytopic::mysub</code>. By default, only a single
+consumer is allowed per subscription. This can be specified using <code>maxConsumers</code> setting of
+the subscription address.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The <code>maxConsumers</code> setting can not be modified for existing subscriptions at present.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -7547,7 +7564,7 @@ spec:
 <p><code>service-admin</code> cluster role</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies <code>create</code>, <code>get</code>, <code>update</code>, <code>delete</code>, <code>list</code>, <code>watch</code>, and <code>patch</code> permissions for <code>addressplans</code>, <code>addressspaceplans</code>, <code>brokeredinfraconfigs</code>, and <code>standardinfraconfigs</code></p>
+<p>Specifies <code>create</code>, <code>get</code>, <code>update</code>, <code>delete</code>, <code>list</code>, <code>watch</code>, and <code>patch</code> permissions for <code>addressplans</code>, <code>addressspaceplans</code>, <code>brokeredinfraconfigs</code>, <code>standardinfraconfigs</code> and <code>authenticationservices</code></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -15770,7 +15787,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <em>required</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-middle"><div class="content"><div class="paragraph">
-<p>&lt; enum (send, receive, view, manage) &gt; array</p>
+<p>&lt; enum (send, recv, view, manage) &gt; array</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -17894,7 +17911,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-10 09:55:36 UTC
+Last updated 2020-02-14 09:58:10 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
