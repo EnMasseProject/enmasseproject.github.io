@@ -3294,6 +3294,14 @@ oc delete oauthclients -l app=enmasse</pre>
 </div>
 </li>
 <li>
+<p>(OpenShift 4) Delete the console integration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc delete consolelinks -l app=enmasse</pre>
+</div>
+</div>
+</li>
+<li>
 <p>(Optional) Delete the service catalog integration:</p>
 <div class="listingblock">
 <div class="content">
@@ -3391,6 +3399,8 @@ oc delete addressspaces -A --all</pre>
 <pre class="nowrap">oc delete all -l app=enmasse -n <em>enmasse-infra</em>
 oc delete cm -l app=enmasse -n <em>enmasse-infra</em>
 oc delete secret -l app=enmasse <em>enmasse-infra</em>
+oc delete consolelinks -l app=enmasse
+oc delete oauthclients -l app=enmasse
 oc delete crd -l app=enmasse</pre>
 </div>
 </div>
@@ -3442,7 +3452,9 @@ oc delete crd -l app=enmasse</pre>
 <div class="content">
 <pre class="nowrap">oc delete all -l app=enmasse -n <em>enmasse-infra</em>
 oc delete cm -l app=enmasse -n <em>enmasse-infra</em>
-oc delete secret -l app=enmasse <em>enmasse-infra</em></pre>
+oc delete secret -l app=enmasse <em>enmasse-infra</em>
+oc delete consolelinks -l app=enmasse
+oc delete oauthclients -l app=enmasse</pre>
 </div>
 </div>
 </li>
@@ -17911,7 +17923,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-24 10:03:18 UTC
+Last updated 2020-02-25 08:21:30 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
