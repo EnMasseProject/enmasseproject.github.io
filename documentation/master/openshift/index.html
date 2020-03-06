@@ -3354,7 +3354,7 @@ The playbook deletes the <code>enmasse-infra</code> project.
 <div class="sect3">
 <h4 id="uninstalling-olm-messaging">3.4.3. Uninstalling EnMasse using the Operator Lifecycle Manager (OLM)</h4>
 <div class="paragraph">
-<p>This method uninstalls EnMasse that was installed using the OLM.</p>
+<p>This method uninstalls EnMasse that was installed using the Operator Lifecycle Manager (OLM).</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -3368,7 +3368,7 @@ The playbook deletes the <code>enmasse-infra</code> project.
 </div>
 </li>
 <li>
-<p>Remove all IoTProject and AddressSpace instances:</p>
+<p>Remove all <code>IoTProject</code> and <code>AddressSpace</code> instances:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc delete iotprojects -A --all
@@ -3377,7 +3377,7 @@ oc delete addressspaces -A --all --timeout=600s</pre>
 </div>
 </li>
 <li>
-<p>Remove the Subscription (replace the name with the name of the subscription used in the install):</p>
+<p>Delete the subscription (replace <code>enmasse</code> with the name of the subscription used in the installation):</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc delete subscription <em>enmasse</em> -n <em>enmasse-infra</em></pre>
@@ -3385,7 +3385,7 @@ oc delete addressspaces -A --all --timeout=600s</pre>
 </div>
 </li>
 <li>
-<p>Remove the CSV for the operator:</p>
+<p>Remove the CSV for the Operator:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc delete csv -l app=enmasse -n <em>enmasse-infra</em></pre>
@@ -3393,7 +3393,7 @@ oc delete addressspaces -A --all --timeout=600s</pre>
 </div>
 </li>
 <li>
-<p>Remove additional resources:</p>
+<p>Remove any remaining resources (replace <code>enmasse-infra</code> with the project where you installed EnMasse):</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc delete all -l app=enmasse -n <em>enmasse-infra</em>
@@ -3406,7 +3406,7 @@ oc delete crd -l app=enmasse</pre>
 </div>
 </li>
 <li>
-<p>(Optional. Skip this step if EnMasse is installed in the openshift-operators namespace) Delete the namespace where EnMasse was installed:</p>
+<p>(Optional: Skip this step if EnMasse is installed in the <code>openshift-operators</code> namespace) Delete the namespace where EnMasse was installed:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc delete namespace <em>enmasse-infra</em></pre>
@@ -3419,13 +3419,13 @@ oc delete crd -l app=enmasse</pre>
 <div class="sect3">
 <h4 id="uninstalling-olm-console-messaging">3.4.4. Uninstalling EnMasse using the OpenShift console</h4>
 <div class="paragraph">
-<p>This method uninstalls EnMasse that was installed using the Operator Lifecycle Manager (OLM).</p>
+<p>This method uninstalls EnMasse that was installed using the Operator Lifecycle Manager (OLM) in the {PlatformName} console.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>From the Project list, select the project where you installed EnMasse:</p>
+<p>From the Project list, select the project where you installed EnMasse.</p>
 </li>
 <li>
 <p>Click <strong>Catalog → Operator Management</strong>. The Operator Management page opens.</p>
@@ -3441,13 +3441,13 @@ oc delete crd -l app=enmasse</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Click Remove. The EnMasse Operator will stop running and no longer receive updates.</p>
+<p>Click <strong>Remove</strong>. The EnMasse Operator will stop running and no longer receive updates.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Remove additional resources (replace <code>enmasse-infra</code> with the project where you installed EnMasse):</p>
+<p>Remove any remaining resources by running the following command (replace <code>enmasse-infra</code> with the project where you installed EnMasse):</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc delete all -l app=enmasse -n <em>enmasse-infra</em>
@@ -3459,7 +3459,7 @@ oc delete oauthclients -l app=enmasse</pre>
 </div>
 </li>
 <li>
-<p>(Optional. Skip this step if EnMasse is installed in the openshift-operators namespace) Delete the namespace where EnMasse was installed:</p>
+<p>(Optional: Skip this step if EnMasse is installed in the <code>openshift-operators</code> namespace) Delete the namespace where EnMasse was installed:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">oc delete namespace <em>enmasse-infra</em></pre>
@@ -6693,6 +6693,44 @@ spec:
 </li>
 <li>
 <p>The address plan describes the resource usage for the address. For more information about how to view the available plans see <a href="http://enmasse.io/documentation/master/openshift/#proc-list-available-address-plans-messaging">Listing available address plans</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-address-example-topic-and-sub-messaging">Topic and subscription address example</h5>
+<div class="paragraph">
+<p>When using topics and subscriptions, the subscription references the topic to which it belongs using the <code>topic:</code> field, as shown in the following example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+    name: myspace.mytopic
+spec:
+    address: mytopic
+    type: topic
+    plan: standard-small-topic</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+    name: myspace.mysub
+spec:
+    address: mysub
+    type: subscription
+    plan: standard-small-subscription
+    topic: mytopic <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The address of topic that this subscription refers to.</p>
 </li>
 </ol>
 </div>
@@ -17923,7 +17961,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-04 10:09:05 UTC
+Last updated 2020-03-06 10:10:16 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
