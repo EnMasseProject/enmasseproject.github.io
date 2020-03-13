@@ -614,10 +614,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#iot-service-admin-messaging-iot-iot-iot">5.2. IoT for service administrators</a>
 <ul class="sectlevel3">
 <li><a href="#con-iot-monitoring-messaging-iot-iot-iot">5.2.1. IoT monitoring</a></li>
-<li><a href="#iot-installing-services-messaging-iot-iot-iot">5.2.2. Installing IoT services</a></li>
-<li><a href="#iot_services_configuration_examples">5.2.3. IoT services configuration examples</a></li>
-<li><a href="#ref-iot-metrics-messaging-iot-iot-iot">5.2.4. IoT-specific metrics</a></li>
-<li><a href="#troubleshooting_guide">5.2.5. Troubleshooting guide</a></li>
+<li><a href="#con-iot-service-registry-messaging-iot-iot-iot">5.2.2. Device registry</a></li>
+<li><a href="#iot-installing-services-messaging-iot-iot-iot">5.2.3. Installing IoT services</a></li>
+<li><a href="#proc-iot-service-registry-jdbc-messaging-iot-iot-iot">5.2.4. Deploy JDBC external device registry</a></li>
+<li><a href="#iot_services_configuration_examples">5.2.5. IoT services configuration examples</a></li>
+<li><a href="#ref-iot-metrics-messaging-iot-iot-iot">5.2.6. IoT-specific metrics</a></li>
+<li><a href="#troubleshooting_guide">5.2.7. Troubleshooting guide</a></li>
 </ul>
 </li>
 <li><a href="#iot-project-owner-messaging-iot-iot-iot-iot">5.3. IoT for projects owners</a>
@@ -8448,7 +8450,46 @@ export MESSAGING_PORT=443</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="iot-installing-services-messaging-iot-iot-iot">5.2.2. Installing IoT services</h4>
+<h4 id="con-iot-service-registry-messaging-iot-iot-iot">5.2.2. Device registry</h4>
+<div class="paragraph">
+<p>The IoT components of EnMasse store all device related information in a service called
+"device registry". This makes the device registry an important component of the overall IoT
+functionality, so it might be necessary to tweak the configuration of the device registry.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Although the device registry storage backend can be configured in different ways, once the
+configuration has been made, and IoT tenants have been created, the storage configuration
+must not be change. Otherwise this may result in the loss of data, in data inconsistencies,
+or other kinds of unexpected behavior.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The configuration of the device registry can be changed by editing the global <code>IoTConfig</code>
+custom resource object. Any changes made to this custom resource, will be applied by the
+EnMasse operator.</p>
+</div>
+<div class="paragraph">
+<p>The database backed device registry, named "JDBC", can be configured to either use an
+existing, "external", database.</p>
+</div>
+<div class="paragraph">
+<p>By default only PostgreSQL is supported. However it is possible to extend the installation,
+by providing custom JDBC drivers and custom SQL statements to the configuration. This allows
+to integrate with database, other than PostgreSQL.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iot-installing-services-messaging-iot-iot-iot">5.2.3. Installing IoT services</h4>
 <div class="paragraph">
 <p>To get started using the IoT feature on EnMasse, you must first install the IoT services.</p>
 </div>
@@ -8520,7 +8561,150 @@ oc apply -f install/components/iot/examples/infinispan/openshift</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="iot_services_configuration_examples">5.2.3. IoT services configuration examples</h4>
+<h4 id="proc-iot-service-registry-jdbc-messaging-iot-iot-iot">5.2.4. Deploy JDBC external device registry</h4>
+<div class="paragraph">
+<p>Using an external database requires you to create a database instance and
+create the required tables and indices.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Although it should technically be possible to use any database which provides
+a JDBC driver and support SQL, at the moment, only PostgreSQL is supported by
+EnMasse. Unless explicitly mentioned, this documentation will assume
+your are using PostgreSQL. If you do not, then you might need to adapter provided
+commands, and SQL statements.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In order to set up a JDBC based device registry, you need to perform
+the following steps:</p>
+</div>
+<div class="sect4">
+<h5 id="choose_a_data_storage_model">Choose a data storage model</h5>
+<div class="paragraph">
+<p>The JDBC based device registry supports the following data models:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Flat JSON</p>
+</li>
+<li>
+<p>Hierarchical JSON</p>
+</li>
+<li>
+<p>Plain tables</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The JSON based data models require no locking or foreign keys. However they
+do rely on PostgreSQL support for JSONB. The flat JSON model is more flexible
+when it comes to storing different types of credentials. The hierarchical JSON
+model has better performance over the flat JSON model, but requires dedicated
+indices for each credentials type in order to achieve this performance.</p>
+</div>
+<div class="paragraph">
+<p>The plain table model does not require any JSON specific database support, but
+require multiple tables, linked with foreign keys, and will need support for
+locking when making changes. On the other side it will have better read
+performance in most cases.</p>
+</div>
+<div class="paragraph">
+<p>The default choice is the hierarchical JSON model.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+It is not possible to change the data model later on without loosing all data
+or manual data migration.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="create_a_database_instance">Create a database instance</h5>
+<div class="paragraph">
+<p>First you need to create a database instance. It is recommended that you also
+create at least two types of users. One for administrating the database and
+one for accessing the device registry specific tables. In the following sections
+the former user is assumed to be named "admin", and the latter "registry".</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="deploy_the_sql_schema_to_the_database_instance">Deploy the SQL schema to the database instance</h5>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>Created a database instance</p>
+</li>
+<li>
+<p>Have access credentials for the "admin" database user</p>
+</li>
+<li>
+<p>Have selected a storage model</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Connect to your database instance using the admin user</p>
+</li>
+<li>
+<p>Execute either of the following steps, depending on which data model
+you chose</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If you chose the hierarchical JSON model, or want to use the default choice,
+review and deploy the SQL schema from
+<code>templates/iot/examples/postgresql/create.sql</code> and <code>templates/iot/examples/postgresql/create.tree.sql</code>.</p>
+</li>
+<li>
+<p>If you chose the flat JSON model, review and deploy the SQL schema
+from <code>templates/iot/examples/postgresql/create.sql</code></p>
+</li>
+<li>
+<p>If you chose the table storage model, review and deploy the SQL schema
+from <code>templates/iot/examples/postgresql/create.table.sql</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="configure_the_iot_infrastructure">Configure the IoT infrastructure</h5>
+<div class="paragraph">
+<p>In order to enable the external JDBC device registry implementation, you will
+need to configure the section <code>.spec.services.deviceRegistry.jdbc.server.external</code>,
+and provide the chosen data model, database connection information and access credentials.</p>
+</div>
+<div class="paragraph">
+<p>For an example see <a href="http://enmasse.io/documentation/master/openshift/#iot-registry-example-registry-jdbc-messaging-iot-iot-iot">Configuration for JDBC with external PostgreSQL</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iot_services_configuration_examples">5.2.5. IoT services configuration examples</h4>
 <div class="sect4">
 <h5 id="iotconfig-example-messaging-iot-iot-iot">Minimal IoT configuration example</h5>
 <div class="paragraph">
@@ -8624,9 +8808,43 @@ spec:
 </ol>
 </div>
 </div>
+<div class="sect4">
+<h5 id="iot-registry-example-registry-jdbc-messaging-iot-iot-iot">Configuration for JDBC with external PostgreSQL</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kind: IoTConfig
+apiVersion: iot.enmasse.io/v1alpha1
+metadata:
+  name: default
+spec:
+  services:
+    deviceRegistry:
+      jdbc:
+        server:
+          external:
+            url: jdbc://postgresql.namespace.svc:5432/database-name # <b class="conum">(1)</b>
+            username: app # <b class="conum">(2)</b>
+            password: test12 # <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The JDBC URL to the PostgreSQL database. This includes the hostname, port, and database name.
+For more information also see: <a href="https://jdbc.postgresql.org/documentation/head/connect.html" class="bare">https://jdbc.postgresql.org/documentation/head/connect.html</a></p>
+</li>
+<li>
+<p>The username used to connect to the PostgreSQL server</p>
+</li>
+<li>
+<p>The password used to connect to the PostgreSQL server</p>
+</li>
+</ol>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="ref-iot-metrics-messaging-iot-iot-iot">5.2.4. IoT-specific metrics</h4>
+<h4 id="ref-iot-metrics-messaging-iot-iot-iot">5.2.6. IoT-specific metrics</h4>
 <div class="paragraph">
 <p>The IoT-specific components of EnMasse provide the metrics described in this section.</p>
 </div>
@@ -8844,7 +9062,7 @@ adapter does not support this metric.</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="troubleshooting_guide">5.2.5. Troubleshooting guide</h4>
+<h4 id="troubleshooting_guide">5.2.7. Troubleshooting guide</h4>
 <div class="sect4">
 <h5 id="proc-iot-troubleshoot-stuck-iotproject-messaging-iot-iot-iot">Fix <code>IoTProject</code> stuck in termination</h5>
 <div class="paragraph">
@@ -17961,7 +18179,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-12 10:11:39 UTC
+Last updated 2020-03-13 10:11:44 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
