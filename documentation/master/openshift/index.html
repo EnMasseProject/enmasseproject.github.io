@@ -552,9 +552,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#create-address-space-cli-messaging">4.2.11. Creating address spaces using the command line</a></li>
 <li><a href="#proc-create-address-space-console-messaging">4.2.12. Creating an address space using the EnMasse Console</a></li>
 <li><a href="#proc-change-address-space-plan-console-messaging">4.2.13. Changing the address space plan associated with an address space using the EnMasse Console</a></li>
-<li><a href="#proc-delete-address-space-console-messaging">4.2.14. Deleting an address space using the EnMasse Console</a></li>
-<li><a href="#retrieving-address-space-information-messaging">4.2.15. Example commands for retrieving address space information</a></li>
-<li><a href="#replace-address-space-cli-messaging">4.2.16. Replacing address spaces using the command line</a></li>
+<li><a href="#proc-change-address-space-auth-service-console-messaging">4.2.14. Changing the authentication service associated with an address space using the EnMasse Console</a></li>
+<li><a href="#proc-delete-address-space-console-messaging">4.2.15. Deleting an address space using the EnMasse Console</a></li>
+<li><a href="#retrieving-address-space-information-messaging">4.2.16. Example commands for retrieving address space information</a></li>
+<li><a href="#replace-address-space-cli-messaging">4.2.17. Replacing address spaces using the command line</a></li>
 </ul>
 </li>
 <li><a href="#managing-addresses-messaging">4.3. Managing addresses</a>
@@ -571,9 +572,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#con-console-messaging">4.4.1. EnMasse Console user permissions</a></li>
 <li><a href="#logging-into-console-messaging">4.4.2. Accessing the EnMasse Console</a></li>
-<li><a href="#ref-console-address-filtering-messaging">4.4.3. Using the EnMasse Console address filtering</a></li>
-<li><a href="#ref-view-message-connection-stats-table-messaging">4.4.4. Viewing message and connection statistics using the EnMasse Console</a></li>
-<li><a href="#proc-purging-queues-messaging">4.4.5. Purging queues and subscriptions</a></li>
+<li><a href="#ref-view-message-connection-stats-table-messaging">4.4.3. Viewing message and application connection statistics using the EnMasse Console</a></li>
+<li><a href="#proc-purging-queues-messaging">4.4.4. Purging queues and subscriptions</a></li>
 </ul>
 </li>
 <li><a href="#con-user-model-messaging">4.5. User model</a>
@@ -6453,7 +6453,7 @@ spec:
 </div>
 </li>
 <li>
-<p>Click <strong>Create</strong>. The Create an instance wizard opens.</p>
+<p>Click <strong>Create Address Space</strong>. The Create an instance wizard opens.</p>
 </li>
 <li>
 <p>Complete the required fields and when you are finished, click <strong>Finish</strong> to create the new address space.</p>
@@ -6461,7 +6461,7 @@ spec:
 </ol>
 </div>
 <div class="paragraph">
-<p>When the address space has been successfully created, you can click the address space name to go to the EnMasse Console and view information about the newly created address space.</p>
+<p>When the address space has been successfully created, you can click the address space name to view information about the newly created address space.</p>
 </div>
 </div>
 <div class="sect3">
@@ -6490,13 +6490,44 @@ spec:
 <p>In the far right column, click the vertical ellipsis icon and select <strong>Edit</strong>. The Edit window opens.</p>
 </li>
 <li>
-<p>In the <strong>Address space plan</strong> field, select a different plan from the list and click <strong>Save</strong>. The address space plan is changed for that address space.</p>
+<p>In the <strong>Address space plan</strong> field, select a different plan from the list and click <strong>Confirm</strong>. The address space plan is changed for that address space.</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-delete-address-space-console-messaging">4.2.14. Deleting an address space using the EnMasse Console</h4>
+<h4 id="proc-change-address-space-auth-service-console-messaging">4.2.14. Changing the authentication service associated with an address space using the EnMasse Console</h4>
+<div class="paragraph">
+<p>You can change the authentication service that is associated with an address space using the EnMasse Console.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You must have already created an address space. For more information see <a href="http://enmasse.io/documentation/master/openshift/#proc-create-address-space-console-messaging">Creating an address space using the EnMasse Console</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/openshift/#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
+</li>
+<li>
+<p>Locate the address space for which you want to change the authentication service.</p>
+</li>
+<li>
+<p>In the far right column, click the vertical ellipsis icon and select <strong>Edit</strong>. The Edit window opens.</p>
+</li>
+<li>
+<p>In the <strong>Authentication Service</strong> field, select a different authentication service from the list and click <strong>Confirm</strong>. The authentication service is changed for that address space.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="proc-delete-address-space-console-messaging">4.2.15. Deleting an address space using the EnMasse Console</h4>
 <div class="paragraph">
 <p>You can delete an existing address space using the EnMasse Console.</p>
 </div>
@@ -6522,9 +6553,9 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="retrieving-address-space-information-messaging">4.2.15. Example commands for retrieving address space information</h4>
+<h4 id="retrieving-address-space-information-messaging">4.2.16. Example commands for retrieving address space information</h4>
 <div class="paragraph">
-<p>The following table shows the commands for retrieving address space information, such as the EnMasse Console host name.</p>
+<p>The following table shows the commands for retrieving address space information.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 4. Retrieving address space information commands table</caption>
@@ -6539,14 +6570,6 @@ spec:
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>EnMasse Console host name</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>oc get routes console -o jsonpath={.spec.host}</code></p>
-</div></div></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>status of an address space</p>
@@ -6575,7 +6598,7 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="replace-address-space-cli-messaging">4.2.16. Replacing address spaces using the command line</h4>
+<h4 id="replace-address-space-cli-messaging">4.2.17. Replacing address spaces using the command line</h4>
 <div class="paragraph">
 <p>Address spaces can be replaced in order to change the plan, endpoints, or network policies, or
 to replace certificates if using the <code>certBundle</code> certificate provider. When changing the plan,
@@ -7005,7 +7028,7 @@ spec:
 <p>EnMasse Console uses the OpenShift RBAC permissions model. For more information about the OpenShift RBAC permissions model, see the <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/cluster_administration/index#admin-guide-manage-rbac" target="_blank" rel="noopener">OpenShift 3.11 documentation</a>.</p>
 </div>
 <div class="paragraph">
-<p>To use EnMasse Console, the OpenShift user requires a role that grants access to <code>addressspace</code> and <code>address</code> resources. For example, for edit access, <code>edit</code> permissions need be to given to the associated role object, and for view-only access, <code>list</code> permissions need to be granted.</p>
+<p>To use EnMasse Console, the OpenShift user requires a role that grants access to <code>addressspace</code> and <code>address</code> resources. For example, for edit access, <code>create</code>, <code>update</code> and <code>delete</code> permissions need be to given to the associated role object, and for view-only access, <code>list</code> permissions need to be granted.</p>
 </div>
 <div class="paragraph">
 <p>For more information about the EnMasse example roles, see <a href="http://enmasse.io/documentation/master/openshift/#ref-example-roles-messaging">EnMasse example roles</a>.</p>
@@ -7017,7 +7040,20 @@ spec:
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have obtained the host name for the EnMasse Console. For more information about how to obtain the host name, see  <a href="http://enmasse.io/documentation/master/openshift/#retrieving-address-space-information-messaging">Example commands for retrieving address space information</a>.</p>
+<p>On OpenShift Container Platform 3.x, obtain the host name for the EnMasse Console by running the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get routes console -o jsonpath={.spec.host}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>On OpenShift Container Platform 4.x, obtain the host name for the EnMasse Console by running the following command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get consolelink -l app=enmasse -o jsonpath={.spec.href}</pre>
+</div>
+</div>
 </li>
 </ul>
 </div>
@@ -7039,74 +7075,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-console-address-filtering-messaging">4.4.3. Using the EnMasse Console address filtering</h4>
-<div class="paragraph">
-<p>The address name filtering feature in the EnMasse Console uses regular expressions. Also, filters are cumulative.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. EnMasse Console address name filtering behavior</caption>
-<colgroup>
-<col style="width: 34%;">
-<col style="width: 33%;">
-<col style="width: 33%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">To match&#8230;&#8203;</th>
-<th class="tableblock halign-left valign-top">Use&#8230;&#8203;</th>
-<th class="tableblock halign-left valign-top">Results in&#8230;&#8203;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The beginning of an expression only</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>A caret followed by an expression: <code>^my</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>All addresses beginning with <code>my</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An expression</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The matching string: <code>my</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>All addresses containing <code>my</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The end of an expression only</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An expression followed by the dollar sign: <code>my$</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>All addresses ending with <code>my</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An exact expression</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>A caret followed by an expression and a dollar sign: <code>^my$</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Only the address <code>my</code></p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="ref-view-message-connection-stats-table-messaging">4.4.4. Viewing message and connection statistics using the EnMasse Console</h4>
+<h4 id="ref-view-message-connection-stats-table-messaging">4.4.3. Viewing message and application connection statistics using the EnMasse Console</h4>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -7115,8 +7084,13 @@ spec:
 </li>
 </ul>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="../openshift/images/console-screenshot-addr.png" alt="EnMasse Console">
+</div>
+</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Message statistics reference table</caption>
+<caption class="title">Table 5. Message statistics reference table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -7124,24 +7098,16 @@ spec:
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">To view&#8230;&#8203;</th>
-<th class="tableblock halign-left valign-top">On the Addresses page see&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">On the Addresses page&#8230;&#8203;</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Address status</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The first column (the symbol preceding the address name)</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Address type</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The third column</p>
+<p>See the first icon in the second column, <strong>Type/plan</strong></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7149,39 +7115,31 @@ spec:
 <p>Address plan</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The fourth column</p>
+<p>See the string that follows the icon in the second column, <strong>Type/plan</strong></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Message ingress rate (during the last 5 minutes)</p>
+<p>Address status</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Messages In</strong></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Message egress rate (during the last 5 minutes)</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Messages Out</strong></p>
+<p>See the third column, <strong>Status</strong></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Number of senders attached</p>
+<p>Messages received per second (computed over the last 5 minutes)</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Senders</strong></p>
+<p>See <strong>Messages In/sec</strong></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Number of receivers attached</p>
+<p>Messages sent per second (computed over the last 5 minutes)</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Receivers</strong></p>
+<p>See <strong>Messages Out/sec</strong></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7189,7 +7147,23 @@ spec:
 <p>Queue and topic address types only: Number of stored messages on the broker or brokers</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Stored</strong></p>
+<p><strong>Stored Messages</strong></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Number of senders attached</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>See <strong>Senders</strong></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Number of receivers attached</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>See <strong>Receivers</strong></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7197,21 +7171,18 @@ spec:
 <p>Standard address space only: Message deliveries per second</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>For the desired address, expand the twisty on the left to show the <strong>Senders</strong> table; see the <strong>Delivery Rate</strong> column.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Standard address space and queue address type only: Number of rejected messages stored in the global dead-letter queue (DLQ)</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Global DLQ</strong></p>
+<p>Click the desired address, which then shows the links page for that address; see the <strong>Delivery Rate</strong> column.</p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
+<div class="imageblock">
+<div class="content">
+<img src="../openshift/images/console-screenshot-conns.png" alt="EnMasse Console">
+</div>
+<div class="title">Figure 1. Application connection statistics reference table</div>
+</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Connection statistics reference table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -7219,24 +7190,24 @@ spec:
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">To view&#8230;&#8203;</th>
-<th class="tableblock halign-left valign-top">On the Connections page see&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">On the Connections page&#8230;&#8203;</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Total number of messages received as long the connection has existed</p>
+<p>Messages received per second (computed over the last 5 minutes)</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Messages In</strong></p>
+<p>See <strong>Messages In/sec</strong></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Standard address space only: Total number of messages sent as long the connection has existed</p>
+<p>Standard address space only: Messages sent per second (computed over the last 5 minutes)</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Messages Out</strong></p>
+<p>See <strong>Messages Out/sec</strong></p>
 </div></div></td>
 </tr>
 <tr>
@@ -7244,15 +7215,7 @@ spec:
 <p>Total number of messages delivered</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>For the desired connection, expand the twisty on the left to show the <strong>Senders</strong> and <strong>Receivers</strong> tables; see the <strong>Deliveries</strong> columns.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Standard address space only: Username used by the client to connect</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The third column</p>
+<p>Click the desired host name to show the list of senders and receivers; see the <strong>Deliveries</strong> column.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -7271,7 +7234,7 @@ For the brokered address space only, on the Connections page, the number of send
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-purging-queues-messaging">4.4.5. Purging queues and subscriptions</h4>
+<h4 id="proc-purging-queues-messaging">4.4.4. Purging queues and subscriptions</h4>
 <div class="paragraph">
 <p>You can purge&#8212;&#8203;that is, clear all messages from&#8212;&#8203;a <code>queue</code> or <code>subscription</code> address type of its stored messages by using the EnMasse Console.</p>
 </div>
@@ -7583,7 +7546,7 @@ spec:
 <p>For more information about messaging tenant resources, see the <a href="http://enmasse.io/documentation/master/openshift/#ref-resources-table-messaging-tenant-messaging">EnMasse messaging tenant resources table</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. EnMasse example roles table</caption>
+<caption class="title">Table 6. EnMasse example roles table</caption>
 <colgroup>
 <col style="width: 40%;">
 <col style="width: 60%;">
@@ -8885,7 +8848,7 @@ For more information also see: <a href="https://jdbc.postgresql.org/documentatio
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Component names</caption>
+<caption class="title">Table 7. Component names</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -8992,7 +8955,7 @@ the metric.</p></td>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Protocol adapter metrics</caption>
+<caption class="title">Table 8. Protocol adapter metrics</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -10075,7 +10038,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>The following table describes the EnMasse resources that pertain to the service administrator role.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. EnMasse service administrator resources table</caption>
+<caption class="title">Table 9. EnMasse service administrator resources table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -10138,7 +10101,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>The following table describes the EnMasse resources that pertain to the messaging tenant role.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. EnMasse messaging tenant resources table</caption>
+<caption class="title">Table 10. EnMasse messaging tenant resources table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -10185,7 +10148,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>This table shows the fields available for the brokered infrastructure configuration and a brief description.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. Brokered infrastructure configuration fields table</caption>
+<caption class="title">Table 11. Brokered infrastructure configuration fields table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -10402,7 +10365,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>This table shows the fields available for the standard infrastructure configuration and a brief description.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. Standard infrastructure configuration fields table</caption>
+<caption class="title">Table 12. Standard infrastructure configuration fields table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -18179,7 +18142,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-16 10:12:56 UTC
+Last updated 2020-03-17 10:13:28 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
