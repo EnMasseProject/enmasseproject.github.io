@@ -4679,12 +4679,8 @@ If you create a subscription on a topic, any senders to that topic must specify 
 <div class="sect5">
 <h6 id="con-standard-subscription-messaging">Subscription</h6>
 <div class="paragraph">
-<p>The subscription address type allows a subscription to be created for a topic that holds messages
-published to the topic even if the subscriber is not attached. The subscription is accessed by the
-consumer using &lt;topic-address&gt;::&lt;subscription-address&gt;. For example, for a subscription <code>mysub</code> on a
-topic <code>mytopic</code> the consumer consumes from the address <code>mytopic::mysub</code>. By default, only a single
-consumer is allowed per subscription. This can be specified using <code>maxConsumers</code> setting of
-the subscription address.</p>
+<p>Using the subscription address type you can create a subscription for a topic that holds messages
+published to the topic even if the subscriber is not attached. The consumer accesses the subscription  using the following address syntax: &lt;topic-address&gt;::&lt;subscription-address&gt;. For example, for a subscription <code>mysub</code> on a topic <code>mytopic</code> the consumer accesses the subscription from the address <code>mytopic::mysub</code>. The default setting permits only a single consumer per subscription. This setting can be changed by editing the <code>maxConsumers</code> attribute of the subscription address.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4693,7 +4689,7 @@ the subscription address.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-The <code>maxConsumers</code> setting cannot be modified for existing subscriptions at present.
+The <code>maxConsumers</code> setting cannot be modified for existing subscriptions.
 </td>
 </tr>
 </table>
@@ -17125,7 +17121,7 @@ kubectl logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-22 12:58:48 UTC
+Last updated 2020-03-23 13:00:51 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
