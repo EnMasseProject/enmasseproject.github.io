@@ -482,7 +482,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#create-edit-infra-config-messaging">3.2.7. Creating and editing infrastructure configurations</a></li>
 <li><a href="#assembly-auth-services-messaging">3.2.8. Authentication services</a></li>
 <li><a href="#ref-example-roles-messaging">3.2.9. EnMasse example roles</a></li>
-<li><a href="#config-openid-connect-for-kubernetes">3.2.10. Configuring EnMasse Console to use OpenID Connect</a></li>
+<li><a href="#configure-console-on-kubernetes">3.2.10. Configuring EnMasse Console on Kubernetes</a></li>
 </ul>
 </li>
 <li><a href="#upgrading-messaging">3.3. Upgrading EnMasse</a>
@@ -1610,7 +1610,7 @@ kind: BrokeredInfraConfig
 metadata:
   name: brokered-infra-config-example
 spec:
-  version: "0.31-SNAPSHOT" <b class="conum">(1)</b>
+  version: "0.32-SNAPSHOT" <b class="conum">(1)</b>
   admin: <b class="conum">(2)</b>
     resources:
       memory: 256Mi
@@ -1786,7 +1786,7 @@ kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: "0.31-SNAPSHOT" <b class="conum">(1)</b>
+  version: "0.32-SNAPSHOT" <b class="conum">(1)</b>
   admin: <b class="conum">(2)</b>
     resources:
       memory: 256Mi
@@ -1989,7 +1989,7 @@ kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: "0.31-SNAPSHOT"
+  version: "0.32-SNAPSHOT"
   admin:
     resources:
       memory: 256Mi
@@ -2406,11 +2406,25 @@ spec:
 </table>
 </div>
 <div class="sect3">
-<h4 id="config-openid-connect-for-kubernetes">3.2.10. Configuring EnMasse Console to use OpenID Connect</h4>
+<h4 id="configure-console-on-kubernetes">3.2.10. Configuring EnMasse Console on Kubernetes</h4>
 <div class="paragraph">
-<p>To use the EnMasse Console on Kubernetes, you must configure Kubernetes to use
+<p>To use the EnMasse Console on Kubernetes, you must either configure Kubernetes to use
 <a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens">OpenID Connect (OIDC)</a>
-as an Authentication Strategy.  Then you must create a <code>consoleservice</code> resource refering to your OIDC Provider.</p>
+as an Authentication Strategy, or configure the EnMasse Console to use an OIDC provider not
+configured with the cluster.</p>
+</div>
+<div class="paragraph">
+<p>If you are running on a Kubernetes cluster with OIDC enabled, then the recommended way to configure
+the console is to use the OIDC provider of the cluster.</p>
+</div>
+<div class="paragraph">
+<p>If you are running on a managed Kubernetes cluster, the OIDC Authentication Strategy is usually not
+enabled, so configuring the console using an external OIDC provider is the only way.</p>
+</div>
+<div class="sect4">
+<h5 id="config-cluster-openid-connect-for-kubernetes">Configuring EnMasse Console to use cluster OpenID Connect</h5>
+<div class="paragraph">
+<p>To deploy the console you must create a <code>consoleservice</code> resource refering to your OIDC Provider.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequestises</div>
@@ -2438,7 +2452,7 @@ as an Authentication Strategy.  Then you must create a <code>consoleservice</cod
 </td>
 <td class="content">
 If using a public OIDC provider (such as Google, Azure, GitHub, etc) the
-<a href="https://pusher.github.io/oauth2_proxy/auth-configuration">OAuthProxy configuration guide</a> offers specific guidance.
+<a href="https://oauth2-proxy.github.io/oauth2-proxy/auth-configuration">OAuthProxy configuration guide</a> offers specific guidance.
 </td>
 </tr>
 </table>
@@ -2508,6 +2522,112 @@ oauthClientSecret references the secret created in the previous step.
 </div>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="config-external-openid-connect-for-kubernetes">Configuring EnMasse Console to use external OpenID Connect</h5>
+<div class="paragraph">
+<p>To deploy the console you must create a <code>consoleservice</code> resource refering to your OIDC Provider.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequestises</div>
+<ul>
+<li>
+<p>Before you begin you need to know the following details from your OpenID Connect provider:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>OIDC Discovery URL</p>
+</li>
+<li>
+<p>OIDC scopes</p>
+</li>
+<li>
+<p>Client ID</p>
+</li>
+<li>
+<p>Client secret</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If using a public OIDC provider (such as Google, Azure, GitHub, etc) the
+<a href="https://oauth2-proxy.github.io/oauth2-proxy/auth-configuration">OAuthProxy configuration guide</a> offers specific guidance.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Select the namespace where EnMasse is installed:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl config set-context $(kubectl config current-context) --namespace=<em>enmasse-infra</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a secret definition with the client-id/client-secret pair of your OIDC provider:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl create secret generic my-google-oidc-secret --from-literal=client-id=myclientid --from-literal=client-secret=mysecret</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Grant impersonation privileges to the console server:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl apply -f install/components/example-console</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a console services definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cat &lt;&lt;EOF | kubectl apply -f -
+apiVersion: admin.enmasse.io/v1beta1
+kind: ConsoleService
+metadata:
+    name: console
+spec:
+    discoveryMetadataURL: https://accounts.google.com/.well-known/openid-configuration
+    impersonation:
+      userHeader: X-Forwarded-Email
+    oauthClientSecret:
+        name: my-google-oidc-secret
+    scope: openid email
+EOF</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Replace the discovery URL and scopes with the appropriate values from your OIDC provider.  Ensure that
+oauthClientSecret references the secret created in the previous step.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>
@@ -9775,7 +9895,7 @@ kubectl logs deployment/admin.<em>uuid</em> -c agent</pre>
 <div class="sect4">
 <h5 id="version_information">Version information</h5>
 <div class="paragraph">
-<p><em>Version</em> : 0.31-SNAPSHOT</p>
+<p><em>Version</em> : 0.32-SNAPSHOT</p>
 </div>
 </div>
 <div class="sect4">
@@ -17121,7 +17241,7 @@ kubectl logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-25 20:42:06 UTC
+Last updated 2020-04-01 11:24:07 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
