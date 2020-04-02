@@ -5559,7 +5559,7 @@ If you create a subscription on a topic, any senders to that topic must specify 
 <h6 id="con-standard-subscription-messaging">Subscription</h6>
 <div class="paragraph">
 <p>Using the subscription address type you can create a subscription for a topic that holds messages
-published to the topic even if the subscriber is not attached. The consumer accesses the subscription  using the following address syntax: &lt;topic-address&gt;::&lt;subscription-address&gt;. For example, for a subscription <code>mysub</code> on a topic <code>mytopic</code> the consumer accesses the subscription from the address <code>mytopic::mysub</code>. The default setting permits only a single consumer per subscription. This setting can be changed by editing the <code>maxConsumers</code> attribute of the subscription address.</p>
+published to the topic even if the subscriber is not attached. The consumer accesses the subscription  using the following address syntax: &lt;topic-address&gt;::&lt;subscription-address&gt;. For example, for a subscription <code>mysub</code> on a topic <code>mytopic</code> the consumer accesses the subscription from the address <code>mytopic::mysub</code>. The default setting permits only a single consumer per subscription. This setting can be changed by editing the <code>maxConsumers</code> field of the subscription address.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -18138,7 +18138,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-01 13:05:35 UTC
+Last updated 2020-04-02 13:06:12 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
