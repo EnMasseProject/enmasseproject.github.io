@@ -8136,11 +8136,47 @@ oc create secret tls iot-mqtt-adapter-tls --key=install/components/iot/examples/
 </div>
 </li>
 <li>
-<p>Install the Infinispan server:</p>
+<p>(Optional) Install the PostgreSQL server and create database:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f install/components/iot/examples/infinispan/common
-oc apply -f install/components/iot/examples/infinispan/openshift</pre>
+<pre class="nowrap">oc apply -f install/components/iot/examples/postgresql/deploy</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may skip this step if you already have a PostgreSQL instance and
+created a database with a user to access to it.</p>
+</div>
+</li>
+<li>
+<p>Apply database schema:</p>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>You will need to execute the following SQL files on the database instance
+you created. Depenending on your setup, this may require database admin privileges:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>install/components/iot/examples/postgresql/create.sql</code></p>
+</li>
+<li>
+<p><code>install/components/iot/examples/postgresql/create.tree.sql</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can execute the SQL file using the <code>psql</code> command, connected to
+your database. The following shows an example, how to execute <code>psql</code>
+from inside the container, when you installed PostgreSQL as described
+in the previous step:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.sql
+oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.tree.sql</pre>
+</div>
+</div>
 </div>
 </div>
 </li>
@@ -8500,11 +8536,47 @@ oc create secret tls iot-mqtt-adapter-tls --key=install/components/iot/examples/
 </div>
 </li>
 <li>
-<p>Install the Infinispan server:</p>
+<p>(Optional) Install the PostgreSQL server and create database:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc apply -f install/components/iot/examples/infinispan/common
-oc apply -f install/components/iot/examples/infinispan/openshift</pre>
+<pre class="nowrap">oc apply -f install/components/iot/examples/postgresql/deploy</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may skip this step if you already have a PostgreSQL instance and
+created a database with a user to access to it.</p>
+</div>
+</li>
+<li>
+<p>Apply database schema:</p>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>You will need to execute the following SQL files on the database instance
+you created. Depenending on your setup, this may require database admin privileges:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>install/components/iot/examples/postgresql/create.sql</code></p>
+</li>
+<li>
+<p><code>install/components/iot/examples/postgresql/create.tree.sql</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can execute the SQL file using the <code>psql</code> command, connected to
+your database. The following shows an example, how to execute <code>psql</code>
+from inside the container, when you installed PostgreSQL as described
+in the previous step:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.sql
+oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.tree.sql</pre>
+</div>
+</div>
 </div>
 </div>
 </li>
@@ -18138,7 +18210,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-03 13:06:07 UTC
+Last updated 2020-04-04 13:06:18 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
