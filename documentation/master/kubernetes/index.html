@@ -3813,7 +3813,7 @@ kubectl get secret broker-support-<em>uuid</em>  --template='{{.data.password}}'
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl oc exec <em>broker pod name</em> -- curl --silent --insecure --user <em>username</em>:_password_ 'https://localhost:8161/console/jolokia/read/org.apache.activemq.artemis:broker="<em>broker pod name</em>"/AddressMemoryUsage'</pre>
+<pre class="nowrap">kubectl oc exec <em>broker pod name</em> -- curl --silent --insecure --user <em>username</em>:_password_ -H "Origin: https://localhost:8161" 'https://localhost:8161/console/jolokia/read/org.apache.activemq.artemis:broker="<em>broker pod name</em>"/AddressMemoryUsage'</pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -5508,15 +5508,18 @@ spec:
     - host: messaging.example.com
       port: 5672
     - host: messaging2.example.com
-    tls: {} <b class="conum">(3)</b>
-    credentials: <b class="conum">(4)</b>
+    idleTimeout: <b class="conum">(3)</b>
+    maxFrameSize: <b class="conum">(4)</b>
+    tls: {} <b class="conum">(5)</b>
+    credentials: <b class="conum">(6)</b>
       username:
         value: test
       password:
         valueFromSecret:
           name: password-secret
           key: password.txt
-    addresses: <b class="conum">(5)</b>
+    role: <b class="conum">(7)</b>
+    addresses: <b class="conum">(8)</b>
     - name: p1
       pattern: "prices/*"
     - name: p2
@@ -5532,10 +5535,19 @@ spec:
 <p>(Required) Specifies a list of endpoints for this connector. This list must contain at least one entry, and any additional entries are used for failover. If not otherwise specified, the <code>port</code> field value is set to the registered IANA port for AMQP (or AMQPS if TLS is enabled).</p>
 </li>
 <li>
+<p>(Optional) Idle timeout of the AMQP connection (seconds). 0 disables the idle timeout.</p>
+</li>
+<li>
+<p>(Optional) Max frame size of the AMQP connection.</p>
+</li>
+<li>
 <p>(Optional) Enable TLS. The connector trusts global root CAs by default. To use a custom CA, specify a value for the <code>caCert</code> field.</p>
 </li>
 <li>
 <p>(Optional) Specifies the username and password credentials to use for this connector. The values can be specified inline or by referencing a secret along with an optional key specifying the location within the secret. The secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
+</li>
+<li>
+<p>(Optional) Role of the connector. Valid values are "normal", "edge", and "route-container" (default value).</p>
 </li>
 <li>
 <p>(Required) Specifies a list of patterns matching addresses to be exposed on the remote endpoint. The pattern consists of one or more tokens separated by a forward slash, <code>/</code>. A token can be one of the following: a * character, a # character, or a sequence of characters that do not include /, *, or #. The * token matches any single token. The # token matches zero or more tokens. * has higher precedence than #, and exact match has the highest precedence.</p>
@@ -17393,7 +17405,7 @@ kubectl logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-21 07:56:50 UTC
+Last updated 2020-04-22 07:57:41 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
