@@ -3813,7 +3813,7 @@ kubectl get secret broker-support-<em>uuid</em>  --template='{{.data.password}}'
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl oc exec <em>broker pod name</em> -- curl --silent --insecure --user <em>username</em>:_password_ -H "Origin: https://localhost:8161" 'https://localhost:8161/console/jolokia/read/org.apache.activemq.artemis:broker="<em>broker pod name</em>"/AddressMemoryUsage'</pre>
+<pre class="nowrap">kubectl exec <em>broker pod name</em> -- curl --silent --insecure --user <em>username</em>:_password_ -H "Origin: https://localhost:8161" 'https://localhost:8161/console/jolokia/read/org.apache.activemq.artemis:broker="<em>broker pod name</em>"/AddressMemoryUsage'</pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -5181,7 +5181,7 @@ spec:
 <p>(Required) The name of the endpoint. The name specified affects the name of the Kubernetes service to be created as well as the name of the endpoint in the status section of the <code>AddressSpace</code>.</p>
 </li>
 <li>
-<p>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code>, <code>console</code>, and <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
+<p>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code> and <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
 </li>
 <li>
 <p>(Required) The type of endpoint being exposed. The <code>loadbalancer</code> type creates an Kubernetes <code>LoadBalancer</code> service. Valid values are <code>route</code> and <code>loadbalancer</code>.</p>
@@ -7335,8 +7335,8 @@ in the previous step:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.sql
-kubectl exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.tree.sql</pre>
+<pre class="nowrap">kubectl exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.sql
+kubectl exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.tree.sql</pre>
 </div>
 </div>
 </div>
@@ -7748,8 +7748,8 @@ in the previous step:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.sql
-kubectl exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.tree.sql</pre>
+<pre class="nowrap">kubectl exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.sql
+kubectl exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.tree.sql</pre>
 </div>
 </div>
 </div>
@@ -17405,7 +17405,7 @@ kubectl logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-22 07:57:41 UTC
+Last updated 2020-04-23 07:58:29 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

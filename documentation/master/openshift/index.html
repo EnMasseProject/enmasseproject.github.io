@@ -4572,7 +4572,7 @@ oc get secret broker-support-<em>uuid</em>  --template='{{.data.password}}' | ba
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc oc exec <em>broker pod name</em> -- curl --silent --insecure --user <em>username</em>:_password_ -H "Origin: https://localhost:8161" 'https://localhost:8161/console/jolokia/read/org.apache.activemq.artemis:broker="<em>broker pod name</em>"/AddressMemoryUsage'</pre>
+<pre class="nowrap">oc exec <em>broker pod name</em> -- curl --silent --insecure --user <em>username</em>:_password_ -H "Origin: https://localhost:8161" 'https://localhost:8161/console/jolokia/read/org.apache.activemq.artemis:broker="<em>broker pod name</em>"/AddressMemoryUsage'</pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -5959,7 +5959,7 @@ spec:
 <p>(Required) The name of the endpoint. The name specified affects the name of the OpenShift service to be created as well as the name of the endpoint in the status section of the <code>AddressSpace</code>.</p>
 </li>
 <li>
-<p>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code>, <code>console</code>, and <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
+<p>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code> and <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
 </li>
 <li>
 <p>(Required) The type of endpoint being exposed. The <code>loadbalancer</code> type creates an OpenShift <code>LoadBalancer</code> service. Valid values are <code>route</code> and <code>loadbalancer</code>.</p>
@@ -6008,13 +6008,13 @@ spec:
 <p>(Required) The name of the endpoint. The name specified affects the name of the OpenShift service to be created as well as the name of the endpoint in the status section of the <code>AddressSpace</code>.</p>
 </li>
 <li>
-<p>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code>, <code>console</code>, or <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
+<p>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code>, or <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
 </li>
 <li>
-<p>(Required) The name of the port to be exposed. With the <code>route</code> type, only a single TLS-enabled port can be specified. For the <code>messaging</code> service, the valid values are <code>amqps</code> or <code>https</code>. For the <code>console</code> service, the only valid value is <code>https</code>.</p>
+<p>(Required) The name of the port to be exposed. With the <code>route</code> type, only a single TLS-enabled port can be specified. For the <code>messaging</code> service, the valid values are <code>amqps</code> or <code>https</code>.</p>
 </li>
 <li>
-<p>(Required) The TLS termination policy to be used for the OpenShift route. For the <code>messaging</code> service, the <code>amqps</code> port requires <code>passthrough</code> to be specified, whereas <code>https</code> (websockets) also allows <code>reencrypt</code>. For the <code>console</code> service, <code>reencrypt</code> can be specified.</p>
+<p>(Required) The TLS termination policy to be used for the OpenShift route. For the <code>messaging</code> service, the <code>amqps</code> port requires <code>passthrough</code> to be specified, whereas <code>https</code> (websockets) also allows <code>reencrypt</code>.</p>
 </li>
 <li>
 <p>(Optional) The host name to use for the created route.</p>
@@ -8268,8 +8268,8 @@ in the previous step:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.sql
-oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.tree.sql</pre>
+<pre class="nowrap">oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.sql
+oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.tree.sql</pre>
 </div>
 </div>
 </div>
@@ -8668,8 +8668,8 @@ in the previous step:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.sql
-oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" < install/components/iot/examples/postgresql/create.tree.sql</pre>
+<pre class="nowrap">oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.sql
+oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.tree.sql</pre>
 </div>
 </div>
 </div>
@@ -18305,7 +18305,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-22 07:57:41 UTC
+Last updated 2020-04-23 07:58:29 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
