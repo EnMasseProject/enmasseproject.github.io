@@ -8268,8 +8268,9 @@ in the previous step:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.sql
-oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.tree.sql</pre>
+<pre class="nowrap">oc exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.sql
+oc exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.tree.sql
+oc exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.devcon.sql</pre>
 </div>
 </div>
 </div>
@@ -8475,7 +8476,7 @@ Make sure that the <code>Phase</code> field shows <code>Ready</code> status for 
 <p>Export the messaging endpoint host and port:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">export MESSAGING_HOST=$(oc -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].externalHost})
+<pre class="nowrap">export MESSAGING_HOST=$(oc get -n myapp addressspace iot -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].externalHost}')
 export MESSAGING_PORT=443</pre>
 </div>
 </div>
@@ -8668,8 +8669,9 @@ in the previous step:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.sql
-oc exec -ti deployment/postgresql bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.tree.sql</pre>
+<pre class="nowrap">oc exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.sql
+oc exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.tree.sql
+oc exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.devcon.sql</pre>
 </div>
 </div>
 </div>
@@ -9504,7 +9506,7 @@ spec:
 <p>Export the messaging endpoint host and port:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">export MESSAGING_HOST=$(oc -n myapp get addressspace iot -o jsonpath={.status.endpointStatuses[?\(@.name==\'messaging\'\)].externalHost})
+<pre class="nowrap">export MESSAGING_HOST=$(oc get -n myapp addressspace iot -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].externalHost}')
 export MESSAGING_PORT=443</pre>
 </div>
 </div>
@@ -18305,7 +18307,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-30 08:02:32 UTC
+Last updated 2020-05-01 08:03:15 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
