@@ -510,7 +510,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#restart-component-messaging">3.6.1. Restarting components to acquire security fixes</a></li>
 <li><a href="#get-logs-router-messaging">3.6.2. Viewing router logs</a></li>
 <li><a href="#get-logs-broker-messaging">3.6.3. Viewing broker logs</a></li>
-<li><a href="#examine-broker-state-messaging">3.6.4. Examining the state of a broker using the Apache ActiveMQ Artemis management interfaces</a></li>
+<li><a href="#enable-protocol-trace-router-messaging">3.6.4. Enabling an AMQP protocol trace for the router</a></li>
+<li><a href="#enable-protocol-trace-broker-messaging">3.6.5. Enabling an AMQP protocol trace for the broker</a></li>
+<li><a href="#examine-broker-state-messaging">3.6.6. Examining the state of a broker using the Apache ActiveMQ Artemis management interfaces</a></li>
 </ul>
 </li>
 <li><a href="#sizing-guide-messaging">3.7. EnMasse configuration sizing guidelines</a>
@@ -3756,7 +3758,206 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="examine-broker-state-messaging">3.6.4. Examining the state of a broker using the Apache ActiveMQ Artemis management interfaces</h4>
+<h4 id="enable-protocol-trace-router-messaging">3.6.4. Enabling an AMQP protocol trace for the router</h4>
+<div class="paragraph">
+<p>For diagnostic purposes, you can enable an AMQP protocol trace for a router.   This can be helpful
+when troubleshooting issues related to client connectivity or with sending and receiving messages.  There are two
+ways this can be achieved.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can dynamically enable/disable the protocol trace for a single router using a <code>qdmange</code> command. This
+method avoids the need to restart the router.  The setting will be lost the next time the router restarts.</p>
+</li>
+<li>
+<p>Alternatively, you can apply configuration to the <code>standardinfraconfig</code> that enables the protocol trace for all
+routers of all the address spaces that use that <code>standardinfraconfig</code>.  This method will cause all the routers to
+restart.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Both procedures are described next.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+Enabling the protocol trace increases the CPU overhead of the router(s) and may decrease
+messaging performance. It may also increase the disk space requirements associated with any log retention system.
+Therefore, it is recommended that you enable the protocol trace for as short a time as possible.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="dynamically_enabling_the_protocol_trace_for_a_single_router">Dynamically enabling the protocol trace for a single router</h5>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>List all router Pods and choose the Pod for the relevant address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get pods -l name=qdrouterd -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enable the protocol trace for a single router:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">echo '{"enable":"trace+"}' | kubectl exec qdrouterd-<em>podname</em> --stdin=true --tty=false -- qdmanage update -b 127.0.0.1:7777 --type=log --name=log/PROTOCOL --stdin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Display the logs for the Pod that will include the protocol trace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl logs <em>pod</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Disable the protocol trace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">echo '{"enable":"info"}' | kubectl exec qdrouterd-<em>podname</em> --stdin=true --tty=false -- qdmanage update -b 127.0.0.1:7777 --type=log --name=log/PROTOCOL --stdin</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="enabling_the_protocol_trace_using_the_standardinfraconfig_environment_variable">Enabling the protocol trace using the <code>StandardInfraConfig</code> environment variable</h5>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Determine the <code>addresspaceplan</code> name for the address space concerned:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get addressspace -n <em>namespace</em> <em>addressspacename</em> --output 'jsonpath={.spec.plan}{"\n"}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Determine the <code>standardinfraconfig</code> name for the <code>addressspaceplan</code> name:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get addressspaceplan <em>addressspaceplan</em> --output 'jsonpath={.spec.infraConfigRef}{"\n"}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enable the protocol trace for all the routers of the all the address spaces using that <code>standardinfraconfig</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl patch standardinfraconfig <em>standardinfraconfigname</em> --type=merge -p '{"spec":{"router":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM","value":"true"}],"name":"router"}]}}}}}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Display the logs for the Pod that will include the protocol trace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl logs <em>pod</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Disable the protocol trace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl patch standardinfraconfig <em>standardinfraconfig name</em> --type=merge -p '{"spec":{"router":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM"}],"name":"router"}]}}}}}'</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="enable-protocol-trace-broker-messaging">3.6.5. Enabling an AMQP protocol trace for the broker</h4>
+<div class="paragraph">
+<p>For diagnostic purposes, you can enable an AMQP protocol trace for a broker. This can be helpful
+to troubleshoot problems with sending or receiving messages.</p>
+</div>
+<div class="paragraph">
+<p>To enable the protocol trace, you apply configuration to the <code>standardinfraconfig</code> (for standard
+address spaces) or <code>brokeredinfraconfig</code> (for brokered address spaces) that enables the protocol trace for all
+brokers of all the address spaces that use that configuration. Applying this configuration will cause the
+brokers to restart.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+Enabling the protocol trace increases the CPU overhead of the broker(s) and may decrease
+messaging performance. It may also increase the disk space requirements associated with any log retention system.
+Therefore, it is recommended that you enable the protocol trace for as short a time as possible.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Determine the <code>addresspaceplan</code> name for the address space concerned:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get addressspace -n <em>namespace</em> <em>addressspacename</em> --output 'jsonpath={.spec.plan}{"\n"}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Determine the <code>standardinfraconfig</code> or <code>brokeredinfraconfig</code> name for the <code>addressspaceplan</code> name:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get addressspaceplan <em>addressspaceplan</em> --output 'jsonpath={.spec.infraConfigRef}{"\n"}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enable the protocol trace for all the brokers of all the address spaces using that <code>standardinfraconfig</code>
+or <code>brokeredinfraconfig</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl patch <em>infraconfigresource</em> <em>infraconfigname</em> --type=merge -p '{"spec":{"broker":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM","value":"true"}],"name":"broker"}]}}}}}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Display the logs for the Pod that will include the protocol trace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl logs <em>pod</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Disable the protocol trace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl patch <em>infraconfigresource</em> <em>infraconfigname</em> --type=merge -p '{"spec":{"broker":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM"}],"name":"broker"}]}}}}}'</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="examine-broker-state-messaging">3.6.6. Examining the state of a broker using the Apache ActiveMQ Artemis management interfaces</h4>
 <div class="paragraph">
 <p>If a problem is suspected with a Broker associated with an address space, you can examine the state of the
 broker directly using its built-in <a href="https://activemq.apache.org/components/artemis/documentation/latest/management.html">management interfaces</a>.  EnMasse exposes the
@@ -7323,7 +7524,7 @@ you created. Depenending on your setup, this may require database admin privileg
 <p><code>install/components/iot/examples/postgresql/create.sql</code></p>
 </li>
 <li>
-<p><code>install/components/iot/examples/postgresql/create.tree.sql</code></p>
+<p><code>install/components/iot/examples/postgresql/create.devcon.sql</code></p>
 </li>
 </ul>
 </div>
@@ -7336,7 +7537,6 @@ in the previous step:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">kubectl exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.sql
-kubectl exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.tree.sql
 kubectl exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.devcon.sql</pre>
 </div>
 </div>
@@ -7737,7 +7937,7 @@ you created. Depenending on your setup, this may require database admin privileg
 <p><code>install/components/iot/examples/postgresql/create.sql</code></p>
 </li>
 <li>
-<p><code>install/components/iot/examples/postgresql/create.tree.sql</code></p>
+<p><code>install/components/iot/examples/postgresql/create.devcon.sql</code></p>
 </li>
 </ul>
 </div>
@@ -7750,7 +7950,6 @@ in the previous step:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">kubectl exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.sql
-kubectl exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.tree.sql
 kubectl exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-registry registry" &lt; install/components/iot/examples/postgresql/create.devcon.sql</pre>
 </div>
 </div>
@@ -7864,9 +8063,6 @@ the former user is assumed to be named "admin", and the latter "registry".</p>
 <li>
 <p>Have access credentials for the "admin" database user</p>
 </li>
-<li>
-<p>Have selected a storage model</p>
-</li>
 </ul>
 </div>
 <div class="olist arabic">
@@ -7876,25 +8072,7 @@ the former user is assumed to be named "admin", and the latter "registry".</p>
 <p>Connect to your database instance using the admin user</p>
 </li>
 <li>
-<p>Execute either of the following steps, depending on which data model
-you chose</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>If you chose the hierarchical JSON model, or want to use the default choice,
-review and deploy the SQL schema from
-<code>templates/iot/examples/postgresql/create.sql</code> and <code>templates/iot/examples/postgresql/create.tree.sql</code>.</p>
-</li>
-<li>
-<p>If you chose the flat JSON model, review and deploy the SQL schema
-from <code>templates/iot/examples/postgresql/create.sql</code></p>
-</li>
-<li>
-<p>If you chose the table storage model, review and deploy the SQL schema
-from <code>templates/iot/examples/postgresql/create.table.sql</code></p>
-</li>
-</ol>
-</div>
+<p>Review and deploy the SQL schema <code>templates/iot/examples/postgresql/create.sql</code></p>
 </li>
 </ol>
 </div>
@@ -17407,7 +17585,7 @@ kubectl logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-05 08:05:18 UTC
+Last updated 2020-05-06 08:06:01 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
