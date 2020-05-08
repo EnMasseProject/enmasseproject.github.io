@@ -4615,7 +4615,7 @@ Therefore, it is recommended that you enable the protocol trace for as short a t
 <p>Determine the <code>addresspaceplan</code> name for the address space concerned:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace -n <em>namespace</em> <em>addressspacename</em> --output 'jsonpath={.spec.plan}{"\n"}'</pre>
+<pre class="nowrap">oc get addressspace -n <em>namespace</em> <em>address-space-name</em> --output 'jsonpath={.spec.plan}{"\n"}'</pre>
 </div>
 </div>
 </li>
@@ -4623,7 +4623,7 @@ Therefore, it is recommended that you enable the protocol trace for as short a t
 <p>Determine the <code>standardinfraconfig</code> name for the <code>addressspaceplan</code> name:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspaceplan <em>addressspaceplan</em> --output 'jsonpath={.spec.infraConfigRef}{"\n"}'</pre>
+<pre class="nowrap">oc get addressspaceplan <em>address-space-plan</em> --output 'jsonpath={.spec.infraConfigRef}{"\n"}'</pre>
 </div>
 </div>
 </li>
@@ -4631,7 +4631,7 @@ Therefore, it is recommended that you enable the protocol trace for as short a t
 <p>Enable the protocol trace for all routers of all address spaces using that <code>standardinfraconfig</code>:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc patch standardinfraconfig <em>standardinfraconfigname</em> --type=merge -p '{"spec":{"router":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM","value":"true"}],"name":"router"}]}}}}}'</pre>
+<pre class="nowrap">oc patch standardinfraconfig <em>standardinfraconfig-name</em> --type=merge -p '{"spec":{"router":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM","value":"true"}],"name":"router"}]}}}}}'</pre>
 </div>
 </div>
 </li>
@@ -4647,7 +4647,7 @@ Therefore, it is recommended that you enable the protocol trace for as short a t
 <p>Disable the protocol trace:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc patch standardinfraconfig <em>standardinfraconfig name</em> --type=merge -p '{"spec":{"router":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM"}],"name":"router"}]}}}}}'</pre>
+<pre class="nowrap">oc patch standardinfraconfig <em>standardinfraconfig-name</em> --type=merge -p '{"spec":{"router":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM"}],"name":"router"}]}}}}}'</pre>
 </div>
 </div>
 </li>
@@ -4704,7 +4704,7 @@ Therefore, it is recommended that you enable the protocol trace for as short a t
 <p>Determine the <code>addresspaceplan</code> name for the address space concerned:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspace -n <em>namespace</em> <em>addressspacename</em> --output 'jsonpath={.spec.plan}{"\n"}'</pre>
+<pre class="nowrap">oc get addressspace -n <em>namespace</em> <em>address-space-name</em> --output 'jsonpath={.spec.plan}{"\n"}'</pre>
 </div>
 </div>
 </li>
@@ -4712,7 +4712,7 @@ Therefore, it is recommended that you enable the protocol trace for as short a t
 <p>Determine the <code>standardinfraconfig</code> or <code>brokeredinfraconfig</code> name for the <code>addressspaceplan</code> name:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get addressspaceplan <em>addressspaceplan</em> --output 'jsonpath={.spec.infraConfigRef}{"\n"}'</pre>
+<pre class="nowrap">oc get addressspaceplan <em>address-space-plan</em> --output 'jsonpath={.spec.infraConfigRef}{"\n"}'</pre>
 </div>
 </div>
 </li>
@@ -4721,7 +4721,7 @@ Therefore, it is recommended that you enable the protocol trace for as short a t
 or <code>brokeredinfraconfig</code>:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc patch <em>infraconfigresource</em> <em>infraconfigname</em> --type=merge -p '{"spec":{"broker":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM","value":"true"}],"name":"broker"}]}}}}}'</pre>
+<pre class="nowrap">oc patch <em>infraconfig-resource</em> <em>infraconfig-name</em> --type=merge -p '{"spec":{"broker":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM","value":"true"}],"name":"broker"}]}}}}}'</pre>
 </div>
 </div>
 </li>
@@ -4737,7 +4737,7 @@ or <code>brokeredinfraconfig</code>:</p>
 <p>Disable the protocol trace:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc patch <em>infraconfigresource</em> <em>infraconfigname</em> --type=merge -p '{"spec":{"broker":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM"}],"name":"broker"}]}}}}}'</pre>
+<pre class="nowrap">oc patch <em>infraconfig-resource</em> <em>infraconfig-name</em> --type=merge -p '{"spec":{"broker":{"podTemplate":{"spec":{"containers":[{"env":[{"name":"PN_TRACE_FRM"}],"name":"broker"}]}}}}}'</pre>
 </div>
 </div>
 </li>
@@ -4799,7 +4799,7 @@ oc get secret broker-support-<em>uuid</em>  --template='{{.data.password}}' | ba
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc get address <em>address resource name</em>  -o jsonpath="{.status.brokerStatuses[*].containerId}"</pre>
+<pre class="nowrap">oc get address <em>address-resource-name</em>  -o jsonpath="{.status.brokerStatuses[*].containerId}"</pre>
 </div>
 </div>
 </li>
@@ -4810,7 +4810,7 @@ oc get secret broker-support-<em>uuid</em>  --template='{{.data.password}}' | ba
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc exec <em>broker pod name</em> -- /opt/apache-artemis/bin/artemis address show --user <em>username</em> --password <em>password</em></pre>
+<pre class="nowrap">oc exec <em>broker-pod-name</em> -- /opt/apache-artemis/bin/artemis address show --user <em>username</em> --password <em>password</em></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4818,7 +4818,7 @@ oc get secret broker-support-<em>uuid</em>  --template='{{.data.password}}' | ba
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">oc exec <em>broker pod name</em> -- curl --silent --insecure --user <em>username</em>:_password_ -H "Origin: https://localhost:8161" 'https://localhost:8161/console/jolokia/read/org.apache.activemq.artemis:broker="<em>broker pod name</em>"/AddressMemoryUsage'</pre>
+<pre class="nowrap">oc exec <em>broker-pod-name</em> -- curl --silent --insecure --user <em>username</em>:_password_ -H "Origin: https://localhost:8161" 'https://localhost:8161/console/jolokia/read/org.apache.activemq.artemis:broker="<em>broker pod name</em>"/AddressMemoryUsage'</pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -18536,7 +18536,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-07 08:06:43 UTC
+Last updated 2020-05-08 08:07:21 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
