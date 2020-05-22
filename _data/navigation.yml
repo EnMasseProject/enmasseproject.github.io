@@ -1,0 +1,7 @@
+main:
+  - title: "Downloads"
+    url: /downloads/
+  - title: "Documentation"
+    url: /documentation/
+  - title: "Community"
+    url: /community/
