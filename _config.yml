@@ -30,7 +30,7 @@ twitter_username: enmasseio
 repository: "EnMasseProject/enmasse"
 logo: "/assets/images/enmasse_logo.png"
 masthead_title: " "
-search: true
+search: false
 defaults:
   - values:
       header:
