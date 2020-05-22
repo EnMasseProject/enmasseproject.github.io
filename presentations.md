@@ -1,8 +1,6 @@
 ---
 layout: splash
 title: "Presentations and slides"
-header:
-  overlay_color: "#00499e"
 permalink: /presentations/
 ---
 

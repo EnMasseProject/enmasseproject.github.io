@@ -1,7 +1,6 @@
 ---
 layout: splash
 header:
-  overlay_color: "#00499e"
   actions:
     - label: "Download"
       url: "/downloads/"

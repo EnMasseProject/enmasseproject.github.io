@@ -1,8 +1,6 @@
 ---
 layout: splash
 title: "Documentation Archive"
-header:
-  overlay_color: "#00499e"
 permalink: /documentation/archive/
 ---
 

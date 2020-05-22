@@ -1,8 +1,6 @@
 ---
 layout: splash
 title: "Articles and examples"
-header:
-  overlay_color: "#00499e"
 permalink: /articles/
 ---
 

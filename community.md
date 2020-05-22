@@ -2,8 +2,6 @@
 permalink: /community/
 layout: splash
 title: "Community"
-header:
-  overlay_color: "#00499e"
 feature_row:
   - title: Download EnMasse
     excerpt: EnMasse is free. [Download](/downloads) and try it out!

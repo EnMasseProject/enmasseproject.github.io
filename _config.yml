@@ -31,6 +31,10 @@ repository: "EnMasseProject/enmasse"
 logo: "/assets/images/enmasse_logo.png"
 masthead_title: " "
 search: true
+defaults:
+  - values:
+      header:
+        overlay_color: "#00499e"
 
 # Build settings
 minimal_mistakes_skin: "default" # "air"

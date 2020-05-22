@@ -2,8 +2,6 @@
 layout: splash
 title: "Downloads"
 permalink: /downloads/
-header:
-  overlay_color: "#00499e"
 ---
 
 EnMasse releases can be downloaded from [GitHub](https://github.com/EnMasseProject/enmasse/releases). The release artifacts contain YAML files for installing and configuring EnMasse. Container images used in the releases are published to [Quay.io](https://quay.io/repository/enmasse/).

@@ -2,8 +2,6 @@
 layout: splash
 title: "Documentation"
 permalink: /documentation/
-header:
-  overlay_color: "#00499e"
 feature_row:
   - title: "Documentation Archive"
     excerpt: Find documentation for [older versions](/documentation/archive) of EnMasse
