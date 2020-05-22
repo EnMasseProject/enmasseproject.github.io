@@ -4,7 +4,6 @@ title: "Documentation"
 permalink: /documentation/
 header:
   overlay_color: "#00499e"
-  overlay_filter: "0.3"
 feature_row:
   - title: "Documentation Archive"
     excerpt: Find documentation for [older versions](/documentation/archive) of EnMasse

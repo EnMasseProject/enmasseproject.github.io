@@ -3,7 +3,6 @@ layout: splash
 title: "Articles and examples"
 header:
   overlay_color: "#00499e"
-  overlay_filter: "0.3"
 permalink: /articles/
 ---
 
