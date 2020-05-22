@@ -38,7 +38,7 @@ feature_row2:
     title: "Powerful integrations"
     excerpt:
       <p>Supports custom external IAM providers such as LDAP.</p>
-      <p>Integration with <b>Eclipse Hono</b> to support multiple IoT protocols, device and tenant management.</p>
+      <p>Integration with <b>Eclipse Hono™</b> to support multiple IoT protocols, device and tenant management.</p>
       <p>Supports federation of messaging addresses and forwarding messages to and from any AMQP 1.0 provider.</p>
 feature_row3:
   - image_path: assets/images/secure_icon.png
@@ -66,7 +66,7 @@ feature_row4:
 
 # What is EnMasse?
 
-EnMasse is an open source multitenant, self-service messaging system for [Kubernetes](https://kubernetes.io). It can run on your own infrastructure or in the cloud, and simplifies managing the messaging infrastructure for your organization. EnMasse can be used for many purposes, such as moving your messaging infrastructure to the cloud without depending on a specific cloud provider, building a scalable messaging backbone for IoT, or just as a cloud-ready version of a message broker. EnMasse is licensed under the [Apache License, Version 2.0](/LICENSE).
+EnMasse is an open source multitenant, self-service messaging system for [Kubernetes](https://kubernetes.io). It can run on your own infrastructure or in the cloud, and simplifies managing the messaging infrastructure for your organization. EnMasse can be used for many purposes, such as moving your messaging infrastructure to the cloud without depending on a specific cloud provider, building a scalable messaging backbone for IoT, or just as a cloud-ready version of a message broker.
 {% include feature_row %}
 
 {% include feature_row id="feature_row2" type="left" %}
@@ -74,3 +74,6 @@ EnMasse is an open source multitenant, self-service messaging system for [Kubern
 {% include feature_row id="feature_row3" type="right" %}
 
 {% include feature_row id="feature_row4" %}
+
+EnMasse is licensed under the Apache License, Version 2.0. IoT components based on Eclipse Hono™ are licensed under the Eclipse Public License, Version 2.0.
+
