@@ -38,6 +38,7 @@ defaults:
 
 # Build settings
 minimal_mistakes_skin: "default" # "air"
+remote_theme: mmistakes/minimal-mistakes
 theme: minimal-mistakes-jekyll
 title_separator: "|"
 plugins:
