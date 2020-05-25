@@ -63,9 +63,6 @@ feature_row4:
     excerpt: Go to our [Community](/community) page to learn how you can contribute to EnMasse.
 ---
 
-
-# What is EnMasse?
-
 EnMasse is an open source multitenant, self-service messaging system for [Kubernetes](https://kubernetes.io). It can run on your own infrastructure or in the cloud, and simplifies managing the messaging infrastructure for your organization. EnMasse can be used for many purposes, such as moving your messaging infrastructure to the cloud without depending on a specific cloud provider, building a scalable messaging backbone for IoT, or just as a cloud-ready version of a message broker.
 {% include feature_row %}
 
