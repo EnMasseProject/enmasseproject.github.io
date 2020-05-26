@@ -9,10 +9,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>asciidoctor</p>
+<p>java</p>
 </li>
 <li>
-<p>python</p>
+<p>maven</p>
 </li>
 </ul>
 </div>
@@ -21,10 +21,10 @@
 <h3 id="project_layout">1.2. Project layout</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs"><em>BOOK_DIR</em>/                          # The source for a book
+<pre class="highlightjs highlight nowrap"><code><em>BOOK_DIR</em>/                          # The source for a book
 common/                              # Shared include files
 common/attributes.adoc               # Global book attributes
-images/                              # Shared image files</code></pre>
+_images/                             # Shared image files</code></pre>
 </div>
 </div>
 </div>
@@ -52,7 +52,7 @@ images/                              # Shared image files</code></pre>
 <h4 id="fedora" class="discrete">Fedora</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ yum install git (up to Fedora 21)
+<pre class="highlightjs highlight"><code>$ yum install git (up to Fedora 21)
 $ dnf install git (Fedora 22 and later)</code></pre>
 </div>
 </div>
@@ -80,7 +80,7 @@ $ dnf install git (Fedora 22 and later)</code></pre>
 <p>Set your name and email</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git config --global user.name "<em>YOUR_NAME</em>"
+<pre class="highlightjs highlight nowrap"><code>$ git config --global user.name "<em>YOUR_NAME</em>"
 $ git config --global user.email "<em>YOUR_EMAIL</em>"</code></pre>
 </div>
 </div>
@@ -101,7 +101,7 @@ The email you specify should be the same one found in your <a href="https://help
 <p>Set your git defaults</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ git config --global pull.rebase true
+<pre class="highlightjs highlight"><code>$ git config --global pull.rebase true
 $ git config --global push.default simple</code></pre>
 </div>
 </div>
@@ -144,7 +144,7 @@ $ git config --global push.default simple</code></pre>
 <p>Check to see if you have a public SSH key:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ ls ~/.ssh/</code></pre>
+<pre class="highlightjs highlight"><code>$ ls ~/.ssh/</code></pre>
 </div>
 </div>
 </li>
@@ -152,7 +152,7 @@ $ git config --global push.default simple</code></pre>
 <p>If you don&#8217;t have a key, generate one:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ ssh-keygen -t rsa -C "<em>YOUR_EMAIL</em>"</code></pre>
+<pre class="highlightjs highlight nowrap"><code>$ ssh-keygen -t rsa -C "<em>YOUR_EMAIL</em>"</code></pre>
 </div>
 </div>
 </li>
@@ -160,7 +160,7 @@ $ git config --global push.default simple</code></pre>
 <p>Open your key in an editor:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ cd ~/.ssh/
+<pre class="highlightjs highlight"><code>$ cd ~/.ssh/
 $ vi id_rsa.pub</code></pre>
 </div>
 </div>
@@ -214,7 +214,7 @@ For more information about <a href="https://help.github.com/articles/fork-a-repo
 <p>Type the following command:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git clone git@github.com:<em>USERNAME</em>/enmasse.git</code></pre>
+<pre class="highlightjs highlight nowrap"><code>$ git clone git@github.com:<em>USERNAME</em>/enmasse.git</code></pre>
 </div>
 </div>
 </li>
@@ -222,7 +222,7 @@ For more information about <a href="https://help.github.com/articles/fork-a-repo
 <p>Navigate to the newly created <code>enmasse</code> folder.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ cd enmasse/</code></pre>
+<pre class="highlightjs highlight"><code>$ cd enmasse/</code></pre>
 </div>
 </div>
 </li>
@@ -245,7 +245,7 @@ For more information about <a href="https://help.github.com/articles/fork-a-repo
 <p>Type the following command:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git clone https://github.com/<em>USERNAME</em>/enmasse.git</code></pre>
+<pre class="highlightjs highlight nowrap"><code>$ git clone https://github.com/<em>USERNAME</em>/enmasse.git</code></pre>
 </div>
 </div>
 </li>
@@ -256,7 +256,7 @@ For more information about <a href="https://help.github.com/articles/fork-a-repo
 <p>Navigate to the newly created <code>enmasse</code> folder.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ cd enmasse/</code></pre>
+<pre class="highlightjs highlight"><code>$ cd enmasse/</code></pre>
 </div>
 </div>
 </li>
@@ -276,7 +276,7 @@ For more information about <a href="https://help.github.com/articles/fork-a-repo
 <p>List the current remote repositories:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git remote -v
+<pre class="highlightjs highlight nowrap"><code>$ git remote -v
 origin	git@github.com:<em>USERNAME</em>/enmasse.git (fetch)
 origin	git@github.com:<em>USERNAME</em>/enmasse.git (push)</code></pre>
 </div>
@@ -286,7 +286,7 @@ origin	git@github.com:<em>USERNAME</em>/enmasse.git (push)</code></pre>
 <p>Add the upstream as a remote repository and fetch its contents. This allows you to check out and work with the latest source code.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ git remote add -f upstream  git@github.com:EnMasseProject/enmasse.git</code></pre>
+<pre class="highlightjs highlight"><code>$ git remote add -f upstream  git@github.com:EnMasseProject/enmasse.git</code></pre>
 </div>
 </div>
 </li>
@@ -297,7 +297,7 @@ origin	git@github.com:<em>USERNAME</em>/enmasse.git (push)</code></pre>
 <p>Verify the new remote was added:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git remote -v
+<pre class="highlightjs highlight nowrap"><code>$ git remote -v
 origin	git@github.com:<em>USERNAME</em>/enmasse.git (fetch)
 origin	git@github.com:<em>USERNAME</em>/enmasse.git (push)
 upstream	git@github.com:EnMasseProject/enmasse.git (fetch)
@@ -315,7 +315,7 @@ upstream	git@github.com:EnMasseProject/enmasse.git (push)</code></pre>
 <p>List the current remote repositories:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git remote -v
+<pre class="highlightjs highlight nowrap"><code>$ git remote -v
 origin	https://github.com/<em>USERNAME</em>/enmasse.git (fetch)
 origin	https://github.com/<em>USERNAME</em>/enmasse.git (push)</code></pre>
 </div>
@@ -325,7 +325,7 @@ origin	https://github.com/<em>USERNAME</em>/enmasse.git (push)</code></pre>
 <p>Add the upstream as a remote repository and fetch its contents. This allows you to check out and work with the latest source code.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ git remote add -f upstream  https://github.com/EnMasseProject/enmasse.git</code></pre>
+<pre class="highlightjs highlight"><code>$ git remote add -f upstream  https://github.com/EnMasseProject/enmasse.git</code></pre>
 </div>
 </div>
 </li>
@@ -336,7 +336,7 @@ origin	https://github.com/<em>USERNAME</em>/enmasse.git (push)</code></pre>
 <p>Verify the new remote was added:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git remote -v
+<pre class="highlightjs highlight nowrap"><code>$ git remote -v
 origin	https://github.com/<em>USERNAME</em>/enmasse.git (fetch)
 origin	https://github.com/<em>USERNAME</em>/enmasse.git (push)
 upstream	https://github.com/EnMasseProject/enmasse.git (fetch)
@@ -354,7 +354,7 @@ upstream	https://github.com/EnMasseProject/enmasse.git (push)</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ git remote set-url upstream https://github.com/EnMasseProject/enmasse.git</code></pre>
+<pre class="highlightjs highlight"><code>$ git remote set-url upstream https://github.com/EnMasseProject/enmasse.git</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -362,7 +362,7 @@ upstream	https://github.com/EnMasseProject/enmasse.git (push)</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ git fetch upstream</code></pre>
+<pre class="highlightjs highlight"><code>$ git fetch upstream</code></pre>
 </div>
 </div>
 </div>
@@ -418,7 +418,7 @@ upstream	https://github.com/EnMasseProject/enmasse.git (push)</code></pre>
 <p>Checkout the master branch</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ git checkout master</code></pre>
+<pre class="highlightjs highlight"><code>$ git checkout master</code></pre>
 </div>
 </div>
 </li>
@@ -426,7 +426,7 @@ upstream	https://github.com/EnMasseProject/enmasse.git (push)</code></pre>
 <p>Update your local repository and fork with the upstream content</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ git pull upstream master
+<pre class="highlightjs highlight"><code>$ git pull upstream master
 $ git push origin master --force</code></pre>
 </div>
 </div>
@@ -435,7 +435,7 @@ $ git push origin master --force</code></pre>
 <p>Create a new branch for your work (using the issue number is helpful)</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git checkout -b <em>BRANCH_NAME</em></code></pre>
+<pre class="highlightjs highlight nowrap"><code>$ git checkout -b <em>BRANCH_NAME</em></code></pre>
 </div>
 </div>
 </li>
@@ -449,7 +449,7 @@ $ git push origin master --force</code></pre>
 <p>If you are creating new files, add the files to the repository</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git status
+<pre class="highlightjs highlight nowrap"><code>$ git status
 $ git add <em>FILE_NAME</em></code></pre>
 </div>
 </div>
@@ -458,7 +458,7 @@ $ git add <em>FILE_NAME</em></code></pre>
 <p>Commit your changes</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git commit -a -m "<em>MESSAGE</em>"</code></pre>
+<pre class="highlightjs highlight nowrap"><code>$ git commit -a -m "<em>MESSAGE</em>"</code></pre>
 </div>
 </div>
 </li>
@@ -466,7 +466,7 @@ $ git add <em>FILE_NAME</em></code></pre>
 <p>Push your changes to your fork</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ git push origin HEAD</code></pre>
+<pre class="highlightjs highlight"><code>$ git push origin HEAD</code></pre>
 </div>
 </div>
 </li>
@@ -474,7 +474,7 @@ $ git add <em>FILE_NAME</em></code></pre>
 <p>If the update is rejected because the commit is behind, merge your changes</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ git pull upstream master
+<pre class="highlightjs highlight"><code>$ git pull upstream master
 $ git push -f origin HEAD</code></pre>
 </div>
 </div>
@@ -1559,20 +1559,20 @@ Add a placeholder for the screenshot early on in the development cycle. This way
 </dd>
 <dt class="hdlist1"><code>make check</code></dt>
 <dd>
-<p>Execute the custom checks in <code>.travis/check_docs.sh</code></p>
+<p>Execute the custom checks in <code>scripts/check_docs.sh</code></p>
 </dd>
-<dt class="hdlist1"><code>make build</code></dt>
+<dt class="hdlist1"><code>make</code></dt>
 <dd>
 <p>Build the docs using asciidoc, including the generated documentation</p>
 </dd>
 <dt class="hdlist1"><code>make publish</code></dt>
 <dd>
-<p>Build the docs via <code>make build</code> and publish them using <code>rsync</code>. The publish destination is configured via a <code>Makefile.publish</code> (not included in this PR; provided by each user so they can publish to their own location). The <code>Makefile.publish</code> needs to configure a single <code>PUBLISH_DEST</code> variable which is the remote directory (<code>&lt;host&gt;:&lt;dir&gt;</code>) to copy the generated docs to.</p>
+<p>Build the docs via <code>make build</code> and publish them using <code>rsync</code>. The publish destination is configured via the PUBLISH_DEST parameter.</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>See the output in your browser at file in your project directory at: <code>documentation/html/index.html</code></p>
+<p>See the output in your browser at file in your project directory at: <code>documentation/target/generated-docs/html/kuberneges-guide.html</code></p>
 </div>
 </div>
 </div>
@@ -1598,7 +1598,7 @@ Add a placeholder for the screenshot early on in the development cycle. This way
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Images</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">images/</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_images/</p></td>
 </tr>
 </tbody>
 </table>
@@ -1615,7 +1615,7 @@ Add a placeholder for the screenshot early on in the development cycle. This way
 <p>Provide an anchor in the format <code>[id='anchor-name']</code> for every module so that it can be identified by Asciidoctor when reused or cross-referenced. Give the anchor the same or similar name as the module heading, separated by dashes:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">[id='anchor-name']
+<pre class="highlightjs highlight"><code>[id='anchor-name']
 = Module Heading
 
 First sentence of topic.</code></pre>
@@ -1688,7 +1688,7 @@ First sentence of topic.</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ git checkout master
+<pre class="highlightjs highlight"><code>$ git checkout master
 $ for br in `git branch` ; do git branch -D $br ; done</code></pre>
 </div>
 </div>
@@ -1697,7 +1697,7 @@ $ for br in `git branch` ; do git branch -D $br ; done</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git checkout master
+<pre class="highlightjs highlight nowrap"><code>$ git checkout master
 $ git branch -D <em>BRANCH_NAME</em></code></pre>
 </div>
 </div>
@@ -1709,7 +1709,7 @@ $ git branch -D <em>BRANCH_NAME</em></code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git checkout <em>BRANCH_NAME</em>
+<pre class="highlightjs highlight nowrap"><code>$ git checkout <em>BRANCH_NAME</em>
 $ git branch -u origin <em>BRANCH_NAME</em>
 $ git pull --rebase upstream master
 $ git push -f origin HEAD</code></pre>
@@ -1723,7 +1723,7 @@ $ git push -f origin HEAD</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">$ git checkout master
+<pre class="highlightjs highlight"><code>$ git checkout master
 $ git reset --hard upstream/master
 $ git push origin master --force
 $ git pull upstream master
@@ -1742,7 +1742,7 @@ $ git push origin master --force</code></pre>
 <p>Check out a new topic branch from upstream/master as you normally do.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git fetch upstream
+<pre class="highlightjs highlight nowrap"><code>$ git fetch upstream
 $ git checkout -b <em>NEW_TOPIC_BRANCH</em> upstream/master</code></pre>
 </div>
 </div>
@@ -1751,7 +1751,7 @@ $ git checkout -b <em>NEW_TOPIC_BRANCH</em> upstream/master</code></pre>
 <p>If you have not yet added that writer’s remote repository, add it now.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git remote add -f <em>USER</em> git@github.com:_USER_/enmasse.git</code></pre>
+<pre class="highlightjs highlight nowrap"><code>$ git remote add -f <em>USER</em> git@github.com:_USER_/enmasse.git</code></pre>
 </div>
 </div>
 </li>
@@ -1760,7 +1760,7 @@ $ git checkout -b <em>NEW_TOPIC_BRANCH</em> upstream/master</code></pre>
 <code>origin/<em>MERGE_REQUEST_BRANCH</em></code> branch.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">$ git rebase <em>USER</em>/<em>MERGE_REQUEST_BRANCH</em></code></pre>
+<pre class="highlightjs highlight nowrap"><code>$ git rebase <em>USER</em>/<em>MERGE_REQUEST_BRANCH</em></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1768,7 +1768,7 @@ $ git checkout -b <em>NEW_TOPIC_BRANCH</em> upstream/master</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">First, rewinding head to replay your work on top of it...
+<pre class="highlightjs highlight nowrap"><code>First, rewinding head to replay your work on top of it...
 Fast-forwarded <em>NEW_TOPIC_BRANCH</em> to <em>USER</em>/<em>MERGE_REQUEST_BRANCH</em></code></pre>
 </div>
 </div>
@@ -1934,7 +1934,7 @@ For tips, see <em>Anchor Names and File Names</em> in <a href="https://github.co
 </tbody>
 </table>
 <div class="paragraph">
-<p><em>Revised on 2020-05-22 02:14:49 +0200</em></p>
+<p><em>Revised on 2020-05-26 06:28:42 UTC</em></p>
 </div>
 </div>
 </div>

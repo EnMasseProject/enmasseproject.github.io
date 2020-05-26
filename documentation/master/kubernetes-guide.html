@@ -167,7 +167,7 @@ kubectl config set-context $(kubectl config current-context) --namespace=<em>enm
 <p>Create an address space definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -211,7 +211,7 @@ spec:
 <p>Create an address definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: Address
 metadata:
     name: myspace.myqueue
@@ -238,7 +238,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Create the address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl create -f standard-small-queue.yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl create -f standard-small-queue.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -246,7 +246,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>List the addresses:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl get addresses -o yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addresses -o yaml</code></pre>
 </div>
 </div>
 </li>
@@ -293,7 +293,7 @@ Be sure to use the <code>-n</code> parameter when running this command. Not spec
 <p>Save the user definition to a file:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: user.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: user.enmasse.io/v1beta1
 kind: MessagingUser
 metadata:
   name: myspace.user1
@@ -355,7 +355,7 @@ spec:
 <p>Save Python client example to a file:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="python" class="language-python hljs">from __future__ import print_function, unicode_literals
+<pre class="highlightjs highlight nowrap"><code class="language-python hljs" data-lang="python">from __future__ import print_function, unicode_literals
 import optparse
 from proton import Message
 from proton.handlers import MessagingHandler
@@ -393,7 +393,7 @@ except KeyboardInterrupt: pass</code></pre>
 <p>Retrieve the address space messaging endpoint host name:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">kubectl get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="messaging")].externalHost}'</code></pre>
+<pre class="highlightjs highlight nowrap"><code>kubectl get addressspace myspace -o 'jsonpath={.status.endpointStatuses[?(@.name=="messaging")].externalHost}'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -404,7 +404,7 @@ except KeyboardInterrupt: pass</code></pre>
 <p>Run the client:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">python client-example1.py -u amqps://user1:password@<em>messaging.example1.com</em>:443/myqueue</code></pre>
+<pre class="highlightjs highlight nowrap"><code>python client-example1.py -u amqps://user1:password@<em>messaging.example1.com</em>:443/myqueue</code></pre>
 </div>
 </div>
 </li>
@@ -668,7 +668,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta2
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta2
 kind: AddressSpacePlan
 metadata:
   name: restrictive-plan
@@ -721,7 +721,7 @@ For more information about infrastructure configurations, see <a href="http://en
 <p>Create an address space plan definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta2
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta2
 kind: AddressSpacePlan
 metadata:
   name: restrictive-plan
@@ -779,7 +779,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta2
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta2
 kind: AddressPlan
 metadata:
   name: small-queue
@@ -840,7 +840,7 @@ A sharded queue no longer guarantees message ordering.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta2
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta2
 kind: AddressPlan
 metadata:
   name: small-anycast
@@ -865,7 +865,7 @@ spec:
 <p>Create an address plan definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta2
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta2
 kind: AddressPlan
 metadata:
   name: small-anycast
@@ -930,7 +930,7 @@ spaces. Address space plans reference the brokered infrastructure configuration 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: BrokeredInfraConfig
 metadata:
   name: brokered-infra-config-example
@@ -1050,7 +1050,7 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: BrokeredInfraConfig
 metadata:
   name: brokered-infra-config
@@ -1106,7 +1106,7 @@ spaces. Address space plans reference the standard infrastructure configuration 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: StandardInfraConfig
 metadata:
   name: myconfig
@@ -1247,7 +1247,7 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: StandardInfraConfig
 metadata:
   name: standard-infra-config
@@ -1309,7 +1309,7 @@ spec:
 <p>Edit the existing infrastructure configuration, or create a new infrastructure configuration using the following example:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: StandardInfraConfig
 metadata:
   name: myconfig
@@ -1375,7 +1375,7 @@ service operator, and are specified when creating an address space.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: AuthenticationService
 metadata:
   name: standard
@@ -1436,7 +1436,7 @@ spec:
 <p>Create an <code>AuthenticationService</code> definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: AuthenticationService
 metadata:
   name: standard-authservice
@@ -1476,7 +1476,7 @@ spec:
 <p>Create a secret with the database credentials:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl create secret generic db-creds -n <em>enmasse-infra</em> --from-literal=database-user=<em>admin</em> --from-literal=database-password=<em>secure-password</em></code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl create secret generic db-creds -n <em>enmasse-infra</em> --from-literal=database-user=<em>admin</em> --from-literal=database-password=<em>secure-password</em></code></pre>
 </div>
 </div>
 </li>
@@ -1484,7 +1484,7 @@ spec:
 <p>Create an <code>AuthenticationService</code> definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: AuthenticationService
 metadata:
   name: standard-authservice
@@ -1531,7 +1531,7 @@ your existing identity management system.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: AuthenticationService
 metadata:
   name: my-external-1
@@ -1572,7 +1572,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: AuthenticationService
 metadata:
   name: my-external-2
@@ -1632,7 +1632,7 @@ property.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
+<pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
     "authenticated-identity": {
         "sub": "myid",
         "preferred_username": "myuser"
@@ -1656,7 +1656,7 @@ that address. The following connection property information contains the policie
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
+<pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
     "address-authz": {
         "myqueue": [
           "send",
@@ -1714,7 +1714,7 @@ It is not recommended to use the <code>none</code> authentication service in pro
 <p>Create an <code>AuthenticationService</code> definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: AuthenticationService
 metadata:
   name: none-authservice
@@ -2362,7 +2362,7 @@ enmasse_version{job="standard-controller",version="1.0.1"} 1</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_space_status_ready{name="my-address-space"} 1
+<pre class="highlightjs highlight nowrap"><code>enmasse_address_space_status_ready{name="my-address-space"} 1
 enmasse_address_space_status_not_ready{name="my-address-space"} 0</code></pre>
 </div>
 </div>
@@ -2371,7 +2371,7 @@ enmasse_address_space_status_not_ready{name="my-address-space"} 0</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_spaces_total == (sum(enmasse_address_space_status_ready) + sum(enmasse_address_space_status_not_ready))</code></pre>
+<pre class="highlightjs highlight nowrap"><code>enmasse_address_spaces_total == (sum(enmasse_address_space_status_ready) + sum(enmasse_address_space_status_not_ready))</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -2396,7 +2396,7 @@ enmasse_address_space_status_not_ready{name="my-address-space"} 0</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_space_status_ready{name="prod-space"} 1
+<pre class="highlightjs highlight nowrap"><code>enmasse_address_space_status_ready{name="prod-space"} 1
 enmasse_address_space_status_ready{name="dev-space"} 0</code></pre>
 </div>
 </div>
@@ -2422,7 +2422,7 @@ enmasse_address_space_status_ready{name="dev-space"} 0</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_space_status_not_ready{name="prod-space"} 0
+<pre class="highlightjs highlight nowrap"><code>enmasse_address_space_status_not_ready{name="prod-space"} 0
 enmasse_address_space_status_not_ready{name="dev-space"} 1</code></pre>
 </div>
 </div>
@@ -2467,7 +2467,7 @@ enmasse_address_space_status_not_ready{name="dev-space"} 1</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_space_connectors_total{name="space-one"} 0
+<pre class="highlightjs highlight nowrap"><code>enmasse_address_space_connectors_total{name="space-one"} 0
 enmasse_address_space_connectors_total{name="space-two"} 2</code></pre>
 </div>
 </div>
@@ -2485,7 +2485,7 @@ enmasse_address_space_connectors_total{name="space-two"} 2</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_addresses_total == enmasse_addresses_ready_total + enmasse_addresses_not_ready_total</code></pre>
+<pre class="highlightjs highlight nowrap"><code>enmasse_addresses_total == enmasse_addresses_ready_total + enmasse_addresses_not_ready_total</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2493,7 +2493,7 @@ enmasse_address_space_connectors_total{name="space-two"} 2</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_addresses_total == enmasse_addresses_active_total + enmasse_addresses_configuring_total + enmasse_addresses_failed_total + enmasse_addresses_pending_total + enmasse_addresses_terminating_total</code></pre>
+<pre class="highlightjs highlight nowrap"><code>enmasse_addresses_total == enmasse_addresses_active_total + enmasse_addresses_configuring_total + enmasse_addresses_failed_total + enmasse_addresses_pending_total + enmasse_addresses_terminating_total</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -2570,7 +2570,7 @@ enmasse_addresses_ready_total{addressspace="space-two"} 2</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_addresses_not_ready_total{addressspace="space-one"} 2
+<pre class="highlightjs highlight nowrap"><code>enmasse_addresses_not_ready_total{addressspace="space-one"} 2
 enmasse_addresses_not_ready_total{addressspace="space-two"} 1</code></pre>
 </div>
 </div>
@@ -2710,7 +2710,7 @@ enmasse_addresses_not_ready_total{addressspace="space-two"} 1</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_standard_controller_router_check_failures_total{addressspace="firstspace"}	0
+<pre class="highlightjs highlight nowrap"><code>enmasse_standard_controller_router_check_failures_total{addressspace="firstspace"}	0
 enmasse_standard_controller_router_check_failures_total{addressspace="myspace"} 0</code></pre>
 </div>
 </div>
@@ -2815,7 +2815,7 @@ enmasse_standard_controller_router_check_failures_total{addressspace="myspace"} 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">sum by(service, exported_namespace) (enmasse_address_space_status_ready)</code></pre>
+<pre class="highlightjs highlight nowrap"><code>sum by(service, exported_namespace) (enmasse_address_space_status_ready)</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -2825,7 +2825,7 @@ enmasse_standard_controller_router_check_failures_total{addressspace="myspace"} 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_spaces_ready_total{exported_namespace="prod_namespace",service="address-space-controller"} 1</code></pre>
+<pre class="highlightjs highlight nowrap"><code>enmasse_address_spaces_ready_total{exported_namespace="prod_namespace",service="address-space-controller"} 1</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -2846,7 +2846,7 @@ enmasse_standard_controller_router_check_failures_total{addressspace="myspace"} 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">sum by(service, exported_namespace) (enmasse_address_space_status_not_ready)</code></pre>
+<pre class="highlightjs highlight nowrap"><code>sum by(service, exported_namespace) (enmasse_address_space_status_not_ready)</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -2856,7 +2856,7 @@ enmasse_standard_controller_router_check_failures_total{addressspace="myspace"} 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_address_spaces_not_ready_total{exported_namespace="prod_namespace",service="address-space-controller"} 1</code></pre>
+<pre class="highlightjs highlight nowrap"><code>enmasse_address_spaces_not_ready_total{exported_namespace="prod_namespace",service="address-space-controller"} 1</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -2877,7 +2877,7 @@ enmasse_standard_controller_router_check_failures_total{addressspace="myspace"} 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">up{job="address-space-controller"} or on(namespace) (1 - absent(up{job="address-space-controller"}))
+<pre class="highlightjs highlight nowrap"><code>up{job="address-space-controller"} or on(namespace) (1 - absent(up{job="address-space-controller"}))
 up{job="api-server"} or on(namespace) (1 - absent(up{job="api-server"}))</code></pre>
 </div>
 </div>
@@ -2888,7 +2888,7 @@ up{job="api-server"} or on(namespace) (1 - absent(up{job="api-server"}))</code><
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">enmasse_component_health{job="address-space-controller"}	1
+<pre class="highlightjs highlight nowrap"><code>enmasse_component_health{job="address-space-controller"}	1
 enmasse_component_health{job="api-server"}	1</code></pre>
 </div>
 </div>
@@ -3121,7 +3121,7 @@ spec:
 <p>List all broker Pods and choose the Pod for the relevant address space:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">kubectl get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</code></pre>
+<pre class="highlightjs highlight nowrap"><code>kubectl get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</code></pre>
 </div>
 </div>
 </li>
@@ -3129,7 +3129,7 @@ spec:
 <p>Display the logs for the Pod:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">kubectl logs <em>pod</em></code></pre>
+<pre class="highlightjs highlight nowrap"><code>kubectl logs <em>pod</em></code></pre>
 </div>
 </div>
 </li>
@@ -3507,7 +3507,7 @@ In EnMasse, you can only restrict the total amount of memory allocated for a bro
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">10 queues * 1000 messages * (128 + (128 kB * 1024)) = 1.25 GB</code></pre>
+<pre class="highlightjs highlight"><code>10 queues * 1000 messages * (128 + (128 kB * 1024)) = 1.25 GB</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3538,7 +3538,7 @@ In the <code>standard</code> address space type, multiple broker instances might
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: BrokeredInfraConfig
 metadata:
   name: cfg1
@@ -3560,7 +3560,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">(1000 messages * 1000 * 128 kB) + (10 queues * 128 kB * 1024) = 123.5 MB</code></pre>
+<pre class="highlightjs highlight"><code>(1000 messages * 1000 * 128 kB) + (10 queues * 128 kB * 1024) = 123.5 MB</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3568,7 +3568,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: BrokeredInfraConfig
 metadata:
   name: cfg1
@@ -3775,7 +3775,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: StandardInfraConfig
 metadata:
   name: cfg1
@@ -3883,7 +3883,7 @@ The operator processes are running on either a JVM or a Node.JS VM. Sizing the a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: StandardInfraConfig
 metadata:
   name: cfg1
@@ -3919,7 +3919,7 @@ spec:
 <p>Save the following script as <code>check-memory.sh</code>:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="shell" class="language-shell hljs">#!/usr/bin/env bash
+<pre class="highlightjs highlight nowrap"><code class="language-shell hljs" data-lang="shell">#!/usr/bin/env bash
 PLAN=$1
 
 total_pods=0
@@ -4135,7 +4135,7 @@ You cannot modify endpoints for an existing address space.
 <div class="listingblock">
 <div class="title">Brokered infrastructure configuration example for engineering</div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: BrokeredInfraConfig
 metadata:
   name: engineering
@@ -4149,7 +4149,7 @@ spec:
 <div class="listingblock">
 <div class="title">Brokered infrastructure configuration example for QA</div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: BrokeredInfraConfig
 metadata:
   name: qa
@@ -4180,7 +4180,7 @@ spec:
 <div class="listingblock">
 <div class="title">Brokered infrastructure configuration example showing network policy setting</div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: BrokeredInfraConfig
 metadata:
   name: engineering
@@ -4203,7 +4203,7 @@ spec:
 <div class="listingblock">
 <div class="title">Address space plan example</div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta2
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta2
 kind: AddressSpacePlan
 metadata:
   name: engineering
@@ -4224,7 +4224,7 @@ spec:
 <div class="listingblock">
 <div class="title">None authentication service example</div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: AuthenticationService
 metadata:
   name: engineering
@@ -4238,7 +4238,7 @@ spec:
 <div class="listingblock">
 <div class="title">Standard authentication service example</div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: admin.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
 kind: AuthenticationService
 metadata:
   name: qa
@@ -4620,7 +4620,7 @@ can vary between EnMasse installations.</p>
 <p>Retrieve the schema showing available address space plans (replace <code>standard</code> with <code>brokered</code> for the brokered address space type):</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl get addressspaceschema standard -o jsonpath='{.spec.plans[*].name}'</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addressspaceschema standard -o jsonpath='{.spec.plans[*].name}'</code></pre>
 </div>
 </div>
 </li>
@@ -4639,7 +4639,7 @@ can vary between EnMasse installations.</p>
 <p>Retrieve the schema with the authentication services listed (replace <code>standard</code> with <code>brokered</code> for the brokered address space type):</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl get addressspaceschema standard -o jsonpath='{.spec.authenticationServices}'</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addressspaceschema standard -o jsonpath='{.spec.authenticationServices}'</code></pre>
 </div>
 </div>
 </li>
@@ -4655,7 +4655,7 @@ can vary between EnMasse installations.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -4682,7 +4682,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -4711,7 +4711,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -4753,7 +4753,7 @@ to access messaging endpoints outside the Kubernetes cluster.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -4826,7 +4826,7 @@ Using a self-signed certificate in production environments is not recommended.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -4859,7 +4859,7 @@ certificates signed by your own CA. Certificate rotation can be performed by upd
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -4917,7 +4917,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">service.host: messaging.svc
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">service.host: messaging.svc
 service.port.amqp: 5672
 external.host: external.example.com
 external.port: 5671
@@ -4932,7 +4932,7 @@ ca.crt: // PEM formatted CA</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">  externalName:  messaging.svc
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">  externalName:  messaging.svc
     ports:
     - name: amqp
       port: 5672
@@ -4952,7 +4952,7 @@ its state and endpoints. The following output is an example of the output you ca
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -5012,7 +5012,7 @@ application.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -5048,7 +5048,7 @@ configmap specified in the exports list. You can do this by creating an RBAC rol
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: rbac.authorization.k8s.io/v1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: rbac
@@ -5096,7 +5096,7 @@ subjects:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -5163,7 +5163,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -5226,7 +5226,7 @@ spec:
 <p>Create an address space definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -5432,7 +5432,7 @@ quota. If it does not, an error is provided on the <code>AddressSpace</code> res
 <p>Update address space definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: AddressSpace
 metadata:
   name: myspace
@@ -5499,7 +5499,7 @@ which might cause reordering of messages.</p>
 <h5 id="ref-address-example-messaging">Address example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: Address
 metadata:
     name: myspace.myqueue <b class="conum">(1)</b>
@@ -5533,7 +5533,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: Address
 metadata:
     name: myspace.mytopic
@@ -5545,7 +5545,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: Address
 metadata:
     name: myspace.mysub
@@ -5595,7 +5595,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: Address
 metadata:
   name: myspace.myqueue
@@ -5630,7 +5630,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: Address
 metadata:
   name: myspace.myqueue
@@ -5672,7 +5672,7 @@ spec:
 <p>Retrieve the schema with the address plans listed (replace <code>standard</code> with <code>brokered</code> for the brokered address space type):</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl get addressspaceschema standard -o 'jsonpath={.spec.addressTypes[?(@.name=="queue")].plans[*].name}'</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addressspaceschema standard -o 'jsonpath={.spec.addressTypes[?(@.name=="queue")].plans[*].name}'</code></pre>
 </div>
 </div>
 </li>
@@ -5691,7 +5691,7 @@ spec:
 <p>Create an address definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: Address
 metadata:
     name: myspace.myqueue
@@ -5718,7 +5718,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Create the address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl create -f standard-small-queue.yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl create -f standard-small-queue.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -5726,7 +5726,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>List the addresses:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl get addresses -o yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addresses -o yaml</code></pre>
 </div>
 </div>
 </li>
@@ -5782,7 +5782,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <p>Update an address definition:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: Address
 metadata:
     name: myspace.myqueue
@@ -5797,7 +5797,7 @@ spec:
 <p>Replace the address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl replace -f standard-xlarge-queue.yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl replace -f standard-xlarge-queue.yaml</code></pre>
 </div>
 </div>
 </li>
@@ -5805,7 +5805,7 @@ spec:
 <p>List the addresses:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kubectl get addresses -o yaml</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kubectl get addresses -o yaml</code></pre>
 </div>
 </div>
 </li>
@@ -6061,7 +6061,7 @@ For the brokered address space only, on the Connections page, the number of send
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: user.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: user.enmasse.io/v1beta1
 kind: MessagingUser
 metadata:
   name: myspace.user1
@@ -6116,7 +6116,7 @@ password for that user. The password will not be printed out when reading the re
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="shell" class="language-shell hljs">$ echo -n my-password | base64
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ echo -n my-password | base64
 bXktcGFzc3dvcmQ=</code></pre>
 </div>
 </div>
@@ -6201,7 +6201,7 @@ Be sure to use the <code>-n</code> parameter when running this command. Not spec
 <p>Save the user definition to a file:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: user.enmasse.io/v1beta1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: user.enmasse.io/v1beta1
 kind: MessagingUser
 metadata:
   name: myspace.user1
@@ -6462,7 +6462,7 @@ Using a self-signed certificate in production environments is not recommended.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="python" class="language-python hljs">from __future__ import print_function, unicode_literals
+<pre class="highlightjs highlight nowrap"><code class="language-python hljs" data-lang="python">from __future__ import print_function, unicode_literals
 from proton import Message
 from proton.handlers import MessagingHandler
 from proton.reactor import Container
@@ -6507,7 +6507,7 @@ Container(HelloWorld("amqps://_messaging-route-hostname_:443", "myqueue")).run()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="python" class="language-python hljs">class CapabilityOptions(ReceiverOption):
+<pre class="highlightjs highlight nowrap"><code class="language-python hljs" data-lang="python">class CapabilityOptions(ReceiverOption):
     def apply(self, receiver):
         receiver.source.capabilities.put_object(symbol("topic"))</code></pre>
 </div>
@@ -6521,7 +6521,7 @@ Container(HelloWorld("amqps://_messaging-route-hostname_:443", "myqueue")).run()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="python" class="language-python hljs">def on_start(self, event):
+<pre class="highlightjs highlight nowrap"><code class="language-python hljs" data-lang="python">def on_start(self, event):
         event.container.create_receiver(conn, self.address, options=CapabilityOptions())</code></pre>
 </div>
 </div>
@@ -6534,7 +6534,7 @@ Container(HelloWorld("amqps://_messaging-route-hostname_:443", "myqueue")).run()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="java" class="language-java hljs">package org.apache.qpid.jms.example;
+<pre class="highlightjs highlight nowrap"><code class="language-java hljs" data-lang="java">package org.apache.qpid.jms.example;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -6604,7 +6604,7 @@ public class HelloWorld {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-none hljs">connectionfactory.myFactoryLookup = amqps://<em>messaging-route-hostname</em>:443?transport.trustAll=true&amp;transport.verifyHost=false
+<pre class="highlightjs highlight nowrap"><code>connectionfactory.myFactoryLookup = amqps://<em>messaging-route-hostname</em>:443?transport.trustAll=true&amp;transport.verifyHost=false
 queue.myQueueLookup = myqueue</code></pre>
 </div>
 </div>
@@ -6616,7 +6616,7 @@ queue.myQueueLookup = myqueue</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="javascript" class="language-javascript hljs">var container = require('rhea');
+<pre class="highlightjs highlight nowrap"><code class="language-javascript hljs" data-lang="javascript">var container = require('rhea');
 container.on('connection_open', function (context) {
     context.connection.open_receiver('myqueue');
     context.connection.open_sender('myqueue');
@@ -6636,7 +6636,7 @@ container.connect({username: '<em>username</em>', password: '<em>password</em>',
 <h6 id="rhea_javascript_client_example_using_websockets">Rhea JavaScript Client example using WebSockets</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="javascript" class="language-javascript hljs">var container = require('rhea');
+<pre class="highlightjs highlight nowrap"><code class="language-javascript hljs" data-lang="javascript">var container = require('rhea');
 var WebSocket = require('ws');
 
 container.on('connection_open', function (context) {
@@ -6665,7 +6665,7 @@ container.connect({username: '<em>username</em>', password: '<em>password</em>',
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="cpp" class="language-cpp hljs">#include &lt;proton/connection.hpp&gt;
+<pre class="highlightjs highlight nowrap"><code class="language-cpp hljs" data-lang="cpp">#include &lt;proton/connection.hpp&gt;
 #include &lt;proton/container.hpp&gt;
 #include &lt;proton/default_container.hpp&gt;
 #include &lt;proton/delivery.hpp&gt;
@@ -6745,7 +6745,7 @@ int main(int argc, char **argv) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="cpp" class="language-cpp hljs">void on_container_start(proton::container&amp; cont) override {
+<pre class="highlightjs highlight nowrap"><code class="language-cpp hljs" data-lang="cpp">void on_container_start(proton::container&amp; cont) override {
         proton::connection conn = cont.connect(conn_url_);
         proton::receiver_options opts {};
         proton::source_options sopts {};
@@ -6766,7 +6766,7 @@ int main(int argc, char **argv) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="csharp" class="language-csharp hljs">using System;
+<pre class="highlightjs highlight nowrap"><code class="language-csharp hljs" data-lang="csharp">using System;
 using Amqp;
 
 namespace Test
@@ -7553,7 +7553,7 @@ and provide the chosen data model, database connection information and access cr
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kind: IoTConfig
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kind: IoTConfig
 apiVersion: iot.enmasse.io/v1alpha1
 metadata:
   name: default
@@ -7591,7 +7591,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kind: IoTConfig
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kind: IoTConfig
 apiVersion: iot.enmasse.io/v1alpha1
 metadata:
   name: default
@@ -7653,7 +7653,7 @@ spec:
 <h5 id="iot-registry-example-registry-jdbc-messaging-iot-iot-iot">Configuration for JDBC with external PostgreSQL</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kind: IoTConfig
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kind: IoTConfig
 apiVersion: iot.enmasse.io/v1alpha1
 metadata:
   name: default
@@ -7973,7 +7973,7 @@ is still pending.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">apiVersion: iot.enmasse.io/v1alpha1
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: iot.enmasse.io/v1alpha1
 kind: IoTProject
 metadata:
   creationTimestamp: "2019-12-09T15:00:00Z"
@@ -8019,7 +8019,7 @@ The EnMasse <code>standard</code> address space and address plans are used.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kind: IoTProject
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kind: IoTProject
 apiVersion: iot.enmasse.io/v1alpha1
 metadata:
   name: user-1
@@ -8073,7 +8073,7 @@ spec:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="yaml" class="language-yaml hljs">kind: IoTProject
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">kind: IoTProject
 apiVersion: iot.enmasse.io/v1alpha1
 metadata:
   name: user-1
@@ -17038,6 +17038,1901 @@ kubectl logs deployment/admin.<em>uuid</em> -c agent</pre>
 <div class="paragraph">
 <p><em>Type</em> : string (int-or-string)</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="eclipse_hono_device_registry_api">F.2. Eclipse Hono™ Device Registry API</h3>
+<div class="quoteblock abstract">
+<div class="title">Abstract</div>
+<blockquote>
+This API defines how to manage <strong>Devices</strong> and their <strong>Credentials</strong>.
+</blockquote>
+</div>
+<div class="sect3">
+<h4 id="endpoints">F.2.1. Endpoints</h4>
+<div class="sect4 Credentials">
+<h5 id="credentials">Credentials</h5>
+<div class="sect5 getAllCredentials">
+<h6 id="getallcredentials">getAllCredentials</h6>
+<div class="paragraph">
+<p><code>GET /credentials/{tenantId}/{deviceId}</code></p>
+</div>
+<div class="paragraph">
+<p>Get credentials set of a device.</p>
+</div>
+<div class="sect6">
+<h7 id="description_24">Description</h7>
+<div class="paragraph">
+<p>Get the credentials set of a device. As long as the device is registered and the user has read access to it, this call should never return \"not found\". Depending on its implementation (or configuration), the device registry can either return all credentials information including full secret details or secret metadata along with the generated identifier (an <code>id</code> property). The identifier can be used for the follow-up <code>update</code> operation).</p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="parameters_24">Parameters</h7>
+<div class="sect7">
+<h8 id="path_parameters">Path Parameters</h8>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tenantId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the tenant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deviceId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the device</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect6">
+<h7 id="return_type">Return Type</h7>
+<div class="paragraph">
+<p>array[<a href="#TypedCredentials"><em>TypedCredentials</em></a>]</p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="content_type">Content Type</h7>
+<div class="ulist">
+<ul>
+<li>
+<p>application/json</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect6">
+<h7 id="responses_24">Responses</h7>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. http response codes</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 50%;">
+<col style="width: 16.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Message</th>
+<th class="tableblock halign-left valign-top">Datatype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">200</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operation successful</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List[<a href="#TypedCredentials"><em>TypedCredentials</em></a>]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Malformed request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">401</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication credentials are required, but missing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;&lt;&gt;&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object not found. This may also be returned for some operations if the user misses read access for the object.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect6">
+<h7 id="samples">Samples</h7>
+
+</div>
+</div>
+<div class="sect5 setAllCredentials">
+<h6 id="setallcredentials">setAllCredentials</h6>
+<div class="paragraph">
+<p><code>PUT /credentials/{tenantId}/{deviceId}</code></p>
+</div>
+<div class="paragraph">
+<p>Update credentials set for registered device</p>
+</div>
+<div class="sect6">
+<h7 id="description_25">Description</h7>
+<div class="paragraph">
+<p>If the device registry is handling full secret details, the updated credential set will be an exact match of the provided content. If it is using secret metadata, data will be merged in based on the secret identities.</p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="parameters_25">Parameters</h7>
+<div class="sect7">
+<h8 id="path_parameters_2">Path Parameters</h8>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tenantId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the tenant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deviceId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the device</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect6">
+<h7 id="body_parameter">Body Parameter</h7>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TypedCredentials</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#TypedCredentials"><em>TypedCredentials</em></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="sect7">
+<h8 id="header_parameters">Header Parameters</h8>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If-Match</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The expected resource version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect6">
+<h7 id="return_type_2">Return Type</h7>
+<div class="paragraph">
+<p>-</p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="content_type_2">Content Type</h7>
+<div class="ulist">
+<ul>
+<li>
+<p>application/json</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect6">
+<h7 id="responses_25">Responses</h7>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 13. http response codes</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 50%;">
+<col style="width: 16.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Message</th>
+<th class="tableblock halign-left valign-top">Datatype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">204</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object updated.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;&lt;&gt;&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Malformed request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">401</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication credentials are required, but missing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;&lt;&gt;&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">403</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operation not allowed. If the user does not have read access for this object, then &#x60;404&#x60; will be returned instead.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object not found. This may also be returned for some operations if the user misses read access for the object.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">412</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expected resource version does not match current. This can only happen when the request header &#x60;If-Match&#x60; was set.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect6">
+<h7 id="samples_2">Samples</h7>
+
+</div>
+</div>
+</div>
+<div class="sect4 Devices">
+<h5 id="devices">Devices</h5>
+<div class="sect5 createDeviceRegistration">
+<h6 id="createdeviceregistration">createDeviceRegistration</h6>
+<div class="paragraph">
+<p><code>POST /devices/{tenantId}</code></p>
+</div>
+<div class="paragraph">
+<p>Create new device registration with auto-generated ID</p>
+</div>
+<div class="sect6">
+<h7 id="description_26">Description</h7>
+
+</div>
+<div class="sect6">
+<h7 id="parameters_26">Parameters</h7>
+<div class="sect7">
+<h8 id="path_parameters_3">Path Parameters</h8>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tenantId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the tenant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect6">
+<h7 id="body_parameter_2">Body Parameter</h7>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Device</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">New device <a href="#Device"><em>Device</em></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect6">
+<h7 id="return_type_3">Return Type</h7>
+<div class="paragraph">
+<p><a href="#inline_response_201">[inline_response_201]</a></p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="content_type_3">Content Type</h7>
+<div class="ulist">
+<ul>
+<li>
+<p>application/json</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect6">
+<h7 id="responses_26">Responses</h7>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 14. http response codes</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 50%;">
+<col style="width: 16.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Message</th>
+<th class="tableblock halign-left valign-top">Datatype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">201</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object created.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#inline_response_201">[inline_response_201]</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Malformed request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">401</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication credentials are required, but missing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;&lt;&gt;&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">403</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operation not allowed. If the user does not have read access for this object, then &#x60;404&#x60; will be returned instead.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect6">
+<h7 id="samples_3">Samples</h7>
+
+</div>
+</div>
+<div class="sect5 createDeviceRegistrationWithId">
+<h6 id="createdeviceregistrationwithid">createDeviceRegistrationWithId</h6>
+<div class="paragraph">
+<p><code>POST /devices/{tenantId}/{deviceId}</code></p>
+</div>
+<div class="paragraph">
+<p>Create new device registration</p>
+</div>
+<div class="sect6">
+<h7 id="description_27">Description</h7>
+
+</div>
+<div class="sect6">
+<h7 id="parameters_27">Parameters</h7>
+<div class="sect7">
+<h8 id="path_parameters_4">Path Parameters</h8>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tenantId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the tenant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deviceId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the device</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect6">
+<h7 id="body_parameter_3">Body Parameter</h7>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Device</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">New device <a href="#Device"><em>Device</em></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect6">
+<h7 id="return_type_4">Return Type</h7>
+<div class="paragraph">
+<p><a href="#inline_response_201">[inline_response_201]</a></p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="content_type_4">Content Type</h7>
+<div class="ulist">
+<ul>
+<li>
+<p>application/json</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect6">
+<h7 id="responses_27">Responses</h7>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 15. http response codes</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 50%;">
+<col style="width: 16.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Message</th>
+<th class="tableblock halign-left valign-top">Datatype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">201</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object created.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#inline_response_201">[inline_response_201]</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Malformed request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">401</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication credentials are required, but missing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;&lt;&gt;&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">403</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operation not allowed. If the user does not have read access for this object, then &#x60;404&#x60; will be returned instead.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">409</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object already exists. If the user has no read access for the existing object, then &#x60;403&#x60; should be returned instead.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect6">
+<h7 id="samples_4">Samples</h7>
+
+</div>
+</div>
+<div class="sect5 deleteRegistration">
+<h6 id="deleteregistration">deleteRegistration</h6>
+<div class="paragraph">
+<p><code>DELETE /devices/{tenantId}/{deviceId}</code></p>
+</div>
+<div class="paragraph">
+<p>Delete device registration</p>
+</div>
+<div class="sect6">
+<h7 id="description_28">Description</h7>
+
+</div>
+<div class="sect6">
+<h7 id="parameters_28">Parameters</h7>
+<div class="sect7">
+<h8 id="path_parameters_5">Path Parameters</h8>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tenantId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the tenant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deviceId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the device</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect7">
+<h8 id="header_parameters_2">Header Parameters</h8>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If-Match</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The expected resource version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect6">
+<h7 id="return_type_5">Return Type</h7>
+<div class="paragraph">
+<p>-</p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="content_type_5">Content Type</h7>
+<div class="ulist">
+<ul>
+<li>
+<p>application/json</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect6">
+<h7 id="responses_28">Responses</h7>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 16. http response codes</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 50%;">
+<col style="width: 16.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Message</th>
+<th class="tableblock halign-left valign-top">Datatype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">204</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object deleted.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;&lt;&gt;&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">401</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication credentials are required, but missing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;&lt;&gt;&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">403</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operation not allowed. If the user does not have read access for this object, then &#x60;404&#x60; will be returned instead.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object not found. This may also be returned for some operations if the user misses read access for the object.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">412</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expected resource version does not match current. This can only happen when the request header &#x60;If-Match&#x60; was set.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect6">
+<h7 id="samples_5">Samples</h7>
+
+</div>
+</div>
+<div class="sect5 getRegistration">
+<h6 id="getregistration">getRegistration</h6>
+<div class="paragraph">
+<p><code>GET /devices/{tenantId}/{deviceId}</code></p>
+</div>
+<div class="paragraph">
+<p>Get device registration information</p>
+</div>
+<div class="sect6">
+<h7 id="description_29">Description</h7>
+
+</div>
+<div class="sect6">
+<h7 id="parameters_29">Parameters</h7>
+<div class="sect7">
+<h8 id="path_parameters_6">Path Parameters</h8>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tenantId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the tenant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deviceId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the device</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect6">
+<h7 id="return_type_6">Return Type</h7>
+<div class="paragraph">
+<p><a href="#Device"><em>Device</em></a></p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="content_type_6">Content Type</h7>
+<div class="ulist">
+<ul>
+<li>
+<p>application/json</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect6">
+<h7 id="responses_29">Responses</h7>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 17. http response codes</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 50%;">
+<col style="width: 16.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Message</th>
+<th class="tableblock halign-left valign-top">Datatype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">200</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">operation successful</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Device"><em>Device</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Malformed request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">401</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication credentials are required, but missing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;&lt;&gt;&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object not found. This may also be returned for some operations if the user misses read access for the object.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect6">
+<h7 id="samples_6">Samples</h7>
+
+</div>
+</div>
+<div class="sect5 updateRegistration">
+<h6 id="updateregistration">updateRegistration</h6>
+<div class="paragraph">
+<p><code>PUT /devices/{tenantId}/{deviceId}</code></p>
+</div>
+<div class="paragraph">
+<p>Update existing device registration</p>
+</div>
+<div class="sect6">
+<h7 id="description_30">Description</h7>
+
+</div>
+<div class="sect6">
+<h7 id="parameters_30">Parameters</h7>
+<div class="sect7">
+<h8 id="path_parameters_7">Path Parameters</h8>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tenantId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the tenant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deviceId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the device</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect6">
+<h7 id="body_parameter_4">Body Parameter</h7>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Device</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Updated device registration <a href="#Device"><em>Device</em></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="sect7">
+<h8 id="header_parameters_3">Header Parameters</h8>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If-Match</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The expected resource version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect6">
+<h7 id="return_type_7">Return Type</h7>
+<div class="paragraph">
+<p>-</p>
+</div>
+</div>
+<div class="sect6">
+<h7 id="content_type_7">Content Type</h7>
+<div class="ulist">
+<ul>
+<li>
+<p>application/json</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect6">
+<h7 id="responses_30">Responses</h7>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 18. http response codes</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 50%;">
+<col style="width: 16.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Message</th>
+<th class="tableblock halign-left valign-top">Datatype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">204</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object updated.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;&lt;&gt;&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Malformed request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">401</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication credentials are required, but missing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;&lt;&gt;&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">403</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operation not allowed. If the user does not have read access for this object, then &#x60;404&#x60; will be returned instead.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object not found. This may also be returned for some operations if the user misses read access for the object.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">412</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expected resource version does not match current. This can only happen when the request header &#x60;If-Match&#x60; was set.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Error"><em>Error</em></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect6">
+<h7 id="samples_7">Samples</h7>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="models">F.2.2. Models</h4>
+<div class="sect4">
+<h5 id="CommonCredentials"><em>CommonCredentials</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-CommonCredentials">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth-id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ext</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Map  of <a href="#object">[object]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows arbitrary properties as extension to the ones specified by the Hono API.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="CommonSecret"><em>CommonSecret</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-CommonSecret">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The device registry can assign an identity to the secret. This value can be used to update secrets based on their metadata.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not-before</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date-time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not-after</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date-time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">comment</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="Device"><em>Device</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-Device">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">defaults</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Map  of <a href="#object">[object]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defaults for properties defined on the tenant and device level.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">via</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List  of <a href="#string">[string]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The device IDs of the gateways that are registered to act on behalf of this device. Note that &amp;quot;via&amp;quot; and &amp;quot;memberOf&amp;quot; must not be set at the same time.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">viaGroups</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List  of <a href="#string">[string]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The IDs of the gateway groups that are registered to act on behalf of this device. Note that &amp;quot;viaGroups&amp;quot; and &amp;quot;memberOf&amp;quot; must not be set at the same time.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">memberOf</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List  of <a href="#string">[string]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The IDs of the gateway groups that this device is a member of. Note that &amp;quot;via&amp;quot; and &amp;quot;memberOf&amp;quot; must not be set at the same time. The same applies for &amp;quot;viaGroups&amp;quot; and &amp;quot;memberOf&amp;quot; which must be set at the same time too. The reason is that Eclipse Hono does not support groups of gateway groups.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ext</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Map  of <a href="#object">[object]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows arbitrary properties as extension to the ones specified by the Hono API.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="Error"><em>Error</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-Error">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A human readable error message of what went wrong.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="InlineResponse201"><em>InlineResponse201</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-InlineResponse201">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the created object</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="PSKCredentials"><em>PSKCredentials</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-PSKCredentials">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth-id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ext</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Map  of <a href="#object">[object]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows arbitrary properties as extension to the ones specified by the Hono API.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">secrets</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List  of <a href="#PSKSecret"><em>PSKSecret</em></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="PSKCredentialsAllOf"><em>PSKCredentialsAllOf</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-PSKCredentialsAllOf">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">secrets</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List  of <a href="#PSKSecret"><em>PSKSecret</em></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="PSKSecret"><em>PSKSecret</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-PSKSecret">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The device registry can assign an identity to the secret. This value can be used to update secrets based on their metadata.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not-before</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date-time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not-after</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date-time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">comment</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte[]</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="PSKSecretAllOf"><em>PSKSecretAllOf</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-PSKSecretAllOf">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte[]</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="PasswordCredentials"><em>PasswordCredentials</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-PasswordCredentials">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth-id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ext</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Map  of <a href="#object">[object]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows arbitrary properties as extension to the ones specified by the Hono API.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">secrets</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List  of <a href="#PasswordSecret"><em>PasswordSecret</em></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="PasswordCredentialsAllOf"><em>PasswordCredentialsAllOf</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-PasswordCredentialsAllOf">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">secrets</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List  of <a href="#PasswordSecret"><em>PasswordSecret</em></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="PasswordSecret"><em>PasswordSecret</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-PasswordSecret">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The device registry can assign an identity to the secret. This value can be used to update secrets based on their metadata.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not-before</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date-time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not-after</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date-time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">comment</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hash-function</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the hash function used to create the password hash (defined in &#x60;pwd-hash&#x60; property). If the password is defined using a &#x60;pwd-plain&#x60; property, this value will be ignored by the device registry. This property should be empty when returning passwords from the device registry using only secret metadata. In this case the id field must be set instead.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pwd-hash</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The password hash created using the &#x60;hash-function&#x60; and optional &#x60;salt&#x60; values. If the password is defined using a &#x60;pwd-plain&#x60; property, this value will be ignored by the device registry. This property should be empty when returning passwords from the device registry using only secret metadata. In this case the id field must be set instead.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">salt</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Base64 encoding of the salt used in the password hash (defined in the &#x60;pwd-hash&#x60; property). If the password is defined using a &#x60;pwd-plain&#x60; property, this value will be ignored by the device registry. This property should be empty when returning passwords from the device registry using only secret metadata. In this case the id field must be set instead.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pwd-plain</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The clear text value of the password to be hashed by the device registry. If this property is specified, the device registry will ignore user-provided hash properties (&#x60;hash-function&#x60;, &#x60;pwd-hash&#x60; and &#x60;salt&#x60;). This property must never be stored by the device registry. This property must be empty when returning passwords from the device registry.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="PasswordSecretAllOf"><em>PasswordSecretAllOf</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-PasswordSecretAllOf">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hash-function</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the hash function used to create the password hash (defined in &#x60;pwd-hash&#x60; property). If the password is defined using a &#x60;pwd-plain&#x60; property, this value will be ignored by the device registry. This property should be empty when returning passwords from the device registry using only secret metadata. In this case the id field must be set instead.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pwd-hash</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The password hash created using the &#x60;hash-function&#x60; and optional &#x60;salt&#x60; values. If the password is defined using a &#x60;pwd-plain&#x60; property, this value will be ignored by the device registry. This property should be empty when returning passwords from the device registry using only secret metadata. In this case the id field must be set instead.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">salt</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Base64 encoding of the salt used in the password hash (defined in the &#x60;pwd-hash&#x60; property). If the password is defined using a &#x60;pwd-plain&#x60; property, this value will be ignored by the device registry. This property should be empty when returning passwords from the device registry using only secret metadata. In this case the id field must be set instead.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pwd-plain</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The clear text value of the password to be hashed by the device registry. If this property is specified, the device registry will ignore user-provided hash properties (&#x60;hash-function&#x60;, &#x60;pwd-hash&#x60; and &#x60;salt&#x60;). This property must never be stored by the device registry. This property must be empty when returning passwords from the device registry.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">byte</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="TypedCredentials"><em>TypedCredentials</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-TypedCredentials">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth-id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ext</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Map  of <a href="#object">[object]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows arbitrary properties as extension to the ones specified by the Hono API.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">secrets</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List  of <a href="#X509CertificateSecret"><em>X509CertificateSecret</em></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="X509CertificateCredentials"><em>X509CertificateCredentials</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-X509CertificateCredentials">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth-id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ext</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Map  of <a href="#object">[object]</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows arbitrary properties as extension to the ones specified by the Hono API.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">secrets</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List  of <a href="#X509CertificateSecret"><em>X509CertificateSecret</em></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="X509CertificateCredentialsAllOf"><em>X509CertificateCredentialsAllOf</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-X509CertificateCredentialsAllOf">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">secrets</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List  of <a href="#X509CertificateSecret"><em>X509CertificateSecret</em></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="X509CertificateSecret"><em>X509CertificateSecret</em></h5>
+<table class="tableblock frame-all grid-all stretch fields-X509CertificateSecret">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field Name</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The device registry can assign an identity to the secret. This value can be used to update secrets based on their metadata.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not-before</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date-time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not-after</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date-time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">comment</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
