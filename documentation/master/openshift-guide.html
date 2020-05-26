@@ -7007,6 +7007,58 @@ For the brokered address space only, on the Connections page, the number of send
 </ol>
 </div>
 </div>
+<div class="sect3">
+<h4 id="proc-closing-connections_messaging">4.4.5. Closing connections using the EnMasse Console</h4>
+<div class="paragraph">
+<p>If an application has unexpectedly stopped processing messages, you can force the application’s messaging connections to close using the EnMasse Console. This may be a useful way to return the application to service.</p>
+</div>
+<div class="paragraph">
+<p>Be aware that closing a connection closes the application’s connection to EnMasse. If the application is configured to do so, the application should reconnect automatically.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/openshift.html#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
+</li>
+<li>
+<p>Navigate to the <strong>Connections</strong> page.</p>
+</li>
+<li>
+<p>To close a single connection:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Locate the connection that you want to close.</p>
+</li>
+<li>
+<p>In the far right column, click the vertical ellipsis icon and select <strong>Close</strong>.</p>
+</li>
+<li>
+<p>When prompted, click <strong>Confirm</strong> to confirm that you want to close the connection. The connection is closed.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>To close multiple connections in a single operation:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Select the check box next to the connections that you want to close.</p>
+</li>
+<li>
+<p>At the top of the page, right-click the vertical ellipsis icon and select <strong>Close Selected</strong>.</p>
+</li>
+<li>
+<p>When prompted, click <strong>Confirm</strong> to confirm that you want to close the connections. The connections are closed.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="con-user-model-messaging">4.5. User model</h3>
