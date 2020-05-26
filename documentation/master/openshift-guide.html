@@ -272,7 +272,7 @@ spec:
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Prefixing the name with the address space name is required to ensure addresses from different address spaces do not collide.
@@ -327,7 +327,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Be sure to use the <code>-n</code> parameter when running this command. Not specifying that parameter will result in an improperly coded password and cause log-in issues.
@@ -1298,34 +1298,38 @@ metadata:
 spec:
   displayName: Restrictive Plan
   displayOrder: 0
-  infraConfigRef: default <b class="conum">(1)</b>
+  infraConfigRef: default <i class="conum" data-value="1"></i><b>(1)</b>
   shortDescription: A plan with restrictive quotas
   longDescription: A plan with restrictive quotas for the standard address space
-  addressSpaceType: standard <b class="conum">(2)</b>
-  addressPlans: <b class="conum">(3)</b>
+  addressSpaceType: standard <i class="conum" data-value="2"></i><b>(2)</b>
+  addressPlans: <i class="conum" data-value="3"></i><b>(3)</b>
   - small-queue
   - small-anycast
-  resourceLimits: <b class="conum">(4)</b>
+  resourceLimits: <i class="conum" data-value="4"></i><b>(4)</b>
     router: 2.0
     broker: 2.0
     aggregate: 2.0</code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>A reference to the <code>StandardInfraConfig</code> (for the <code>standard</code> address space type) or the <code>BrokeredInfraConfig</code> (for the <code>brokered</code> address space type) describing the infrastructure deployed for address spaces using this plan.</p>
-</li>
-<li>
-<p>The address space type this plan applies to, either <code>standard</code> or <code>brokered</code>.</p>
-</li>
-<li>
-<p>A list of address plans available to address spaces using this plan.</p>
-</li>
-<li>
-<p>The maximum number of routers (<code>router</code>) and brokers (<code>broker</code>) for address spaces using this plan. For the <code>brokered</code> address space type, only the <code>broker</code> field is required.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A reference to the <code>StandardInfraConfig</code> (for the <code>standard</code> address space type) or the <code>BrokeredInfraConfig</code> (for the <code>brokered</code> address space type) describing the infrastructure deployed for address spaces using this plan.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The address space type this plan applies to, either <code>standard</code> or <code>brokered</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>A list of address plans available to address spaces using this plan.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The maximum number of routers (<code>router</code>) and brokers (<code>broker</code>) for address spaces using this plan. For the <code>brokered</code> address space type, only the <code>broker</code> field is required.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The other fields are used by the EnMasse Console UI. Note the field <code>spec.infraConfigRef</code>, which
@@ -1427,25 +1431,28 @@ spec:
   displayOrder: 0
   shortDescription: A plan for small queues
   longDescription: A plan for small queues that consume little resources
-  addressType: queue <b class="conum">(1)</b>
-  resources: <b class="conum">(2)</b>
+  addressType: queue <i class="conum" data-value="1"></i><b>(1)</b>
+  resources: <i class="conum" data-value="2"></i><b>(2)</b>
     router: 0.2
     broker: 0.3
-  partitions: 1 <b class="conum">(3)</b></code></pre>
+  partitions: 1 <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The address type this plan applies to.</p>
-</li>
-<li>
-<p>The resources consumed by addresses using this plan. The <code>router</code> field is optional for address plans referenced by a <code>brokered</code> address space plan.</p>
-</li>
-<li>
-<p>The number of partitions that should be created for queues using this plan. Only available in the <code>standard</code> address space.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The address type this plan applies to.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The resources consumed by addresses using this plan. The <code>router</code> field is optional for address plans referenced by a <code>brokered</code> address space plan.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The number of partitions that should be created for queues using this plan. Only available in the <code>standard</code> address space.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The other fields are used by the EnMasse Console UI.</p>
@@ -1461,7 +1468,7 @@ spec:
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 A sharded queue no longer guarantees message ordering.
@@ -1588,40 +1595,44 @@ kind: BrokeredInfraConfig
 metadata:
   name: brokered-infra-config-example
 spec:
-  version: "0.32-SNAPSHOT" <b class="conum">(1)</b>
-  admin: <b class="conum">(2)</b>
+  version: "0.32-SNAPSHOT" <i class="conum" data-value="1"></i><b>(1)</b>
+  admin: <i class="conum" data-value="2"></i><b>(2)</b>
     resources:
       memory: 256Mi
     podTemplate:
       metadata:
         labels:
           key: value
-  broker: <b class="conum">(3)</b>
+  broker: <i class="conum" data-value="3"></i><b>(3)</b>
     resources:
       memory: 2Gi
       storage: 100Gi
     addressFullPolicy: PAGE
-    podTemplate: <b class="conum">(4)</b>
+    podTemplate: <i class="conum" data-value="4"></i><b>(4)</b>
       spec:
         priorityClassName: messaging</code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>Specifies the EnMasse version used. When upgrading, EnMasse uses
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Specifies the EnMasse version used. When upgrading, EnMasse uses
 this field to determine whether to upgrade the infrastructure to the requested version. If omitted,
-the version is assumed to be the same version as the controllers reading the configuration.</p>
-</li>
-<li>
-<p>Specifies the settings you can configure for the <code>admin</code> components.</p>
-</li>
-<li>
-<p>Specifies the settings you can configure for the <code>broker</code> components. Note that changing
-the <code>.broker.resources.storage</code> setting does not configure the existing broker storage size.</p>
-</li>
-<li>
-<p>For both <code>admin</code> and <code>broker</code> components you can configure the following <code>podTemplate</code> elements:</p>
+the version is assumed to be the same version as the controllers reading the configuration.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Specifies the settings you can configure for the <code>admin</code> components.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Specifies the settings you can configure for the <code>broker</code> components. Note that changing
+the <code>.broker.resources.storage</code> setting does not configure the existing broker storage size.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>For both <code>admin</code> and <code>broker</code> components you can configure the following <code>podTemplate</code> elements:
 <div class="ulist">
 <ul>
 <li>
@@ -1655,9 +1666,9 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 </div>
 </li>
 </ul>
-</div>
-</li>
-</ol>
+</div></td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>For detailed information about all of the available brokered infrastructure configuration fields, see the <a href="http://enmasse.io/documentation/master/openshift.html#ref-brokered-infra-config-fields-messaging">Brokered infrastructure configuration fields table</a>.</p>
@@ -1713,24 +1724,27 @@ spec:
     podTemplate:
       spec:
         containers:
-          - name: broker <b class="conum">(1)</b>
+          - name: broker <i class="conum" data-value="1"></i><b>(1)</b>
             readinessProbe:
-              failureThreshold: 6 <b class="conum">(2)</b>
-              initialDelaySeconds: 20 <b class="conum">(3)</b></code></pre>
+              failureThreshold: 6 <i class="conum" data-value="2"></i><b>(2)</b>
+              initialDelaySeconds: 20 <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The <code>name</code> value must match the target container name. For a broker, the <code>podTemplate</code> name is <code>broker</code>.</p>
-</li>
-<li>
-<p>Specifies the number of times that OpenShift tries when a Pod starts and the probe fails before either the Pod is marked <code>Unready</code> for a readiness probe, or restarting the container for a liveness probe. The default value is <code>3</code>, and the minimum value is <code>1</code>.</p>
-</li>
-<li>
-<p>Specifies the number of seconds before performing the first probe after the container starts.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>name</code> value must match the target container name. For a broker, the <code>podTemplate</code> name is <code>broker</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Specifies the number of times that OpenShift tries when a Pod starts and the probe fails before either the Pod is marked <code>Unready</code> for a readiness probe, or restarting the container for a liveness probe. The default value is <code>3</code>, and the minimum value is <code>1</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Specifies the number of seconds before performing the first probe after the container starts.</td>
+</tr>
+</table>
 </div>
 <div class="ulist">
 <div class="title">Related links</div>
@@ -1767,16 +1781,16 @@ kind: StandardInfraConfig
 metadata:
   name: myconfig
 spec:
-  version: "0.32-SNAPSHOT" <b class="conum">(1)</b>
-  admin: <b class="conum">(2)</b>
+  version: "0.32-SNAPSHOT" <i class="conum" data-value="1"></i><b>(1)</b>
+  admin: <i class="conum" data-value="2"></i><b>(2)</b>
     resources:
       memory: 256Mi
-  broker: <b class="conum">(3)</b>
+  broker: <i class="conum" data-value="3"></i><b>(3)</b>
     resources:
       memory: 2Gi
       storage: 100Gi
     addressFullPolicy: PAGE
-  router: <b class="conum">(4)</b>
+  router: <i class="conum" data-value="4"></i><b>(4)</b>
     resources:
       memory: 256Mi
     linkCapacity: 1000
@@ -1788,7 +1802,7 @@ spec:
       maxSessionsPerConnection: 10
       maxSendersPerConnection: 5
       maxReceiversPerConnection: 5
-    podTemplate: <b class="conum">(5)</b>
+    podTemplate: <i class="conum" data-value="5"></i><b>(5)</b>
       spec:
         affinity:
           nodeAffinity:
@@ -1804,24 +1818,29 @@ spec:
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>Specifies the EnMasse version used. When upgrading, EnMasse uses
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Specifies the EnMasse version used. When upgrading, EnMasse uses
 this field to determine whether to upgrade the infrastructure to the requested version. If omitted,
-the version is assumed to be the same version as the controllers reading the configuration.</p>
-</li>
-<li>
-<p>Specifies the settings you can configure for the <code>admin</code> components.</p>
-</li>
-<li>
-<p>Specifies the settings you can configure for the <code>broker</code> components. Changing
-the <code>.broker.resources.storage</code> setting does not configure the existing broker storage size.</p>
-</li>
-<li>
-<p>Specifies the settings you can configure for the <code>router</code> components.</p>
-</li>
-<li>
-<p>For <code>admin</code>, <code>broker</code>, and <code>router</code> components you can configure the following <code>podTemplate</code> elements:</p>
+the version is assumed to be the same version as the controllers reading the configuration.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Specifies the settings you can configure for the <code>admin</code> components.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Specifies the settings you can configure for the <code>broker</code> components. Changing
+the <code>.broker.resources.storage</code> setting does not configure the existing broker storage size.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Specifies the settings you can configure for the <code>router</code> components.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>For <code>admin</code>, <code>broker</code>, and <code>router</code> components you can configure the following <code>podTemplate</code> elements:
 <div class="ulist">
 <ul>
 <li>
@@ -1855,9 +1874,9 @@ the <code>.broker.resources.storage</code> setting does not configure the existi
 </div>
 </li>
 </ul>
-</div>
-</li>
-</ol>
+</div></td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>For detailed information about all of the available standard infrastructure configuration fields, see the <a href="http://enmasse.io/documentation/master/openshift.html#ref-standard-infra-config-fields-messaging">Standard infrastructure configuration fields table</a>.</p>
@@ -1913,34 +1932,37 @@ spec:
     podTemplate:
       spec:
         containers:
-          - name: broker <b class="conum">(1)</b>
+          - name: broker <i class="conum" data-value="1"></i><b>(1)</b>
             readinessProbe:
-              failureThreshold: 6 <b class="conum">(2)</b>
-              initialDelaySeconds: 20 <b class="conum">(3)</b>
+              failureThreshold: 6 <i class="conum" data-value="2"></i><b>(2)</b>
+              initialDelaySeconds: 20 <i class="conum" data-value="3"></i><b>(3)</b>
 
   router:
     ...
     podTemplate:
       spec:
         containers:
-          - name: router <b class="conum">(1)</b>
+          - name: router <i class="conum" data-value="1"></i><b>(1)</b>
             livenessProbe:
-              failureThreshold: 6 <b class="conum">(2)</b>
-              initialDelaySeconds: 20 <b class="conum">(3)</b></code></pre>
+              failureThreshold: 6 <i class="conum" data-value="2"></i><b>(2)</b>
+              initialDelaySeconds: 20 <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The <code>name</code> value must match the target container name. For example, for a broker <code>podTemplate</code>, <code>name</code> is <code>broker</code>, and for a router <code>podTemplate</code>, it is <code>router</code>.</p>
-</li>
-<li>
-<p>Specifies the number of times that OpenShift tries when a Pod starts and the probe fails before either the Pod is marked <code>Unready</code> for a readiness probe, or restarting the container for a liveness probe. The default value is <code>3</code>, and the minimum value is <code>1</code>.</p>
-</li>
-<li>
-<p>Specifies the number of seconds before performing the first probe after the container starts.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>name</code> value must match the target container name. For example, for a broker <code>podTemplate</code>, <code>name</code> is <code>broker</code>, and for a router <code>podTemplate</code>, it is <code>router</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Specifies the number of times that OpenShift tries when a Pod starts and the probe fails before either the Pod is marked <code>Unready</code> for a readiness probe, or restarting the container for a liveness probe. The default value is <code>3</code>, and the minimum value is <code>1</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Specifies the number of seconds before performing the first probe after the container starts.</td>
+</tr>
+</table>
 </div>
 <div class="ulist">
 <div class="title">Related links</div>
@@ -2055,21 +2077,21 @@ kind: AuthenticationService
 metadata:
   name: standard
 spec:
-  type: standard <b class="conum">(1)</b>
+  type: standard <i class="conum" data-value="1"></i><b>(1)</b>
   standard:
-    credentialsSecret: <b class="conum">(2)</b>
+    credentialsSecret: <i class="conum" data-value="2"></i><b>(2)</b>
       name: my-admin-credentials
-    certificateSecret <b class="conum">(3)</b>
+    certificateSecret <i class="conum" data-value="3"></i><b>(3)</b>
       name: my-authservice-certificate
-    resources: <b class="conum">(4)</b>
+    resources: <i class="conum" data-value="4"></i><b>(4)</b>
       requests:
         memory: 2Gi
       limits:
         memory: 2Gi
-    storage: <b class="conum">(5)</b>
+    storage: <i class="conum" data-value="5"></i><b>(5)</b>
       type: persistent-claim
       size: 5Gi
-    datasource: <b class="conum">(6)</b>
+    datasource: <i class="conum" data-value="6"></i><b>(6)</b>
       type: postgresql
       host: example.com
       port: 5432
@@ -2077,26 +2099,32 @@ spec:
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>Valid values for <code>type</code> are <code>none</code>, <code>standard</code>, or <code>external</code>.</p>
-</li>
-<li>
-<p>(Optional) The secret must contain the <code>admin.username</code> field for the user and the <code>admin.password</code> field for the password of the Keycloak admin user. If not specified, a random password will be generated and stored in a secret.</p>
-</li>
-<li>
-<p>(Optional on OpenShift) A custom certificate can be specified. On OpenShift, a certificate is automatically created if not specified.</p>
-</li>
-<li>
-<p>(Optional) Resource limits for the Keycloak instance can be specified.</p>
-</li>
-<li>
-<p>(Optional) The storage type can be specified as <code>ephemeral</code> or <code>persistent-claim</code>. For <code>persistent-claim</code>, you should also configure the size of the claim. The default type is <code>ephemeral</code>.</p>
-</li>
-<li>
-<p>(Optional) Specifies the data source to be used by Keycloak. The default option is the embedded <code>h2</code> data source. For production usage, the <code>postgresql</code> data source is recommended.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Valid values for <code>type</code> are <code>none</code>, <code>standard</code>, or <code>external</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>(Optional) The secret must contain the <code>admin.username</code> field for the user and the <code>admin.password</code> field for the password of the Keycloak admin user. If not specified, a random password will be generated and stored in a secret.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(Optional on OpenShift) A custom certificate can be specified. On OpenShift, a certificate is automatically created if not specified.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>(Optional) Resource limits for the Keycloak instance can be specified.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>(Optional) The storage type can be specified as <code>ephemeral</code> or <code>persistent-claim</code>. For <code>persistent-claim</code>, you should also configure the size of the claim. The default type is <code>ephemeral</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>(Optional) Specifies the data source to be used by Keycloak. The default option is the embedded <code>h2</code> data source. For production usage, the <code>postgresql</code> data source is recommended.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect5">
@@ -2236,29 +2264,33 @@ metadata:
   name: my-external-1
 spec:
   type: external
-  realm: myrealm <b class="conum">(1)</b>
+  realm: myrealm <i class="conum" data-value="1"></i><b>(1)</b>
   external:
-    host: example.com <b class="conum">(2)</b>
-    port: 5671 <b class="conum">(3)</b>
-    caCertSecret: <b class="conum">(4)</b>
+    host: example.com <i class="conum" data-value="2"></i><b>(2)</b>
+    port: 5671 <i class="conum" data-value="3"></i><b>(3)</b>
+    caCertSecret: <i class="conum" data-value="4"></i><b>(4)</b>
       name: my-ca-cert</code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Optional) The <code>realm</code> is passed in the authentication request. If not specified, an identifier in the form of <em>namespace-addressspace</em> is used as the realm.</p>
-</li>
-<li>
-<p>The host name of the external authentication server.</p>
-</li>
-<li>
-<p>The port number of the external authentication server.</p>
-</li>
-<li>
-<p>(Optional) The CA certificate to trust when connecting to the authentication server.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Optional) The <code>realm</code> is passed in the authentication request. If not specified, an identifier in the form of <em>namespace-addressspace</em> is used as the realm.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The host name of the external authentication server.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The port number of the external authentication server.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>(Optional) The CA certificate to trust when connecting to the authentication server.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The external authentication server must implement the API described in the <a href="http://enmasse.io/documentation/master/openshift.html#con-external-authentication-server-api-messaging">External authentication server API</a>.</p>
@@ -2277,33 +2309,38 @@ metadata:
   name: my-external-2
 spec:
   type: external
-  realm: myrealm <b class="conum">(1)</b>
+  realm: myrealm <i class="conum" data-value="1"></i><b>(1)</b>
   external:
-    host: example.org <b class="conum">(2)</b>
-    port: 5671 <b class="conum">(3)</b>
-    caCertSecret: <b class="conum">(4)</b>
+    host: example.org <i class="conum" data-value="2"></i><b>(2)</b>
+    port: 5671 <i class="conum" data-value="3"></i><b>(3)</b>
+    caCertSecret: <i class="conum" data-value="4"></i><b>(4)</b>
       name: my-ca-cert
-    allowOverride: true <b class="conum">(5)</b></code></pre>
+    allowOverride: true <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Optional) The <code>realm</code> is passed in the authentication request. If not specified, an identifier in the form of <em>namespace-addressspace</em> is used as the realm.</p>
-</li>
-<li>
-<p>The host name of the external authentication server.</p>
-</li>
-<li>
-<p>The port number of the external authentication server.</p>
-</li>
-<li>
-<p>(Optional) The CA certificate to trust when connecting to the authentication server.</p>
-</li>
-<li>
-<p>(Optional) Specifies whether address space overrides are allowed to the host name, port number, realm, and CA certificate. Valid values are <code>true</code> or <code>false</code>. If not specified, the default value is <code>false</code>.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Optional) The <code>realm</code> is passed in the authentication request. If not specified, an identifier in the form of <em>namespace-addressspace</em> is used as the realm.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The host name of the external authentication server.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The port number of the external authentication server.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>(Optional) The CA certificate to trust when connecting to the authentication server.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>(Optional) Specifies whether address space overrides are allowed to the host name, port number, realm, and CA certificate. Valid values are <code>true</code> or <code>false</code>. If not specified, the default value is <code>false</code>.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The external authentication server must implement the API described in the <a href="http://enmasse.io/documentation/master/openshift.html#con-external-authentication-server-api-messaging">External authentication server API</a>.</p>
@@ -2393,7 +2430,7 @@ that address. The following connection property information contains the policie
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 It is not recommended to use the <code>none</code> authentication service in production environments. It is intended only to be used in non-production environments, such as internal test or development environments.
@@ -2703,7 +2740,7 @@ oc delete oauthclients -l app=enmasse</pre>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The playbook deletes the <code>enmasse-infra</code> project.
@@ -3906,7 +3943,7 @@ restart.</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Warning</div>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 Enabling the protocol trace increases the CPU overhead of the router(s) and may decrease
@@ -4053,7 +4090,7 @@ brokers to restart.</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Warning</div>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 Enabling the protocol trace increases the CPU overhead of the broker(s) and may decrease
@@ -4207,7 +4244,7 @@ oc get secret broker-support-<em>uuid</em>  --template='{{.data.password}}' | ba
 <table>
 <tr>
 <td class="icon">
-<div class="title">Important</div>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 The double quotes around the broker pod name within the URL are required. Make sure you protect them from your
@@ -4251,7 +4288,7 @@ For more information about address space types and their semantics, see <a href=
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -4299,7 +4336,7 @@ For more information about address space types and their semantics, see <a href=
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 In EnMasse, you can only restrict the total amount of memory allocated for a broker. You cannot restrict the amount of memory used by individual addresses.
@@ -4333,7 +4370,7 @@ In EnMasse, you can only restrict the total amount of memory allocated for a bro
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 In the <code>standard</code> address space type, multiple broker instances might be created. The sizing of these broker instances also depends on the address plan configuration and how many addresses you expect each broker to be able to handle before another broker is spawned.
@@ -4567,7 +4604,7 @@ spec:
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -4675,7 +4712,7 @@ spec:
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The operator processes are running on either a JVM or a Node.JS VM. Sizing the amount of memory for these processes at twice the amount of memory required for the address configuration itself is recommended.
@@ -4790,7 +4827,7 @@ echo "Pods: ${total_pods}. Memory: ${total_memory_mb} MB. Storage: ${total_stora
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 You cannot modify endpoints for an existing address space.
@@ -5137,7 +5174,7 @@ tools. Address spaces are managed like any other OpenShift resource using <code>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 You cannot modify endpoints for an existing address space.
@@ -5228,7 +5265,7 @@ You cannot modify endpoints for an existing address space.
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 If you create a subscription on a topic, any senders to that topic must specify the <code>topic</code> capability.
@@ -5300,7 +5337,7 @@ published to the topic even if the subscriber is not attached. The consumer acce
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The <code>maxConsumers</code> setting cannot be modified for existing subscriptions.
@@ -5489,19 +5526,21 @@ kind: AddressSpace
 metadata:
   name: myspace
 spec:
-  type: standard <b class="conum">(1)</b>
-  plan: standard-unlimited <b class="conum">(2)</b></code></pre>
+  type: standard <i class="conum" data-value="1"></i><b>(1)</b>
+  plan: standard-unlimited <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The address space type can be either <code>brokered</code> or <code>standard</code>.</p>
-</li>
-<li>
-<p>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. To view your available address space plans, see <a href="http://enmasse.io/documentation/master/openshift.html#proc-list-available-address-space-plans-messaging">Listing available address space plans</a>.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The address space type can be either <code>brokered</code> or <code>standard</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The address space plan depends on the address space type and what has been configured by the EnMasse administrator. To view your available address space plans, see <a href="http://enmasse.io/documentation/master/openshift.html#proc-list-available-address-space-plans-messaging">Listing available address space plans</a>.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect4">
@@ -5519,15 +5558,16 @@ spec:
   type: standard
   plan: standard-unlimited
   authenticationService:
-    name: standard-authservice <b class="conum">(1)</b></code></pre>
+    name: standard-authservice <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The authentication service name depends on the available authentication services configured by the EnMasse administrator. To view the available authentication services for your address space type, see <a href="http://enmasse.io/documentation/master/openshift.html#proc-list-available-auth-services-messaging">Listing available authentication services</a>.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The authentication service name depends on the available authentication services configured by the EnMasse administrator. To view the available authentication services for your address space type, see <a href="http://enmasse.io/documentation/master/openshift.html#proc-list-available-auth-services-messaging">Listing available authentication services</a>.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect4">
@@ -5548,9 +5588,9 @@ spec:
   type: standard
   plan: standard-unlimited
   authenticationService:
-    name: external-authservice <b class="conum">(1)</b>
+    name: external-authservice <i class="conum" data-value="1"></i><b>(1)</b>
     type: external
-    overrides: <b class="conum">(2)</b>
+    overrides: <i class="conum" data-value="2"></i><b>(2)</b>
       realm: enmasse-infra-space-standard-auth
       host: standard-authservice-enmasse-infra.apps.wfd-28d9.openshiftworkshop.com
       port: 5671
@@ -5559,14 +5599,16 @@ spec:
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The authentication service name depends on the available authentication services configured by the EnMasse administrator. To view the available authentication services for your address space type, see <a href="http://enmasse.io/documentation/master/openshift.html#proc-list-available-auth-services-messaging">Listing available authentication services</a>.</p>
-</li>
-<li>
-<p>Specifies the override values.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The authentication service name depends on the available authentication services configured by the EnMasse administrator. To view the available authentication services for your address space type, see <a href="http://enmasse.io/documentation/master/openshift.html#proc-list-available-auth-services-messaging">Listing available authentication services</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Specifies the override values.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect4">
@@ -5592,40 +5634,46 @@ spec:
   authenticationService:
     name: standard-authservice
   endpoints:
-  - name: messaging <b class="conum">(1)</b>
-    service: messaging <b class="conum">(2)</b>
+  - name: messaging <i class="conum" data-value="1"></i><b>(1)</b>
+    service: messaging <i class="conum" data-value="2"></i><b>(2)</b>
     expose:
-     type: loadbalancer <b class="conum">(3)</b>
-     loadBalancerPorts: <b class="conum">(4)</b>
+     type: loadbalancer <i class="conum" data-value="3"></i><b>(3)</b>
+     loadBalancerPorts: <i class="conum" data-value="4"></i><b>(4)</b>
      - amqp
      - amqps
-      annotations: <b class="conum">(5)</b>
+      annotations: <i class="conum" data-value="5"></i><b>(5)</b>
         mykey: myvalue
-      loadBalancerSourceRanges: <b class="conum">(6)</b>
+      loadBalancerSourceRanges: <i class="conum" data-value="6"></i><b>(6)</b>
       - 10.0.0.0/8</code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Required) The name of the endpoint. The name specified affects the name of the OpenShift service to be created as well as the name of the endpoint in the status section of the <code>AddressSpace</code>.</p>
-</li>
-<li>
-<p>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code> and <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
-</li>
-<li>
-<p>(Required) The type of endpoint being exposed. The <code>loadbalancer</code> type creates an OpenShift <code>LoadBalancer</code> service. Valid values are <code>route</code> and <code>loadbalancer</code>.</p>
-</li>
-<li>
-<p>(Required) A list of the ports to be exposed on the <code>LoadBalancer</code> service. For the <code>messaging</code> service, the valid values are <code>amqp</code> and <code>amqps</code>.</p>
-</li>
-<li>
-<p>(Optional) A set of key-value annotation pairs that are added to the <code>LoadBalancer</code> <code>Service</code> object.</p>
-</li>
-<li>
-<p>(Optional) The allowed source ranges that are accepted by the load balancer.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Required) The name of the endpoint. The name specified affects the name of the OpenShift service to be created as well as the name of the endpoint in the status section of the <code>AddressSpace</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code> and <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(Required) The type of endpoint being exposed. The <code>loadbalancer</code> type creates an OpenShift <code>LoadBalancer</code> service. Valid values are <code>route</code> and <code>loadbalancer</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>(Required) A list of the ports to be exposed on the <code>LoadBalancer</code> service. For the <code>messaging</code> service, the valid values are <code>amqp</code> and <code>amqps</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>(Optional) A set of key-value annotation pairs that are added to the <code>LoadBalancer</code> <code>Service</code> object.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>(Optional) The allowed source ranges that are accepted by the load balancer.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect5">
@@ -5645,33 +5693,38 @@ spec:
   authenticationService:
     name: standard-authservice
   endpoints:
-  - name: messaging <b class="conum">(1)</b>
-    service: messaging <b class="conum">(2)</b>
+  - name: messaging <i class="conum" data-value="1"></i><b>(1)</b>
+    service: messaging <i class="conum" data-value="2"></i><b>(2)</b>
     expose:
      type: route
-     routeServicePort: amqps <b class="conum">(3)</b>
-     routeTlsTermination: passthrough <b class="conum">(4)</b>
-     routeHost: messaging.example.com <b class="conum">(5)</b></code></pre>
+     routeServicePort: amqps <i class="conum" data-value="3"></i><b>(3)</b>
+     routeTlsTermination: passthrough <i class="conum" data-value="4"></i><b>(4)</b>
+     routeHost: messaging.example.com <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Required) The name of the endpoint. The name specified affects the name of the OpenShift service to be created as well as the name of the endpoint in the status section of the <code>AddressSpace</code>.</p>
-</li>
-<li>
-<p>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code>, or <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</p>
-</li>
-<li>
-<p>(Required) The name of the port to be exposed. With the <code>route</code> type, only a single TLS-enabled port can be specified. For the <code>messaging</code> service, the valid values are <code>amqps</code> or <code>https</code>.</p>
-</li>
-<li>
-<p>(Required) The TLS termination policy to be used for the OpenShift route. For the <code>messaging</code> service, the <code>amqps</code> port requires <code>passthrough</code> to be specified, whereas <code>https</code> (websockets) also allows <code>reencrypt</code>.</p>
-</li>
-<li>
-<p>(Optional) The host name to use for the created route.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Required) The name of the endpoint. The name specified affects the name of the OpenShift service to be created as well as the name of the endpoint in the status section of the <code>AddressSpace</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code>, or <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(Required) The name of the port to be exposed. With the <code>route</code> type, only a single TLS-enabled port can be specified. For the <code>messaging</code> service, the valid values are <code>amqps</code> or <code>https</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>(Required) The TLS termination policy to be used for the OpenShift route. For the <code>messaging</code> service, the <code>amqps</code> port requires <code>passthrough</code> to be specified, whereas <code>https</code> (websockets) also allows <code>reencrypt</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>(Optional) The host name to use for the created route.</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -5701,15 +5754,16 @@ spec:
   - name: messaging
     service: messaging
     cert:
-     provider: openshift <b class="conum">(1)</b></code></pre>
+     provider: openshift <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Required) The certificate provider type. Valid values are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default value).</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Required) The certificate provider type. Valid values are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default value).</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect5">
@@ -5723,7 +5777,7 @@ certificates. The CA for these certificates can be found in the <code>status.caC
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Using a self-signed certificate in production environments is not recommended.
@@ -5746,15 +5800,16 @@ spec:
   - name: messaging
     service: messaging
     cert:
-     provider: selfsigned <b class="conum">(1)</b></code></pre>
+     provider: selfsigned <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Required) The certificate provider type. Valid values are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default value).</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Required) The certificate provider type. Valid values are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default value).</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect5">
@@ -5779,23 +5834,26 @@ spec:
   - name: messaging
     service: messaging
     cert:
-     provider: certBundle <b class="conum">(1)</b>
-     tlsKey: Y2VydGJ1bmRsZXByb3ZpZGVyY2VydA== <b class="conum">(2)</b>
-     tlsCert: Y2VydGJ1bmRsZXByb3ZpZGVyY2VydA== <b class="conum">(3)</b></code></pre>
+     provider: certBundle <i class="conum" data-value="1"></i><b>(1)</b>
+     tlsKey: Y2VydGJ1bmRsZXByb3ZpZGVyY2VydA== <i class="conum" data-value="2"></i><b>(2)</b>
+     tlsCert: Y2VydGJ1bmRsZXByb3ZpZGVyY2VydA== <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Required) The certificate provider type. Valid values are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default value).</p>
-</li>
-<li>
-<p>(Required) The base64-encoded value of the PEM private key (including the preamble).</p>
-</li>
-<li>
-<p>(Required) The base64-encoded value of the PEM certificate (including the preamble).</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Required) The certificate provider type. Valid values are <code>openshift</code> (on OpenShift only), <code>certBundle</code>, and <code>selfsigned</code> (default value).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>(Required) The base64-encoded value of the PEM private key (including the preamble).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(Required) The base64-encoded value of the PEM certificate (including the preamble).</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -5866,48 +5924,55 @@ metadata:
 spec:
   ...
 status:
-  isReady: false <b class="conum">(1)</b>
+  isReady: false <i class="conum" data-value="1"></i><b>(1)</b>
   messages:
     - "One or more deployments are not ready: "
-  endpointStatuses: <b class="conum">(2)</b>
+  endpointStatuses: <i class="conum" data-value="2"></i><b>(2)</b>
     - name: messaging
-      cert: aGVsbG8= <b class="conum">(3)</b>
-      serviceHost: messaging-123.enmasse-infra.svc <b class="conum">(4)</b>
-      servicePorts: <b class="conum">(5)</b>
+      cert: aGVsbG8= <i class="conum" data-value="3"></i><b>(3)</b>
+      serviceHost: messaging-123.enmasse-infra.svc <i class="conum" data-value="4"></i><b>(4)</b>
+      servicePorts: <i class="conum" data-value="5"></i><b>(5)</b>
         - name: amqp
           port: 5672
         - name: amqps
           port: 5671
-      externalHost: messaging.example.com <b class="conum">(6)</b>
-      externalPorts: <b class="conum">(7)</b>
+      externalHost: messaging.example.com <i class="conum" data-value="6"></i><b>(6)</b>
+      externalPorts: <i class="conum" data-value="7"></i><b>(7)</b>
         - name: amqps
           port: 443</code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The <code>status.isReady</code> field can be either <code>true</code> or <code>false</code>.</p>
-</li>
-<li>
-<p>The <code>status.endpointStatuses</code> field provides information about available endpoints for this address space.</p>
-</li>
-<li>
-<p>The <code>cert</code> field contains the base64-encoded certificate for a given endpoint.</p>
-</li>
-<li>
-<p>The <code>serviceHost</code> field contains the cluster-internal host name for a given endpoint.</p>
-</li>
-<li>
-<p>The <code>servicePorts</code> field contains the available ports for the cluster-internal host.</p>
-</li>
-<li>
-<p>The <code>externalHost</code> field contains the external host name for a given endpoint.</p>
-</li>
-<li>
-<p>The <code>externalPorts</code> field contains the available ports for the external host.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>status.isReady</code> field can be either <code>true</code> or <code>false</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>status.endpointStatuses</code> field provides information about available endpoints for this address space.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>cert</code> field contains the base64-encoded certificate for a given endpoint.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>serviceHost</code> field contains the cluster-internal host name for a given endpoint.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The <code>servicePorts</code> field contains the available ports for the cluster-internal host.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The <code>externalHost</code> field contains the external host name for a given endpoint.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>The <code>externalPorts</code> field contains the available ports for the external host.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -5932,22 +5997,24 @@ spec:
   - name: messaging
     service: messaging
     exports:
-    - kind: ConfigMap <b class="conum">(1)</b>
-      name: my-config <b class="conum">(2)</b></code></pre>
+    - kind: ConfigMap <i class="conum" data-value="1"></i><b>(1)</b>
+      name: my-config <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Required) The type of export: <code>ConfigMap</code>, <code>Secret</code>, or <code>Service</code>. The resulting <code>ConfigMap</code> contains the values in the format
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Required) The type of export: <code>ConfigMap</code>, <code>Secret</code>, or <code>Service</code>. The resulting <code>ConfigMap</code> contains the values in the format
 shown in <a href="http://enmasse.io/documentation/master/openshift.html#ref-address-space-example-exports-messaging">example exports format</a>. For <code>Secret</code>, the same keys are used, but the values are base64-encoded. For
 <code>Service</code>, a OpenShift service of the type <code>ExternalName</code> is created. This provides applications running on OpenShift with a way to
-inject endpoint information or provide a proxy service in the same namespace as the application. For more information see <a href="http://enmasse.io/documentation/master/openshift.html#ref-address-space-example-exports-messaging">example exports format</a>.</p>
-</li>
-<li>
-<p>(Required) The name of the resource to create and update.</p>
-</li>
-</ol>
+inject endpoint information or provide a proxy service in the same namespace as the application. For more information see <a href="http://enmasse.io/documentation/master/openshift.html#ref-address-space-example-exports-messaging">example exports format</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>(Required) The name of the resource to create and update.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>When exporting endpoint information, the <code>system:serviceaccounts:_enmasse-infra_</code> group must be granted privileges to create, update, and delete the
@@ -6011,23 +6078,23 @@ spec:
   type: standard
   plan: standard-unlimited
   connectors:
-  - name: remote1 <b class="conum">(1)</b>
-    endpointHosts: <b class="conum">(2)</b>
+  - name: remote1 <i class="conum" data-value="1"></i><b>(1)</b>
+    endpointHosts: <i class="conum" data-value="2"></i><b>(2)</b>
     - host: messaging.example.com
       port: 5672
     - host: messaging2.example.com
-    idleTimeout: <b class="conum">(3)</b>
-    maxFrameSize: <b class="conum">(4)</b>
-    tls: {} <b class="conum">(5)</b>
-    credentials: <b class="conum">(6)</b>
+    idleTimeout: <i class="conum" data-value="3"></i><b>(3)</b>
+    maxFrameSize: <i class="conum" data-value="4"></i><b>(4)</b>
+    tls: {} <i class="conum" data-value="5"></i><b>(5)</b>
+    credentials: <i class="conum" data-value="6"></i><b>(6)</b>
       username:
         value: test
       password:
         valueFromSecret:
           name: password-secret
           key: password.txt
-    role: <b class="conum">(7)</b>
-    addresses: <b class="conum">(8)</b>
+    role: <i class="conum" data-value="7"></i><b>(7)</b>
+    addresses: <i class="conum" data-value="8"></i><b>(8)</b>
     - name: p1
       pattern: "prices/*"
     - name: p2
@@ -6035,32 +6102,40 @@ spec:
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Required) Specifies the name of the connector. All remote addresses are prefixed with the connector name and a forward slash, <code>/</code>.</p>
-</li>
-<li>
-<p>(Required) Specifies a list of endpoints for this connector. This list must contain at least one entry, and any additional entries are used for failover. If not otherwise specified, the <code>port</code> field value is set to the registered IANA port for AMQP (or AMQPS if TLS is enabled).</p>
-</li>
-<li>
-<p>(Optional) Idle timeout of the AMQP connection (seconds). 0 disables the idle timeout.</p>
-</li>
-<li>
-<p>(Optional) Max frame size of the AMQP connection.</p>
-</li>
-<li>
-<p>(Optional) Enable TLS. The connector trusts global root CAs by default. To use a custom CA, specify a value for the <code>caCert</code> field.</p>
-</li>
-<li>
-<p>(Optional) Specifies the username and password credentials to use for this connector. The values can be specified inline or by referencing a secret along with an optional key specifying the location within the secret. The secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
-</li>
-<li>
-<p>(Optional) Role of the connector. Valid values are "normal", "edge", and "route-container" (default value).</p>
-</li>
-<li>
-<p>(Required) Specifies a list of patterns matching addresses to be exposed on the remote endpoint. The pattern consists of one or more tokens separated by a forward slash, <code>/</code>. A token can be one of the following: a * character, a # character, or a sequence of characters that do not include /, *, or #. The * token matches any single token. The # token matches zero or more tokens. * has higher precedence than #, and exact match has the highest precedence.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Required) Specifies the name of the connector. All remote addresses are prefixed with the connector name and a forward slash, <code>/</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>(Required) Specifies a list of endpoints for this connector. This list must contain at least one entry, and any additional entries are used for failover. If not otherwise specified, the <code>port</code> field value is set to the registered IANA port for AMQP (or AMQPS if TLS is enabled).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(Optional) Idle timeout of the AMQP connection (seconds). 0 disables the idle timeout.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>(Optional) Max frame size of the AMQP connection.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>(Optional) Enable TLS. The connector trusts global root CAs by default. To use a custom CA, specify a value for the <code>caCert</code> field.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>(Optional) Specifies the username and password credentials to use for this connector. The values can be specified inline or by referencing a secret along with an optional key specifying the location within the secret. The secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>(Optional) Role of the connector. Valid values are "normal", "edge", and "route-container" (default value).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>(Required) Specifies a list of patterns matching addresses to be exposed on the remote endpoint. The pattern consists of one or more tokens separated by a forward slash, <code>/</code>. A token can be one of the following: a * character, a # character, or a sequence of characters that do not include /, *, or #. The * token matches any single token. The # token matches zero or more tokens. * has higher precedence than #, and exact match has the highest precedence.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect4">
@@ -6078,20 +6153,20 @@ spec:
   type: standard
   plan: standard-unlimited
   connectors:
-  - name: remote1 <b class="conum">(1)</b>
-    endpointHosts: <b class="conum">(2)</b>
+  - name: remote1 <i class="conum" data-value="1"></i><b>(1)</b>
+    endpointHosts: <i class="conum" data-value="2"></i><b>(2)</b>
     - host: messaging.example.com
       port: 5671
     tls:
-      caCert: <b class="conum">(3)</b>
+      caCert: <i class="conum" data-value="3"></i><b>(3)</b>
         valueFromSecret:
           name: remote-certs
           key: ca.crt
-      clientCert: <b class="conum">(4)</b>
+      clientCert: <i class="conum" data-value="4"></i><b>(4)</b>
         valueFromSecret:
           name: remote-certs
           key: tls.crt
-      clientKey: <b class="conum">(5)</b>
+      clientKey: <i class="conum" data-value="5"></i><b>(5)</b>
         valueFromSecret:
           name: remote-certs
           key: tls.key
@@ -6101,23 +6176,28 @@ spec:
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Required) Specifies the name of the connector. All remote addresses are prefixed with the connector name and a forward slash, <code>/</code>.</p>
-</li>
-<li>
-<p>(Required) Specifies a list of endpoints for this connector. This list must contain at least one entry, and any additional entries are used for failover. If not otherwise specified, the <code>port</code> field value is set to the registered IANA port for AMQP (or AMQPS if TLS is enabled).</p>
-</li>
-<li>
-<p>(Optional) Specifies the CA certificate to trust for the remote connection. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
-</li>
-<li>
-<p>(Optional) Specifies the client certificate to use for mutual TLS authentication. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
-</li>
-<li>
-<p>(Optional) Specifies the client private key to use for mutual TLS authentication. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Required) Specifies the name of the connector. All remote addresses are prefixed with the connector name and a forward slash, <code>/</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>(Required) Specifies a list of endpoints for this connector. This list must contain at least one entry, and any additional entries are used for failover. If not otherwise specified, the <code>port</code> field value is set to the registered IANA port for AMQP (or AMQPS if TLS is enabled).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(Optional) Specifies the CA certificate to trust for the remote connection. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>(Optional) Specifies the client certificate to use for mutual TLS authentication. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>(Optional) Specifies the client private key to use for mutual TLS authentication. The referenced secret must be readable by the <code>system:serviceaccounts:_enmasse-infra_</code> group.</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -6441,28 +6521,32 @@ which might cause reordering of messages.</p>
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
 kind: Address
 metadata:
-    name: myspace.myqueue <b class="conum">(1)</b>
+    name: myspace.myqueue <i class="conum" data-value="1"></i><b>(1)</b>
 spec:
-    address: myqueue <b class="conum">(2)</b>
-    type: queue <b class="conum">(3)</b>
-    plan: standard-small-queue <b class="conum">(4)</b></code></pre>
+    address: myqueue <i class="conum" data-value="2"></i><b>(2)</b>
+    type: queue <i class="conum" data-value="3"></i><b>(3)</b>
+    plan: standard-small-queue <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The address name must be prefixed with the address space name and a dot. Address names can only include alphanumeric characters.</p>
-</li>
-<li>
-<p>The address is the messaging address this address resource represents.</p>
-</li>
-<li>
-<p>The address type dictates the semantics of this address.</p>
-</li>
-<li>
-<p>The address plan describes the resource usage for the address. For more information about how to view the available plans see <a href="http://enmasse.io/documentation/master/openshift.html#proc-list-available-address-plans-messaging">Listing available address plans</a>.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The address name must be prefixed with the address space name and a dot. Address names can only include alphanumeric characters.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The address is the messaging address this address resource represents.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The address type dictates the semantics of this address.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The address plan describes the resource usage for the address. For more information about how to view the available plans see <a href="http://enmasse.io/documentation/master/openshift.html#proc-list-available-address-plans-messaging">Listing available address plans</a>.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect4">
@@ -6492,15 +6576,16 @@ spec:
     address: mysub
     type: subscription
     plan: standard-small-subscription
-    topic: mytopic <b class="conum">(1)</b></code></pre>
+    topic: mytopic <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The address of topic that this subscription refers to.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The address of topic that this subscription refers to.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect4">
@@ -6543,23 +6628,26 @@ spec:
   type: queue
   plan: standard-small-queue
   forwarders:
-  - name: f1 <b class="conum">(1)</b>
-    remoteAddress: remote1/clients/me/1 <b class="conum">(2)</b>
-    direction: out <b class="conum">(3)</b></code></pre>
+  - name: f1 <i class="conum" data-value="1"></i><b>(1)</b>
+    remoteAddress: remote1/clients/me/1 <i class="conum" data-value="2"></i><b>(2)</b>
+    direction: out <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Required) Specifies the name of the forwarder, which is used to ensure a unique identity.</p>
-</li>
-<li>
-<p>(Required) Specifies the remote address to forward messages to. The address must be prefixed with the connector name and must be identical to the address matching patterns defined on the connector.</p>
-</li>
-<li>
-<p>(Required) Specifies the direction of message flow, which is either <code>out</code> or <code>in</code>. A value of <code>out</code> forwards messages to the remote endpoint. A value of <code>in</code> forwards messages from the remote endpoint.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Required) Specifies the name of the forwarder, which is used to ensure a unique identity.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>(Required) Specifies the remote address to forward messages to. The address must be prefixed with the connector name and must be identical to the address matching patterns defined on the connector.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(Required) Specifies the direction of message flow, which is either <code>out</code> or <code>in</code>. A value of <code>out</code> forwards messages to the remote endpoint. A value of <code>in</code> forwards messages from the remote endpoint.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect5">
@@ -6578,23 +6666,26 @@ spec:
   type: queue
   plan: standard-small-queue
   forwarders:
-  - name: f1 <b class="conum">(1)</b>
-    remoteAddress: remote1/prices/milk <b class="conum">(2)</b>
-    direction: in <b class="conum">(3)</b></code></pre>
+  - name: f1 <i class="conum" data-value="1"></i><b>(1)</b>
+    remoteAddress: remote1/prices/milk <i class="conum" data-value="2"></i><b>(2)</b>
+    direction: in <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>(Required) Specifies the name of the forwarder, which is used to ensure a unique identity.</p>
-</li>
-<li>
-<p>(Required) Specifies the remote address to forward messages to. The address must be prefixed with the connector name and must be identical to the address matching patterns defined on the connector.</p>
-</li>
-<li>
-<p>(Required) Specifies the direction of message flow, which is either <code>out</code> or <code>in</code>. A value of <code>out</code> forwards messages to the remote endpoint. A value of <code>in</code> forwards messages from the remote endpoint.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Required) Specifies the name of the forwarder, which is used to ensure a unique identity.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>(Required) Specifies the remote address to forward messages to. The address must be prefixed with the connector name and must be identical to the address matching patterns defined on the connector.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(Required) Specifies the direction of message flow, which is either <code>out</code> or <code>in</code>. A value of <code>out</code> forwards messages to the remote endpoint. A value of <code>in</code> forwards messages from the remote endpoint.</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -6652,7 +6743,7 @@ spec:
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Prefixing the name with the address space name is required to ensure addresses from different address spaces do not collide.
@@ -6967,7 +7058,7 @@ spec:
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 For the brokered address space only, on the Connections page, the number of senders is either <code>0</code> or <code>1</code>. As soon as one or more senders exist, <code>1</code> is displayed rather than reflecting the actual number of senders.
@@ -7200,7 +7291,7 @@ be managed using the OpenShift command-line tools.</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Be sure to use the <code>-n</code> parameter when running this command. Not specifying that parameter will result in an improperly coded password and cause log-in issues.
@@ -7421,7 +7512,7 @@ certificate from the <code>AddressSpace</code> using the following procedure.</p
 <table>
 <tr>
 <td class="icon">
-<div class="title">Warning</div>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 Using a self-signed certificate in production environments is not recommended.
@@ -7981,7 +8072,7 @@ oc create secret tls iot-mqtt-adapter-tls --key=install/components/iot/examples/
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -8098,7 +8189,7 @@ oc get iotproject iot</pre>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Make sure that the <code>Phase</code> field shows <code>Ready</code> status for both resources.
@@ -8317,7 +8408,7 @@ functionality, so it might be necessary to tweak the configuration of the device
 <table>
 <tr>
 <td class="icon">
-<div class="title">Warning</div>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -8381,7 +8472,7 @@ oc create secret tls iot-mqtt-adapter-tls --key=install/components/iot/examples/
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -8463,7 +8554,7 @@ create the required tables and indices.</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Important</div>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -8519,7 +8610,7 @@ performance in most cases.</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 It is not possible to change the data model later on without loosing all data
@@ -8593,7 +8684,7 @@ spec:
     deviceRegistry:
       infinispan:
         server:
-          external: <b class="conum">(1)</b>
+          external: <i class="conum" data-value="1"></i><b>(1)</b>
             host: infinispan
             port: 11222
             username: app
@@ -8608,11 +8699,12 @@ spec:
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The Infinispan service must be provided.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The Infinispan service must be provided.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect4">
@@ -8640,20 +8732,20 @@ spec:
             saslRealm: ApplicationRealm
   adapters:
     mqtt:
-      enabled: true <b class="conum">(1)</b>
+      enabled: true <i class="conum" data-value="1"></i><b>(1)</b>
       replicas: 1
       options:
-        tenantIdleTimeout: 30m <b class="conum">(2)</b>
+        tenantIdleTimeout: 30m <i class="conum" data-value="2"></i><b>(2)</b>
         maxPayloadSize: 2048
     http:
       enabled: true
-      replicas: 1 <b class="conum">(4)</b>
+      replicas: 1 <i class="conum" data-value="4"></i><b>(4)</b>
       options:
         tenantIdleTimeout: 30m
-        maxPayloadSize: 2048 <b class="conum">(3)</b>
+        maxPayloadSize: 2048 <i class="conum" data-value="3"></i><b>(3)</b>
       containers:
         adapter:
-          resources: <b class="conum">(4)</b>
+          resources: <i class="conum" data-value="4"></i><b>(4)</b>
             limits:
               memory: 128Mi
               cpu: 500m
@@ -8664,20 +8756,24 @@ spec:
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>Protocol adapters can be disabled if necessary. The default value is <code>true</code>.</p>
-</li>
-<li>
-<p>Specifies the duration to keep alive the client connection.</p>
-</li>
-<li>
-<p>Specifies the maximum allowed size of an incoming message in bytes.</p>
-</li>
-<li>
-<p>Container resources and instances can be adjusted if necessary.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Protocol adapters can be disabled if necessary. The default value is <code>true</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Specifies the duration to keep alive the client connection.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Specifies the maximum allowed size of an incoming message in bytes.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Container resources and instances can be adjusted if necessary.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect4">
@@ -8694,24 +8790,27 @@ spec:
       jdbc:
         server:
           external:
-            url: jdbc://postgresql.namespace.svc:5432/database-name # <b class="conum">(1)</b>
-            username: app # <b class="conum">(2)</b>
-            password: test12 # <b class="conum">(3)</b></code></pre>
+            url: jdbc://postgresql.namespace.svc:5432/database-name <i class="conum" data-value="1"></i><b>(1)</b>
+            username: app <i class="conum" data-value="2"></i><b>(2)</b>
+            password: test12 <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The JDBC URL to the PostgreSQL database. This includes the hostname, port, and database name.
-For more information also see: <a href="https://jdbc.postgresql.org/documentation/head/connect.html" class="bare">https://jdbc.postgresql.org/documentation/head/connect.html</a></p>
-</li>
-<li>
-<p>The username used to connect to the PostgreSQL server</p>
-</li>
-<li>
-<p>The password used to connect to the PostgreSQL server</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The JDBC URL to the PostgreSQL database. This includes the hostname, port, and database name.
+For more information also see: <a href="https://jdbc.postgresql.org/documentation/head/connect.html" class="bare">https://jdbc.postgresql.org/documentation/head/connect.html</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The username used to connect to the PostgreSQL server</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The password used to connect to the PostgreSQL server</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -8956,7 +9055,7 @@ to force the destruction of the <code>IoTProject</code> resources.</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Warning</div>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 Manually removing the resource cleanup finalizer will skip the cleanup process,
@@ -9010,17 +9109,18 @@ metadata:
   creationTimestamp: "2019-12-09T15:00:00Z"
   deletionTimestamp: "2019-12-09T16:00:00Z"
   finalizers:
-  - iot.enmasse.io/deviceRegistryCleanup <b class="conum">(1)</b>
+  - iot.enmasse.io/deviceRegistryCleanup <i class="conum" data-value="1"></i><b>(1)</b>
   name: iot
   namespace: myapp</code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The line with the finalizer to delete</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The line with the finalizer to delete</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Delete the line of the finalizer. Save and exit the editor. This will automatically trigger an update
@@ -9056,45 +9156,50 @@ metadata:
   name: user-1
 spec:
   downstreamStrategy:
-    managedStrategy: <b class="conum">(1)</b>
+    managedStrategy: <i class="conum" data-value="1"></i><b>(1)</b>
       addressSpace:
         name: iot-user-1
-        plan: standard-unlimited <b class="conum">(2)</b>
-        type: standard <b class="conum">(4)</b>
+        plan: standard-unlimited <i class="conum" data-value="2"></i><b>(2)</b>
+        type: standard <i class="conum" data-value="4"></i><b>(4)</b>
       addresses:
         telemetry:
-          plan: standard-small-anycast <b class="conum">(3)</b>
-          type: standard <b class="conum">(5)</b>
+          plan: standard-small-anycast <i class="conum" data-value="3"></i><b>(3)</b>
+          type: standard <i class="conum" data-value="5"></i><b>(5)</b>
         event:
-          plan: standard-small-queue <b class="conum">(3)</b>
+          plan: standard-small-queue <i class="conum" data-value="3"></i><b>(3)</b>
         command:
-          plan: standard-small-anycast <b class="conum">(3)</b></code></pre>
+          plan: standard-small-anycast <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>The <code>managedStrategy</code> value refers to a messaging infrastructure managed by EnMasse.</p>
-</li>
-<li>
-<p>Specifies the address space plan, defining the resource usage of the address space. Each IoT tenant must have its own address space.</p>
-</li>
-<li>
-<p>Each address must be associated with a valid address plan.</p>
-</li>
-<li>
-<p>Specifies the type of address space. The default value is <code>standard</code>.</p>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>managedStrategy</code> value refers to a messaging infrastructure managed by EnMasse.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Specifies the address space plan, defining the resource usage of the address space. Each IoT tenant must have its own address space.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Each address must be associated with a valid address plan.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Specifies the type of address space. The default value is <code>standard</code>.
 <div class="paragraph">
 <p>For more information, see <a href="http://enmasse.io/documentation/master/openshift.html#managing-address-spaces-messaging">Managing address spaces</a>.</p>
-</div>
-</li>
-<li>
-<p>Specifies the type of address.</p>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Specifies the type of address.
 <div class="paragraph">
 <p>For more information, see <a href="http://enmasse.io/documentation/master/openshift.html#managing-address-spaces-messaging">Managing address spaces</a>.</p>
-</div>
-</li>
-</ol>
+</div></td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect4">
@@ -9620,7 +9725,7 @@ as part of the registration information (for example, <code>{"via": ["sigfox-bac
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Do not set a password for this device.
@@ -9684,7 +9789,7 @@ to handle messages as <em>telemetry</em> data. You can use <code>/data/event</co
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <code>{device}</code> and <code>{data}</code> are literal values and must not be replaced.
