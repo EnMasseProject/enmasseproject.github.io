@@ -955,6 +955,7 @@ spec:
       memory: 2Gi
       storage: 100Gi
     addressFullPolicy: PAGE
+    globalMaxSize: 256Mb
     podTemplate: <i class="conum" data-value="4"></i><b>(4)</b>
       spec:
         priorityClassName: messaging</code></pre>
@@ -3584,7 +3585,7 @@ spec:
     addressFullPolicy: FAIL
     globalMaxSize: 1.35Gb
     resources:
-      memory: 4Gi
+      memory: 8Gi
       storage: 2Gi
   ...</code></pre>
 </div>
@@ -3614,7 +3615,7 @@ spec:
     addressFullPolicy: PAGE
     globalMaxSize: 124Mb
     resources:
-      memory: 512Mi
+      memory: 1Gi
       storage: 2Gi
   ...</code></pre>
 </div>
