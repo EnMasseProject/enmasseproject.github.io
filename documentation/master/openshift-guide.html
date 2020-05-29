@@ -8399,7 +8399,87 @@ export MESSAGING_PORT=443</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-iot-service-registry-messaging-iot-iot-iot">5.2.2. Device registry</h4>
+<h4 id="con-iot-logging-messaging-iot-iot-iot">5.2.2. IoT logging</h4>
+<div class="paragraph">
+<p>By default, the IoT components of EnMasse use a conservative
+logging configuration for the infrastructure services to
+preserve resources for normal operation.</p>
+</div>
+<div class="paragraph">
+<p>EnMasse also allows operation-level tracing using Jaeger,
+for more in-depth tracing scenarios.</p>
+</div>
+<div class="sect4">
+<h5 id="configuration_options">Configuration options</h5>
+<div class="paragraph">
+<p>For IoT components, it might be necessary to increase the logging output at
+the following application
+levels (ordered in increasing priority):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A default log level for all IoT components</p>
+</li>
+<li>
+<p>A default configuration for specific log channels</p>
+</li>
+<li>
+<p>A service specific default log level</p>
+</li>
+<li>
+<p>A service specific configuration for specific log channels</p>
+</li>
+<li>
+<p>A service specific custom log configuration file</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All configuration is part of the <code>IoTConfig</code> instance and the EnMasse Operator applies the configuration to the services.
+The only exception is the service specific
+log configuration file, which can either be provided through the <code>IoTConfig</code> resource
+or by creating an entry in the service specific <code>ConfigMap</code> resource.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="log_levels">Log levels</h5>
+<div class="paragraph">
+<p>The following log levels are available (ordered from the lowest level to the highest level):</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">error</dt>
+<dd>
+<p>Error conditions. Indicates an unexpected condition, which may impact the stability of the system.</p>
+</dd>
+<dt class="hdlist1">warn</dt>
+<dd>
+<p>Warning conditions. Indicates an expected condition, which may impact the current operation or stability of the system.</p>
+</dd>
+<dt class="hdlist1">info</dt>
+<dd>
+<p>Informational messages. Indicates an expected event, which may impact the current operation.</p>
+</dd>
+<dt class="hdlist1">debug</dt>
+<dd>
+<p>Messages for debugging.</p>
+</dd>
+<dt class="hdlist1">trace</dt>
+<dd>
+<p>All messages.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>When limiting output by log level, lower levels will always include
+higher level messages. For example, when limiting the output to "info",
+"warn" and "error" messages are also included.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="con-iot-service-registry-messaging-iot-iot-iot">5.2.3. Device registry</h4>
 <div class="paragraph">
 <p>The IoT components of EnMasse store all device related information in a service called
 "device registry". This makes the device registry an important component of the overall IoT
@@ -8438,7 +8518,7 @@ to integrate with database, other than PostgreSQL.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="iot-installing-services-messaging-iot-iot-iot">5.2.3. Installing IoT services</h4>
+<h4 id="iot-installing-services-messaging-iot-iot-iot">5.2.4. Installing IoT services</h4>
 <div class="paragraph">
 <p>To get started using the IoT feature on EnMasse, you must first install the IoT services.</p>
 </div>
@@ -8546,7 +8626,7 @@ oc exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-regi
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-iot-service-registry-jdbc-messaging-iot-iot-iot">5.2.4. Deploy JDBC external device registry</h4>
+<h4 id="proc-iot-service-registry-jdbc-messaging-iot-iot-iot">5.2.5. Deploy JDBC external device registry</h4>
 <div class="paragraph">
 <p>Using an external database requires you to create a database instance and
 create the required tables and indices.</p>
@@ -8668,7 +8748,349 @@ and provide the chosen data model, database connection information and access cr
 </div>
 </div>
 <div class="sect3">
-<h4 id="iot_services_configuration_examples">5.2.5. IoT services configuration examples</h4>
+<h4 id="proc-iot-logging-messaging-iot-iot-iot">5.2.6. Configuring logging</h4>
+<div class="paragraph">
+<p>If the default logging settings are not sufficient, the following
+sections describe different methods for configuring the logging system.</p>
+</div>
+<div class="sect4">
+<h5 id="configure_the_global_log_levels">Configure the global log levels</h5>
+<div class="paragraph">
+<p>The global logging configuration is applied to all
+services that do not have any explicit logging configuration.</p>
+</div>
+<div class="paragraph">
+<p>By default, the global log level is <code>info</code>.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift.html#iot-installing-services-messaging-iot-iot-iot">The IoT services are installed</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Edit the <code>IoTConfig</code> instance named <code>default</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc edit iotconfig default</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure the logging options, save and exit the editor:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: iot.enmasse.io/v1alpha1
+kind: IoTConfig
+metadata:
+  namespace: enmasse-infra
+  name: default
+spec:
+  logging:
+    level: info <i class="conum" data-value="1"></i><b>(1)</b>
+    loggers: <i class="conum" data-value="2"></i><b>(2)</b>
+      io.enmasse: debug <i class="conum" data-value="3"></i><b>(3)</b>
+      io.netty: error <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The default global log level. If omitted, <code>info</code> is used.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The section for log channel specific entries.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Lowers the filtering to <code>debug</code> level for messages in the channel <code>io.enmasse</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Raises the filtering to <code>error</code> level for messages in the channel <code>io.netty</code>.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>The operator will apply the logging configuration and re-deploy all
+required components.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In the example above:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>An <code>info</code> level message for the logger <code>org.eclipse.hono</code> would be logged because the logger does not match any explicit configuration and the global default is <code>info</code>.</p>
+</li>
+<li>
+<p>An <code>info</code> level message for the logger <code>io.enmasse</code> would be logged because the specific configuration for <code>io.enmasse</code> is <code>debug</code> and the <code>info</code> level message is of higher severity.</p>
+</li>
+<li>
+<p>A <code>warn</code> level message for the logger <code>io.netty</code> would be dropped
+because the explicit configuration for <code>io.netty</code> requires at least a severity of <code>error</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="configuring_application_specific_log_levels">Configuring application specific log levels</h5>
+<div class="paragraph">
+<p>To override the global defaults, you can configure
+logging specifically for an IoT service.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift.html#iot-installing-services-messaging-iot-iot-iot">The IoT services are installed</a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Edit the <code>IoTConfig</code> instance named <code>default</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc edit iotconfig default</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure the logging options, save and exit the editor:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: iot.enmasse.io/v1alpha1
+kind: IoTConfig
+metadata:
+  namespace: enmasse-infra
+  name: default
+spec:
+  adapters:
+    mqtt:
+      containers:
+        adapter:
+          logback:
+            level: info <i class="conum" data-value="1"></i><b>(1)</b>
+            loggers: <i class="conum" data-value="2"></i><b>(2)</b>
+              io.enmasse: debug <i class="conum" data-value="3"></i><b>(3)</b>
+              io.netty: error <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The application global log level. If omitted, the default global level is used.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The section for log channel specific entries. If omitted and the
+application global log level is also omitted, the
+default log channel configuration of the infrastructure
+is used. If the application global log level
+is set, it is considered an empty set, and no log channel
+specific configuration is applied.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Lowers the filtering to <code>debug</code> level for messages in the channel <code>io.enmasse</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Raises the filtering to <code>error</code> level for messages in the channel <code>io.netty</code>.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>The operator will apply the logging configuration and re-deploy all
+required components.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="applying_a_custom_logback_specific_configuration">Applying a custom logback specific configuration</h5>
+<div class="paragraph">
+<p>For containers running applications using the Logback
+logging implementation, it is possible to provide a
+custom, XML-based, logback configuration file. This will override
+any other logging configuration in the system.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The logging configuration is not checked by EnMasse in
+any way. Providing an incorrect configuration may result in loss of
+performance, stability, or may lead to a total system failure.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For more information about configuring Logback, see <a href="http://logback.qos.ch/manual/configuration.html" class="bare">http://logback.qos.ch/manual/configuration.html</a>.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift.html#iot-installing-services-messaging-iot-iot-iot">The IoT services are installed</a>.</p>
+</li>
+<li>
+<p>Create the content of an XML-based logback configuration file</p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="using_the_iotconfig_resource">Using the <code>IoTConfig</code> resource</h6>
+<div class="paragraph">
+<p>You can apply the configuration using the <code>IoTConfig</code> resource.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Edit the <code>IoTConfig</code> instance named <code>default</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc edit iotconfig default</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure the logging options, save and exit the editor:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: iot.enmasse.io/v1alpha1
+kind: IoTConfig
+metadata:
+  namespace: enmasse-infra
+  name: default
+spec:
+  adapters:
+    mqtt:
+      containers:
+        adapter:
+          logback:
+            logback: | <i class="conum" data-value="1"></i><b>(1)</b>
+              &lt;configuration&gt;
+                &lt;appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"&gt;
+                  &lt;encoder&gt;
+                    &lt;pattern&gt;%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;
+                  &lt;/encoder&gt;
+                &lt;/appender&gt;
+                &lt;root level="debug"&gt;
+                  &lt;appender-ref ref="STDOUT" /&gt;
+                &lt;/root&gt;
+              &lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The full XML-based logback configuration.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>The operator will apply the logging configuration and re-deploy all
+required components.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect5">
+<h6 id="using_the_services_configmap_resource">Using the service&#8217;s <code>ConfigMap</code> resource</h6>
+<div class="paragraph">
+<p>In addition to providing the custom configuration using the
+<code>IoTConfig</code>, it is possible to put the custom logging
+configuration into the services' <code>ConfigMap</code> source.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Edit the <code>ConfigMap</code> instance for the service. For example, <code>iot-http-adapter-config</code> for the HTTP protocol adapter.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc edit cm iot-http-adapter-config</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the XML-based logback configuration in the data section with the key <code>logback-custom.xml</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: enmasse-infra
+  name: iot-http-adapter-config
+data:
+  application.yaml: … <i class="conum" data-value="1"></i><b>(1)</b>
+  logback-spring.xml: … <i class="conum" data-value="2"></i><b>(2)</b>
+  logback-custom.xml: | <i class="conum" data-value="3"></i><b>(3)</b>
+    &lt;configuration&gt;
+      &lt;appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"&gt;
+        &lt;encoder&gt;
+          &lt;pattern&gt;%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+      &lt;/appender&gt;
+      &lt;root level="debug"&gt;
+        &lt;appender-ref ref="STDOUT" /&gt;
+      &lt;/root&gt;
+    &lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The application specific configuration file. The operator generates this file
+and overwrites any changes.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The effective logback configuration, applied by the system. Do not
+change this, as it will be overwritten by the operator.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The full XML-based logback configuration</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>The operator detects changes on the <code>ConfigMap</code> resource, applies
+the logging configuration and re-deploys all required components.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iot_services_configuration_examples">5.2.7. IoT services configuration examples</h4>
 <div class="sect4">
 <h5 id="iotconfig-example-messaging-iot-iot-iot">Minimal IoT configuration example</h5>
 <div class="paragraph">
@@ -8816,7 +9238,7 @@ For more information also see: <a href="https://jdbc.postgresql.org/documentatio
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-iot-metrics-messaging-iot-iot-iot">5.2.6. IoT-specific metrics</h4>
+<h4 id="ref-iot-metrics-messaging-iot-iot-iot">5.2.8. IoT-specific metrics</h4>
 <div class="paragraph">
 <p>The IoT-specific components of EnMasse provide the metrics described in this section.</p>
 </div>
@@ -9034,7 +9456,7 @@ adapter does not support this metric.</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="troubleshooting_guide">5.2.7. Troubleshooting guide</h4>
+<h4 id="troubleshooting_guide">5.2.9. Troubleshooting guide</h4>
 <div class="sect4">
 <h5 id="proc-iot-troubleshoot-stuck-iotproject-messaging-iot-iot-iot">Fix <code>IoTProject</code> stuck in termination</h5>
 <div class="paragraph">
