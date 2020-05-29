@@ -9054,7 +9054,7 @@ content-length: 13
 <p>Use the MQTT client to subscribe to the MQTT topic for receiving commands:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">mosquitto_sub -v -d -h $(oc -n enmasse-infra get routes iot-mqtt-adapter --template='{{ .spec.host }}') -p 443 -u 'sensor1@myapp.iot' -P hono-secret -t command/+/+/req/# -i 4711 --cafile install/components/iot/examples/k8s-tls/build/iot-mqtt-adapter-fullchain.pem</pre>
+<pre class="nowrap">mosquitto_sub -v -d -h $(kubectl -n enmasse-infra get service iot-mqtt-adapter-external -o jsonpath={.status.loadBalancer.ingress[0].hostname}) -p 443 -u 'sensor1@myapp.iot' -P hono-secret -t command/+/+/req/# -i 4711 --cafile install/components/iot/examples/k8s-tls/build/iot-mqtt-adapter-fullchain.pem</pre>
 </div>
 </div>
 </li>
