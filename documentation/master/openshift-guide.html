@@ -6265,7 +6265,19 @@ spec:
 <div class="sect3">
 <h4 id="proc-create-address-space-console-messaging">4.2.12. Creating an address space using the EnMasse Console</h4>
 <div class="paragraph">
-<p>You can create a new address space using the EnMasse Console.</p>
+<p>You can create a new address space using the EnMasse Console, including configuring the endpoints of an address space using different certificate providers and creating endpoints to make the address space available for messaging applications to use.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you choose not to configure endpoints for your address space, the system creates a default set of endpoints as OpenShift routes for AMQPS and AMQP-WSS, secured with a system generated (self-signed) certificate and a cluster service.
+</td>
+</tr>
+</table>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -6285,7 +6297,7 @@ spec:
 </ol>
 </div>
 <div class="paragraph">
-<p>When the address space has been successfully created, you can click the address space name to view information about the newly created address space.</p>
+<p>When the address space has been successfully created, you can click the address space name to view information about the newly created address space, including messaging and application statistics and endpoint information.</p>
 </div>
 </div>
 <div class="sect3">
@@ -7015,9 +7027,9 @@ spec:
 <div class="content">
 <img src="images/console-screenshot-conns.png" alt="EnMasse Console">
 </div>
-<div class="title">Figure 1. Application connection statistics reference table</div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. Application connection statistics reference table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -7069,7 +7081,122 @@ For the brokered address space only, on the Connections page, the number of send
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-purging-queues-messaging">4.4.4. Purging queues and subscriptions</h4>
+<h4 id="ref-view-endpoint-info-messaging">4.4.4. Viewing endpoint information using the EnMasse Console</h4>
+<div class="paragraph">
+<p>You can use the EnMasse Console to view information about the endpoints configured for a given address space. You need this information to connect your messaging application to EnMasse.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You must be logged into the EnMasse Console. For more information, see <a href="http://enmasse.io/documentation/master/openshift.html#logging-into-console-messaging">Accessing the EnMasse Console</a>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/console-screenshot-endpoints.png" alt="EnMasse Console">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. Messaging endpoint information reference table</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Column</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Name</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Displays the name of the endpoint.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Type</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Displays the type of endpoint. Valid values include:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>cluster</code></dt>
+<dd>
+<p>An endpoint accessible on the OpenShift cluster through a cluster IP address.</p>
+</dd>
+<dt class="hdlist1"><code>route</code></dt>
+<dd>
+<p>An OpenShift route available outside the cluster.</p>
+</dd>
+<dt class="hdlist1"><code>loadbalancer</code></dt>
+<dd>
+<p>A <code>LoadBalancer</code> service integrating with an external load balancer.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>For more information, see the following OpenShift documentation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.openshift.com/container-platform/4.4/networking/routes/route-configuration.html">Route Configuration</a></p>
+</li>
+<li>
+<p><a href="https://docs.openshift.com/container-platform/4.4/networking/configuring_ingress_cluster_traffic/configuring-ingress-cluster-traffic-load-balancer.html">Configuring ingress cluster traffic using a load balancer</a></p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Host</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Displays the host name of the endpoint.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Ports</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Displays the port protocol name and port number of the endpoint. Valid port names include:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>AMQP</code></dt>
+<dd>
+<p>Advance Messaging Queuing Protocol</p>
+</dd>
+<dt class="hdlist1"><code>AMQPS</code></dt>
+<dd>
+<p>Advance Messaging Queuing Protocol over TLS</p>
+</dd>
+<dt class="hdlist1"><code>AMQP-WS</code></dt>
+<dd>
+<p>AMQP-WebSocket protocol</p>
+</dd>
+<dt class="hdlist1"><code>AMQP-WSS</code></dt>
+<dd>
+<p>AMQP-WebSocket protocol over TLS</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="proc-purging-queues-messaging">4.4.5. Purging queues and subscriptions</h4>
 <div class="paragraph">
 <p>You can purge&#8212;&#8203;that is, clear all messages from&#8212;&#8203;a <code>queue</code> or <code>subscription</code> address type of its stored messages by using the EnMasse Console.</p>
 </div>
@@ -7100,7 +7227,7 @@ For the brokered address space only, on the Connections page, the number of send
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-closing-connections_messaging">4.4.5. Closing connections using the EnMasse Console</h4>
+<h4 id="proc-closing-connections_messaging">4.4.6. Closing connections using the EnMasse Console</h4>
 <div class="paragraph">
 <p>If an application has unexpectedly stopped processing messages, you can force the application’s messaging connections to close using the EnMasse Console. This may be a useful way to return the application to service.</p>
 </div>
@@ -7433,7 +7560,7 @@ spec:
 <p>For more information about messaging tenant resources, see the <a href="http://enmasse.io/documentation/master/openshift.html#ref-resources-table-messaging-tenant-messaging">EnMasse messaging tenant resources table</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. EnMasse example roles table</caption>
+<caption class="title">Table 8. EnMasse example roles table</caption>
 <colgroup>
 <col style="width: 40%;">
 <col style="width: 60%;">
@@ -8414,7 +8541,7 @@ for more in-depth tracing scenarios.</p>
 <div class="paragraph">
 <p>For IoT components, it might be necessary to increase the logging output at
 the following application
-levels (ordered in increasing priority):</p>
+levels, listed in order from lowest priority to highest priority:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -8445,36 +8572,31 @@ or by creating an entry in the service specific <code>ConfigMap</code> resource.
 <div class="sect4">
 <h5 id="log_levels">Log levels</h5>
 <div class="paragraph">
-<p>The following log levels are available (ordered from the lowest level to the highest level):</p>
+<p>The following log levels are available, listed in order from most severe to least severe:</p>
 </div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">error</dt>
 <dd>
-<p>Error conditions. Indicates an unexpected condition, which may impact the stability of the system.</p>
+<p>Error conditions. Indicates an unexpected condition, which may impact the stability of the system. Displays only error messages.</p>
 </dd>
 <dt class="hdlist1">warn</dt>
 <dd>
-<p>Warning conditions. Indicates an expected condition, which may impact the current operation or stability of the system.</p>
+<p>Warning conditions. Indicates an expected condition, which may impact the current operation or stability of the system. Displays only warning and error messages.</p>
 </dd>
 <dt class="hdlist1">info</dt>
 <dd>
-<p>Informational messages. Indicates an expected event, which may impact the current operation.</p>
+<p>Informational messages. Indicates an expected event, which may impact the current operation. Displays only informational, warning, and error messages.</p>
 </dd>
 <dt class="hdlist1">debug</dt>
 <dd>
-<p>Messages for debugging.</p>
+<p>Displays debug messages, in addition to all of the above.</p>
 </dd>
 <dt class="hdlist1">trace</dt>
 <dd>
-<p>All messages.</p>
+<p>Displays all messages.</p>
 </dd>
 </dl>
-</div>
-<div class="paragraph">
-<p>When limiting output by log level, lower levels will always include
-higher level messages. For example, when limiting the output to "info",
-"warn" and "error" messages are also included.</p>
 </div>
 </div>
 </div>
@@ -8754,7 +8876,7 @@ and provide the chosen data model, database connection information and access cr
 sections describe different methods for configuring the logging system.</p>
 </div>
 <div class="sect4">
-<h5 id="configure_the_global_log_levels">Configure the global log levels</h5>
+<h5 id="configuring_global_log_levels">Configuring global log levels</h5>
 <div class="paragraph">
 <p>The global logging configuration is applied to all
 services that do not have any explicit logging configuration.</p>
@@ -8820,7 +8942,7 @@ spec:
 </div>
 </li>
 <li>
-<p>The operator will apply the logging configuration and re-deploy all
+<p>The operator applies the logging configuration and re-deploys all
 required components.</p>
 </li>
 </ol>
@@ -8831,20 +8953,20 @@ required components.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>An <code>info</code> level message for the logger <code>org.eclipse.hono</code> would be logged because the logger does not match any explicit configuration and the global default is <code>info</code>.</p>
+<p>An <code>info</code> message for the logger <code>org.eclipse.hono</code> would be logged because the logger does not match any explicit configuration and the global default is <code>info</code>.</p>
 </li>
 <li>
-<p>An <code>info</code> level message for the logger <code>io.enmasse</code> would be logged because the specific configuration for <code>io.enmasse</code> is <code>debug</code> and the <code>info</code> level message is of higher severity.</p>
+<p>An <code>info</code> message for the logger <code>io.enmasse</code> would be logged because the configuration for <code>io.enmasse</code> is <code>debug</code> and the <code>info</code> message is of higher severity.</p>
 </li>
 <li>
-<p>A <code>warn</code> level message for the logger <code>io.netty</code> would be dropped
-because the explicit configuration for <code>io.netty</code> requires at least a severity of <code>error</code>.</p>
+<p>A <code>warn</code> message for the logger <code>io.netty</code> would be dropped
+because the configuration for <code>io.netty</code> is set to only display <code>error</code> messages.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="configuring_application_specific_log_levels">Configuring application specific log levels</h5>
+<h5 id="configuring_application_specific_log_levels">Configuring application-specific log levels</h5>
 <div class="paragraph">
 <p>To override the global defaults, you can configure
 logging specifically for an IoT service.</p>
@@ -8916,7 +9038,7 @@ specific configuration is applied.</td>
 </div>
 </li>
 <li>
-<p>The operator will apply the logging configuration and re-deploy all
+<p>The operator applies the logging configuration and re-deploys all
 required components.</p>
 </li>
 </ol>
@@ -8937,8 +9059,7 @@ any other logging configuration in the system.</p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-The logging configuration is not checked by EnMasse in
-any way. Providing an incorrect configuration may result in loss of
+The logging configuration is not checked by EnMasse. Providing an incorrect configuration may result in the loss of
 performance, stability, or may lead to a total system failure.
 </td>
 </tr>
@@ -9012,7 +9133,7 @@ spec:
 </div>
 </li>
 <li>
-<p>The operator will apply the logging configuration and re-deploy all
+<p>The operator applies the logging configuration and re-deploys all
 required components.</p>
 </li>
 </ol>
@@ -9023,7 +9144,7 @@ required components.</p>
 <div class="paragraph">
 <p>In addition to providing the custom configuration using the
 <code>IoTConfig</code>, it is possible to put the custom logging
-configuration into the services' <code>ConfigMap</code> source.</p>
+configuration into the service&#8217;s <code>ConfigMap</code> source.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -9065,8 +9186,7 @@ data:
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The application specific configuration file. The operator generates this file
-and overwrites any changes.</td>
+<td>The application specific configuration file. The operator generates this file and overwrites any changes.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -9075,7 +9195,7 @@ change this, as it will be overwritten by the operator.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The full XML-based logback configuration</td>
+<td>The full XML-based logback configuration.</td>
 </tr>
 </table>
 </div>
@@ -9279,7 +9399,7 @@ For more information also see: <a href="https://jdbc.postgresql.org/documentatio
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Component names</caption>
+<caption class="title">Table 9. Component names</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -9386,7 +9506,7 @@ the metric.</p></td>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. Protocol adapter metrics</caption>
+<caption class="title">Table 10. Protocol adapter metrics</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -10481,7 +10601,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>The following table describes the EnMasse resources that pertain to the service administrator role.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. EnMasse service administrator resources table</caption>
+<caption class="title">Table 11. EnMasse service administrator resources table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -10544,7 +10664,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>The following table describes the EnMasse resources that pertain to the messaging tenant role.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. EnMasse messaging tenant resources table</caption>
+<caption class="title">Table 12. EnMasse messaging tenant resources table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -10591,7 +10711,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>This table shows the fields available for the brokered infrastructure configuration and a brief description.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Brokered infrastructure configuration fields table</caption>
+<caption class="title">Table 13. Brokered infrastructure configuration fields table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -10808,7 +10928,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <p>This table shows the fields available for the standard infrastructure configuration and a brief description.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Standard infrastructure configuration fields table</caption>
+<caption class="title">Table 14. Standard infrastructure configuration fields table</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -18665,7 +18785,7 @@ This API defines how to manage <strong>Devices</strong> and their <strong>Creden
 <div class="sect6">
 <h7 id="responses_24">Responses</h7>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. http response codes</caption>
+<caption class="title">Table 15. http response codes</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 50%;">
@@ -18840,7 +18960,7 @@ This API defines how to manage <strong>Devices</strong> and their <strong>Creden
 <div class="sect6">
 <h7 id="responses_25">Responses</h7>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. http response codes</caption>
+<caption class="title">Table 16. http response codes</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 50%;">
@@ -18989,7 +19109,7 @@ This API defines how to manage <strong>Devices</strong> and their <strong>Creden
 <div class="sect6">
 <h7 id="responses_26">Responses</h7>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. http response codes</caption>
+<caption class="title">Table 17. http response codes</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 50%;">
@@ -19132,7 +19252,7 @@ This API defines how to manage <strong>Devices</strong> and their <strong>Creden
 <div class="sect6">
 <h7 id="responses_27">Responses</h7>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 16. http response codes</caption>
+<caption class="title">Table 18. http response codes</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 50%;">
@@ -19280,7 +19400,7 @@ This API defines how to manage <strong>Devices</strong> and their <strong>Creden
 <div class="sect6">
 <h7 id="responses_28">Responses</h7>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 17. http response codes</caption>
+<caption class="title">Table 19. http response codes</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 50%;">
@@ -19398,7 +19518,7 @@ This API defines how to manage <strong>Devices</strong> and their <strong>Creden
 <div class="sect6">
 <h7 id="responses_29">Responses</h7>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 18. http response codes</caption>
+<caption class="title">Table 20. http response codes</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 50%;">
@@ -19571,7 +19691,7 @@ This API defines how to manage <strong>Devices</strong> and their <strong>Creden
 <div class="sect6">
 <h7 id="responses_30">Responses</h7>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 19. http response codes</caption>
+<caption class="title">Table 21. http response codes</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 50%;">
