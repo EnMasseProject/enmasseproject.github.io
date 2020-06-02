@@ -8784,10 +8784,10 @@ spec:
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-installing-services-messaging-iot-iot-iot-iot-iot">The IoT services are installed</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-installing-services-messaging-iot-iot">The IoT services are installed</a>.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-creating-project-messaging-iot-iot-iot-iot-iot">An IoT project is created</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-creating-project-messaging-iot-iot">An IoT project is created</a>.</p>
 </li>
 </ul>
 </div>
@@ -8877,13 +8877,13 @@ spec:
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-installing-services-messaging-iot-iot-iot-iot-iot-iot">The IoT services are installed</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-installing-services-messaging-iot-iot">The IoT services are installed</a>.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-creating-project-messaging-iot-iot-iot-iot-iot-iot">An IoT project is created</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-creating-project-messaging-iot-iot">An IoT project is created</a>.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#assembly-iot-creating-device-messaging-iot-iot-iot-iot-iot-iot">An IoT device is created</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#assembly-iot-creating-device-messaging-iot-iot">An IoT device is created</a>.</p>
 </li>
 </ul>
 </div>
@@ -9210,10 +9210,10 @@ the Sigfox backend integration.</p>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-installing-services-messaging-iot-iot-iot-iot-iot-iot-iot">The IoT services are installed</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-installing-services-messaging-iot-iot">The IoT services are installed</a>.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-creating-project-messaging-iot-iot-iot-iot-iot-iot-iot">An IoT project is created</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-creating-project-messaging-iot-iot">An IoT project is created</a>.</p>
 </li>
 <li>
 <p>TLS is properly deployed in your cluster. The Sigfox protocol adapter endpoint
@@ -9233,7 +9233,7 @@ must be properly validated with TLS.</p>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>The Sigfox backend is set up in EnMasse as a gateway device. For more information see <a href="" class="bare"></a>.</p>
+<p>The Sigfox backend is set up in EnMasse as a gateway device.</p>
 </li>
 <li>
 <p>The credentials assigned to this device are required for the configuration
@@ -9248,13 +9248,13 @@ of the "callback" in the Sigfox backend.</p>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#proc-iot-register-new-device-messaging-iot">Register a new device</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#proc-iot-register-new-device-messaging-iot-iot">Register a new device</a>.</p>
 <div class="paragraph">
 <p>In step 3 of this procedure, specify <code>sigfox-backend</code> as the ID.</p>
 </div>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-proc-creating-device-set-password-messaging-iot">Set up password credentials</a> for this device (for example, <code>sigfox-user</code> / <code>sigfox-password</code>).</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#proc-iot-set-username-password-device-messaging-iot-iot">Set up password credentials</a> for this device (for example, <code>sigfox-user</code> / <code>sigfox-password</code>).</p>
 </li>
 </ol>
 </div>
@@ -9265,7 +9265,7 @@ of the "callback" in the Sigfox backend.</p>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#proc-iot-registering-sigfox-backend-gateway-device-messaging-iot-iot-iot-iot-iot-iot-iot">Registered the Sigfox backend as a gateway device</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#iot-register-sigfox-backend-gateway-device-messaging-iot-iot-iot-iot-iot-iot-iot">Registered the Sigfox backend as a gateway device</a>.</p>
 </li>
 </ul>
 </div>
@@ -9277,7 +9277,7 @@ of the "callback" in the Sigfox backend.</p>
 process in the Sigfox backend.</p>
 </li>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#proc-iot-register-new-device-messaging-iot-iot-iot-iot-iot-iot-iot">Register a new device</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#proc-iot-register-new-device-messaging-iot-iot">Register a new device</a>.</p>
 <div class="paragraph">
 <p>Specify the device ID as the name (for example, <code>1AB2C3</code>) and specify the name of the gateway device in the <code>via</code> field,
 as part of the registration information (for example, <code>{"via": ["sigfox-backend"]}</code>).</p>
@@ -9371,7 +9371,7 @@ to handle messages as <em>telemetry</em> data. You can use <code>/data/event</co
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="http://enmasse.io/documentation/master/kubernetes.html#ref-iot-configure-sigfox-connection-information-messaging-iot-iot-iot-iot-iot-iot-iot">Prepared the Sigfox connection information</a>.</p>
+<p><a href="http://enmasse.io/documentation/master/kubernetes.html#ref-iot-prepare-sigfox-connection-information-messaging-iot-iot-iot-iot-iot-iot-iot">Prepared the Sigfox connection information</a>.</p>
 </li>
 </ul>
 </div>
