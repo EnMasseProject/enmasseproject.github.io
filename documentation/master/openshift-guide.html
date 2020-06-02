@@ -1788,11 +1788,13 @@ spec:
       memory: 256Mi
   broker: <i class="conum" data-value="3"></i><b>(3)</b>
     resources:
+      cpu: 0.5
       memory: 2Gi
       storage: 100Gi
     addressFullPolicy: PAGE
   router: <i class="conum" data-value="4"></i><b>(4)</b>
     resources:
+      cpu: 1
       memory: 256Mi
     linkCapacity: 1000
     minReplicas: 1
@@ -9075,7 +9077,7 @@ performance, stability, or may lead to a total system failure.
 <p><a href="http://enmasse.io/documentation/master/openshift.html#iot-installing-services-messaging-iot-iot-iot">The IoT services are installed</a>.</p>
 </li>
 <li>
-<p>Create the content of an XML-based logback configuration file</p>
+<p>Create the content of an XML-based logback configuration file.</p>
 </li>
 </ul>
 </div>
