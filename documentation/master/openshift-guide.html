@@ -8603,7 +8603,21 @@ or by creating an entry in the service specific <code>ConfigMap</code> resource.
 </div>
 </div>
 <div class="sect3">
-<h4 id="con-iot-service-registry-messaging-iot-iot-iot">5.2.3. Device registry</h4>
+<h4 id="con-iot-tracing-messaging-iot-iot-iot">5.2.3. IoT tracing</h4>
+<div class="paragraph">
+<p>EnMasse allows application-level tracing in the IoT infrastructure
+using Jaeger. This feature allows service administrators to gain insight into the
+inner workings of the IoT services to analyze system performance and issues.</p>
+</div>
+<div class="paragraph">
+<p>By default, tracing support is not enabled and needs to be activated manually. For more information, see <a href="http://enmasse.io/documentation/master/openshift.html#proc-iot-tracing-messaging-iot-iot-iot">Configuring tracing</a>.</p>
+</div>
+<div class="paragraph">
+<p>For more information about Jaeger tracing, see: <a href="https://www.jaegertracing.io/" class="bare">https://www.jaegertracing.io/</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="con-iot-service-registry-messaging-iot-iot-iot">5.2.4. Device registry</h4>
 <div class="paragraph">
 <p>The IoT components of EnMasse store all device related information in a service called
 "device registry". This makes the device registry an important component of the overall IoT
@@ -8642,7 +8656,7 @@ to integrate with database, other than PostgreSQL.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="iot-installing-services-messaging-iot-iot-iot">5.2.4. Installing IoT services</h4>
+<h4 id="iot-installing-services-messaging-iot-iot-iot">5.2.5. Installing IoT services</h4>
 <div class="paragraph">
 <p>To get started using the IoT feature on EnMasse, you must first install the IoT services.</p>
 </div>
@@ -8750,7 +8764,7 @@ oc exec -ti deployment/postgresql -- bash -c "PGPASSWORD=user12 psql device-regi
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-iot-service-registry-jdbc-messaging-iot-iot-iot">5.2.5. Deploy JDBC external device registry</h4>
+<h4 id="proc-iot-service-registry-jdbc-messaging-iot-iot-iot">5.2.6. Deploy JDBC external device registry</h4>
 <div class="paragraph">
 <p>Using an external database requires you to create a database instance and
 create the required tables and indices.</p>
@@ -8872,7 +8886,7 @@ and provide the chosen data model, database connection information and access cr
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-iot-logging-messaging-iot-iot-iot">5.2.6. Configuring logging</h4>
+<h4 id="proc-iot-logging-messaging-iot-iot-iot">5.2.7. Configuring logging</h4>
 <div class="paragraph">
 <p>If the default logging settings are not sufficient, the following
 sections describe different methods for configuring the logging system.</p>
@@ -9212,7 +9226,112 @@ the logging configuration and re-deploys all required components.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="iot_services_configuration_examples">5.2.7. IoT services configuration examples</h4>
+<h4 id="proc-iot-tracing-messaging-iot-iot-iot">5.2.8. Configuring tracing</h4>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="http://enmasse.io/documentation/master/openshift.html#iot-installing-services-messaging-iot-iot-iot">The IoT services are installed</a>.</p>
+</li>
+<li>
+<p>The "Jaeger Operator" from OperatorHub is installed in the EnMasse namespace.</p>
+</li>
+<li>
+<p>An instance of Jaeger is deployed using the operator in the EnMasse namespace.</p>
+</li>
+<li>
+<p>Know whether the Jaeger instance was deployed using the "sidecar" or "daemonset" agent.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Edit the <code>IoTConfig</code> instance named <code>default</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc edit iotconfig default</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Modify the configuration according to your Jaeger agent configuration:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If the Jaeger instance is deployed with the "sidecar" agent, add the following
+configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: iot.enmasse.io/v1alpha1
+kind: IoTConfig
+metadata:
+  namespace: enmasse-infra
+  name: default
+spec:
+  tracing:
+    strategy: <i class="conum" data-value="1"></i><b>(1)</b>
+      sidecar: {} <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The field to select the strategy. Only one strategy must be configured.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Enables the "sidecar" strategy. The use of an empty empty object (<code>{}</code>) is intentional.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>If the Jaeger instance is deployed with the "sidecar" agent, add the following
+configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: iot.enmasse.io/v1alpha1
+kind: IoTConfig
+metadata:
+  namespace: enmasse-infra
+  name: default
+spec:
+  tracing:
+    strategy: <i class="conum" data-value="1"></i><b>(1)</b>
+      daemonset: {} <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The field to select the strategy. Only one strategy must be configured.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Enables the "daemonset" strategy. The use of an empty empty object (<code>{}</code>) is intentional.</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Save and exit the editor.</p>
+</li>
+<li>
+<p>The operator applies the tracing configuration and re-deploys all
+required components.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iot_services_configuration_examples">5.2.9. IoT services configuration examples</h4>
 <div class="sect4">
 <h5 id="iotconfig-example-messaging-iot-iot-iot">Minimal IoT configuration example</h5>
 <div class="paragraph">
@@ -9360,7 +9479,7 @@ For more information also see: <a href="https://jdbc.postgresql.org/documentatio
 </div>
 </div>
 <div class="sect3">
-<h4 id="ref-iot-metrics-messaging-iot-iot-iot">5.2.8. IoT-specific metrics</h4>
+<h4 id="ref-iot-metrics-messaging-iot-iot-iot">5.2.10. IoT-specific metrics</h4>
 <div class="paragraph">
 <p>The IoT-specific components of EnMasse provide the metrics described in this section.</p>
 </div>
@@ -9578,7 +9697,7 @@ adapter does not support this metric.</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="troubleshooting_guide">5.2.9. Troubleshooting guide</h4>
+<h4 id="troubleshooting_guide">5.2.11. Troubleshooting guide</h4>
 <div class="sect4">
 <h5 id="proc-iot-troubleshoot-stuck-iotproject-messaging-iot-iot-iot">Fix <code>IoTProject</code> stuck in termination</h5>
 <div class="paragraph">
