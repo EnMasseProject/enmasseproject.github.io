@@ -4852,6 +4852,15 @@ echo "Pods: ${total_pods}. Memory: ${total_memory_mb} MB. Storage: ${total_stora
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="ref-address-sizing-messaging">3.7.5. Address sizing</h4>
+<div class="paragraph">
+<p>Per address broker memory limits are calculated from the address plan configuration. EnMasse determines the maximum size allowed for each queue by multiplying the broker configuration <code>globalMaxSize</code> (specified in the <code>standardinfraconfig</code> or <code>brokeredinfraconfig</code>) by the address plan’s broker resource limit. The behavior when the queue reaches its memory limit is governed by the address full policy. For more information on the address full policy, see <a href="http://enmasse.io/documentation/master/openshift.html#broker-component-sizing-messaging">Broker component sizing</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example, if the broker&#8217;s configuration specifies <code>globalMaxSize</code> = 124 MB and the address plan configuration specifies <code>addressplan.spec.resources.broker</code> = 0.2, the maximum size allowed for each queue is 25 MB (<code>124 * 0.2 = 25 MB</code>).</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="assembly-planning-messaging-planning">3.8. Understanding EnMasse resource configuration</h3>
@@ -4944,11 +4953,11 @@ You cannot modify endpoints for an existing address space.
 <p>When created, these Custom Resources define the configuration that is available to the messaging tenants.</p>
 </div>
 <div class="paragraph">
-<p>The following diagram illustrates the relationship between the different service configuration resources (green) and how they are referenced by the messaging tenant resources (blue).</p>
+<p>The following diagram illustrates the relationship between the different service configuration resources and how they are referenced by the messaging tenant resources.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/enmasse-entities.svg" alt="EnMasse entities">
+<img src="images/config_relationships.png" alt="EnMasse entities">
 </div>
 </div>
 </div>
