@@ -798,14 +798,17 @@ spec:
   resources: <i class="conum" data-value="2"></i><b>(2)</b>
     router: 0.2
     broker: 0.3
-  partitions: 1 <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+  partitions: 1 <i class="conum" data-value="3"></i><b>(3)</b>
+  messageTtl: <i class="conum" data-value="4"></i><b>(4)</b>
+    minimim: 30000
+    maximum: 300000</code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The address type this plan applies to.</td>
+<td>The address type to which this plan applies.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -814,6 +817,10 @@ spec:
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>The number of partitions that should be created for queues using this plan. Only available in the <code>standard</code> address space.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>(Optional) Restricts message time-to-live (TTL). Applies to address types <code>queue</code> and <code>topic</code> only.</td>
 </tr>
 </table>
 </div>
@@ -825,7 +832,27 @@ spec:
 </div>
 <div class="paragraph">
 <p>In the <code>standard</code> address space, address plans for the <code>queue</code> address type may contain a field
-<code>partitions</code>, which allows a queue to be sharded accross multiple brokers for HA and improved performance. Specifying an amount of <code>broker</code> resource above 1 will automatically cause a queue to be partitioned.</p>
+<code>partitions</code>, which allows a queue to be sharded across multiple brokers for HA and improved performance. Specifying an amount of <code>broker</code> resource above 1 will automatically cause a queue to be partitioned.</p>
+</div>
+<div class="paragraph">
+<p>The <code>messageTtl</code> field is used to restrict the effective <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-properties"><code>absolute-expiry-time</code></a> of
+any message put to a queue or topic. The <code>maximum</code> and <code>minimum</code> values are defined in milliseconds. The system adjusts the TTL value of an incoming message to a particular address based on these values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If a messages arrives at the address with a TTL value that is greater than the <code>maximum</code> value, the system changes the message TTL to the maximum value.</p>
+</li>
+<li>
+<p>If a message arrives at the address with a TTL value that is less than the <code>minimum</code> value, the system changes the message TTL to the minimum value.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Messages that arrive without a TTL defined are considered to have a TTL value of infinity.</p>
+</div>
+<div class="paragraph">
+<p>Expired messages will be automatically removed from the <code>queue</code>, <code>subscription</code> or temporary topic subscription periodically. These messages are lost. This occurs every 30 seconds.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -5704,6 +5731,57 @@ spec:
 <td>The address of topic that this subscription refers to.</td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-address-example-ttlmessaging">Address TTL restriction example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+    name: myspace.myqueue
+spec:
+    address: myqueue
+    type: queue
+    plan: standard-small-queue
+    messageTtl: <i class="conum" data-value="1"></i><b>(1)</b>
+        minimim: 30000
+        maximum: 300000</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Optional) Restricts message time-to-live (TTL). Applies to address types <code>queue</code> and <code>topic</code> only.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>messageTtl</code> field is used to restrict the effective <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-properties"><code>absolute-expiry-time</code></a> of
+any message put to a queue or topic. The <code>maximum</code> and <code>minimum</code> values are defined in milliseconds. The system adjusts the TTL value of an incoming message to a particular address based on these values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If a messages arrives at the address with a TTL value that is greater than the <code>maximum</code> value, the system changes the message TTL to the maximum value.</p>
+</li>
+<li>
+<p>If a message arrives at the address with a TTL value that is less than the <code>minimum</code> value, the system changes the message TTL to the minimum value.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Messages that arrive without a TTL defined are considered to have a TTL value of infinity.</p>
+</div>
+<div class="paragraph">
+<p>Expired messages will be automatically removed from the <code>queue</code>, <code>subscription</code> or temporary topic subscription periodically. These messages are lost. This occurs every 30 seconds.</p>
+</div>
+<div class="paragraph">
+<p>TTL restrictions may also be imposed by the address plan.  If a TTL restriction is imposed at both the plan and the address,
+the address TTL restriction can only further narrow the TTL restriction.  The address <code>status</code> section shows the
+TTL values that are in force.</p>
 </div>
 </div>
 <div class="sect4">
