@@ -8324,6 +8324,15 @@ oc apply -f install/components/cluster-service-broker</pre>
 oc create secret tls iot-mqtt-adapter-tls --key=install/components/iot/examples/k8s-tls/build/iot-mqtt-adapter-key.pem --cert=install/components/iot/examples/k8s-tls/build/iot-mqtt-adapter-fullchain.pem</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>You can override the namespace to which the <code>deploy</code> script installs the keys and certificates by
+setting the environment variable <code>NAMESPACE</code> when calling the script. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">NAMESPACE=my-namespace ./install/components/iot/examples/k8s-tls/deploy</pre>
+</div>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -8811,6 +8820,15 @@ to integrate with database, other than PostgreSQL.</p>
 <div class="content">
 <pre class="nowrap">./install/components/iot/examples/k8s-tls/create
 oc create secret tls iot-mqtt-adapter-tls --key=install/components/iot/examples/k8s-tls/build/iot-mqtt-adapter-key.pem --cert=install/components/iot/examples/k8s-tls/build/iot-mqtt-adapter-fullchain.pem</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can override the namespace to which the <code>deploy</code> script installs the keys and certificates by
+setting the environment variable <code>NAMESPACE</code> when calling the script. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">NAMESPACE=my-namespace ./install/components/iot/examples/k8s-tls/deploy</pre>
 </div>
 </div>
 <div class="admonitionblock note">
