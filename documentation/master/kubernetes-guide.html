@@ -4517,9 +4517,6 @@ You cannot modify endpoints for an existing address space.
 <div class="paragraph">
 <p>The queue address type is a store-and-forward queue. This address type is appropriate for implementing a distributed work queue, handling traffic bursts, and other use cases when you want to decouple the producer and consumer. A queue can be sharded across multiple storage units. Message ordering might be lost for queues in the standard address space.</p>
 </div>
-<div class="paragraph">
-<p>Regarding dead-letter queues (DLQs), you can determine if any messages are stored in a DLQ by logging in to the EnMasse Console and <a href="http://enmasse.io/documentation/master/kubernetes.html#ref-view-message-connection-stats-table-messaging">viewing the Addresses page</a>. To resolve this situation, you must connect to a client and consume from a DLQ address.</p>
-</div>
 </div>
 <div class="sect5">
 <h6 id="con-standard-topic-messaging">Topic</h6>
