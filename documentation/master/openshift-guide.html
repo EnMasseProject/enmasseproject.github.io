@@ -2917,7 +2917,13 @@ oc delete oauthclients -l app=enmasse</pre>
 <p>You can monitor EnMasse by deploying built-in monitoring tools or using your pre-existing monitoring infrastructure.</p>
 </div>
 <div class="sect3">
-<h4 id="deploy-monitoring-operator-messaging">3.5.1. (Optional) Deploying the Application Monitoring Operator</h4>
+<h4 id="enable-monitoring-ocp4-messaging">3.5.1. Enabling Monitoring on OpenShift 4</h4>
+<div class="paragraph">
+<p>In order to monitor EnMasse on OpenShift 4 using the existing monitoring stack, user-workload monitoring must be <a href="https://docs.openshift.com/container-platform/4.4/monitoring/monitoring-your-own-services.html" target="_blank" rel="noopener">enabled</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="deploy-monitoring-operator-messaging">3.5.2. (Optional) Deploying the Application Monitoring Operator</h4>
 <div class="paragraph">
 <p>To monitor EnMasse, an operator that acts on the monitoring Custom Resource Definitions must
 be deployed. You may skip this step if you have such an operator installed on your OpenShift
@@ -2970,7 +2976,7 @@ cluster.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deploy-kube-state-metrics-messaging">3.5.2. (Optional) Deploying the kube-state-metrics agent</h4>
+<h4 id="deploy-kube-state-metrics-messaging">3.5.3. (Optional) Deploying the kube-state-metrics agent</h4>
 <div class="paragraph">
 <p>You can monitor EnMasse pods using the <code>kube-state-metrics</code> agent.</p>
 </div>
@@ -3005,7 +3011,7 @@ cluster.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deploy-monitoring-bundle-messaging">3.5.3. Enabling monitoring</h4>
+<h4 id="deploy-monitoring-bundle-messaging">3.5.4. Enabling monitoring</h4>
 <div class="paragraph">
 <p>If you are not using a default installation configuration, the simplest way to deploy monitoring is to enable the monitoring environment variable on the
 <code>enmasse-operator</code> deployment.</p>
@@ -3041,7 +3047,7 @@ cluster.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="config-alerts-messaging">3.5.4. Configuring alert notifications</h4>
+<h4 id="config-alerts-messaging">3.5.5. Configuring alert notifications</h4>
 <div class="paragraph">
 <p>To configure alert notifications, such as emails, you must change the default configuration of Alertmanager.</p>
 </div>
@@ -3113,7 +3119,7 @@ data:
 </div>
 </div>
 <div class="sect3">
-<h4 id="assembly-metrics-rules-messaging">3.5.5. Metrics and rules</h4>
+<h4 id="assembly-metrics-rules-messaging">3.5.6. Metrics and rules</h4>
 <div class="sect4">
 <h5 id="ref-metrics-common-messaging">Common metrics</h5>
 <div class="paragraph">
@@ -3803,7 +3809,7 @@ enmasse_component_health{job="api-server"}	1</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="enable-tenant-metrics-messaging">3.5.6. Enabling Tenant Metrics</h4>
+<h4 id="enable-tenant-metrics-messaging">3.5.7. Enabling Tenant Metrics</h4>
 <div class="paragraph">
 <p>Metrics from brokers and routers can be exposed to tenants without exposing system-admin metrics. To expose tenant metrics create a service monitor in any non-<code>enmasse-infra</code> namespace, ideally the namespace of the concerned address space(s).</p>
 </div>
