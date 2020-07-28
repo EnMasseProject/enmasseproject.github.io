@@ -927,7 +927,7 @@ EOF</pre>
 <p>In the <strong>Name</strong> field, type <code>enmasse-infra</code> and click <strong>Create</strong>. The <code>enmasse-infra</code> project is created.</p>
 </li>
 <li>
-<p>Click <strong>Catalog &gt; OperatorHub</strong>.</p>
+<p>Click <strong>Operators &gt; OperatorHub</strong>.</p>
 </li>
 <li>
 <p>In the <strong>Filter by keyword</strong> box, type <code>EnMasse</code> to find the EnMasse Operator.</p>
@@ -948,7 +948,7 @@ EOF</pre>
 </div>
 </li>
 <li>
-<p>After the subscription upgrade status is shown as <strong>Up to date</strong>, click <strong>Catalog &gt; Installed Operators</strong> to verify that the <strong>EnMasse</strong> ClusterServiceVersion (CSV) is displayed and its <strong>Status</strong> ultimately resolves to <strong>InstallSucceeded</strong> in the <strong>enmasse-infra</strong> namespace.</p>
+<p>After the subscription upgrade status is shown as <strong>Up to date</strong>, click <strong>Operators &gt; Installed Operators</strong> to verify that the <strong>EnMasse</strong> ClusterServiceVersion (CSV) is displayed and its <strong>Status</strong> ultimately resolves to <strong>InstallSucceeded</strong> in the <strong>enmasse-infra</strong> namespace.</p>
 <div class="paragraph">
 <p>For troubleshooting information, see the <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/applications/operators#olm-installing-operators-from-operatorhub_olm-adding-operators-to-a-cluster">OpenShift documentation</a>.</p>
 </div>
@@ -1013,13 +1013,10 @@ EOF</pre>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>From the dropdown menu, select the <code>enmasse-infra</code> project.</p>
+<p>In the top right, click the <strong>Plus</strong> icon (+). The Import YAML window opens.</p>
 </li>
 <li>
-<p>Click <strong>Catalog &gt; Installed Operators</strong>.</p>
-</li>
-<li>
-<p>Click <strong>Add &gt; Import YAML</strong>. The Import YAML window opens.</p>
+<p>From the top left drop-down menu, select the <code>enmasse-infra</code> project.</p>
 </li>
 <li>
 <p>Copy the following code:</p>
@@ -1035,7 +1032,7 @@ spec:
 </div>
 </li>
 <li>
-<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The AddressPlan Overview page is displayed.</p>
+<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The AuthenticationService overview page is displayed.</p>
 </li>
 <li>
 <p>Click <strong>Workloads &gt; Pods</strong>. In the <strong>Readiness</strong> column, the Pod status is <code>Ready</code> when the custom resource has been deployed.</p>
@@ -1060,16 +1057,13 @@ spec:
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>From the dropdown menu, select the <code>enmasse-infra</code> project.</p>
+<p>In the top right, click the <strong>Plus</strong> icon (+). The Import YAML window opens.</p>
 </li>
 <li>
-<p>Click <strong>Catalog &gt; Installed Operators</strong>.</p>
+<p>From the top left drop-down menu, select the <code>enmasse-infra</code> project.</p>
 </li>
 <li>
-<p>Click <strong>Add &gt; Import YAML</strong>. The Import YAML window opens.</p>
-</li>
-<li>
-<p>Copy the following code for <code>StandardInfraConfig</code>:</p>
+<p>Copy the following code:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: admin.enmasse.io/v1beta1
@@ -1080,10 +1074,13 @@ metadata:
 </div>
 </li>
 <li>
-<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The StandardInfraConfig Overview page is displayed.</p>
+<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The StandardInfraConfig overview page is displayed.</p>
 </li>
 <li>
-<p>Click <strong>Workloads &gt; Pods</strong>. In the <strong>Readiness</strong> column, the Pod status is <code>Ready</code> when the custom resource has been deployed.</p>
+<p>Click <strong>Operators &gt; Installed Operators</strong>.</p>
+</li>
+<li>
+<p>Click the EnMasse Operator and click the <strong>Standard Infra Config</strong> tab to verify that its <strong>Status</strong> displays as <strong>Active</strong>.</p>
 </li>
 </ol>
 </div>
@@ -1105,13 +1102,10 @@ metadata:
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>From the dropdown menu, select the <code>enmasse-infra</code> project.</p>
+<p>In the top right, click the <strong>Plus</strong> icon (+). The Import YAML window opens.</p>
 </li>
 <li>
-<p>Click <strong>Catalog &gt; Installed Operators</strong>.</p>
-</li>
-<li>
-<p>Click <strong>Add &gt; Import YAML</strong>. The Import YAML window opens.</p>
+<p>From the top left drop-down menu, select the <code>enmasse-infra</code> project.</p>
 </li>
 <li>
 <p>Copy the following code:</p>
@@ -1134,10 +1128,13 @@ spec:
 </div>
 </li>
 <li>
-<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The AddressPlan Overview page is displayed.</p>
+<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The AddressSpacePlan overview page is displayed.</p>
 </li>
 <li>
-<p>Click <strong>Workloads &gt; Pods</strong>. In the <strong>Readiness</strong> column, the Pod status is <code>Ready</code> when the custom resource has been deployed.</p>
+<p>Click <strong>Operators &gt; Installed Operators</strong>.</p>
+</li>
+<li>
+<p>Click the EnMasse Operator and click the <strong>Address Space Plan</strong> tab to verify that its <strong>Status</strong> displays as <strong>Active</strong>.</p>
 </li>
 </ol>
 </div>
@@ -1159,13 +1156,10 @@ spec:
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>From the dropdown menu, select the <code>enmasse-infra</code> project.</p>
+<p>In the top right, click the <strong>Plus</strong> icon (+). The Import YAML window opens.</p>
 </li>
 <li>
-<p>Click <strong>Catalog &gt; Installed Operators</strong>.</p>
-</li>
-<li>
-<p>Click <strong>Add &gt; Import YAML</strong>. The Import YAML window opens.</p>
+<p>From the top left drop-down menu, select the <code>enmasse-infra</code> project.</p>
 </li>
 <li>
 <p>Copy the following code:</p>
@@ -1184,10 +1178,13 @@ spec:
 </div>
 </li>
 <li>
-<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The AddressPlan Overview page is displayed.</p>
+<p>In the Import YAML window, paste the copied code and click <strong>Create</strong>. The AddressPlan overview page is displayed.</p>
 </li>
 <li>
-<p>Click <strong>Workloads &gt; Pods</strong>. In the <strong>Readiness</strong> column, the Pod status is <code>Ready</code> when the custom resource has been deployed.</p>
+<p>Click <strong>Operators &gt; Installed Operators</strong>.</p>
+</li>
+<li>
+<p>Click the EnMasse Operator and click the <strong>Address Plan</strong> tab to verify that its <strong>Status</strong> displays as <strong>Active</strong>.</p>
 </li>
 </ol>
 </div>
