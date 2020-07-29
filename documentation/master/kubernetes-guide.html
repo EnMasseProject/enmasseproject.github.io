@@ -7425,7 +7425,7 @@ kubectl create -f install/components/iot/examples/iot-project-managed.yaml</pre>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">kubectl get addressspace iot
-kubectl get iotproject iot</pre>
+kubectl get iottenant iot</pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -8839,21 +8839,21 @@ adapter does not support this metric.</p></td>
 <div class="sect3">
 <h4 id="troubleshooting_guide">5.2.11. Troubleshooting guide</h4>
 <div class="sect4">
-<h5 id="proc-iot-troubleshoot-stuck-iotproject-messaging-iot-iot-iot">Fix <code>IoTProject</code> stuck in termination</h5>
+<h5 id="proc-iot-troubleshoot-stuck-iotproject-messaging-iot-iot-iot">Fix <code>IoTTenant</code> stuck in termination</h5>
 <div class="paragraph">
-<p>When an <code>IoTProject</code> instance is deleted, the resource will not be deleted immediately.
+<p>When an <code>IoTTenant</code> instance is deleted, the resource will not be deleted immediately.
 It is only marked for deletion and necessary cleanup operations will be performed in the background.
 The resource will automatically be deleted once the cleanup has been performed successfully.</p>
 </div>
 <div class="paragraph">
 <p>In some situations it might be that, due do to infrastructure issues, the clean-up operation
-cannot be performed at this point in time. The <code>IoTProject</code> will still be kept, and the
+cannot be performed at this point in time. The <code>IoTTenant</code> will still be kept, and the
 operator will re-try periodically to clean up the resources. The cleanup will succeed once
 the infrastructure is back in operational state.</p>
 </div>
 <div class="paragraph">
 <p>In the case that the infrastructure is not expected to function ever again, it might be desirable
-to force the destruction of the <code>IoTProject</code> resources.</p>
+to force the destruction of the <code>IoTTenant</code> resources.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -8875,7 +8875,7 @@ Manually removing the resource cleanup finalizer will skip the cleanup process,
 <p>Evaluate if the project is stuck in the termination state using the <code>kubectl</code> tool:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl get iotproject iot -n myapp
+<pre class="nowrap">kubectl get iottenant iot -n myapp
 NAME   IOT TENANT  DOWNSTREAM HOST                       DOWNSTREAM PORT   TLS    PHASE
 iot    myapp.iot   messaging-be482a6.enmasse-infra.svc   5671              true   Terminating</pre>
 </div>
@@ -8886,7 +8886,7 @@ In addition, verify that the cleanup finalizer is still present:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl get iotproject iot -n myapp -ojsonpath='{range .metadata.finalizers[*]}{..}{"\n"}{end}'
+<pre class="nowrap">kubectl get iottenant iot -n myapp -ojsonpath='{range .metadata.finalizers[*]}{..}{"\n"}{end}'
 iot.enmasse.io/deviceRegistryCleanup</pre>
 </div>
 </div>
@@ -8899,7 +8899,7 @@ is still pending.</p>
 <p>Manually remove the finalizer <code>iot.enmasse.io/deviceRegistryCleanup</code> from the list of finalizers:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">kubectl edit iotproject iot -n myapp</pre>
+<pre class="nowrap">kubectl edit iottenant iot -n myapp</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8928,7 +8928,7 @@ metadata:
 </div>
 <div class="paragraph">
 <p>Delete the line of the finalizer. Save and exit the editor. This will automatically trigger an update
-on the server, and the system will continue deleting the <code>IoTProject</code> resource.</p>
+on the server, and the system will continue deleting the <code>IoTTenant</code> resource.</p>
 </div>
 </li>
 <li>
@@ -9140,7 +9140,7 @@ metadata:
   name: device-manager-role <i class="conum" data-value="1"></i><b>(1)</b>
 rules: <i class="conum" data-value="2"></i><b>(2)</b>
 - apiGroups: ["iot.enmasse.io"]
-  resources: ["iotprojects"]
+  resources: ["iottenants"]
   verbs: ["create", "update", "get", "list", "delete"]</code></pre>
 </div>
 </div>
@@ -9737,13 +9737,13 @@ Do not set a password for this device.
 <dt class="hdlist1">IoT tenant name</dt>
 <dd>
 <p>The name of the IoT tenant consists of the Kubernetes namespace and the name
-of the IoT project resource, for example, <code>namespace.iotproject</code>.</p>
+of the IoT project resource, for example, <code>namespace.iottenant</code>.</p>
 </dd>
 <dt class="hdlist1">HTTP authorization header</dt>
 <dd>
 <p>For the Sigfox backend to authenticate, you must convert the username and password combination of the gateway device into an HTTP "Basic Authorization" header. Be sure to specify the full user name using the following syntax: <code><em>authentication id</em> @<em>IoT tenant name</em></code>.</p>
 <div class="paragraph">
-<p>Example: <code>sigfox-user@namespace.iotproject</code></p>
+<p>Example: <code>sigfox-user@namespace.iottenant</code></p>
 </div>
 <div class="paragraph">
 <p>The basic authentication header value can be generated on the command line using
@@ -9751,7 +9751,7 @@ the following command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">echo "Basic $(echo -n "sigfox-user@namespace.iotproject:password" | base64)"</pre>
+<pre class="nowrap">echo "Basic $(echo -n "sigfox-user@namespace.iottenant:password" | base64)"</pre>
 </div>
 </div>
 </dd>
