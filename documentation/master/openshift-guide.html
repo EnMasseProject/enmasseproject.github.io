@@ -1435,7 +1435,12 @@ spec:
   partitions: 1 <i class="conum" data-value="3"></i><b>(3)</b>
   messageTtl: <i class="conum" data-value="4"></i><b>(4)</b>
     minimim: 30000
-    maximum: 300000</code></pre>
+    maximum: 300000
+  messageRedelivery: <i class="conum" data-value="5"></i><b>(5)</b>
+    maximumDeliveryAttempts: 3
+    redeliveryDelay: 5000
+    redeliveryDelayMultiplier: 1.5
+    maximumDeliveryDelay: 30000</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1455,6 +1460,10 @@ spec:
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>(Optional) Restricts message time-to-live (TTL). Applies to address types <code>queue</code> and <code>topic</code> only.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>(Optional) Provides message redelivery settings. Applies to address types <code>queue</code> and <code>subscription</code> only.</td>
 </tr>
 </table>
 </div>
@@ -1486,7 +1495,10 @@ any message put to a queue or topic. The <code>maximum</code> and <code>minimum<
 <p>Messages that arrive without a TTL defined are considered to have a TTL value of infinity.</p>
 </div>
 <div class="paragraph">
-<p>Expired messages will be automatically removed from the <code>queue</code>, <code>subscription</code> or temporary topic subscription periodically. These messages are lost. This occurs every 30 seconds.</p>
+<p>The <code>messageRedelivery</code> field is used to control the behavior of a queue or subscription when a receiver is unsuccessful in its processing
+a message and the system returns the message to the queue for redelivery. By default, the system redelivers messages indefinitely.
+However, the <code>messageRedelivery</code> field allows you to modify the behavior either by delaying redelivery or redirecting the message to a
+<code>deadletter</code> address.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -6678,7 +6690,7 @@ spec:
 </div>
 </div>
 <div class="sect4">
-<h5 id="ref-address-example-ttlmessaging">Address TTL restriction example</h5>
+<h5 id="ref-address-example-message-ttlmessaging">Address TTL restriction example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
@@ -6689,7 +6701,8 @@ spec:
     address: myqueue
     type: queue
     plan: standard-small-queue
-    messageTtl: <i class="conum" data-value="1"></i><b>(1)</b>
+    expiry: myexpiry <i class="conum" data-value="1"></i><b>(1)</b>
+    messageTtl: <i class="conum" data-value="2"></i><b>(2)</b>
         minimim: 30000
         maximum: 300000</code></pre>
 </div>
@@ -6698,6 +6711,10 @@ spec:
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Optional) Destination for expired messages.  This address must be of type <code>deadletter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>(Optional) Restricts message time-to-live (TTL). Applies to address types <code>queue</code> and <code>topic</code> only.</td>
 </tr>
 </table>
@@ -6720,12 +6737,80 @@ any message put to a queue or topic. The <code>maximum</code> and <code>minimum<
 <p>Messages that arrive without a TTL defined are considered to have a TTL value of infinity.</p>
 </div>
 <div class="paragraph">
-<p>Expired messages will be automatically removed from the <code>queue</code>, <code>subscription</code> or temporary topic subscription periodically. These messages are lost. This occurs every 30 seconds.</p>
-</div>
-<div class="paragraph">
 <p>TTL restrictions may also be imposed by the address plan.  If a TTL restriction is imposed at both the plan and the address,
 the address TTL restriction can only further narrow the TTL restriction.  The address <code>status</code> section shows the
 TTL values that are in force.</p>
+</div>
+<div class="paragraph">
+<p>If the address has an <code>expiry</code> address assigned, expired messages are automatically moved to it.  If the address has no <code>expiry</code> address assigned or
+if the address is a temporary topic subscription, expired messages are removed.  These messages are lost.
+Message expiration occurs periodically at an interval of 30 seconds.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="ref-address-example-ttlmessaging">Address message redelivery/dead letter example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-yaml hljs" data-lang="yaml">apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+    name: myspace.myqueue
+spec:
+    address: myqueue
+    type: queue
+    plan: standard-small-queue
+    deadletter: mydeadletter <i class="conum" data-value="1"></i><b>(1)</b>
+    messageRedelivery: <i class="conum" data-value="2"></i><b>(2)</b>
+        maximumDeliveryAttempts: 3 <i class="conum" data-value="3"></i><b>(3)</b>
+        redeliveryDelay: 5000 <i class="conum" data-value="4"></i><b>(4)</b>
+        redeliveryDelayMultiplier: 1.5 <i class="conum" data-value="5"></i><b>(5)</b>
+        maximumDeliveryDelay: 30000 <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>(Optional) Destination for messages that have exceeded the maximum number of delivery attempts.  This address must be of type <code>deadletter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>(Optional) Provides message redelivery settings. Applies to address types <code>queue</code> and <code>subscription</code> only.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(Optional) Maximum number of delivery attempts made for a message before the message is directed to a <code>deadletter</code> address (or dropped). Set to -1 for infinite re-deliveries.  Defaults to 10.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>(Optional) The number of milliseconds to wait before redelivery. Set to 0 for no redelivery delay.  Defaults to 0.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>(Optional) The redelivery multiplier. This factor is applied to the last redelivery delay. Defaults to 1.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>(Optional) The maximum delivery delay in milliseconds. Imposes an upper limit on the delivery delay. Set to 0 for no maximum.  Defaults to 0.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>messageRedelivery</code> field is used to control the behavior of a queue or subscription when a receiver is unsuccessful in its processing
+a message and the system returns the message to the queue for redelivery. By default, the system redelivers messages indefinitely.
+However, the <code>messageRedelivery</code> field allows you to modify the behavior either by delaying redelivery or redirecting the message to a
+<code>deadletter</code> address.</p>
+</div>
+<div class="paragraph">
+<p>Message redelivery settings may also be defined by the address plan.  If both the address and address plan provide a message redelivery setting,
+the value provided by the address takes priority. The address <code>status</code> section shows the
+message redelivery settings that are in force.</p>
+</div>
+<div class="paragraph">
+<p>If the address has a <code>deadletter</code> address assigned, messages that have exceeded the maximum number of delivery attempts are automatically moved to it.</p>
+</div>
+<div class="paragraph">
+<p>If the address has no <code>deadletter</code> address assigned, the system drops the messages. These messages are lost permanently.</p>
 </div>
 </div>
 <div class="sect4">
@@ -6750,6 +6835,11 @@ TTL values that are in force.</p>
 <p>Address forwarding is supported only in the <code>standard</code> address space type, and only for the <code>queue</code> and <code>subscription</code> address types. With the <code>queue</code> address type, you can forward messages to a remote AMQP server or from a remote AMQP server to a local queue. With the <code>subscription</code> address type, you can create a forwarder to a remote AMQP address, but you cannot create a forwarder that copies messages to the subscription. That is, the <code>subscription</code> address type supports forwarding in the <code>out</code> direction only, as shown in the example.</p>
 </div>
 <div class="paragraph">
+<p>For outgoing forwarders, you can assign a <code>priority</code> value to the consumer associated with the forwarder. This allows you to influence message routing within the AMQP network by favoring one link over another. If the forwarder has
+a lower priority than other consumers, messages will only flow through the forwarder when the other consumers do not have credit or cannot accept a message for other reasons (for example, message selectors). The value must be an integral number in the range
+-2^31 to 2^31-1.  Values lower than zero reduce the forwarder&#8217;s priority relative to other consumers, while values greater than zero raise it.  If the priority is unassigned, a default value of 0 is used.</p>
+</div>
+<div class="paragraph">
 <p>In the following examples, it is assumed that a connector, <code>remote1</code>, has been configured for the address space.</p>
 </div>
 <div class="sect5">
@@ -6770,7 +6860,8 @@ spec:
   forwarders:
   - name: f1 <i class="conum" data-value="1"></i><b>(1)</b>
     remoteAddress: remote1/clients/me/1 <i class="conum" data-value="2"></i><b>(2)</b>
-    direction: out <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+    direction: out <i class="conum" data-value="3"></i><b>(3)</b>
+    priority: 10 <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6787,13 +6878,17 @@ spec:
 <td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>(Required) Specifies the direction of message flow, which is either <code>out</code> or <code>in</code>. A value of <code>out</code> forwards messages to the remote endpoint. A value of <code>in</code> forwards messages from the remote endpoint.</td>
 </tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>(Optional) Specifies the priority assigned to the consumer used by the forwarder (integral number in the range -2^31 to 2^31-1 with a default of 0).  Applies to outgoing forwarders only.</td>
+</tr>
 </table>
 </div>
 </div>
 <div class="sect5">
 <h6 id="forwarding_messages_from_a_remote_amqp_server_to_a_local_queue">Forwarding messages from a remote AMQP server to a local queue</h6>
 <div class="paragraph">
-<p>In this example, you receive messages from an an address <code>prices/milk</code> on a remote AMQP server.  The messages are then moved to a local queue, <code>myqueue</code>.</p>
+<p>In this example, you receive messages from an address <code>prices/milk</code> on a remote AMQP server.  The messages are then moved to a local queue, <code>myqueue</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9114,7 +9209,7 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 <div class="sect4">
 <h5 id="version_information">Version information</h5>
 <div class="paragraph">
-<p><em>Version</em> : 0.32-SNAPSHOT</p>
+<p><em>Version</em> : 0.33-SNAPSHOT</p>
 </div>
 </div>
 <div class="sect4">
