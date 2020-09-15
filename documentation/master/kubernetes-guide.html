@@ -3529,6 +3529,80 @@ receive an authorization failure.
 </ol>
 </div>
 </div>
+<div class="sect3">
+<h4 id="change-logging-level-broker-messaging">3.6.7. Changing the broker logging level at runtime</h4>
+<div class="paragraph">
+<p>For diagnostic purposes, you can change the broker logging level at runtime, which can be helpful
+when troubleshooting issues with sending or receiving messages.</p>
+</div>
+<div class="paragraph">
+<p>To do this, you <code>kubectl rsh</code> into the broker Pod and adjust the <code>logging.properties</code> file used by
+the broker.  The broker automatically reloads this file and immediately applies the changes without
+interrupting established messaging connections.</p>
+</div>
+<div class="paragraph">
+<p>The changes made to <code>logging.properties</code> are transient. The system reverts the logging level to default levels
+the next time the broker pod restarts.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Increasing the logging verbosity increases the CPU overhead of the broker(s) and may decrease
+messaging performance. It may also increase the disk space requirements associated with any log retention system.
+Therefore, it is recommended that you increase the logging verbosity for as short a time as possible.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>List all broker Pods and choose the Pod for the relevant address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl get pods -l role=broker -o go-template --template '{{range .items}}{{.metadata.name}}{{"\t"}}{{.metadata.annotations.addressSpace}}{{"\n"}}{{end}}'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Change the logging level for a single broker by <code>kubectl rsh</code> into the broker pod and editing the
+<code>logging.properties</code>.  The broker uses the JBoss Logging framework. Adjust the logging levels of the packages
+corresponding to the area of interest.  There are comments in the file to guide you.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl rsh <em>pod</em>
+cp /var/run/artemis/split-1/broker/etc/logging.properties /tmp/logging.properties
+vi /var/run/artemis/split-1/broker/etc/logging.properties
+exit</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Display the logs for the Pod that will include the protocol trace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl logs <em>pod</em></pre>
+</div>
+</div>
+</li>
+<li>
+<p>To revert to normal logging levels, revert the contents of the <code>logging.properties</code> file.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">kubectl rsh <em>pod</em>
+cp /tmp/logging.properties /var/run/artemis/split-1/broker/etc/logging.properties
+exit</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="sizing-guide-messaging">3.7. EnMasse configuration sizing guidelines</h3>
