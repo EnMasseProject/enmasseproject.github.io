@@ -950,7 +950,7 @@ EOF</pre>
 <li>
 <p>After the subscription upgrade status is shown as <strong>Up to date</strong>, click <strong>Operators &gt; Installed Operators</strong> to verify that the <strong>EnMasse</strong> ClusterServiceVersion (CSV) is displayed and its <strong>Status</strong> ultimately resolves to <strong>InstallSucceeded</strong> in the <strong>enmasse-infra</strong> namespace.</p>
 <div class="paragraph">
-<p>For troubleshooting information, see the <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/applications/operators#olm-installing-operators-from-operatorhub_olm-adding-operators-to-a-cluster">OpenShift documentation</a>.</p>
+<p>For troubleshooting information, see the <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.5/html-single/operators/index#olm-installing-operators-from-operatorhub_olm-adding-operators-to-a-cluster">OpenShift documentation</a>.</p>
 </div>
 </li>
 </ol>
@@ -1790,7 +1790,7 @@ spec:
 <p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html/developer_guide/dev-guide-application-health">OpenShift 3.11 documentation on overriding probe timeouts</a></p>
 </li>
 <li>
-<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html-single/nodes/index#nodes-nodes-health">OpenShift 4.1 documentation on overriding probe timeouts</a></p>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.5/html-single/applications/index#application-health">OpenShift 4.x documentation on overriding probe timeouts</a></p>
 </li>
 </ul>
 </div>
@@ -2010,7 +2010,7 @@ spec:
 <p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html/developer_guide/dev-guide-application-health">OpenShift 3.11 documentation about liveness and readiness probes (application health)</a></p>
 </li>
 <li>
-<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html-single/nodes/index#nodes-nodes-health">OpenShift 4.1 documentation about liveness and readiness probes (application health)</a></p>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.5/html-single/applications/index#application-health">OpenShift 4.x documentation about liveness and readiness probes (application health)</a></p>
 </li>
 </ul>
 </div>
@@ -2927,7 +2927,7 @@ oc delete oauthclients -l app=enmasse</pre>
 <div class="sect3">
 <h4 id="enable-monitoring-ocp4-messaging">3.5.1. Enabling Monitoring on OpenShift 4</h4>
 <div class="paragraph">
-<p>In order to monitor EnMasse on OpenShift 4 using the existing monitoring stack, user-workload monitoring must be <a href="https://docs.openshift.com/container-platform/4.4/monitoring/monitoring-your-own-services.html" target="_blank" rel="noopener">enabled</a>.</p>
+<p>In order to monitor EnMasse on OpenShift 4 using the existing monitoring stack, user-workload monitoring must be <a href="https://docs.openshift.com/container-platform/4.5/monitoring/monitoring-your-own-services.html" target="_blank" rel="noopener">enabled</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -6180,7 +6180,7 @@ spec:
 <td>(Required) The type of export: <code>ConfigMap</code>, <code>Secret</code>, or <code>Service</code>. The resulting <code>ConfigMap</code> contains the values in the format
 shown in <a href="http://enmasse.io/documentation/master/openshift.html#ref-address-space-example-exports-messaging">example exports format</a>. For <code>Secret</code>, the same keys are used, but the values are base64-encoded. For
 <code>Service</code>, a OpenShift service of the type <code>ExternalName</code> is created. This provides applications running on OpenShift with a way to
-inject endpoint information or provide a proxy service in the same namespace as the application. For more information see <a href="http://enmasse.io/documentation/master/openshift.html#ref-address-space-example-exports-messaging">example exports format</a>.</td>
+inject endpoint information or provide a proxy service in the same namespace as the application. For more information, see <a href="http://enmasse.io/documentation/master/openshift.html#ref-address-space-example-exports-messaging">example exports format</a>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -6480,7 +6480,7 @@ If you choose not to configure endpoints for your address space, the system crea
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created an address space. For more information see <a href="http://enmasse.io/documentation/master/openshift.html#proc-create-address-space-console-messaging">Creating an address space using the EnMasse Console</a>.</p>
+<p>You must have already created an address space. For more information, see <a href="http://enmasse.io/documentation/master/openshift.html#proc-create-address-space-console-messaging">Creating an address space using the EnMasse Console</a>.</p>
 </li>
 </ul>
 </div>
@@ -6511,7 +6511,7 @@ If you choose not to configure endpoints for your address space, the system crea
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created an address space. For more information see <a href="http://enmasse.io/documentation/master/openshift.html#proc-create-address-space-console-messaging">Creating an address space using the EnMasse Console</a>.</p>
+<p>You must have already created an address space. For more information, see <a href="http://enmasse.io/documentation/master/openshift.html#proc-create-address-space-console-messaging">Creating an address space using the EnMasse Console</a>.</p>
 </li>
 </ul>
 </div>
@@ -6728,7 +6728,7 @@ spec:
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The address plan describes the resource usage for the address. For more information about how to view the available plans see <a href="http://enmasse.io/documentation/master/openshift.html#proc-list-available-address-plans-messaging">Listing available address plans</a>.</td>
+<td>The address plan describes the resource usage for the address. For more information about how to view the available plans, see <a href="http://enmasse.io/documentation/master/openshift.html#proc-list-available-address-plans-messaging">Listing available address plans</a>.</td>
 </tr>
 </table>
 </div>
@@ -7098,7 +7098,7 @@ Prefixing the name with the address space name is required to ensure addresses f
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have created an address space. For more information see <a href="http://enmasse.io/documentation/master/openshift.html#create-address-space-cli-messaging">Creating an address space</a>.</p>
+<p>You must have created an address space. For more information, see <a href="http://enmasse.io/documentation/master/openshift.html#create-address-space-cli-messaging">Creating an address space</a>.</p>
 </li>
 </ul>
 </div>
@@ -7820,7 +7820,7 @@ spec:
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p>You must have already created a user. For more information see <a href="http://enmasse.io/documentation/master/openshift.html#proc-creating-users-cli-messaging">Creating users using the command line</a>.</p>
+<p>You must have already created a user. For more information, see <a href="http://enmasse.io/documentation/master/openshift.html#proc-creating-users-cli-messaging">Creating users using the command line</a>.</p>
 </li>
 </ul>
 </div>
