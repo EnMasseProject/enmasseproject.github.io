@@ -2120,7 +2120,7 @@ spec:
   standard:
     credentialsSecret: <i class="conum" data-value="2"></i><b>(2)</b>
       name: my-admin-credentials
-    certificateSecret <i class="conum" data-value="3"></i><b>(3)</b>
+    certificateSecret: <i class="conum" data-value="3"></i><b>(3)</b>
       name: my-authservice-certificate
     resources: <i class="conum" data-value="4"></i><b>(4)</b>
       requests:
@@ -2952,7 +2952,7 @@ cluster.</p>
 <p>(Optional) If you want to deploy to a namespace other than <code>enmasse-monitoring</code> you must run the following command and substitute <code>enmasse-monitoring</code> in subsequent steps:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">sed -i 's/enmasse-monitoring/<em>my-namespace</em>/' install/bundles/enmasse/*.yaml</pre>
+<pre class="nowrap">sed -i 's/enmasse-monitoring/<em>my-namespace</em>/' install/components/monitoring-operator/enmasse/*.yaml</pre>
 </div>
 </div>
 </li>
@@ -3836,7 +3836,7 @@ enmasse_component_health{job="api-server"}	1</code></pre>
 <div class="title">Procedure</div>
 <ul>
 <li>
-<p>Creata a <code>servicemonitor</code> resource with a the selector configured to match labels of <code>monitoring-key: enmasse-tenants</code> and the <code>enmasse-infra</code> as the namespace selector. An example service monitor is shown below:</p>
+<p>Create a <code>servicemonitor</code> resource with a the selector configured to match labels of <code>monitoring-key: enmasse-tenants</code> and the <code>enmasse-infra</code> as the namespace selector. An example service monitor is shown below:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">apiVersion: monitoring.coreos.com/v1
@@ -4889,7 +4889,7 @@ The operator processes are running on either a JVM or a Node.JS VM. Sizing the a
 <div class="sect4">
 <h5 id="operator_component_configuration_example">Operator component configuration example</h5>
 <div class="paragraph">
-<p>Each address adds about 20 kB overhead to the operator process. With 1500 addresses, an additional <code>1500 * 2 kB = 30 MB</code> is needed for the operator process.</p>
+<p>Each address adds about 20 kB overhead to the operator process. With 1500 addresses, an additional <code>1500 * 20 kB = 30 MB</code> is needed for the operator process.</p>
 </div>
 <div class="paragraph">
 <p>In addition, these processes have a base memory requirement of 256 MB.  So, the total operator memory needed is <code>256 MB + 30 MB = 286 MB</code>. This value can be configured in both the <code>StandardInfraConfig</code> and <code>BrokeredInfraConfig</code> resources:</p>
@@ -4960,7 +4960,7 @@ echo "Pods: ${total_pods}. Memory: ${total_memory_mb} MB. Storage: ${total_stora
 <p>Run the script using the following command:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">bash calculate-memory.sh <em>standard-small</em></pre>
+<pre class="nowrap">bash check-memory.sh <em>standard-small</em></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5472,7 +5472,7 @@ If you create a subscription on a topic, any senders to that topic must specify 
 <p><code>a/#/b</code> matches <code>a/foo/b</code>, <code>a/bar/b</code>, and <code>a/foo/bar/b</code></p>
 </li>
 <li>
-<p><code>a/+/b</code> matches <code>a/foo/b</code> and <code>a/bar/b</code>, but would not match <code>a/foo/bar</code></p>
+<p><code>a/+/b</code> matches <code>a/foo/b</code> and <code>a/bar/b</code>, but would not match <code>a/foo/bar/b</code></p>
 </li>
 </ul>
 </div>
