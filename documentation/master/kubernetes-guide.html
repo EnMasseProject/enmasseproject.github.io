@@ -4565,7 +4565,7 @@ You cannot modify endpoints for an existing address space.
 </ul>
 </div>
 <div class="paragraph">
-<p>Clients connect and send and receive messages in this address space using the AMQP or MQTT protocols. Note that MQTT does not support qos2 or retained messages.</p>
+<p>Clients connect and send and receive messages in this address space using the AMQP protocol.</p>
 </div>
 <div class="sect4">
 <h5 id="assembly-standard-address-types-messaging">Standard address types</h5>
@@ -4980,7 +4980,7 @@ spec:
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>(Required) The service configured for the endpoint. Valid values for <code>service</code> are <code>messaging</code> and <code>mqtt</code>. However, the <code>mqtt</code> service is supported for the <code>standard</code> address space type only.</td>
+<td>(Required) The service configured for the endpoint. The valid value for <code>service</code> is <code>messaging</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
