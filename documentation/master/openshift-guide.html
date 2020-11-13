@@ -9109,6 +9109,30 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.treatRejectAsUnmodifiedDeliveryFailed</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Treat rejected delivery outcome as modified delivery failed. This causes the message to be re-sent to the consumer by default. The default value is <code>true</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.useModifiedForTransientDeliveryErrors</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Respond with modified for transient delivery errors to allow sender to retry. The default value is <code>true</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>broker.minLargeMessageSize</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the minimum size of a message for it to be treated as a large message. A large message is always paged to disk with a reference in the journal.The default value is <code>-1</code> (never page).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>router.resources.memory</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
