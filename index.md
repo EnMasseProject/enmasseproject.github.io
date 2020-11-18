@@ -6,7 +6,7 @@ header:
       url: "/downloads/"
     - label: "Getting started"
       url: "/documentation/master/kubernetes.html#quickstart-messaging-gs"
-excerpt: "Multitenant, self-service messaging system for Kubernetes with first-class support for IoT"
+excerpt: "Multitenant, self-service messaging system for Kubernetes"
 feature_row:
   - title: "Simple"
     excerpt:
@@ -20,7 +20,6 @@ feature_row:
       <ul>
       <li>Supports request-response, pub-sub and event messaging patterns.</li>
       <li>Support for AMQP 1.0 and JMS.</li>
-      <li>Support for IoT using HTTP, MQTT, Sigfox or LoRaWAN protocols.</li>
       </ul>
   - title: "Devops-friendly"
     # image_path: /assets/images/unsplash-gallery-image-2-th.jpg
@@ -38,7 +37,6 @@ feature_row2:
     title: "Powerful integrations"
     excerpt:
       <p>Supports custom external IAM providers such as LDAP.</p>
-      <p>Integration with <b>Eclipse Hono™</b> to support multiple IoT protocols, device and tenant management.</p>
       <p>Supports federation of messaging addresses and forwarding messages to and from any AMQP 1.0 provider.</p>
 feature_row3:
   - image_path: assets/images/secure_icon.png
@@ -72,5 +70,5 @@ EnMasse is an open source multitenant, self-service messaging system for [Kubern
 
 {% include feature_row id="feature_row4" %}
 
-EnMasse is licensed under the Apache License, Version 2.0. IoT components based on Eclipse Hono™ are licensed under the Eclipse Public License, Version 2.0.
+EnMasse is licensed under the Apache License, Version 2.0.
 
