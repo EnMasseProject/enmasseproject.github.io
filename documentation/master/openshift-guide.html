@@ -936,24 +936,31 @@ EOF</pre>
 <p>Click the EnMasse Operator.  Information about the Operator is displayed.</p>
 </li>
 <li>
-<p>Read the information about the Operator and click <strong>Install</strong>. The Create Operator Subscription page opens.</p>
+<p>Read the information about the Operator and click <strong>Install</strong>.</p>
 </li>
 <li>
-<p>On the <strong>Create Operator Subscription</strong> page, for <strong>Installation Mode</strong>, click <strong>A specific namespace on the cluster</strong>, and then select the <strong>enmasse-infra</strong> namespace from the drop-down list.</p>
+<p>On the <strong>Install Operator</strong> page:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Under <strong>Installation Mode</strong>, click <strong>A specific namespace on the cluster</strong>.</p>
 </li>
 <li>
-<p>Accept all of the remaining default selections and click <strong>Subscribe</strong>.</p>
-<div class="paragraph">
-<p>The <strong>enmasse</strong> page is displayed, where you can monitor the installation progress of the EnMasse Operator subscription.</p>
-</div>
+<p>From the <strong>Installed Namespace</strong> drop-down list, select the <code>enmasse-infra</code> namespace.</p>
 </li>
 <li>
-<p>After the subscription upgrade status is shown as <strong>Up to date</strong>, click <strong>Operators &gt; Installed Operators</strong> to verify that the <strong>EnMasse</strong> ClusterServiceVersion (CSV) is displayed and its <strong>Status</strong> ultimately resolves to <strong>InstallSucceeded</strong> in the <strong>enmasse-infra</strong> namespace.</p>
-<div class="paragraph">
-<p>For troubleshooting information, see the <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.5/html-single/operators/index#olm-installing-operators-from-operatorhub_olm-adding-operators-to-a-cluster">OpenShift documentation</a>.</p>
+<p>Accept all of the remaining default selections and click <strong>Install</strong>.</p>
+</li>
+</ol>
 </div>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>When the Operator installation is complete, the <strong>Installed Operators</strong> page opens. You should see that the EnMasse Operator is installed in the project namespace that you specified.</p>
+</div>
+<div class="paragraph">
+<p>For troubleshooting information, see the <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.5/html-single/operators/index#olm-installing-operators-from-operatorhub_olm-adding-operators-to-a-cluster">OpenShift documentation</a>.</p>
 </div>
 <div class="ulist">
 <div class="title">Next steps</div>
