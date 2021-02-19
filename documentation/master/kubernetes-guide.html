@@ -3702,7 +3702,7 @@ In EnMasse, you can only restrict the total amount of memory allocated for a bro
 <p>The amount of memory required for the broker depends on which address full policy is specified. If the <code>PAGE</code> policy is used, the memory requirements can be reduced  since the messages are stored separately from the journal (which always needs to fit in memory). If the <code>FAIL</code>, <code>BLOCK</code>, or <code>DROP</code> policies are specified, all messages must also be held in memory, even if they are persisted.</p>
 </div>
 <div class="paragraph">
-<p>There is also constant memory cost associated with running the broker as well as the JVM. The memory available to store message is automatically derived from the memory set in the broker configuration and is set to be half the JVM memory, which in turn is set to half of the system memory.</p>
+<p>There is also constant memory cost associated with running the broker as well as the JVM. The memory available to store message is automatically derived from the memory set in the broker configuration and is set to be half the JVM memory, which in turn is set to half of the system memory (memory assigned to the container).</p>
 </div>
 <div class="admonitionblock note">
 <table>
