@@ -6904,7 +6904,10 @@ message redelivery settings that are in force.</p>
 <p>If the address has a <code>deadletter</code> address assigned, messages that have exceeded the maximum number of delivery attempts are automatically moved to it.</p>
 </div>
 <div class="paragraph">
-<p>If the address has no <code>deadletter</code> address assigned, the system drops the messages. These messages are lost permanently.</p>
+<p>If the address has no <code>deadletter</code> address assigned, the system drops the messages. These messages are lost permanently. However, the standard address space
+supports a <strong>global DLQ</strong> mode. If set to <code>true</code> in the <code>standardinfraconfig</code> resources, the system establishes a fallback global dead letter address named
+<code>!!GLOBAL_DLQ</code> and routes the undelivered messages to it.  To remove messages from this address and prevent the broker(s) from becoming full, connect a
+consuming application to the <code>!!GLOBAL_DLQ</code> address.</p>
 </div>
 </div>
 <div class="sect4">
@@ -9348,6 +9351,14 @@ oc logs deployment/admin.<em>uuid</em> -c agent</pre>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the maximum size in bytes of AMQP message transfers allowed for this router. This limit is applied to transfers to/from client connections. A value of zero disables this limit.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>globalDLQ</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>If set to <code>true</code>, the system establishes a fallback global dead letter address: <code>!!GLOBAL_DLQ</code>.  The default is <code>false</code>. To remove messages from this address and prevent the broker(s) from becoming full, connect a consuming application to the <code>!!GLOBAL_DLQ</code> address .</p>
 </div></div></td>
 </tr>
 </tbody>
